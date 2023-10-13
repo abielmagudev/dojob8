@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Schema;
 
 class ExtensionSeeder extends Seeder
 {
+    const EXTENSION_CREATED_FAILED = false;
+
     public $console;
 
     public $extensions;
@@ -43,15 +45,15 @@ class ExtensionSeeder extends Seeder
             return $extension;
         }
 
-        if(! $extension = Extension::create( $installer->toCreate() ) )
+        if( $extension = Extension::create( $installer->toCreate() ) )
         {
-            $this->console->writeln("<error>Error creating extension:</error> {$installer->namespace()}");
-            return;
+            $this->console->writeln("<info>Installed extension:</info> {$installer->namespace()}");
+            return $extension;
         }
+        
+        $this->console->writeln("<error>Error installing extension:</error> {$installer->namespace()}");
 
-        $this->console->writeln("<info>Created extension:</info> {$installer->namespace()}");
-
-        return $extension;
+        return self::EXTENSION_CREATED_FAILED;
     }
 
     public function migrate(array $migrations, Extension $extension)
@@ -68,13 +70,15 @@ class ExtensionSeeder extends Seeder
 
             if(! Schema::hasTable($table) )
             {
-                $this->console->writeln("<error>Error installing migration:</error> {$table}");
-                $this->console->writeln("<comment>Deleted extension:</comment> {$extension->title}");
+                $this->console->writeln("<error>Error migration:</error> {$table}");
+
                 $extension->delete();
+                $this->console->writeln("<comment>Deleted extension:</comment> {$extension->title}");
+
                 continue;
             }
             
-            $this->console->writeln("<info>Installed migration:</info> {$table}");
+            $this->console->writeln("<info>Created migration:</info> {$table}");
         }
     }
 }

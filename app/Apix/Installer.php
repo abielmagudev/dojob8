@@ -17,6 +17,13 @@ abstract class Installer
             'title' => $this->title(),
             'description' => $this->description(),
             'namespace' => $this->namespace(),
+            'classname' => $this->classname(),
         ];
+    }
+
+    public function classname()
+    {
+        $namespace_segments = explode('\\', $this->namespace());
+        return end($namespace_segments);
     }
 }

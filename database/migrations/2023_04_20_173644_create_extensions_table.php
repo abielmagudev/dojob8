@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->text('description')->nullable();
             $table->string('namespace')->unique();
+            $table->string('classname')->unique();
             $table->timestamps();
             $table->softDeletes();
         });

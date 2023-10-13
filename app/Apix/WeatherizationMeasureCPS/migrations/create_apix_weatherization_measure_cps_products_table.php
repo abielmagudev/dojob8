@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('apix_weatherization_measure_cps_products', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique('weatherization_cps_name');
+            $table->unsignedTinyInteger('item_price_id')->unique('weatherization_cps_item_price_id');
+            $table->decimal('material_price', 8, 2, true)->nullable();
+            $table->decimal('labor_price', 8, 2, true)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

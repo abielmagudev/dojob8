@@ -15,4 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', fn() => view('welcome') );
-Route::resource('extensions', ExtensionController::class);
+
+Route::get('extensions', [ExtensionController::class, 'index'])->name('extensions.index');
+Route::prefix('extensions')->group(function () {
+    Route::get('/{extension}', [ExtensionController::class, 'show'])->name('extensions.show');
+    Route::get('/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
+    Route::post('/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
+    Route::get('/{extension}/edit', [ExtensionController::class, 'edit'])->name('extensions.edit');
+    Route::match(['put', 'patch'], '/{extension}/edit', [ExtensionController::class, 'update'])->name('extensions.update');
+    Route::delete('/{extension}', [ExtensionController::class, 'destroy'])->name('extensions.destroy');
+});

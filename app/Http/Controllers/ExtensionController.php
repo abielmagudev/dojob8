@@ -17,27 +17,31 @@ class ExtensionController extends Controller
 
     public function show(Request $request, Extension $extension)
     {
-        $view = app($extension->controller)->callAction('show', [$request, $extension]);
-
-        return view('extensions.show', [
-            'content' => is_a($view, View::class) ? $view->render() : null,
-            'extension' => $extension,
-        ]);
+        return app($extension->controller)->callAction('show', [$request, $extension]);
     }
 
-    public function store(Request $request)
+    public function create(Request $request, Extension $extension)
     {
-        $extension = Extension::find($request->extension);
+        return app($extension->controller)->callAction('create', [$request, $extension]);
+    }
+
+    public function store(Request $request, Extension $extension)
+    {
         return app($extension->controller)->callAction('store', [$request, $extension]);
+    }
+
+    public function edit(Request $request, Extension $extension)
+    {
+        return app($extension->controller)->callAction('edit', [$request, $extension]);
     }
 
     public function update(Request $request, Extension $extension)
     {
-        // 
+        return app($extension->controller)->callAction('update', [$request, $extension]);
     }
 
     public function destroy(Request $request, Extension $extension)
     {
-        // 
+        return app($extension->controller)->callAction('destroy', [$request, $extension]);
     }
 }

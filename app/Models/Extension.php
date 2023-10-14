@@ -15,45 +15,22 @@ class Extension extends Model
         'title',
         'description',
         'namespace',
+        'classname',
     ];
-
     
-    // Model attributes
-
-    public function getModelAttribute()
-    {
-        return sprintf('%s\\%s', $this->namespace, $this->classname);
-    }
-
-    
-    // Controller attributes
-
-    public function getControllerPathAttribute()
-    {
-        return sprintf('App\\Http\\Controllers\\ApiExtensions\\%s', $this->classname);
-    }
-
     public function getControllerAttribute()
     {
-        return sprintf('%s\\%sController', $this->controller_path, $this->classname);
+        return sprintf('%s\Controllers\%sController', $this->namespace, $this->classname);
     }
 
-    public function getControllerSettingsAttribute()
+    public function getOrderControllerAttribute()
     {
-        return sprintf('%s\\%sSettingsController', $this->controller_path, $this->classname);
+        return sprintf('%s\Controllers\%sOrderController', $this->namespace, $this->classname);
     }
 
-
-    // Form requests attributes
-
-    public function getRequestsNamespaceAttribute()
+    public function formRequestClassname(string $form_request)
     {
-        return sprintf('App\\Http\\Requests\\ApiExtensions\\%s', $this->classname);
-    }
-
-    public function getFormRequest(string $form_request_name)
-    {
-        return sprintf('%s\\%s', $this->requests_namespace, $form_request_name);
+        return sprintf('%s\Requests\%s', $this->namespace, $form_request);
     }
 
 

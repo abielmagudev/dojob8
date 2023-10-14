@@ -20,10 +20,4 @@ abstract class Installer
             'classname' => $this->classname(),
         ];
     }
-
-    public function classname()
-    {
-        $namespace_segments = explode('\\', $this->namespace());
-        return end($namespace_segments);
-    }
 }

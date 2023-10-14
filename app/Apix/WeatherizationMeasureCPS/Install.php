@@ -12,6 +12,8 @@ return new class extends Installer
 
     protected $namespace = __NAMESPACE__;
 
+    protected $classname = 'WeatherizationMeasureCPS';
+
     public function migrations(): array
     {
         return [

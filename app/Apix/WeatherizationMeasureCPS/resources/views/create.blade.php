@@ -3,11 +3,11 @@
 <h1>{{ $extension->title }}</h1>
 <br>
 <x-card title="Add product">
-    <form action="{{ route('extensions.store', $extension) }}" method="post">
+    <form action="{{ route('extensions.store', $extension) }}" method="post" autocomplete="off">
         @csrf
         <div class="mb-3">
             <label for="numberItemPrice" class="form-label">Item</label>
-            <input type="number" name="item_price_id" value="{{ old('item_price_id') }}" class="form-control" id="numberItemPrice" min="1" step="1" placeholder="Price ID...">
+            <input type="number" name="item_price_id" value="{{ old('item_price_id', $next_item_price_id) }}" class="form-control" id="numberItemPrice" min="1" step="1" placeholder="Price ID...">
             <x-error name="item_price_id" />
         </div>
         <div class="mb-3">
@@ -17,12 +17,12 @@
         </div>
         <div class="mb-3">
             <label for="numberMaterialPrice" class="form-label">Material price</label>
-            <input type="number" name="material_price" value="{{ old('material_price') }}" class="form-control" id="numberMaterialPrice" min="0.01" step="0.01">
+            <input type="number" name="material_price" value="{{ old('material_price') }}" class="form-control" id="numberMaterialPrice" min="0.01" max="999999.99" step="0.01">
             <x-error name="material_price" />
         </div>
         <div class="mb-3">
             <label for="numberLaborPrice" class="form-label">Labor price</label>
-            <input type="number" name="labor_price" value="{{ old('labor_price') }}" class="form-control" id="numberLaborPrice" min="0.01" step="0.01">
+            <input type="number" name="labor_price" value="{{ old('labor_price') }}" class="form-control" id="numberLaborPrice" min="0.01" max="999999.99" step="0.01">
             <x-error name="labor_price" />
         </div>
         <br>

@@ -2,44 +2,44 @@
 @section('content')
 <h1>{{ $extension->title }}</h1>
 <br>
-<x-card title="Add product">
-    <form action="{{ route('extensions.update', [$extension, 'product' => $product->id]) }}" method="post">
+<x-card title="Add measure">
+    <form action="{{ route('extensions.update', [$extension, 'measure' => $measure->id]) }}" method="post" autocomplete="off">
         @csrf
         @method('put')
         <div class="mb-3">
             <label for="numberItemPrice" class="form-label">Item</label>
-            <input type="number" name="item_price_id" value="{{ old('item_price_id', $product->item_price_id) }}" class="form-control" id="numberItemPrice" min="1" step="1" placeholder="Price ID...">
+            <input type="number" name="item_price_id" value="{{ old('item_price_id', $measure->item_price_id) }}" class="form-control" id="numberItemPrice" min="1" step="1" placeholder="Price ID...">
             <x-error name="item_price_id" />
         </div>
         <div class="mb-3">
             <label for="inputName" class="form-label">Name</label>
-            <input type="text" name="name" value="{{ old('name', $product->name) }}" class="form-control" id="inputName">
+            <input type="text" name="name" value="{{ old('name', $measure->name) }}" class="form-control" id="inputName">
             <x-error name="name" />
         </div>
         <div class="mb-3">
             <label for="numberMaterialPrice" class="form-label">Material price</label>
-            <input type="number" name="material_price" value="{{ old('materia_price', $product->material_price) }}" class="form-control" id="numberMaterialPrice" min="0.01" step="0.01">
+            <input type="number" name="material_price" value="{{ old('materia_price', $measure->material_price) }}" class="form-control" id="numberMaterialPrice" min="0.01" max="999999.99" step="0.01">
             <x-error name="material_price" />
         </div>
         <div class="mb-3">
             <label for="numberLaborPrice" class="form-label">Labor price</label>
-            <input type="number" name="labor_price" value="{{ old('labor_price', $product->labor_price) }}" class="form-control" id="numberLaborPrice" min="0.01" step="0.01">
+            <input type="number" name="labor_price" value="{{ old('labor_price', $measure->labor_price) }}" class="form-control" id="numberLaborPrice" min="0.01" max="999999.99" step="0.01">
             <x-error name="labor_price" />
         </div>
         <br>
 
         <div class="text-end">
-            <button class="btn btn-warning" type="submit">Update product</button>
+            <button class="btn btn-warning" type="submit">Update measure</button>
             <a href="{{ route('extensions.show', $extension) }}" class="btn btn-dark">Cancel</a>
         </div>
     </form>
 </x-card>
 <br>
-<form action="{{ route('extensions.destroy', [$extension, 'product' => $product->id]) }}" method="post">
+<form action="{{ route('extensions.destroy', [$extension, 'measure' => $measure->id]) }}" method="post">
     @csrf
     @method('delete')
     <div class="text-end">
-        <button class="btn btn-outline-danger" type="submit">Delete product</button>
+        <button class="btn btn-outline-danger" type="submit">Delete measure</button>
     </div>
 </form>
 @endsection

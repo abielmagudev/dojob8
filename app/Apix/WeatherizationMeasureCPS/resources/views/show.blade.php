@@ -3,9 +3,9 @@
 <h1>{{ $extension->title }}</h1>
 <br>
 <p class="text-end">
-    <a href="{{ route('extensions.create', $extension) }}" class="btn btn-primary">Add product</a>
+    <a href="{{ route('extensions.create', $extension) }}" class="btn btn-primary">Add measure</a>
 </p>
-<x-card title="Products">
+<x-card title="Measures">
     <div class="table-responsive">
         <table class="table">
             <tbody>
@@ -19,15 +19,15 @@
                         <th></th>
                     </tr>
                 </thead>
-                @foreach($products as $product)
+                @foreach($measures as $measure)
                 <tr class="align-middle ">
-                    <td style="width:1%">{{ $product->item_price_id }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>${{ $product->material_price }}</td>
-                    <td>${{ $product->labor_price }}</td>
-                    <td>${{ $product->total_cost }}</td>
+                    <td style="width:1%">{{ $measure->item_price_id }}</td>
+                    <td>{{ $measure->name }}</td>
+                    <td>${{ $measure->material_price }}</td>
+                    <td>${{ $measure->labor_price }}</td>
+                    <td>${{ $measure->total_cost }}</td>
                     <td class="text-end">
-                        <a href="{{ route('extensions.edit', [$extension, 'product' => $product->id]) }}" class="btn btn-outline-warning">Edit</a>
+                        <a href="{{ route('extensions.edit', [$extension, 'measure' => $measure->id]) }}" class="btn btn-outline-warning">Edit</a>
                     </td>
                 </tr>
                 @endforeach

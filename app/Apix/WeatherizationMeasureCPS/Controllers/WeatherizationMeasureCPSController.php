@@ -2,11 +2,12 @@
 
 namespace App\Apix\WeatherizationMeasureCPS\Controllers;
 
+use App\Apix\Kernel\ResourcesTrait;
+use App\Apix\WeatherizationMeasureCPS\Models\WeatherizationMeasureCPSProduct;
+use App\Apix\WeatherizationMeasureCPS\Requests\ProductWeatherizationMeasureCpsSaveRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use Illuminate\Http\Request;
-use App\Apix\Kernel\ResourcesTrait;
-use App\Apix\WeatherizationMeasureCPS\Models\WeatherizationMeasureCPSProduct;
 
 class WeatherizationMeasureCPSController extends Controller
 {
@@ -28,7 +29,7 @@ class WeatherizationMeasureCPSController extends Controller
         ]);
     }
 
-    public function store(Request $request, Extension $extension)
+    public function store(ProductWeatherizationMeasureCpsSaveRequest $request, Extension $extension)
     {
         if(! $product = WeatherizationMeasureCPSProduct::create($request->all()) )
             return back()->with('danger', 'Error adding product, please try again...');

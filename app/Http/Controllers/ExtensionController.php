@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Kernel\ResolveFormRequestsTrait;
 use App\Models\Extension;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
-
 class ExtensionController extends Controller
 {
+    use ResolveFormRequestsTrait;
+
     public function index(Request $request)
     {
         return view('extensions.index', [
@@ -27,7 +28,10 @@ class ExtensionController extends Controller
 
     public function store(Request $request, Extension $extension)
     {
-        return app($extension->controller)->callAction('store', [$request, $extension]);
+        return app($extension->controller)->callAction('store', [
+            $this->resolveControllerFormRequest($extension->controller, 'store') ?? $request, 
+            $extension
+        ]);
     }
 
     public function edit(Request $request, Extension $extension)

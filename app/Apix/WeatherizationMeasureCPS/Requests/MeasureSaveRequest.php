@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Apix\WeatherizationMeasureCPS\Requests;
+namespace App\Apix\WeatherizationMeasureCps\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductWeatherizationMeasureCpsSaveRequest extends FormRequest
+class MeasureSaveRequest extends FormRequest
 {
     public function authorize()
     {

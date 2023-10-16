@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Apix\WeatherizationMeasureCPS\Models;
+namespace App\Apix\WeatherizationMeasureCps\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class WeatherizationMeasureCPSProduct extends Model
+class WeatherizationMeasureCps extends Model
 {
-    protected $table = 'apix_weatherization_measure_cps_products';
+    protected $table = 'apix_weatherization_measures_cps';
 
     protected $fillable = [
         'name',

@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('apix_weatherization_measure_cps_products', function (Blueprint $table) {
+        Schema::create('apix_weatherization_measures_cps', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique('wm_cps_name');
+            $table->string('name')->unique('wms_cps_name');
             $table->unsignedTinyInteger('item_price_id');
             $table->decimal('material_price', 8, 2, true)->nullable();
             $table->decimal('labor_price', 8, 2, true)->nullable();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('apix_weatherization_measure_cps_products');
+        Schema::dropIfExists('apix_weatherization_measures_cps');
     }
 };

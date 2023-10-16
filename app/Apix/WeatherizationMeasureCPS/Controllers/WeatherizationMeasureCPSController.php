@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Apix\WeatherizationMeasureCPS\Controllers;
+namespace App\Apix\WeatherizationMeasureCps\Controllers;
 
 use App\Apix\Kernel\ResourcesTrait;
-use App\Apix\WeatherizationMeasureCPS\Models\WeatherizationMeasureCPSProduct;
-use App\Apix\WeatherizationMeasureCPS\Requests\ProductWeatherizationMeasureCpsSaveRequest;
+use App\Apix\WeatherizationMeasureCps\Models\WeatherizationMeasureCps;
+use App\Apix\WeatherizationMeasureCps\Requests\MeasureSaveRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use Illuminate\Http\Request;
 
-class WeatherizationMeasureCPSController extends Controller
+class WeatherizationMeasureCpsController extends Controller
 {
     use ResourcesTrait;
 
@@ -17,7 +17,7 @@ class WeatherizationMeasureCPSController extends Controller
     {
         return $this->view('show', [
             'extension' => $extension,
-            'products' => WeatherizationMeasureCPSProduct::all(),
+            'products' => WeatherizationMeasureCps::all(),
         ]);
     }
 
@@ -25,13 +25,13 @@ class WeatherizationMeasureCPSController extends Controller
     {
         return $this->view('create', [
             'extension' => $extension,
-            'products' => WeatherizationMeasureCPSProduct::all(),
+            'products' => WeatherizationMeasureCps::all(),
         ]);
     }
 
-    public function store(ProductWeatherizationMeasureCpsSaveRequest $request, Extension $extension)
+    public function store(MeasureSaveRequest $request, Extension $extension)
     {
-        if(! $product = WeatherizationMeasureCPSProduct::create($request->all()) )
+        if(! $product = WeatherizationMeasureCps::create($request->all()) )
             return back()->with('danger', 'Error adding product, please try again...');
 
         return redirect()->route('extensions.index')->with('success', "Product {$product->name} added");
@@ -39,18 +39,18 @@ class WeatherizationMeasureCPSController extends Controller
 
     public function edit(Request $request, Extension $extension)
     {
-        $product = WeatherizationMeasureCPSProduct::findOrFail($request->product);
+        $product = WeatherizationMeasureCps::findOrFail($request->product);
 
         return $this->view('edit', [
             'extension' => $extension,
-            'products' => WeatherizationMeasureCPSProduct::all(),
+            'products' => WeatherizationMeasureCps::all(),
             'product' => $product,
         ]);
     }
 
     public function update(Request $request, Extension $extension)
     {
-        $product = WeatherizationMeasureCPSProduct::findOrFail($request->product);
+        $product = WeatherizationMeasureCps::findOrFail($request->product);
 
         if(! $product->fill( $request->all() )->save() )
             return back()->with('danger', 'Error updating product, please try again...');
@@ -60,7 +60,7 @@ class WeatherizationMeasureCPSController extends Controller
 
     public function destroy(Request $request, Extension $extension)
     {
-        $product = WeatherizationMeasureCPSProduct::findOrFail($request->product);
+        $product = WeatherizationMeasureCps::findOrFail($request->product);
 
         if(! $product->delete() )
             return back()->with('danger', 'Error deleting product, please try again...');

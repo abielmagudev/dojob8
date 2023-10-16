@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('apix_weatherization_measure_cps_order', function (Blueprint $table) {
+        Schema::create('apix_weatherization_measures_cps_order', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id');
+            $table->foreignId('measure_id');
+            $table->unsignedInteger('quantity');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('apix_weatherization_measure_cps_order');
+        Schema::dropIfExists('apix_weatherization_measures_cps_order');
     }
 };

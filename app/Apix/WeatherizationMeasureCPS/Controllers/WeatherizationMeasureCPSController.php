@@ -50,7 +50,7 @@ class WeatherizationMeasureCpsController extends Controller
         ]);
     }
 
-    public function update(Request $request, Extension $extension)
+    public function update(MeasureSaveRequest $request, Extension $extension)
     {
         $measure = WeatherizationMeasureCps::findOrFail($request->measure);
 

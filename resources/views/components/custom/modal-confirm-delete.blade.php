@@ -1,20 +1,18 @@
 <div class="text-end">
     <x-modal-trigger modal-id="modalConfirmDelete" class="btn btn-outline-danger border-0">
-        <span>Delete {{ $attributes->get('name') }}</span>
+        <span>Delete {{ $attributes->get('concept') }}</span>
     </x-modal-trigger>
 </div>
 
-<x-modal id="modalConfirmDelete" title="ATENTION" footer-class="justify-content-center" header-close footer-close>
-    
-    <form action="{{ $attributes->get('route') }}" method="post" id='formConfirmDelete'>
-        @csrf
-        @method('delete')
-        <div class="text-center">
-            {!! $slot !!}
-        </div>
-    </form>
+<x-modal id="modalConfirmDelete" dialog-class="modal-dialog-centered">
+    <div class="text-center">
+        <div class="mb-4">{!! $slot !!}</div>
 
-    <x-slot name="footer">
-        <button class="btn btn-outline-danger" type="submit" form="formConfirmDelete">Yes, delete {{ $attributes->get('name') }}</button>
-    </x-slot>
+        <form action="{{ $attributes->get('route') }}" method="post" id='formConfirmDelete'>
+            @csrf
+            @method('delete')
+            <button class="btn btn-outline-danger" type="submit" form="formConfirmDelete">Yes, delete {{ $attributes->get('concept') }}</button>
+            <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
+        </form>
+    </div>
 </x-modal>

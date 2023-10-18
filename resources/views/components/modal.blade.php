@@ -1,9 +1,9 @@
-<div class="modal fade" id="{{ $attributes->get('id') }}" tabindex="-1" aria-labelledby="{{ $attributes->get('id') }}Label" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="{{ $attributes->get('id') }}" tabindex="-1" aria-labelledby="{{ $attributes->get('id') }}Label" @if( $attributes->has('static') ) data-bs-backdrop="static" data-bs-keyboard="false" @endif aria-hidden="true">
+    <div class="modal-dialog {{ $attributes->get('dialog-class') }}">
         <div class="modal-content">
 
-            <div class="modal-header {{ $attributes->get('header-class', '') }}">
-                <h1 class="modal-title fs-5" id="{{ $attributes->get('id') }}Label">{{ $attributes->get('title') }}</h1>
+            <div class="modal-header border-0 {{ $attributes->get('header-class', '') }}">
+                <h1 class="modal-title fs-5" id="{{ $attributes->get('id') }}Label">{{ $attributes->get('title') ?? $title ?? '' }}</h1>
                 @if( $attributes->has('header-close') )     
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 @endif

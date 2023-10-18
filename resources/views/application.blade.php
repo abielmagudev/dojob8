@@ -17,7 +17,12 @@
     @include('application.navbar')
     <br>
     <div class="container">
+        <header>
+            @yield('header')
+        </header>
+
         @include('application.alert-message')
+        
         @yield('content')
     </div>
     <br>

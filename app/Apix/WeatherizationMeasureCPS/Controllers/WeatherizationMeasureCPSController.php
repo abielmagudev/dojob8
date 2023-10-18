@@ -36,7 +36,7 @@ class WeatherizationMeasureCpsController extends Controller
         if(! $measure = WeatherizationMeasureCps::create($request->all()) )
             return back()->with('danger', 'Error adding measure, please try again...');
 
-        return redirect()->route('extensions.show', $extension)->with('success', "Measure {$measure->name} added");
+        return redirect()->route('extensions.show', $extension)->with('success', "Measure <b>{$measure->name}</b> saved");
     }
 
     public function edit(Request $request, Extension $extension)
@@ -57,7 +57,7 @@ class WeatherizationMeasureCpsController extends Controller
         if(! $measure->fill( $request->all() )->save() )
             return back()->with('danger', 'Error updating measure, please try again...');
 
-        return redirect()->route('extensions.edit', [$extension, 'measure' => $measure->id])->with('success', "Measure {$measure->name} updated");
+        return redirect()->route('extensions.edit', [$extension, 'measure' => $measure->id])->with('success', "Measure <b>{$measure->name}</b> updated");
     }
 
     public function destroy(Request $request, Extension $extension)
@@ -67,6 +67,6 @@ class WeatherizationMeasureCpsController extends Controller
         if(! $measure->delete() )
             return back()->with('danger', 'Error deleting measure, please try again...');
 
-        return redirect()->route('extensions.show', $extension)->with('success', "Measure {$measure->name} deleted");
+        return redirect()->route('extensions.show', $extension)->with('success', "Measure <b>{$measure->name}</b> deleted");
     }
 }

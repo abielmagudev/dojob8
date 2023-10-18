@@ -1,8 +1,6 @@
 @extends('application')
+<x-header-sm>{{ $extension->title }}</x-header-sm>
 @section('content')
-<p class="text-dark">
-    <b>{{ $extension->title }}</b>
-</p>
 <x-card title="Edit measure">
     <form action="{{ route('extensions.update', [$extension, 'measure' => $measure->id]) }}" method="post" autocomplete="off">
         @csrf
@@ -31,16 +29,12 @@
 
         <div class="text-end">
             <button class="btn btn-warning" type="submit">Update measure</button>
-            <a href="{{ route('extensions.show', $extension) }}" class="btn btn-dark">Cancel</a>
+            <a href="{{ route('extensions.show', $extension) }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>
 <br>
-<form action="{{ route('extensions.destroy', [$extension, 'measure' => $measure->id]) }}" method="post">
-    @csrf
-    @method('delete')
-    <div class="text-end">
-        <button class="btn btn-outline-danger" type="submit">Delete measure</button>
-    </div>
-</form>
+<x-custom.modal-confirm-delete concept="measure" route="{{ route('extensions.destroy', [$extension, 'measure' => $measure->id]) }}">
+    <p>Are you sure to remove the measure <br><b>{{ $measure->name }}</b>?</p>
+</x-custom.modal-confirm-delete>
 @endsection

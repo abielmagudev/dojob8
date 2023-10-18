@@ -1,9 +1,7 @@
 @extends('application')
+<x-header-sm>{{ $extension->title }}</x-header-sm>
 @section('content')
-<p class="text-dark">
-    <b>{{ $extension->title }}</b>
-</p>
-<x-card title="Add measure">
+<x-card title="New measure">
     <form action="{{ route('extensions.store', $extension) }}" method="post" autocomplete="off">
         @csrf
         <div class="mb-3">
@@ -29,8 +27,8 @@
         <br>
 
         <div class="text-end">
-            <button class="btn btn-success" type="submit">Add product</button>
-            <a href="{{ route('extensions.show', $extension) }}" class="btn btn-dark">Cancel</a>
+            <button class="btn btn-success" type="submit">Save measure</button>
+            <a href="{{ route('extensions.show', $extension) }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

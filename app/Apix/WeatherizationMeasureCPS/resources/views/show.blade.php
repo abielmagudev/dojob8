@@ -1,11 +1,9 @@
 @extends('application')
 @section('content')
-<h1>{{ $extension->title }}</h1>
-<br>
 <p class="text-end">
     <a href="{{ route('extensions.create', $extension) }}" class="btn btn-primary">Add measure</a>
 </p>
-<x-card title="Measures">
+<x-card :title="$extension->title">
     <div class="table-responsive">
         <table class="table">
             <tbody>

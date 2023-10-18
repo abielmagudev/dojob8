@@ -1,8 +1,9 @@
 @extends('application')
 @section('content')
-<h1>{{ $extension->title }}</h1>
-<br>
-<x-card title="Add product">
+<p class="text-dark">
+    <b>{{ $extension->title }}</b>
+</p>
+<x-card title="Add measure">
     <form action="{{ route('extensions.store', $extension) }}" method="post" autocomplete="off">
         @csrf
         <div class="mb-3">

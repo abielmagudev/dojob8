@@ -1,8 +1,9 @@
 @extends('application')
 @section('content')
-<h1>{{ $extension->title }}</h1>
-<br>
-<x-card title="Add measure">
+<p class="text-dark">
+    <b>{{ $extension->title }}</b>
+</p>
+<x-card title="Edit measure">
     <form action="{{ route('extensions.update', [$extension, 'measure' => $measure->id]) }}" method="post" autocomplete="off">
         @csrf
         @method('put')

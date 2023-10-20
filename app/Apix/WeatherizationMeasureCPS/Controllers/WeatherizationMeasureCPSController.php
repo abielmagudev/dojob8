@@ -23,11 +23,12 @@ class WeatherizationMeasureCpsController extends Controller
 
     public function create(Request $request, Extension $extension)
     {
-        $measures = WeatherizationMeasureCps::all();
+        $next_item_price_id = (WeatherizationMeasureCps::all())->max('item_price_id') + 1;
+
         return $this->view('create', [
             'extension' => $extension,
-            'measures' => $measures,
-            'next_item_price_id' => ($measures->max('item_price_id') + 1), 
+            'measure' => new WeatherizationMeasureCps,
+            'next_item_price_id' => $next_item_price_id, 
         ]);
     }
 
@@ -45,8 +46,8 @@ class WeatherizationMeasureCpsController extends Controller
 
         return $this->view('edit', [
             'extension' => $extension,
-            'measures' => WeatherizationMeasureCps::all(),
             'measure' => $measure,
+            'next_item_price_id' => $measure->item_price_id,
         ]);
     }
 

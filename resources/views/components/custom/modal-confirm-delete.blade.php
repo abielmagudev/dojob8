@@ -6,7 +6,8 @@
 
 <x-modal id="modalConfirmDelete" dialog-class="modal-dialog-centered">
     <div class="text-center">
-        <div class="mb-4">{!! $slot !!}</div>
+        <p class="h2 text-danger mb-4">Attention</p>
+        <div class="mb-5">{!! $slot !!}</div>
 
         <form action="{{ $attributes->get('route') }}" method="post" id='formConfirmDelete'>
             @csrf

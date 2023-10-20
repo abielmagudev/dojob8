@@ -11,6 +11,9 @@
         .bg-body-custom {
             background-color: #e7edf5;
         }
+        .dropdown-toggle-without-caret::after {
+            content: none !important;
+        }
     </style>
 </head>
 <body class="bg-body-custom">

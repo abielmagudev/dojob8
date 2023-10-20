@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('extensions', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
+            $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->string('namespace')->unique();
             $table->string('classname')->unique();
             $table->timestamps();
             $table->softDeletes();

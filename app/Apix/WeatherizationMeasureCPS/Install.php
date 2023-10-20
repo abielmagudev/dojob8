@@ -6,11 +6,9 @@ use App\Apix\Installer;
 
 return new class extends Installer
 {
-    protected $title = 'Weatherization Measures for CPS';
+    protected $name = 'Weatherization Measures for CPS';
 
     protected $description = 'Description Weatherization Measures for CPS';
-
-    protected $namespace = __NAMESPACE__;
 
     protected $classname = 'WeatherizationMeasureCps';
 

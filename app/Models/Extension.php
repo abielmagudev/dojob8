@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Extension extends Model
 {
-    use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
-        'title',
+        'name',
         'description',
-        'namespace',
         'classname',
     ];
+
+    public function getNamespaceAttribute()
+    {
+        return sprintf('App\Apix\%s', $this->classname);
+    }
     
     public function getControllerAttribute()
     {
@@ -33,7 +35,12 @@ class Extension extends Model
         return sprintf('%s\Requests\%s', $this->namespace, $form_request);
     }
 
-
+    public function getViewsResourceAttribute()
+    {
+        return sprintf('%s/resources/views', $this->classname);
+    }
+    
+    
     // Relations
 
     public function jobs()

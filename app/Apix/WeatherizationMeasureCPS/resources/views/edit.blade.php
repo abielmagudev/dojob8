@@ -1,5 +1,5 @@
 @extends('application')
-<x-header subheader="Extension configuration | Measures">{{ $extension->title }}</x-header>
+<x-header subheader="Extension | Measures">{{ $extension->name }}</x-header>
 @section('content')
 <x-card title="Edit measure">
     <form action="{{ route('extensions.update', [$extension, 'measure' => $measure->id]) }}" method="post" autocomplete="off">

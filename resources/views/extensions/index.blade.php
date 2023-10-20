@@ -14,7 +14,7 @@
                 <tbody>
                     @foreach($extensions as $extension)             
                     <tr>
-                        <td>{{ $extension->title }}</td>
+                        <td>{{ $extension->name }}</td>
                         <td>{{ $extension->description }}</td>
                         <td class='text-end'>
                             <a class="btn btn-outline-primary" href="{{ route('extensions.show', $extension) }}">Configuration</a>

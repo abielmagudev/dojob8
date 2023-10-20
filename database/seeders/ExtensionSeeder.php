@@ -39,19 +39,19 @@ class ExtensionSeeder extends Seeder
 
     public function create(Installer $installer)
     {
-        if( $extension = $this->extensions->where('namespace', $installer->namespace())->first() )
+        if( $extension = $this->extensions->where('classname', $installer->classname())->first() )
         {
-            $this->console->writeln("<comment>Already extension:</comment> {$installer->namespace()}");
+            $this->console->writeln("<comment>Already extension:</comment> {$extension->namespace}");
             return $extension;
         }
 
-        if( $extension = Extension::create( $installer->toCreate() ) )
+        if( $extension = Extension::create( $installer->data() ) )
         {
-            $this->console->writeln("<info>Installed extension:</info> {$installer->namespace()}");
+            $this->console->writeln("<info>Installed extension:</info> {$extension->namespace}");
             return $extension;
         }
         
-        $this->console->writeln("<error>Error installing extension:</error> {$installer->namespace()}");
+        $this->console->writeln("<error>Error installing extension:</error> {$installer->classname()}");
 
         return self::EXTENSION_CREATED_FAILED;
     }

@@ -7,7 +7,7 @@
         <br>
         <div class="text-end">
             <button type="submit" class="btn btn-warning">Update job</button>
-            <a href="{{ route('jobs.index') }}" class="btn btn-primary">Back</a>
+            <a href="{{ route('jobs.show', $job) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

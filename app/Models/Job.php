@@ -16,6 +16,7 @@ class Job extends Model
         'is_available',
     ];
 
+
     // Validators
 
     public function hasExtensions(): bool
@@ -28,7 +29,7 @@ class Job extends Model
 
     public function extensions()
     {
-        return $this->belongsToMany(Extension::class, 'extension_job', 'job_id', 'api_extension_id');
+        return $this->belongsToMany(Extension::class);
     }
 
     public function orders()

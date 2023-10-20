@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ExtensionController;
+use App\Http\Controllers\ExtensionJobController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +28,6 @@ Route::prefix('extensions')->group(function () {
     Route::delete('/{extension}', [ExtensionController::class, 'destroy'])->name('extensions.destroy');
 });
 
+Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
+Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
 Route::resource('jobs', JobController::class);

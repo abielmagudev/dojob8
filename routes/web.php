@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ExtensionController;
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +26,5 @@ Route::prefix('extensions')->group(function () {
     Route::match(['put', 'patch'], '/{extension}/edit', [ExtensionController::class, 'update'])->name('extensions.update');
     Route::delete('/{extension}', [ExtensionController::class, 'destroy'])->name('extensions.destroy');
 });
+
+Route::resource('jobs', JobController::class);

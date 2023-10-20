@@ -11,7 +11,7 @@
           <a class="nav-link text-white " aria-current="page" href="{{ route('extensions.index') }}">Extensions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="{ route('jobs.index') }}">Jobs</a>
+          <a class="nav-link text-white " href="{{ route('jobs.index') }}">Jobs</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white " href="{ route('orders.index') }}">Orders</a>

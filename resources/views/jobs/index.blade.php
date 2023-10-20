@@ -24,10 +24,10 @@
             <td>{ $job->extensions_count }}</td>
             <td>{ $job->orders_count }}</td>
             <td class="text-nowrap text-end">
-                <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary btn-sm">
+                <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>
-                <a href="{{ route('jobs.edit', $job) }}" class="btn btn-outline-warning btn-sm">
+                <a href="{{ route('jobs.edit', $job) }}" class="btn btn-outline-warning">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>

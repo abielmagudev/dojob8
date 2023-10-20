@@ -1,7 +1,7 @@
 @extends('application')
 @section('content')
 <x-header>Extensions</x-header>
-<x-card title="Available extensions">
+<x-card>
     <div class="table-responsive">
         <table class="table table-hover align-middle">
             <thead>

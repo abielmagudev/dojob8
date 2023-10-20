@@ -1,5 +1,5 @@
 @extends('application')
-<x-header>{{ $extension->title }}</x-header>
+<x-header subheader="Extension configuration">{{ $extension->title }}</x-header>
 @section('content')
 <x-card title="Measures">
     <x-slot name="options">

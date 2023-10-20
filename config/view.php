@@ -15,6 +15,9 @@ return [
 
     'paths' => [
         resource_path('views'),
+
+        // Blade on Apix views
+        app_path('Apix'),
     ],
 
     /*

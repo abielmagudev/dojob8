@@ -15,6 +15,9 @@ class Extension extends Model
         'classname',
     ];
 
+    
+    // Attributes
+
     public function getNamespaceAttribute()
     {
         return sprintf('App\Apix\%s', $this->classname);
@@ -30,17 +33,20 @@ class Extension extends Model
         return sprintf('%s\Controllers\%sOrderController', $this->namespace, $this->classname);
     }
 
-    public function formRequestClassname(string $form_request)
-    {
-        return sprintf('%s\Requests\%s', $this->namespace, $form_request);
-    }
-
     public function getViewsResourceAttribute()
     {
         return sprintf('%s/resources/views', $this->classname);
     }
     
     
+    // Helpers
+
+    public function bladeViewPath(string $view)
+    {
+        return sprintf('%s/%s', $this->views_resource, $view);
+    }
+
+
     // Relations
 
     public function jobs()

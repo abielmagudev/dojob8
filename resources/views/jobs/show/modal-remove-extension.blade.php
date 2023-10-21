@@ -1,7 +1,7 @@
 <x-modal id="modalRemoveExtension" title="Remove extension" header-close>
     <div class="text-center">
         <p>¿Are you sure to remove the extension<br><b></b>?</p>
-        <small><b>*</b> All information will be kept safe</small>
+        <small class="fw-bold text-success">* All information will be kept safe</small>
     </div>
     <br>
     <form action="{{ route('jobs.extensions.detach', $job) }}" method="post">

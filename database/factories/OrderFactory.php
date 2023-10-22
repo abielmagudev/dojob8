@@ -18,6 +18,7 @@ class OrderFactory extends Factory
             'scheduled_time' => $this->faker->time(),
             'notes' => $this->faker->optional()->sentence(),
             'job_id' => $this->faker->numberBetween(1, 10),
+            'client_id' => $this->faker->numberBetween(1, 500),
         ];
     }
 }

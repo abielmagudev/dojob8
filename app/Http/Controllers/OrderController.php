@@ -11,7 +11,7 @@ class OrderController extends Controller
     public function index()
     {
         return view('orders.index', [
-            'orders' => Order::with('job')->orderBy('scheduled_date','desc')->orderBy('scheduled_time','asc')->paginate(25),
+            'orders' => Order::with(['job', 'client'])->orderBy('scheduled_date', 'desc')->orderBy('scheduled_time', 'asc')->paginate(25),
         ]);
     }
 

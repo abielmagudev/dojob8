@@ -10,7 +10,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        return view('clients.index')->with('clients', Client::orderByDesc('id')->paginate(25));
+        return view('clients.index')->with('clients', Client::withCount('orders')->orderByDesc('id')->paginate(25));
     }
 
     public function create()
@@ -28,7 +28,7 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
-        return view('clients.show')->with('client', $client);
+        return view('clients.show')->with('client', $client->load('orders.job'));
     }
 
     public function edit(Client $client)

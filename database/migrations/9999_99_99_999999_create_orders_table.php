@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->time('scheduled_time');
             $table->text('notes')->nullable();
             $table->foreignId('job_id');
+            $table->foreignId('client_id');
             $table->timestamps();
         });
     }

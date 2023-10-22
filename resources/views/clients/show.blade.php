@@ -41,10 +41,24 @@
     <div class="col-sm">
         <x-card title="Work orders">
             <x-slot name="options">
-                <a href="{{ route('orders.create', ['client' => $client->id]) }}" class="btn btn-success">
+                <a href="{{ route('orders.create', ['client' => $client->id]) }}" class="btn btn-primary px-3">
                     <b>+</b>
                 </a>
             </x-slot>
+
+            <x-table class="align-middle ">
+                @foreach($client->orders as $order)
+                <tr>
+                    <td>{{ $order->job->name }}</td>
+                    <td>{{ $order->scheduled_datetime_human }}</td>
+                    <td class="text-end">
+                        <a href="{{ route('orders.show', $order) }}" class="btn btn-outline-primary">
+                            <i class="bi bi-eye-fill"></i>
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </x-table>
         </x-card>
     </div>
 </div>

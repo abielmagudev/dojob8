@@ -13,7 +13,9 @@
             <thead>
                 <tr>
                     <th>Job</th>
-                    <th colspan="2">Scheduled</th>
+                    <th>Client</th>
+                    <th>Zip code</th>
+                    <th>Scheduled</th>
                     <th></th>
                 </tr>
             </thead>
@@ -21,9 +23,19 @@
                 @foreach($orders as $order)           
                 <tr>
                     <td class="text-nowrap">{{ $order->job->name }}</td>
-                    <td class="text-nowrap" style="width:0%">{{ $order->scheduled_date_human }}</td>
-                    <td class="text-nowrap" style="width:0%">{{ $order->scheduled_time_human }}</td>
-                    <td class="text-end">
+                    <td class="text-nowrap">
+                        <span class="d-block">{{ $order->client->address }}</span>
+                        <small>{{ $order->client->fullname }} | {{ $order->client->contact }}</small>
+                    </td>
+                    <td class="text-nowrap">
+                        <span class="d-block">{{ $order->client->zip_code }}</span>
+                        <small>{{ $order->client->city }}, {{ $order->client->state }}</small>
+                    </td>
+                    <td class="text-nowrap">
+                        <span class="d-block">{{ $order->scheduled_date_human }}</span>
+                        <small>{{ $order->scheduled_time_human }}</small>
+                    </td>
+                    <td class="text-nowrap text-end">
                         <a href="{{ route('orders.edit', $order) }}" class="btn btn-outline-warning">
                             <i class="bi bi-pencil-fill"></i>
                         </a>

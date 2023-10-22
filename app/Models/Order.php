@@ -11,10 +11,11 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'job_id',
         'notes',
         'scheduled_date',
         'scheduled_time',
+        'job_id',
+        'client_id',
     ];
 
 
@@ -56,5 +57,10 @@ class Order extends Model
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }

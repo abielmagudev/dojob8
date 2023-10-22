@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
 use App\Http\Controllers\JobController;
@@ -33,4 +34,5 @@ Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])-
 Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
 Route::resource('jobs', JobController::class);
 
+Route::resource('clients', ClientController::class);
 Route::resource('orders', OrderController::class);

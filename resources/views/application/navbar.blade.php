@@ -14,6 +14,9 @@
           <a class="nav-link text-white " href="{{ route('jobs.index') }}">Jobs</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-white " href="{{ route('clients.index') }}">Clients</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('orders.index') }}">Orders</a>
         </li>
       </ul>

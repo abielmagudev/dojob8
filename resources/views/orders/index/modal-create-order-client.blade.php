@@ -1,5 +1,5 @@
 <x-modal id="modalCreateOrderClient" title="Search client">
-    <form action="{{ route('orders.create') }}" method="get">
+    <form action="{{ route('orders.create', '?') }}" method="get">
         <div class="mb-1">
             <label for="inputSearchClient" class="form-label">Client</label>
             <input id="inputSearchClient" type="search" class="form-control" name="client" placeholder="Search like by name, address, email..." required>

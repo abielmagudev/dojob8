@@ -11,7 +11,7 @@ class JobController extends Controller
     public function index()
     {
         return view('jobs.index')->with('jobs', 
-            Job::withCount(['extensions'])
+            Job::withCount(['extensions', 'orders'])
             ->orderBy('name')
             ->get()
         );
@@ -34,7 +34,7 @@ class JobController extends Controller
     {
         return view('jobs.show', [
             'extensions' => Extension::whereNotIn('id', $job->extensions->pluck('id'))->orderBy('name')->get(),
-            'job' => $job,
+            'job' => $job->load(['extensions', 'orders']),
         ]);
     }
 

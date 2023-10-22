@@ -22,7 +22,7 @@
         <tr>
             <td>{{ $job->name }}</td>
             <td>{{ $job->extensions_count }}</td>
-            <td>{ $job->orders_count }}</td>
+            <td>{{ $job->orders_count }}</td>
             <td class="text-nowrap text-end">
                 <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>

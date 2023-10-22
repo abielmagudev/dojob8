@@ -33,11 +33,24 @@ class Client extends Model
 
     public function getLocationAttribute()
     {
-        return implode(', ', [
+        $segments = array_filter([
             $this->city,
             $this->state,
             $this->country,
         ]);
+
+        return implode(', ', $segments);
+    }
+
+    public function getContactAttribute()
+    {
+        $segments = array_filter([
+            $this->phone_number,
+            $this->mobile_number,
+            $this->email,
+        ]);
+        
+        return implode(', ', $segments);
     }
 
 

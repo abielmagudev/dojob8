@@ -5,17 +5,12 @@
             <li>{{ $client->fullname }}</li>
             <li>{{ $client->address }}</li>
             <li>{{ $client->location }}, {{ $client->zip_code }}</li>
-            
+           
             @empty(! $client->contact)
             <li>{{ $client->contact }}</li>   
             @endempty
-           
-            @empty(! $client->notes)
-            <li>
-                <em>{{ $client->notes }}</em>
-            </li>           
-            @endempty
         </ul>
+        <a href="{{ route('clients.show', $client) }}">See more</a>
     </div>
 </div>
 <div class="mb-3">

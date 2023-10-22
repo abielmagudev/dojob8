@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Job;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -15,11 +16,12 @@ class OrderController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Client $client)
     {
         return view('orders.create', [
-            'order' => new Order,
+            'client' => $client,
             'jobs' => Job::all(),
+            'order' => new Order,
         ]);
     }
 
@@ -39,6 +41,7 @@ class OrderController extends Controller
     {
         return view('orders.edit', [
             'order' => $order,
+            'client' => $order->client,
         ]);
     }
 

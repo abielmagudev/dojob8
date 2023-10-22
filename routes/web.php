@@ -35,4 +35,6 @@ Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach']
 Route::resource('jobs', JobController::class);
 
 Route::resource('clients', ClientController::class);
-Route::resource('orders', OrderController::class);
+
+Route::resource('orders', OrderController::class)->except('create');
+Route::get('orders/create/{client}', [OrderController::class, 'create'])->name('orders.create');

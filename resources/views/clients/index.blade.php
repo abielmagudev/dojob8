@@ -29,7 +29,7 @@
             <td class="text-nowrap">{{ $client->zip_code }}</td>
             <td>{{ $client->orders_count }}</td>
             <td class="text-nowrap text-end">
-                <a href="{{ route('orders.create', ['client' => $client->id]) }}" class="btn btn-outline-primary px-3">
+                <a href="{{ route('orders.create', $client) }}" class="btn btn-outline-primary px-3">
                     <b>+</b>
                 </a>
                 <a href="{{ route('clients.show', $client) }}" class="btn btn-outline-primary">

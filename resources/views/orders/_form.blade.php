@@ -1,4 +1,24 @@
 <div class="mb-3">
+    <label class="form-label">Client</label>
+    <div class="alert alert-light">
+        <ul class="m-0 ps-3">
+            <li>{{ $client->fullname }}</li>
+            <li>{{ $client->address }}</li>
+            <li>{{ $client->location }}, {{ $client->zip_code }}</li>
+            
+            @empty(! $client->contact)
+            <li>{{ $client->contact }}</li>   
+            @endempty
+           
+            @empty(! $client->notes)
+            <li>
+                <em>{{ $client->notes }}</em>
+            </li>           
+            @endempty
+        </ul>
+    </div>
+</div>
+<div class="mb-3">
     <label for="inputScheduleDate" class="form-label">Schedule</label>
     <div class="row">
         <div class="col-sm">

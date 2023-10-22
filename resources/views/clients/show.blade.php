@@ -41,7 +41,7 @@
     <div class="col-sm">
         <x-card title="Work orders">
             <x-slot name="options">
-                <a href="{{ route('orders.create', ['client' => $client->id]) }}" class="btn btn-primary px-3">
+                <a href="{{ route('orders.create', $client) }}" class="btn btn-primary px-3">
                     <b>+</b>
                 </a>
             </x-slot>

@@ -21,15 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome') );
 
-Route::get('extensions', [ExtensionController::class, 'index'])->name('extensions.index');
-Route::prefix('extensions')->group(function () {
-    Route::get('/{extension}', [ExtensionController::class, 'show'])->name('extensions.show');
-    Route::get('/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
-    Route::post('/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
-    Route::get('/{extension}/edit', [ExtensionController::class, 'edit'])->name('extensions.edit');
-    Route::match(['put', 'patch'], '/{extension}/edit', [ExtensionController::class, 'update'])->name('extensions.update');
-    Route::delete('/{extension}', [ExtensionController::class, 'destroy'])->name('extensions.destroy');
-});
+Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
+Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
+Route::resource('extensions', ExtensionController::class)->except(['create','store']);
 
 Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
 Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');

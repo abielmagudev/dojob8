@@ -54,6 +54,24 @@ class Client extends Model
     }
 
 
+    // Scopes
+
+    public function scopeSearch($query, $value)
+    {
+        $query = $query->where('address', 'like', "%{$value}%");
+
+        if( is_numeric($value) )
+        {
+            return $query->orWhere('zip_code', 'like', "%{$value}%")
+                        ->orWhere('phone_number', 'like', "%{$value}%")
+                        ->orWhere('mobile_number', 'like', "%{$value}%");
+        }
+
+        return $query->orWhere('name', 'like', "%{$value}%")
+                    ->orWhere('lastname', 'like', "%{$value}%")
+                    ->orWhere('email', 'like', "%{$value}%");
+    }
+
     // Relations
 
     public function orders()

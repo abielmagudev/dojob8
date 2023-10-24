@@ -10,14 +10,7 @@
 
         {{-- List float --}}
         <div class="position-absolute shadow rounded bg-white p-1 w-100 d-none">
-            <div class="list-group list-group-flush overflow-y-scroll is-hidden" id="clientsList" style="max-height:272px;">
-                
-                {{-- When not found clients: LOCKED TO REMOVE --}}
-                <div class="list-group-item list-group-item-action list-group-item-locked d-none">
-                    <span>No clients found</span>
-                </div>
-
-            </div>
+            <div class="list-group list-group-flush overflow-y-scroll is-hidden" id="clientsList" style="max-height:272px;"></div>
 
             {{-- Template list item --}}
             <template id="templateClientItem">
@@ -35,6 +28,7 @@
         <a href="{{ route('clients.create') }}">create new client</a>
     </div>
 </x-modal>
+
 @push('scripts')
 <script>
 const modalSearchClient = {
@@ -84,38 +78,33 @@ inputSearchClient.listen()
 const clientsList = {
     element: modalSearchClient.element.querySelector('#clientsList'),
     templateElement: modalSearchClient.element.querySelector('#templateClientItem'),
-    toggleEmptyMessage: function (switcher) {
-        return this.element.querySelector('.list-group-item-locked').classList.toggle('d-hide', switcher)
-    },
     template: function () {
         return this.templateElement.content.cloneNode(true);
     },
     fill: function (clients) {
+
+        if( clients.length  == 0 )
+        {
+            this.clear().hide()
+            return false;
+        }
+        
+        this.clear().show()
+
         let self = this
 
-        self.clear().show()
+        clients.forEach(function ($client) {
+            let cloned = self.template();
+            let link = cloned.querySelector('a')
 
-        if( clients.length )
-        {
-            self.toggleEmptyMessage(true)
-
-            clients.forEach(function ($client) {
-                let cloned = self.template();
-                let link = cloned.querySelector('a')
-    
-                link.setAttribute('href', link.href.replace('?', $client.id))
-                link.children[0].innerText = $client.name + ' ' + $client.lastname;
-                link.children[1].innerText = $client.address + ', ' + $client.zip_code;
-                link.children[2].innerText = [$client.city, $client.state, $client.country].filter(x => !!x).join(', ');
-                link.children[3].innerText = [$client.email, $client.phone_number, $client.mobile_number].filter(x => !!x).join(', ');
-            
-                self.element.appendChild(link)
-            })
-        }
-        else
-        {
-            self.toggleEmptyMessage(false)
-        }
+            link.setAttribute('href', link.href.replace('?', $client.id))
+            link.children[0].innerText = $client.name + ' ' + $client.lastname;
+            link.children[1].innerText = $client.address + ', ' + $client.zip_code;
+            link.children[2].innerText = [$client.city, $client.state, $client.country].filter(x => !!x).join(', ');
+            link.children[3].innerText = [$client.email, $client.phone_number, $client.mobile_number].filter(x => !!x).join(', ');
+        
+            self.element.appendChild(link)
+        })
     },
     clear: function () {
         for(item of this.element.children)

@@ -3,7 +3,7 @@
 @section('content')
 <x-card title="Work Orders">
     <x-slot name="options">
-        <x-modal-trigger modal-id="modalCreateOrderClient">
+        <x-modal-trigger modal-id="modalSearchClient">
             <b>+</b>
         </x-modal-trigger>
     </x-slot>
@@ -51,5 +51,5 @@
 </x-card>
 <br>
 <x-pagination-simple :collection="$orders" />
-@include('orders.index.modal-create-order-client')
+@include('clients.modal-search')
 @endsection

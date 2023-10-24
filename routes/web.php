@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
@@ -34,6 +35,7 @@ Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])-
 Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
 Route::resource('jobs', JobController::class);
 
+Route::get('clients/ajax', [ClientAjaxController::class, 'search'])->name('clients.ajax.search');
 Route::resource('clients', ClientController::class);
 
 Route::resource('orders', OrderController::class)->except('create');

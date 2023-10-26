@@ -11,16 +11,19 @@
     </form>
 </x-card>
 
-{{-- 
 @push('scripts') 
-    @include('orders._script-job-extensions-loader')
-    @include('orders._script-job-extensions-select')
+@include('orders.scripts.extensionsLoader')
+@include('orders.scripts.selectedJob')
 
-    @if( old('job') )
-    <script>
-        selectJob.dispatchChangeEvent()
-    </script>
-    @endif
+<script>
+selectedJob.listen("<?= route('orders.api.create', '?') ?>")
+</script>
+
+@if( old('job') &&! $errors->has('job') )
+<script>
+extensionsLoader.get("<?= route('orders.api.create', old('job')) ?>")
+</script>
+@endif
+
 @endpush
- --}}
 @endsection

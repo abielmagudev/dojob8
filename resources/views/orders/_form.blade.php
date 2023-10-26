@@ -1,3 +1,4 @@
+{{-- Client --}}
 <div class="mb-3">
     <label class="form-label">Client</label>
     <div class="alert alert-light">
@@ -13,6 +14,8 @@
         <a href="{{ route('clients.show', $client) }}">See more</a>
     </div>
 </div>
+
+{{-- Schedule --}}
 <div class="mb-3">
     <label for="inputScheduleDate" class="form-label">Schedule</label>
     <div class="row">
@@ -27,46 +30,49 @@
     </div>
 </div>
 
-{{-- Select job --}}
+{{-- Job --}}
 <div class="mb-3">
     <label for="selectJob" class="form-label">Job</label>
-
-    <div class="mb-3">
-        
-        {{-- Edit order's job --}}
-        @if( $order->id )
-        <div class="form-control bg-light">{{ $order->job->name }}</div>
-        
-        {{-- Create order's job --}}
-        @else
-        <select class="form-select {{ bsInputInvalid( $errors->has('job') ) }}" name="job" id='selectJob'>
-            <option disabled selected label="Choose a job"></option>
-            @foreach($jobs as $job)
-            <option value="{{ $job->id }}" data-has-extensions="{{ (int) $job->hasExtensions() }}" {{ isSelected( old('job') == $job->id ) }}>{{ $job->name }}</option>
-            @endforeach
-        </select>
-        <x-error name="job"></x-error>
     
-        @endif
-    </div>
-
-    {{-- Extensions of job selected --}}
-    <div id="extensionsJob">
-
-        {{-- Spinner loader image --}}
-        <div id="extensionsJobSpinner" class="text-center d-none">       
-            <div class="spinner-border spinner-border-sm" role="status">
-                <span class="visually-hidden">Loading extensions...</span>
-            </div>
-            <span>Loading extensions...</span>
-        </div>
+    {{-- Select Job for create order --}}
+    @if( is_null($order->id) )
+    <select id='selectJob' class="form-select {{ bsInputInvalid( $errors->has('job') ) }}" name="job">
+        <option disabled selected label="Choose a job"></option>
+        @foreach($jobs as $job)
+        <option value="{{ $job->id }}" data-has-extensions="{{ (int) $job->hasExtensions() }}" {{ isSelected( old('job') == $job->id ) }}>{{ $job->name }}</option>
+        @endforeach
+    </select>
+    <x-error name="job"></x-error>
     
-        {{-- Container templates rendered --}}
-        <div id='extensionsJobContainer' class="bg-light rounded-1 p-3 d-none"></div>
+    {{-- Show job for edit order --}}
+    @else
+    <div class="form-control bg-light">{{ $order->job->name }}</div>
 
-    </div>
+    @endif
 </div>
 
+{{-- Extensions of job selected or saved --}}
+<div id="extensions">
+
+    {{-- Loading image --}}
+    <div id="loading" class="mb-3 d-none">  
+        <div class="spinner-border spinner-border-sm" role="status"></div>
+        <span>Loading extensions...</span>   
+    </div>
+
+    {{-- Templates container --}}
+    <div id="container" class="mb-3 d-none">
+        <label class="form-label">Extensions</label>
+        <div id='templates'></div>
+    </div>
+
+    {{-- Template clone --}}
+    <template id="template">
+        <div class="alert alert-light"></div>
+    </template>
+</div>
+
+{{-- Notes --}}
 <div class="mb-3">
     <label for="textareaNotes" class="form-label">Notes</label>
     <textarea name="notes" id="textareaNotes" rows="3" class="form-control">{{ old('notes', $order->notes) }}</textarea>

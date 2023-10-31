@@ -22,7 +22,7 @@
 @include('orders.scripts.extensionsLoader')
 
 <script>
-    extensionsLoader.get("<?= route('orders.api.edit', $order) ?>")
+extensionsLoader.get("<?= route('orders.ajax.edit', $order) ?>")
 </script>
 
 @endpush

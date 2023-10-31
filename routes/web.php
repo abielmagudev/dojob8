@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\OrderJobExtensionsController;
-use App\Http\Controllers\ClientAjaxController;
+use App\Http\Controllers\Ajax\OrderJobExtensionsAjaxController;
+use App\Http\Controllers\Ajax\ClientAjaxController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
@@ -36,5 +36,5 @@ Route::resource('clients', ClientController::class);
 Route::resource('orders', OrderController::class)->except('create');
 Route::get('orders/create/{client}', [OrderController::class, 'create'])->name('orders.create');
 
-Route::get('orders/api/create/{job}', [OrderJobExtensionsController::class, 'create'])->name('orders.api.create');
-Route::get('orders/api/edit/{order}', [OrderJobExtensionsController::class, 'edit'])->name('orders.api.edit');
+Route::get('orders/ajax/create/{job}', [OrderJobExtensionsAjaxController::class, 'create'])->name('orders.ajax.create');
+Route::get('orders/ajax/edit/{order}', [OrderJobExtensionsAjaxController::class, 'edit'])->name('orders.ajax.edit');

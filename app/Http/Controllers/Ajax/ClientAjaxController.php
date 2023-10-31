@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ajax;
 
+use App\Http\Controllers\Controller;
 use App\Http\Middleware\SameOriginMiddleware;
 use App\Models\Client;
 use Illuminate\Http\Request;

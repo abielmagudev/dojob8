@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
-class OrderJobExtensionsController extends Controller
+class OrderJobExtensionsAjaxController extends Controller
 {
     public function create(Request $request, Job $job)
     {

@@ -16,12 +16,12 @@
 @include('orders.scripts.selectedJob')
 
 <script>
-selectedJob.listen("<?= route('orders.api.create', '?') ?>")
+selectedJob.listen("<?= route('orders.ajax.create', '?') ?>")
 </script>
 
 @if( old('job') &&! $errors->has('job') )
 <script>
-extensionsLoader.get("<?= route('orders.api.create', old('job')) ?>")
+extensionsLoader.get("<?= route('orders.ajax.create', old('job')) ?>")
 </script>
 @endif
 

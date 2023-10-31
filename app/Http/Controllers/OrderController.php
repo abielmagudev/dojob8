@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderStoreRequest;
+use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Client;
 use App\Models\Job;
 use App\Models\Order;
@@ -25,9 +27,14 @@ class OrderController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(OrderStoreRequest $request)
     {
-        return $request->all();
+        if(! $order = Order::create($request->validated()) )
+            return back()->with('danger', "Error saving order, try again please");
+
+        $route = $request->get('after_saving') == 1 ? route('orders.create', $order->client_id) : route('orders.index');
+
+        return redirect($route)->with('success', "Order <b>#{$order->id}: {$order->job->name}</b> saved");
     }
 
     public function show(Order $order)
@@ -45,9 +52,12 @@ class OrderController extends Controller
         ]);
     }
 
-    public function update(Request $request, Order $order)
+    public function update(OrderUpdateRequest $request, Order $order)
     {
-        return $request->all();
+        if(! $order->fill( $request->validated() )->save() )
+            return back()->with('danger', 'Error updating order, try again please');
+
+        return redirect()->route('orders.edit', $order)->with('success', "Order <b>#{$order->id}: {$order->job->name}</b> updated");
     }
 
     public function destroy(Order $order)

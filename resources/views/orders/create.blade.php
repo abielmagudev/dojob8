@@ -3,6 +3,14 @@
 <x-card title="New order">
     <form action="{{ route('orders.store') }}" method="post">
         @include('orders._form')
+        <input type="hidden" name="client" value="{{ $client->id }}">
+        <div class="mb-3">
+            <label for="selectAfterSaving" class="form-labeo">After saving</label>
+            <select id="selectAfterSaving" class="form-select" name="after_saving">
+                <option value="1">Create a new order for this client</option>
+                <option value="0">Just save order and finish</option>
+            </select>
+        </div>
         <br>
         <div class="text-end">
             <button class="btn btn-success" type="submit">Save order</button>

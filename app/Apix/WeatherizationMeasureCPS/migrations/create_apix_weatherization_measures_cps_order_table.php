@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('apix_weatherization_measures_cps_order', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('measure_id');
             $table->unsignedInteger('quantity');
+            $table->foreignId('measure_id');
+            $table->foreignId('order_id');
             $table->timestamps();
         });
     }

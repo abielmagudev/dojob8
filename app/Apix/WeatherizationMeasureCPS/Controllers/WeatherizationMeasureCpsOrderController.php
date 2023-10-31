@@ -26,6 +26,7 @@ class WeatherizationMeasureCpsOrderController extends Controller
         return $this->view('orders/edit', [
             'extension' => $extension,
             'products' => WeatherizationMeasureCps::all(),
+            
         ]); 
     }
 }

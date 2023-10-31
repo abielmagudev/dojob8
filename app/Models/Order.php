@@ -11,11 +11,11 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'client_id',
+        'job_id',
         'notes',
         'scheduled_date',
         'scheduled_time',
-        'job_id',
-        'client_id',
     ];
 
 
@@ -39,6 +39,11 @@ class Order extends Model
     public function getScheduledTimeHumanAttribute()
     {
         return Carbon::parse($this->scheduled_time)->format('h:i A');
+    }
+
+    public function getScheduledTimeWithoutMilisecondsAttribute()
+    {
+        return Carbon::parse($this->scheduled_time)->format('H:i');
     }
 
 

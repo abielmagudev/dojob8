@@ -5,7 +5,7 @@
         @include('clients._form')
         <br>
         <div class="text-end">
-            <button class="btn btn-success" type="submit">Save client</button>
+            <button class="btn btn-success" type="submit" name="redirect" value="{{ request('redirect', 'clients') }}">Save client</button>
             <a href="{{ route('clients.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>

@@ -23,9 +23,9 @@
             </template>
         </div>
     </div>
-    <div class="mt-2 text-center">
+    <div class="mt-2 text-end">
         <span class="text-secondary">...or</span>
-        <a href="{{ route('clients.create') }}">create new client</a>
+        <a href="{{ route('clients.create', ['redirect' => 'orders.create']) }}">create new client</a>
     </div>
 </x-modal>
 

@@ -26,7 +26,7 @@ class OrderJobExtensionsAjaxController extends Controller
             'order' => $order,
             'status' => 200,
             'templates' => $order->job->extensions->map(function ($extension) use ($order) {
-                return (app($extension->orderController)->callAction('create', [$extension, $order]))->render();
+                return (app($extension->orderController)->callAction('edit', [$extension, $order]))->render();
             }),
         ], 200);
     }

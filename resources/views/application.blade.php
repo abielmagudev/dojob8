@@ -12,8 +12,14 @@
         .bg-body-custom {
             background-color: #e7edf5;
         }
+        .bg-transparent {
+            background-color: transparent !important;
+        }
         .dropdown-toggle-without-caret::after {
             content: none !important;
+        }
+        .hover-bg-darken:hover {
+            background-color: rgba(0, 0, 0, 0.025) !important;
         }
     </style>
 </head>

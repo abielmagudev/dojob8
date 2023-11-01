@@ -21,4 +21,5 @@
     </div>
 </div>
 <div id="wmcps-products"></div>
+<x-error name="measures" />
 <script src="{{ asset('x-js/wmcps.js') }}" fake></script>

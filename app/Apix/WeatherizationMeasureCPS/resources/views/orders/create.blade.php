@@ -1,4 +1,4 @@
-<p class="h5">{{ $extension->name }} edit</p>
+<p class="h5">{{ $extension->name }}</p>
 <div class="row align-items-end" id="wmcps-component">
     <div class="col-sm">
         <label for="selectProduct" class="form-label">Product</label>
@@ -21,4 +21,5 @@
     </div>
 </div>
 <div id="wmcps-products"></div>
+<x-error name="measures" />
 <script src="{{ asset('x-js/wmcps.js') }}" fake></script>

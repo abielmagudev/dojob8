@@ -11,11 +11,12 @@
     <x-table>
         <x-slot name="thead">
             <tr>
-                <th>Item</th>
-                <th>Name</th>
-                <th>Material price</th>
-                <th>Labor price</th>
-                <th>Total cost</th>
+                <th class="text-nowrap">Item price ID</th>
+                <th class="text-nowrap">Product or service name</th>
+                <th class="text-nowrap">Material price</th>
+                <th class="text-nowrap">Labor price</th>
+                <th class="text-nowrap">Total cost</th>
+                <th class="text-nowrap">Available</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -27,6 +28,7 @@
             <td>${{ $measure->material_price }}</td>
             <td>${{ $measure->labor_price }}</td>
             <td>${{ $measure->total_cost }}</td>
+            <td>{{ $measure->isAvailable() ? 'Yes' : 'No' }}</td>
             <td class="text-end">
                 <a href="{{ route('extensions.edit', [$extension, 'measure' => $measure->id]) }}" class="btn btn-outline-warning">
                     <i class="bi bi-pencil-fill"></i>

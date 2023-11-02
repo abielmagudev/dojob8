@@ -5,7 +5,7 @@ namespace App\Apix\WeatherizationMeasureCps\Requests;
 use App\Apix\WeatherizationMeasureCps\Models\WeatherizationMeasureCps;
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderMeasureSaveRequest extends FormRequest
+class ProductOrderSaveRequest extends FormRequest
 {
     public function authorize()
     {
@@ -15,11 +15,17 @@ class OrderMeasureSaveRequest extends FormRequest
     public function rules()
     {
         return [
-            'measures' => [
+            'products' => [
                 'array',
             ],
-            'measures.*' => [
+            'products.*' => [
                 sprintf('exists:%s,id', WeatherizationMeasureCps::class)
+            ],
+            'quantities' => [
+                'array',
+            ],
+            'quantities.*' => [
+                'integer',
             ],
         ];
     }

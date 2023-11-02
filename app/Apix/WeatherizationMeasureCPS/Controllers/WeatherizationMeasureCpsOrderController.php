@@ -2,10 +2,9 @@
 
 namespace App\Apix\WeatherizationMeasureCps\Controllers;
 
-use App\Apix\Kernel\ResourcesTrait;
 use App\Apix\WeatherizationMeasureCps\Models\WeatherizationMeasureCps;
-use App\Apix\WeatherizationMeasureCps\Models\WeatherizationMeasureCpsOrder;
-use App\Apix\WeatherizationMeasureCps\Requests\OrderMeasureSaveRequest;
+use App\Apix\WeatherizationMeasureCps\Models\WeatherizationProductCpsOrder;
+use App\Apix\WeatherizationMeasureCps\Requests\ProductOrderSaveRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\Order;
@@ -13,76 +12,64 @@ use Illuminate\Http\Request;
 
 class WeatherizationMeasureCpsOrderController extends Controller
 {
-    use ResourcesTrait;
+    private function save(Request $request, Order $order)
+    {
+        $products_count = count( $request->products );
+
+        $data = [];
+
+        for($i = 0; $i < $products_count; $i++)
+        {
+            array_push($data, [
+                'quantity' => $request->quantities[$i] ?? 0,
+                'measure_id' => $request->products[$i],
+                'order_id' => $order->id,
+                'created_at' => now(),
+            ]);
+        }
+
+        return WeatherizationProductCpsOrder::insert($data);
+    }
 
     public function create(Extension $extension)
     {
-        return $this->view('orders/create', [
+        return view('WeatherizationMeasureCps/resources/views/orders/create', [
             'extension' => $extension,
-            'products' => WeatherizationMeasureCps::all(),
+            'products' => WeatherizationMeasureCps::available()->get(['id', 'name']),
         ]);
     }
 
-    public function store(OrderMeasureSaveRequest $request, Order $order)
+    public function store(ProductOrderSaveRequest $request, Order $order)
     {
-        if( is_null($request->get('products')) )
-        {
-            session()->flash('success', 'Weatherization Measure CPS empty');
+        if( is_null($request->products) ) {
             return true;
         }
 
-        return $this->insertData($request, $order);
+        return $this->save($request, $order);
     }
 
     public function edit(Extension $extension, Order $order)
     {
         return view('WeatherizationMeasureCps/resources/views/orders/edit', [
             'extension' => $extension,
-            'products' => WeatherizationMeasureCps::all(),
-            'measures' => WeatherizationMeasureCpsOrder::with('product')->where('order_id', $order->id)->get(),
+            'products' => WeatherizationMeasureCps::available()->get(['id', 'name']),
+            'products_order' => WeatherizationProductCpsOrder::with('measure')->whereOrder($order->id)->get(),
         ]); 
     }
 
-    public function update(OrderMeasureSaveRequest $request, Order $order)
+    public function update(ProductOrderSaveRequest $request, Order $order)
     {
-        $this->destroyByOrder($order);
+        WeatherizationProductCpsOrder::whereOrder($order->id)->delete();
 
-        if( is_null($request->get('products')) )
-        {
-            session()->flash('success', 'Weatherization Measure CPS empty');
+        if( is_null($request->products) ) {
             return true;
         }
 
-        return $this->insertData($request, $order);
+        return $this->save($request, $order);
     }
 
-    public function insertData(Request $request, $order)
+    public function destroy(WeatherizationProductCpsOrder $product)
     {
-        $data = [];
-
-        $measures_count = count($request->products);
-        
-        for($i = 0; $i < $measures_count; $i++)
-        {
-            array_push($data, [
-                'quantity' => $request->quantities[$i],
-                'measure_id' => $request->products[$i],
-                'order_id' => $order->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
-
-        return WeatherizationMeasureCpsOrder::insert($data);
-    }
-
-    public function destroyByOrder(Order $order)
-    {
-        return WeatherizationMeasureCpsOrder::where('order_id', $order->id)->delete();
-    }
-
-    public function destroy()
-    {
-        
+        //   
     }
 }

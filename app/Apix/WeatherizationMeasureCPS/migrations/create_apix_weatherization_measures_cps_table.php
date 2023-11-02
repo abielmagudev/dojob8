@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('apix_weatherization_measures_cps', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique('wms_cps_name');
+            $table->string('name')->unique('name_unique');
             $table->unsignedTinyInteger('item_price_id');
-            $table->decimal('material_price', 8, 2, true)->nullable();
-            $table->decimal('labor_price', 8, 2, true)->nullable();
+            $table->decimal('material_price', 8, 2, true);
+            $table->decimal('labor_price', 8, 2, true);
+            $table->text('notes')->nullable();
+            $table->boolean('is_available')->default(true);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

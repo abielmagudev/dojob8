@@ -1,8 +1,8 @@
-if( typeof wmcpsComponent == 'undefined' )
+if( typeof wmcpsProductComponent == 'undefined' )
 {
-    const wmcpsComponent = {
-        element: document.getElementById('wmcps-component'),
-        container: document.getElementById('wmcps-measures'),
+    const wmcpsProductComponent = {
+        element: document.getElementById('wmcpsProductsComponent'),
+        container: document.getElementById('wmcpsProductsOrder'),
         template: function (setup) {
             let clone = this.element.querySelector('template').content.cloneNode(true);
 
@@ -59,5 +59,5 @@ if( typeof wmcpsComponent == 'undefined' )
             })
         }
     }
-    wmcpsComponent.listen()
+    wmcpsProductComponent.listen()
 }

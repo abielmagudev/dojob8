@@ -19,6 +19,7 @@ class MeasureSaveRequest extends FormRequest
         return [
             'item_price_id' => [
                 'required',
+                'integer',
             ],
             'name' => [
                 'required',
@@ -26,22 +27,38 @@ class MeasureSaveRequest extends FormRequest
             ],
             'material_price' => [
                 'required',
+                'numeric',
             ],
             'labor_price' => [
                 'required',
+                'numeric'
             ],
+            'notes' => [
+                'nullable',
+                'string',
+            ],
+            'is_available' => [
+                'nullable',
+            ]
         ];
     }
 
     public function messages()
     {
         return [
-            'item_price_id.required' => __('The item field is required.'),
+            'item_price_id.required' => __('The item price ID field is required.'),
         ];
     }
 
     public function prepareForValidation()
     {
         $this->measure_id = $this->get('measure', 0);
+    }
+
+    public function validated()
+    {
+        return array_merge(parent::validated(), [
+            'is_available' => (int) ($this->isMethod('post') || $this->is_available == 1),
+        ]);
     }
 }

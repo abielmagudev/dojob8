@@ -3,7 +3,7 @@
 @section('content')
 <x-card title="New measure">
     <form action="{{ route('extensions.store', $extension) }}" method="post" autocomplete="off">
-        @include($extension->bladeViewPath('_form'))
+        @include('WeatherizationMeasureCps/resources/views/_form')
         <br>
 
         <div class="text-end">

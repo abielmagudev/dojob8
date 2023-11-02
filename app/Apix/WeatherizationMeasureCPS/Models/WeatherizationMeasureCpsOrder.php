@@ -14,4 +14,9 @@ class WeatherizationMeasureCpsOrder extends Model
         'measure_id',
         'order_id',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(WeatherizationMeasureCps::class, 'measure_id');
+    }
 }

@@ -25,7 +25,7 @@ class WeatherizationMeasureCpsOrderController extends Controller
 
     public function store(OrderMeasureSaveRequest $request, Order $order)
     {
-        if( is_null($request->get('measures')) )
+        if( is_null($request->get('products')) )
         {
             session()->flash('success', 'Weatherization Measure CPS empty');
             return true;
@@ -39,6 +39,7 @@ class WeatherizationMeasureCpsOrderController extends Controller
         return view('WeatherizationMeasureCps/resources/views/orders/edit', [
             'extension' => $extension,
             'products' => WeatherizationMeasureCps::all(),
+            'measures' => WeatherizationMeasureCpsOrder::with('product')->where('order_id', $order->id)->get(),
         ]); 
     }
 
@@ -46,7 +47,7 @@ class WeatherizationMeasureCpsOrderController extends Controller
     {
         $this->destroyByOrder($order);
 
-        if( is_null($request->get('measures')) )
+        if( is_null($request->get('products')) )
         {
             session()->flash('success', 'Weatherization Measure CPS empty');
             return true;
@@ -59,13 +60,13 @@ class WeatherizationMeasureCpsOrderController extends Controller
     {
         $data = [];
 
-        $measures_count = count($request->measures);
+        $measures_count = count($request->products);
         
         for($i = 0; $i < $measures_count; $i++)
         {
             array_push($data, [
                 'quantity' => $request->quantities[$i],
-                'measure_id' => $request->measures[$i],
+                'measure_id' => $request->products[$i],
                 'order_id' => $order->id,
                 'created_at' => now(),
                 'updated_at' => now(),

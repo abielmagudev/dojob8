@@ -24,6 +24,8 @@
 </div>
 
 <x-error name="products" />
+<x-error name="products.*" />
 <x-error name="quantities" />
+<x-error name="quantities.*" />
 
 <script src="{{ asset('x-js/wmcps.js') }}" fake></script>

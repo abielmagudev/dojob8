@@ -19,7 +19,7 @@ class ProductOrderSaveRequest extends FormRequest
                 'array',
             ],
             'products.*' => [
-                sprintf('exists:%s,id', WeatherizationMeasureCps::class)
+                sprintf('exists:%s,id,is_available,1', WeatherizationMeasureCps::class)
             ],
             'quantities' => [
                 'array',
@@ -27,6 +27,13 @@ class ProductOrderSaveRequest extends FormRequest
             'quantities.*' => [
                 'integer',
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'products.*.exists' => __('One of the products is not available'),
         ];
     }
 }

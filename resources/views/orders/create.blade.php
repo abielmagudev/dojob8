@@ -4,7 +4,7 @@
     <form action="{{ route('orders.store') }}" method="post">
         @include('orders._form')
         <input type="hidden" name="client" value="{{ $client->id }}">
-        <div class="mb-3">
+        <div class="alert alert-warning">
             <label for="selectAfterSaving" class="form-labeo">After saving</label>
             <select id="selectAfterSaving" class="form-select" name="after_saving">
                 <option value="1">Create a new order for this client</option>

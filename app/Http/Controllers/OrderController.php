@@ -9,12 +9,31 @@ use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Client;
 use App\Models\Job;
 use App\Models\Order;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     use ResolveFormRequestsTrait;
     use ReflashInputErrorsTrait;
+
+    private function resolvesFormRequestsJobExtensions(Collection $extensions, Request $request_default)
+    {
+        foreach($extensions as $extension)
+        {
+            $requests[$extension->id] = $this->resolveControllerFormRequest($extension->order_controller, 'store') ?? $request_default;
+        }
+
+        return $requests;
+    }
+
+    private function saveOrderForJobExtensions(Collection $extensions, string $method, array $requests, Order $order)
+    {
+        foreach($extensions as $extension)
+        {
+            app($extension->order_controller)->callAction($method, [$requests[$extension->id], $order]);
+        }
+    }
 
     public function index()
     {
@@ -38,20 +57,12 @@ class OrderController extends Controller
     {
         $extensions = Job::find($request->job)->extensions;
 
-        $requests = [];
-
-        foreach($extensions as $extension)
-        {
-            $requests[$extension->id] = $this->resolveControllerFormRequest($extension->order_controller, 'store') ?? $request;
-        }
+        $requests = $this->resolvesFormRequestsJobExtensions($extensions, $request);
 
         if(! $order = Order::create($request->validated()) )
             return back()->with('danger', "Error saving order, try again please");
 
-        foreach($extensions as $extension)
-        {
-            app($extension->order_controller)->callAction('store', [$requests[$extension->id], $order]);
-        }
+        $this->saveOrderForJobExtensions($extensions, 'store', $requests, $order);
         
         $route = $request->get('after_saving') == 1 ? route('orders.create', $order->client_id) : route('orders.index');
 
@@ -77,20 +88,12 @@ class OrderController extends Controller
 
     public function update(OrderUpdateRequest $request, Order $order)
     {
-        $requests = [];
-
-        foreach($order->job->extensions as $extension )
-        {
-            $requests[$extension->id] = $this->resolveControllerFormRequest($extension->order_controller, 'update') ?? $request;
-        }
+        $requests = $this->resolvesFormRequestsJobExtensions($order->job->extensions, $request);
 
         if(! $order->fill( $request->validated() )->save() )
             return back()->with('danger', 'Error updating order, try again please');
 
-        foreach($order->job->extensions as $extension)
-        {
-            app($extension->order_controller)->callAction('update', [$requests[$extension->id], $order]);
-        }
+        $this->saveOrderForJobExtensions($order->job->extensions, 'update', $requests, $order);
         
         return redirect()->route('orders.edit', $order)->with('success', "Order <b>#{$order->id}: {$order->job->name}</b> updated");
     }

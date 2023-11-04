@@ -1,6 +1,6 @@
 @extends('application')
 @section('content')
-<x-card title="Work Order #{{ $order->id }}">
+<x-card title="Order #{{ $order->id }}">
     <small>Job</small>
     <p>{{ $order->job->name }}</p>
     

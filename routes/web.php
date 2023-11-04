@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Ajax\OrderJobExtensionsAjaxController;
-use App\Http\Controllers\Ajax\ClientAjaxController;
+use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderJobExtensionsAjaxController;
 use Illuminate\Support\Facades\Route;
 
 /*

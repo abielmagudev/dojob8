@@ -2,7 +2,7 @@
 
 namespace App\Apix\WeatherizationMeasureCps;
 
-use App\Apix\Installer;
+use App\Apix\Kernel\Installer;
 
 return new class extends Installer
 {

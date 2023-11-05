@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Apix\Installer;
+use App\Apix\Kernel\Installer;
 use App\Apix\Register;
 use App\Models\Extension;
 use Illuminate\Database\Seeder;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Illuminate\Support\Facades\Schema;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ExtensionSeeder extends Seeder
 {
@@ -26,7 +26,7 @@ class ExtensionSeeder extends Seeder
 
     public function run()
     {
-        $this->console->writeln("<question>INSTALLING API-EXTENSIONS...</question>");
+        $this->console->writeln("<question>INSTALLING API-EXTENSIONS (APIX)...</question>");
 
         foreach(Register::apiExtensions() as $installer)
         {

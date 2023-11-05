@@ -2,7 +2,7 @@
 
 namespace App\Apix;
 
-use Illuminate\Database\Eloquent\Collection;
+use App\Apix\Kernel\Installer;
 
 class Register
 {

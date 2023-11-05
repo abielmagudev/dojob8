@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Apix;
+namespace App\Apix\Kernel;
 
 abstract class Installer
 {

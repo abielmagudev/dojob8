@@ -1,36 +1,43 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\Kernel;
 
 use Illuminate\Http\Request;
 use ReflectionMethod;
 
-trait ResolveFormRequestsTrait
+class ControllerFormRequestResolver
 {
-    public function resolveFormRequest(string $formRequestClass)
+    public $reflection;
+
+    public function __construct(string $controller, string $method)
     {
-        return app()->make($formRequestClass);
+        $this->reflection = new ReflectionMethod($controller, $method);
     }
 
-    public function getFormRequestClassParameterController(string $controllerClass, string $method)
+    public function filter()
     {
-        $reflection = new ReflectionMethod($controllerClass, $method);
-
-        $filtered = array_filter($reflection->getParameters(), function ($parameter) {
-            return $parameter->getName() == 'request' && $parameter->getType() <> Request::class;
-        });
-
-        return count($filtered) ? $filtered[0]->getType()->getName() : null;
+        return array_filter($this->reflection->getParameters(), function ($parameter) {
+            return is_a($parameter->getType()->getName(), Request::class) || is_subclass_of($parameter->getType()->getName(), Request::class);
+        });      
     }
 
-    public function resolveControllerFormRequest(string $controllerClass, string $method, $default = null)
+    public function get()
     {
-        $formRequestClass = $this->getFormRequestClassParameterController($controllerClass, $method);
+        return array_map(function ($item) {
+            return $item->getType()->getName();
+        }, $this->filter());
+    }
 
-        if( empty($formRequestClass) ||! class_exists($formRequestClass) )
-            return $default; // If does not have a form request
+    public function resolve()
+    {
+        return array_map(function ($class) {
+            return app()->make( $class );
+        }, $this->get());
+    }
 
-        return $this->resolveFormRequest($formRequestClass);
+    public static function make(string $controller, string $method)
+    {
+        return (new self($controller, $method))->resolve();
     }
 }
 

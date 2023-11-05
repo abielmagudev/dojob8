@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\OrderRequest\ResolveExtensionRequestsTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderUpdateRequest extends FormRequest
 {    
+    use ResolveExtensionRequestsTrait;
+
     public function authorize()
     {
         return true;
@@ -26,5 +29,18 @@ class OrderUpdateRequest extends FormRequest
                 'nullable',
             ],
         ];
+    }
+
+    public function passedValidation()
+    {
+        $this->merge([
+            'cache' => [
+                'extensions' => $this->route('order')->job->extensions,
+                'resolved_requests' => $this->resolveExtensionRequests(
+                    $this->route('order')->job->extensions,
+                    'update'
+                ),
+            ],
+        ]);
     }
 }

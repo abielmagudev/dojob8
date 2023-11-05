@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\OrderRequest\ResolveExtensionRequestsTrait;
 use App\Models\Client;
 use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderStoreRequest extends FormRequest
 {
+    use ResolveExtensionRequestsTrait;
 
     public function authorize()
     {
@@ -37,6 +39,21 @@ class OrderStoreRequest extends FormRequest
                 'nullable',
             ],
         ];
+    }
+
+    public function passedValidation()
+    {
+        $job = Job::find($this->job);
+
+        $this->merge([
+            'cache' => [
+                'extensions' => $job->extensions,
+                'resolved_requests' => $this->resolveExtensionRequests(
+                    $job->extensions,
+                    'store'
+                ),
+            ],
+        ]);
     }
 
     public function validated()

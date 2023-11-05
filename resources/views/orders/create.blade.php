@@ -4,16 +4,19 @@
     <form action="{{ route('orders.store') }}" method="post">
         @include('orders._form')
         <input type="hidden" name="client" value="{{ $client->id }}">
-        <div class="alert alert-warning">
-            <label for="selectAfterSaving" class="form-labeo">After saving</label>
-            <select id="selectAfterSaving" class="form-select" name="after_saving">
-                <option value="1">Create a new order for this client</option>
-                <option value="0">Just save order and finish</option>
-            </select>
-        </div>
         <br>
         <div class="text-end">
-            <button class="btn btn-success" type="submit">Save order</button>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-success" name="after_saving" value="1">Save and create new order</button>
+                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" type="submit" name="after_saving" value="0">Save and finish</button>
+                    </li>
+                </ul>
+            </div>
             <a href="{{ route('orders.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>

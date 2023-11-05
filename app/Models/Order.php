@@ -28,22 +28,22 @@ class Order extends Model
 
     public function getScheduledDatetimeHumanAttribute()
     {
-        return Carbon::parse( $this->scheduled_datetime )->toDayDateTimeString();
+        return $this->id ? Carbon::parse( $this->scheduled_datetime )->toDayDateTimeString() : null;
     }
 
     public function getScheduledDateHumanAttribute()
     {
-        return Carbon::parse($this->scheduled_date)->format('D M d, Y');
+        return $this->id ? Carbon::parse($this->scheduled_date)->format('D M d, Y') : null;
     }
 
     public function getScheduledTimeHumanAttribute()
     {
-        return Carbon::parse($this->scheduled_time)->format('h:i A');
+        return $this->id ? Carbon::parse($this->scheduled_time)->format('h:i A') : null;
     }
 
     public function getScheduledTimeWithoutMilisecondsAttribute()
     {
-        return Carbon::parse($this->scheduled_time)->format('H:i');
+        return $this->id ? Carbon::parse($this->scheduled_time)->format('H:i') : null;
     }
 
 

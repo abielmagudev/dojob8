@@ -17,7 +17,7 @@ class ControllerFormRequestResolver
     public function filter()
     {
         return array_filter($this->reflection->getParameters(), function ($parameter) {
-            return is_a($parameter->getType()->getName(), Request::class) || is_subclass_of($parameter->getType()->getName(), Request::class);
+            return is_a($parameter->getType()->getName(), Request::class, true) || is_subclass_of($parameter->getType()->getName(), Request::class);
         });      
     }
 

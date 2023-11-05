@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class WeatherizationMeasureCpsController extends Controller
 {
-    public function show(Request $request, Extension $extension)
+    public function show(Extension $extension)
     {
         return view('WeatherizationMeasureCps/resources/views/show', [
             'extension' => $extension,
@@ -18,7 +18,7 @@ class WeatherizationMeasureCpsController extends Controller
         ]);
     }
 
-    public function create(Request $request, Extension $extension)
+    public function create(Extension $extension)
     {
         $next_item_price_id = (WeatherizationMeasureCps::all())->max('item_price_id') + 1;
 

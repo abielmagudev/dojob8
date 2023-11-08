@@ -3,7 +3,7 @@
         <div class="col">
             <label for="selectProduct" class="form-label">Product</label>
             <select id="selectProduct" class="form-select">
-                <option disabled selected label="Choose..."></option>
+                <option disabled selected label="..."></option>
     
                 @foreach($categories as $category)
                 <optgroup label="{{ $category->name }}">

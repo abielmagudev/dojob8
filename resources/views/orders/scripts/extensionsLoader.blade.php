@@ -46,11 +46,11 @@ const extensionsLoader = {
         });
 
         document.querySelectorAll('script[fake]').forEach( script_fake => {
-            // Remove the loaded script to recreate it
-            if( script_loaded = document.querySelector(`script[src="${script_fake.src}"]`) ) {
-                script_loaded.remove(); 
-            }
-
+            // Remove the loaded script to recreate it 
+            document.querySelectorAll(`script[src="${script_fake.src}"]`).forEach(script_loaded => {
+                script_loaded.remove()
+            })
+            
             // Recreates the fake script with an active script 
             let script = document.createElement('script')
             script.src = script_fake.src

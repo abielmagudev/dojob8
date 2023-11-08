@@ -6,16 +6,24 @@
         <input type="hidden" name="client" value="{{ $client->id }}">
         <br>
         <div class="text-end">
-            <div class="btn-group">
-                <button type="submit" class="btn btn-success" name="after_saving" value="1">Save and create new order</button>
-                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <button class="dropdown-item" type="submit" name="after_saving" value="0">Save and finish</button>
-                    </li>
-                </ul>
+            <div class="d-inline-block">
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span>Save order</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="submit" name="after_saving" value="1">
+                                <span>...and create another order</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="submit" name="after_saving" value="0">
+                                <span>...and finish</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <a href="{{ route('orders.index') }}" class="btn btn-primary">Cancel</a>
         </div>

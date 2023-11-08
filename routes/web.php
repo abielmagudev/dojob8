@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn() => view('welcome') );
+Route::get('/', fn() => redirect()->route('orders.index') );
 
 Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
 Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');

@@ -17,7 +17,7 @@
                 <th class="text-nowrap">Category</th>
                 <th class="text-nowrap">Material price</th>
                 <th class="text-nowrap">Labor price</th>
-                <th class="text-nowrap">Total cost</th>
+                <th class="text-nowrap">Unit price</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -29,7 +29,7 @@
             <td>{{ $product->category->name }}</td>
             <td>${{ $product->material_price }}</td>
             <td>${{ $product->labor_price }}</td>
-            <td>${{ $product->total_cost }}</td>
+            <td>${{ $product->unit_price }}</td>
             <td class="text-end">
                 <a href="{{ route('extensions.edit', [$extension, 'concept' => 'product', 'product' => $product->id]) }}" class="btn btn-outline-warning">
                     <i class="bi bi-pencil-fill"></i>

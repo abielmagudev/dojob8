@@ -18,7 +18,7 @@ class Product extends Model
         'category_id',
     ];
     
-    public function getTotalCostAttribute()
+    public function getUnitPriceAttribute()
     {
         return ($this->material_price + $this->labor_price);
     }

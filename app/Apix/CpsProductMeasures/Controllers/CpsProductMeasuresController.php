@@ -2,7 +2,6 @@
 
 namespace App\Apix\CpsProductMeasures\Controllers;
 
-use App\Apix\CpsProductMeasures\Requests\SaveRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Kernel\ControllerFormRequestResolver;
 use App\Models\Extension;
@@ -13,6 +12,7 @@ class CpsProductMeasuresController extends Controller
     public static $concepts_subcontrollers = [
         'category' => CategoryController::class,
         'product' => ProductController::class,
+        'exports' => ExportController::class,
     ];
 
     private function callActionByConcept(string $concept = null, string $method, array $parameters)

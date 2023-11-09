@@ -176,10 +176,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
-         * Additional providers 
+         * Additional 
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Maatwebsite\LaravelNovaExcel\LaravelNovaExcelServiceProvider::class,
 
     ],
 
@@ -235,6 +234,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /*
+         * Additional 
+         */
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

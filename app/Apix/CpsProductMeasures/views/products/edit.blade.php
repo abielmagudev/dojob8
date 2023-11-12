@@ -2,7 +2,7 @@
 <x-header subheader="Products">{{ $extension->name }}</x-header>
 @section('content')
 <x-card title="Edit product">
-    <form action="{{ route('extensions.update', [$extension, 'concept' => 'product', 'product' => $product->id]) }}" method="post" autocomplete="off">
+    <form action="{{ route('extensions.update', [$extension, 'sub' => 'product', 'product' => $product->id]) }}" method="post" autocomplete="off">
         @method('put')
         @include('CpsProductMeasures/views/products/_form')
         <div class="mb-3">

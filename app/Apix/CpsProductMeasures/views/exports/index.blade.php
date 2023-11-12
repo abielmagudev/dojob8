@@ -1,9 +1,9 @@
 @extends('application')
 <x-header subheader="Extension configuration">{{ $extension->name }}</x-header>
 @section('content')
-@include('CpsProductMeasures/views/partials/submenu')
+@include('CpsProductMeasures/views/partials/subnavbar')
 <x-card title="Exports">
-    <form action="{{ route('extensions.store', [$extension, 'concept' => 'exports']) }}" method="post" autocomplete="off">
+    <form action="{{ route('extensions.store', [$extension, 'sub' => 'exports']) }}" method="post" autocomplete="off">
         @csrf
         <div class="mb-3">
             <label for="productSelect" class="form-label">Product</label>

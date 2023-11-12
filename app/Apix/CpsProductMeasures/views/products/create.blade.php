@@ -2,7 +2,7 @@
 <x-header subheader="Products">{{ $extension->name }}</x-header>
 @section('content')
 <x-card title="New product">
-    <form action="{{ route('extensions.store', [$extension, 'concept' => 'product']) }}" method="post" autocomplete="off">
+    <form action="{{ route('extensions.store', [$extension, 'sub' => 'product']) }}" method="post" autocomplete="off">
         @include('CpsProductMeasures/views/products/_form')
         <br>
 
@@ -22,7 +22,7 @@
                     </ul>
                 </div>
             </div>
-            <a href="{{ route('extensions.show', [$extension, 'concept' => 'product']) }}" class="btn btn-primary">Cancel</a>
+            <a href="{{ route('extensions.show', [$extension, 'sub' => 'product']) }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

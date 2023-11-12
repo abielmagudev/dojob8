@@ -37,7 +37,7 @@ class ProductController extends Controller
         $message = "Product <b>{$product->name}</b> saved";
 
         if( $request->after_saving == 1 ) {
-            return redirect()->route('extensions.create', [$extension, 'concept' => 'product'])->withInput($request->only('category'))->with('success', $message);
+            return redirect()->route('extensions.create', [$extension, 'sub' => 'product'])->withInput($request->only('category'))->with('success', $message);
         }
 
         return redirect()->route('extensions.show', $extension)->with('success', $message);
@@ -63,7 +63,7 @@ class ProductController extends Controller
             return back()->with('danger', 'Error updating product, try again please');
         }
 
-        return redirect()->route('extensions.edit', [$extension, 'concept' => 'product', 'product' => $product->id])->with('success', "Product {$product->name} updated");
+        return redirect()->route('extensions.edit', [$extension, 'sub' => 'product', 'product' => $product->id])->with('success', "Product {$product->name} updated");
     }
 
     public function destroy(Request $request, Extension $extension)

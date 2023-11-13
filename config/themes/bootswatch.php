@@ -5,7 +5,7 @@
 // https://bootswatch.com/{theme}/
 
 return [
-    'default' => 'flatly',
+    'theme' => 'default',
 
     'all' => [
         'cerulean', 
@@ -19,18 +19,18 @@ return [
         'lux',
         'materia',
         'minty',
-        'morph',
+        // 'morph',
         'pulse',
-        'quartz',
+        // 'quartz',
         'sandstone',
         'simplex',
         'sketchy',
-        'slate',
-        'solar',
+        // 'slate',
+        // 'solar',
         'spacelab',
-        'superhero',
+        // 'superhero',
         'united',
-        'vapor',
+        // 'vapor',
         'yeti',
         'zephyr',
     ],

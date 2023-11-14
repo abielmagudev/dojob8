@@ -7,7 +7,7 @@
     <title>{{ config('app.name') }}</title>
 
     @if( config('themes.bootswatch.theme') <> 'default' )
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/{{ config('themes.bootswatch.default') }}/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/{{ config('themes.bootswatch.theme') }}/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     @else
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -30,7 +30,7 @@
         }
     </style>
 </head>
-<body class="bg-body-tertiary">
+<body class="bg-body-secondary">
     @include('application.navbar')
     @include('application.navbar-menu')
     @include('application.sidebar-menu')

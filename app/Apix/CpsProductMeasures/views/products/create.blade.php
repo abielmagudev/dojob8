@@ -3,14 +3,14 @@
 @section('header')
 <x-header title="{{ $extension->name }}" :breadcrumbs="[
     'Back to extensions' => route('extensions.index'),
-    'Products' => route('extensions.show', [$extension, 'sub' => 'product']),
+    'Products' => route('extensions.show', [$extension, 'sub' => 'products']),
     'Create' => '#!',
 ]" />
 @endsection
 
 @section('content')
 <x-card title="New product">
-    <form action="{{ route('extensions.store', [$extension, 'sub' => 'product']) }}" method="post" autocomplete="off">
+    <form action="{{ route('extensions.store', [$extension, 'sub' => 'products']) }}" method="post" autocomplete="off">
         @include('CpsProductMeasures/views/products/_form')
         <br>
 
@@ -30,7 +30,7 @@
                     </ul>
                 </div>
             </div>
-            <a href="{{ route('extensions.show', [$extension, 'sub' => 'product']) }}" class="btn btn-primary">Cancel</a>
+            <a href="{{ route('extensions.show', [$extension, 'sub' => 'products']) }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

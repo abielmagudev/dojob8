@@ -32,7 +32,7 @@ class CategoryController extends Controller
             return back()->with('danger', 'Error saving category, try again please');
         }
 
-        return redirect()->route('extensions.show', [$extension, 'sub' => 'category'])->with('success', "Category <b>{$category->name}</b> saved");
+        return redirect()->route('extensions.show', [$extension, 'sub' => 'categories'])->with('success', "Category <b>{$category->name}</b> saved");
     }
 
     public function edit(Request $request, Extension $extension)
@@ -53,7 +53,7 @@ class CategoryController extends Controller
             return back()->with('danger', 'Error updating, try again please');
         }
 
-        return redirect()->route('extensions.edit', [$extension, 'sub' => 'category', 'category' => $category->id])->with('success', "Category <b>{$category->name}</b> updated");
+        return redirect()->route('extensions.edit', [$extension, 'sub' => 'categories', 'category' => $category->id])->with('success', "Category <b>{$category->name}</b> updated");
     }
 
     public function destroy(Request $request, Extension $extension)

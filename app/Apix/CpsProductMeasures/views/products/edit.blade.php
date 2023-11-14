@@ -3,14 +3,14 @@
 @section('header')
 <x-header title="{{ $extension->name }}" :breadcrumbs="[
     'Back to extensions' => route('extensions.index'),
-    'Products' => route('extensions.show', [$extension, 'sub' => 'product']),
+    'Products' => route('extensions.show', [$extension, 'sub' => 'products']),
     'Edit' => '#!',
 ]" />
 @endsection
 
 @section('content')
 <x-card title="Edit product">
-    <form action="{{ route('extensions.update', [$extension, 'sub' => 'product', 'product' => $product->id]) }}" method="post" autocomplete="off">
+    <form action="{{ route('extensions.update', [$extension, 'sub' => 'products', 'product' => $product->id]) }}" method="post" autocomplete="off">
         @method('put')
         @include('CpsProductMeasures/views/products/_form')
         <div class="mb-3">

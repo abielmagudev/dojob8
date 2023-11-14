@@ -12,14 +12,14 @@ class CpsProductMeasuresController extends Controller
     use CallSubcontrollersTrait;
 
     public static $subaliases_subcontrollers = [
-        'product' => ProductController::class,
-        'category' => CategoryController::class,
+        'products' => ProductController::class,
+        'categories' => CategoryController::class,
         'exports' => ExportController::class,
     ];
 
     public function show(Request $request, Extension $extension)
     {
-        return $this->callSubcontroller($request->get('sub', 'product'), 'index', [$extension]);
+        return $this->callSubcontroller($request->get('sub', 'products'), 'index', [$extension]);
     }
 
     public function create(Request $request, Extension $extension)

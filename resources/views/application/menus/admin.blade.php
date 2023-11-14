@@ -13,10 +13,6 @@ $items = [
         'route' => route('jobs.index'),
         'active' => request()->routeIs('jobs.*') || request()->routeIs('extensions.*'),
     ],
-    'Customers' => [
-        'route' => route('clients.index'),
-        'active' => request()->routeIs('clients.*'),
-    ],
     'Staff' => [
         'route' => '#employees-crews',
         'active' => false,
@@ -28,6 +24,10 @@ $items = [
     'Users' => [
         'route' => '#users-admins-coordinators-operators-intermediaries-guests',
         'active' => false,
+    ],
+    'Clients' => [
+        'route' => route('clients.index'),
+        'active' => request()->routeIs('clients.*'),
     ],
 ];
 

@@ -40,10 +40,13 @@
             @yield('header')
         </header>
 
+        @yield('subheader')
+
         @include('application.alert-message')
 
         @yield('content')
     </div>
+    <br>
     <br>
     <br>
 

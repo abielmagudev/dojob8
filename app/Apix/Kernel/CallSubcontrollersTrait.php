@@ -39,4 +39,15 @@ trait CallSubcontrollersTrait
         return class_exists($sub);
     }
     
+    // ------------------------------------------------------------------------
+
+    public static function getSubaliases()
+    {
+        return array_keys(self::$subaliases_subcontrollers);
+    }
+
+    public static function getSubcontrollers()
+    {
+        return array_values(self::$subaliases_subcontrollers);
+    }
 }

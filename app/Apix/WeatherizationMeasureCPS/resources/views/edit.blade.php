@@ -1,7 +1,15 @@
 @extends('application')
-<x-header subheader="Extension | Measures">{{ $extension->name }}</x-header>
+
+@section('header')
+<x-header title="{{ $extension->name }}" :breadcrumbs="[
+    'Back to extensions' => route('extensions.index'),
+    'Product measures' => route('extensions.show', $extension),
+    'Edit' => '#!',
+]" />
+@endsection
+
 @section('content')
-<x-card title="Edit measure">
+<x-card title="Edit product measure">
     <form action="{{ route('extensions.update', [$extension, 'measure' => $measure->id]) }}" method="post" autocomplete="off">
         @method('put')
         @include('WeatherizationMeasureCps/resources/views/_form')

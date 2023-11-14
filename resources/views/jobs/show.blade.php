@@ -1,13 +1,18 @@
 @extends('application')
-<x-header subheader="Jobs">
-    {{ $job->name }}
-</x-header>
+
+@section('header')
+<x-header title="Jobs" :breadcrumbs="[
+    'Back to jobs' => route('jobs.index'),
+    $job->name => route('jobs.show', $job),
+]"></x-header>
+@endsection
+
 @section('content')
 <div class="row">
 
     {{-- Information --}}
-    <div class="col">
-        <x-card title="Information">
+    <div class="col-sm mb-3">
+        <x-card title="{{ $job->name }}">
             <x-slot name="options">
                 <a href="{{ route('jobs.edit', $job) }}" class="btn btn-warning">
                     <i class="bi bi-pencil-fill"></i>
@@ -27,7 +32,7 @@
     </div>
 
     {{-- Extensions --}}
-    <div class="col">
+    <div class="col-sm">
         <x-card title="Extensions">
             <x-slot name="options">
                 @if( $extensions->count() )

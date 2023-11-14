@@ -1,4 +1,12 @@
 @extends('application')
+
+@section('header')
+<x-header title="Order #{{ $order->id }}" :breadcrumbs="[
+    'Back to orders' => route('orders.index'),
+    'Edit' => '#!',
+]" />
+@endsection
+
 @section('content')
 <x-card title="Edit order">
     <form action="{{ route('orders.update', $order) }}" method="post">

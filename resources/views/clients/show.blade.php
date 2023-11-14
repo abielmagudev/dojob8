@@ -1,10 +1,18 @@
 @extends('application')
+
+@section('header')
+<x-header title="Clients" :breadcrumbs="[
+    'Back to clients' => route('clients.index'),
+    'Show' => '#!'
+]" />
+@endsection
+
 @section('content')
 <div class="row">
 
     {{-- Information --}}
     <div class="col-sm col-sm-4">
-        <x-card title="Client">
+        <x-card title="Information">
             <x-slot name="options">
                 <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">
                     <i class="bi bi-pencil-fill"></i>
@@ -39,7 +47,7 @@
 
     {{-- Work Orders --}}
     <div class="col-sm">
-        <x-card title="Work orders">
+        <x-card title="Orders">
             <x-slot name="options">
                 <a href="{{ route('orders.create', $client) }}" class="btn btn-primary px-3">
                     <b>+</b>

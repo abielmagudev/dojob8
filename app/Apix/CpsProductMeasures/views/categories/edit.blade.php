@@ -1,5 +1,13 @@
 @extends('application')
-<x-header subheader="Categories">{{ $extension->name }}</x-header>
+
+@section('header')
+<x-header title="{{ $extension->name }}" :breadcrumbs="[
+    'Back to extensions' => route('extensions.index'),
+    'Categories' => route('extensions.show', [$extension, 'sub' => 'category']),
+    'Edit' => '#!',
+]" />
+@endsection
+
 @section('content')
 <x-card title="Edit category">
     <form action="{{ route('extensions.update', [$extension, 'sub' => 'category', 'category' => $category->id]) }}" method="post" autocomplete="off">

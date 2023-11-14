@@ -1,14 +1,22 @@
 @extends('application')
-<x-header>Jobs</x-header>
+
+@section('header')
+<x-header title="Jobs">
+    <x-slot name="options">
+        <a href="{{ route('extensions.index') }}" class="btn btn-primary">
+            <span>Extensions</span>
+        </a>
+    </x-slot>
+</x-header>
+@endsection
+
 @section('content')
 <x-card>
-
     <x-slot name="options">
         <a href="{{ route('jobs.create') }}" class="btn btn-primary">
             <b>+</b>
         </a>
     </x-slot>
-
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>

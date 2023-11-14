@@ -1,7 +1,11 @@
 @extends('application')
-<x-header>Orders</x-header>
+
+@section('header')
+<x-header title="Orders" />
+@endsection
+
 @section('content')
-<x-card title="Orders">
+<x-card>
     <x-slot name="options">
         <x-modal-trigger modal-id="modalSearchClient">
             <b>+</b>

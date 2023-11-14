@@ -1,7 +1,14 @@
 @extends('application')
-<x-header subheader="Extension | Configuration">{{ $extension->name }}</x-header>
+
+@section('header')
+<x-header title="{{ $extension->name }}" :breadcrumbs="[
+    'Back to extensions' => route('extensions.index'),
+    'Configuration' => '#!',
+]" />
+@endsection
+
 @section('content')
-<x-card title="Measures">
+<x-card title="Product measures">
     <x-slot name="options">
         <a href="{{ route('extensions.create', $extension) }}" class="btn btn-primary">
             <b>+</b>

@@ -1,4 +1,13 @@
 @extends('application')
+
+@section('header')
+<x-header title="Clients" :breadcrumbs="[
+    'Back to clients' => route('clients.index'),
+    $client->fullname => route('clients.show', $client),
+    'Edit' => '#!',
+]" />
+@endsection
+
 @section('content')
 <x-card title="Edit client">
     <form action="{{ route('clients.update', $client) }}" method="POST" autocomplete="off">

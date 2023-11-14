@@ -1,5 +1,9 @@
 @extends('application')
-<x-header subheader="Extension configuration">{{ $extension->name }}</x-header>
+
+@section('header')
+@include('CpsProductMeasures/views/partials/header')
+@endsection
+
 @section('content')
 @include('CpsProductMeasures/views/partials/subnavbar')
 <x-card title="Categories">

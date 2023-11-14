@@ -1,5 +1,9 @@
 @extends('application')
-<x-header>Clients</x-header>
+
+@section('header')
+<x-header title="Clients" />
+@endsection
+
 @section('content')
 <x-card title="">
     <x-slot name="options">

@@ -2,16 +2,22 @@
 
 <div class="d-flex justify-content-between">
     <div>
-        @isset($preheader)       
-        <div class="small text-secondary">{{ $preheader }}</div>
+        @isset($pretitle)       
+        <div class="small text-secondary">{{ $pretitle }}</div>
         @endisset
         
-        <h2 class="mb-0">{!! $slot !!}</h2>
-        
-        @isset($subheader)       
-        <p class="small mb-1">{{ $subheader }}</p>
+        @isset($title)
+        <h2 class="mb-0">{!! $title !!}</h2>
+
+        @else
+        {!! $slot !!}
+            
         @endisset
-        
+
+        @isset($subtitle)       
+        <p class="small">{{ $subtitle }}</p>
+        @endisset
+
         @isset($breadcrumbs)       
         <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&quot;);">
             <ol class="breadcrumb text-secondary m-0">
@@ -32,7 +38,8 @@
                 @endforeach
             </ol>
         </nav>
-        @endisset
+        @endisset 
+        
     </div>
 
     @isset($options)

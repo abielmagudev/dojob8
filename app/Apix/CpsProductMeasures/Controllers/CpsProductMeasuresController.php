@@ -12,8 +12,8 @@ class CpsProductMeasuresController extends Controller
     use CallSubcontrollersTrait;
 
     public static $subaliases_subcontrollers = [
-        'category' => CategoryController::class,
         'product' => ProductController::class,
+        'category' => CategoryController::class,
         'exports' => ExportController::class,
     ];
 

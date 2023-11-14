@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 <div class="d-inline-block d-lg-none align-middle me-1">
-                    <button class="btn btn-outline-primary border-0 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                    <button class="btn btn-outline-primary border-0 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebarMenu" aria-controls="offcanvasSidebarMenu">
                         <i class="bi bi-list"></i>
                     </button>
                 </div>
@@ -23,16 +23,25 @@
                         <h6 class="dropdown-header">Company name</h6>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="#">
+                            <i class="bi bi-person"></i>
+                            <span class="ms-1">Profile</span>
+                        </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Preferences</a>
+                        <a class="dropdown-item" href="#">
+                            <i class="bi bi-sliders"></i>
+                            <span class="ms-1">Preferences</span>
+                        </a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item text-danger" href="#">Logout</a>
+                        <a class="dropdown-item text-danger" href="#">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span class="ms-1">Logout</span>
+                        </a>
                     </li>
                 </x-dropdown>
             </div>

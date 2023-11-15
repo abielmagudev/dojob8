@@ -28,6 +28,13 @@
         .hover-bg-darken:hover {
             background-color: rgba(0, 0, 0, 0.025) !important;
         }
+        .form-label-optional::after {
+            color: #BBB;
+            content: "(Optional)";
+            /* font-size: .75rem; */
+            font-style: italic;
+            margin-left: 0.25rem;
+        }
     </style>
 </head>
 <body class="bg-body-secondary">

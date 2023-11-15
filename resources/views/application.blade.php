@@ -36,7 +36,7 @@
     @include('application.sidebar-menu')
     
     <div class="container">
-        <header class="mt-5 mb-3">
+        <header class="mt-5 mb-4">
             @yield('header')
         </header>
 

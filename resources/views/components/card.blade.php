@@ -1,4 +1,4 @@
-<div class="card shadow-sm border-0">
+<div class="card shadow-sm border-0 {{ $attributes->get('class', '') }}" style="{{ $attributes->get('style', '') }}">
 
     @if( isset($title) || isset($options) || isset($dropoptions) )
     <div class="card-header border-0 bg-white py-3">

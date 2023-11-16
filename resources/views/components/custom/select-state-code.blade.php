@@ -1,7 +1,7 @@
 <?php 
 
 $country_selected = $countries->get( $attributes->get('country') ) ?? $countries->get( $country_code_default );
-$state_code_to_select = $country_selected->get('states')->search( $attributes->get('old') ) <> false ? $attributes->get('old') : $state_code_default;
+$state_code_to_select = $country_selected->get('states')->get( $attributes->get('old') ) ? $attributes->get('old') : $state_code_default;
 
 ?>
 

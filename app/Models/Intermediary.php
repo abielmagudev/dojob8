@@ -59,8 +59,21 @@ class Intermediary extends Model
 
     public function getLocationAttribute()
     {
-        $data = array_filter([$this->city, $this->state_name, $this->country_name, $this->zip_code]);
+        $data = array_filter([$this->city, $this->state_name, $this->country_name]);
+        
         return implode(', ', $data);
+    }
+
+    public function getLocationCountryCodeAttribute()
+    {
+        $data = array_filter([$this->city, $this->state_name, $this->country_code]);
+        
+        return implode(', ', $data);
+    }
+
+    public function getAddressArrayAttribute()
+    {
+        return array_filter([$this->street, $this->location_country_code, $this->zip_code]);
     }
 
     public function hasInfo(string $prop)

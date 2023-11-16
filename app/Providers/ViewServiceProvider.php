@@ -30,5 +30,9 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('country_code_default', 'US');
             $view->with('state_code_default', 'TX');
         });
+
+        View::composer('components.custom.input-city', function ($view) {
+            $view->with('city_default', 'San Antonio');
+        });
     }
 }

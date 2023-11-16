@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
+use App\Http\Controllers\IntermediaryController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderJobExtensionsAjaxController;
@@ -32,6 +33,8 @@ Route::resource('jobs', JobController::class);
 
 Route::get('clients/ajax', [ClientAjaxController::class, 'search'])->name('clients.ajax.search');
 Route::resource('clients', ClientController::class);
+
+Route::resource('intermediaries', IntermediaryController::class);
 
 Route::resource('orders', OrderController::class)->except('create');
 Route::get('orders/create/{client}', [OrderController::class, 'create'])->name('orders.create');

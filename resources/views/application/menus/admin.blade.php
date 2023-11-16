@@ -18,8 +18,8 @@ $items = [
         'active' => false,
     ],
     'Intermediaries' => [
-        'route' => '#intermediaries',
-        'active' => false,
+        'route' => route('intermediaries.index'),
+        'active' => request()->routeIs('intermediaries.*'),
     ],
     'Users' => [
         'route' => '#users-admins-coordinators-operators-intermediaries-guests',

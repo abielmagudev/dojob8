@@ -20,4 +20,8 @@
         </div>
     </form>
 </x-card>
+<br>
+<x-custom.modal-confirm-delete :route="route('intermediaries.destroy', $intermediary)" concept="intermediary">
+    <p>¿Do you want to continue to delete the intermediary <br> <b><?= $intermediary->name ?> ({{ $intermediary->alias }})</b>?</p>
+</x-custom.modal-confirm-delete>
 @endsection

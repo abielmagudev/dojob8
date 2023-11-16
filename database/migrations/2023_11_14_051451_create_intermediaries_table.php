@@ -28,6 +28,7 @@ class CreateIntermediariesTable extends Migration
             $table->string('city')->index();
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

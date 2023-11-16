@@ -4,7 +4,7 @@
 <x-header title="{{ $extension->name }}" :breadcrumbs="[
     'Back to extensions' => route('extensions.index'),
     'Categories' => route('extensions.show', [$extension, 'sub' => 'categories']),
-    'Create' => '#!',
+    'Create' => null,
 ]" />
 @endsection
 

@@ -4,7 +4,7 @@
 <x-header title="Clients" :breadcrumbs="[
     'Back to clients' => route('clients.index'),
     $client->fullname => route('clients.show', $client),
-    'Edit' => '#!',
+    'Edit' => null,
 ]" />
 @endsection
 

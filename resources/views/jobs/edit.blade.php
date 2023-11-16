@@ -4,7 +4,7 @@
 <x-header title="Jobs" :breadcrumbs="[
     'Back to jobs' => route('jobs.index'),
     $job->name => route('jobs.show', $job),
-    'Edit' => '#!',
+    'Edit' => null,
 ]">Jobs</x-header>
 @endsection
 

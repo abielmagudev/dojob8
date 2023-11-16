@@ -1,9 +1,9 @@
 @extends('application')
 
 @section('header')
-<x-header title="Clients" :breadcrumbs="[
+<x-header title="{{ $client->fullname }}" :breadcrumbs="[
     'Back to clients' => route('clients.index'),
-    'Show' => '#!'
+    'Client' => null
 ]" />
 @endsection
 
@@ -18,11 +18,7 @@
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </x-slot>
-        
-            <p>
-                <small class="d-block text-secondary">Full name</small>
-                {{ $client->fullname }}
-            </p>
+
             <p>
                 <small class="d-block text-secondary">Address</small>
                 {{ $client->address }}

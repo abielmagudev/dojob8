@@ -3,7 +3,8 @@
 @section('header')
 <x-header title="Order #{{ $order->id }}" :breadcrumbs="[
     'Back to orders' => route('orders.index'),
-    'Edit' => '#!',
+    $order->id => route('orders.show', $order),
+    'Edit' => null,
 ]" />
 @endsection
 

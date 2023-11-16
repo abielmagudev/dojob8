@@ -1,9 +1,9 @@
 @extends('application')
 
 @section('header')
-<x-header title="Jobs" :breadcrumbs="[
+<x-header title="{{ $job->name }}" :breadcrumbs="[
     'Back to jobs' => route('jobs.index'),
-    $job->name => route('jobs.show', $job),
+    'Job' => null,
 ]"></x-header>
 @endsection
 
@@ -12,7 +12,7 @@
 
     {{-- Information --}}
     <div class="col-sm mb-3">
-        <x-card title="{{ $job->name }}">
+        <x-card title="Information">
             <x-slot name="options">
                 <a href="{{ route('jobs.edit', $job) }}" class="btn btn-warning">
                     <i class="bi bi-pencil-fill"></i>

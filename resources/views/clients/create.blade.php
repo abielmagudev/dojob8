@@ -3,7 +3,7 @@
 @section('header')
 <x-header title="Clients" :breadcrumbs="[
     'Back to clients' => route('clients.index'),
-    'Create' => '#!'
+    'Create' => null
 ]" />
 @endsection
 

@@ -10,7 +10,7 @@
 @section('content')
 <div class="row">
     <div class="col-sm">
-        <x-card>
+        <x-card title="Information">
             <x-slot name="options">
                 <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">
                     <i class="bi bi-pencil-fill"></i>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="col-sm col-md-9">
-        <x-card title="Orders">
+        <x-card title="Orders" class="h-100">
             <x-slot name="options">
                 <a href="{{ route('orders.create', $client) }}" class="btn btn-primary px-3">
                     <b>+</b>

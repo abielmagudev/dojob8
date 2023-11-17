@@ -1,1 +1,1 @@
-<input id="inputCity" type="text" class="form-control" name="city" value="{{ $attributes->get('old', $city_default) }}" required>
+<input id="inputCity" type="text" class="form-control {{ $attributes->get('class', '') }}" name="city" value="{{ $attributes->get('old', $city_default) }}" @if( $attributes->has('required') ) required @endif>

@@ -15,23 +15,23 @@
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
-                <th>Alias</th>
                 <th>Name</th>
+                <th>Alias</th>
                 <th>Contact</th>
-                <th>Email</th>
                 <th>Phone</th>
                 <th>Mobile</th>
+                <th>Email</th>
                 <th></th>
             </tr>
         </x-slot>
         @foreach($intermediaries as $intermediary)
         <tr>
-            <td>{{ $intermediary->alias }}</td>
             <td>{{ $intermediary->name }}</td>
+            <td>{{ $intermediary->alias }}</td>
             <td>{{ $intermediary->contact }}</td>
-            <td>{{ $intermediary->email }}</td>
             <td>{{ $intermediary->phone_number }}</td>
             <td>{{ $intermediary->mobile_number }}</td>
+            <td>{{ $intermediary->email }}</td>
             <td class="text-end">
                 <a href="{{ route('intermediaries.show', $intermediary) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>

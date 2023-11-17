@@ -18,14 +18,14 @@ class CreateIntermediariesTable extends Migration
             $table->string('name')->unique();
             $table->string('alias', 16)->unique();
             $table->string('contact');
-            $table->string('phone_number');
-            $table->string('mobile_number')->nullable();
-            $table->string('email');
             $table->string('street')->nullable();
             $table->string('zip_code')->nullable();
             $table->string('country_code', 8)->index();
             $table->string('state_code', 8)->index();
             $table->string('city')->index();
+            $table->string('phone_number');
+            $table->string('mobile_number')->nullable();
+            $table->string('email')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

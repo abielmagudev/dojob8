@@ -37,10 +37,6 @@ class IntermediarySaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'email' => [
-                'required',
-                'email',
-            ],
             'phone_number' => [
                 'required',
                 'string',
@@ -48,6 +44,10 @@ class IntermediarySaveRequest extends FormRequest
             'mobile_number' => [
                 'nullable',
                 'string',
+            ],
+            'email' => [
+                'nullable',
+                'email',
             ],
             'street' => [
                 'nullable',
@@ -95,15 +95,8 @@ class IntermediarySaveRequest extends FormRequest
 
         $this->country_codes = CountryManager::codes()->implode(',');
 
-        if(! empty($this->country_code) && CountryManager::exists($this->country_code) )
-        {
-            $country = CountryManager::get($this->country_code);
-
-            $this->state_codes = $country->get('states')->keys()->implode(',');
-        }
-        else
-        {
-            $this->state_codes = '¿?';
-        }
+        $this->state_codes = CountryManager::exists( $this->get('country_code', '?') ) 
+                           ? CountryManager::get( $this->country_code )->get('states')->keys()->implode(',') 
+                           : '?';
     }
 }

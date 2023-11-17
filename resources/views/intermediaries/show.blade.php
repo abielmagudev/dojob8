@@ -17,42 +17,23 @@
                 </a>
             </x-slot>
         
-            <div class="row">
-                <div class="col-sm">
-                    <p>
-                        <small class="text-secondary">Contact</small>
-                        <br>
-                        <span>{{ $intermediary->contact }}</span>
-                    </p>
-                    <p>
-                        <small class="text-secondary">Email</small>
-                        <br>
-                        <span>{{ $intermediary->email }}</span>
-                    </p>
-                    <p>
-                        <small class="text-secondary">Phone</small>
-                        <br>
-                        <span>{{ $intermediary->phone_number }}</span>
-                    </p>
-                    <p>
-                        <small class="text-secondary">Mobile</small>
-                        <br>
-                        <span>{{ $intermediary->mobile_number }}</span>
-                    </p>
-                    <p>
-                        <small class="text-secondary">Address</small>
-                        <br>
-                        {!! implode('<br>', $intermediary->address_array) !!}
-                    </p>
-                </div>
-                <div class="col-sm">
-                    <p>
-                        <small class="text-secondary">Notes</small>
-                        <br>
-                        <em>{{ $intermediary->notes }}</em>
-                    </p>
-                </div>
-            </div>
+            <p>
+                <small class="text-secondary">Contact</small>
+                <span class="d-block">{{ $intermediary->contact }}</span>
+                <span class="d-block">{{ $intermediary->phone_number }}</span>
+                <span class="d-block">{{ $intermediary->mobile_number }}</span>
+                <span class="d-block">{{ $intermediary->email }}</span>
+            </p>
+            <p>
+                <small class="text-secondary">Address</small>
+                <span class="d-block">{{ $intermediary->street }}</span>
+                <span class="d-block">{{ $intermediary->location_country_code }}</span>
+                <span class="d-block">{{ $intermediary->zip_code }}</span>
+            </p>
+            <p>
+                <small class="text-secondary">Notes</small>
+                <em class="d-block ">{{ $intermediary->notes }}</em>
+            </p>
         </x-card>
     </div>
 

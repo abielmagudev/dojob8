@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\CountryManager;
 use App\Http\Requests\IntermediarySaveRequest;
 use App\Models\Intermediary;
 use Illuminate\Http\Request;
@@ -20,11 +19,6 @@ class IntermediaryController extends Controller
     {
         return view('intermediaries.create', [
             'intermediary' => new Intermediary,
-            'countries' => CountryManager::only('US'),
-            'default' => collect([
-                'country_code' => 'US',
-                'state_code' => 'TX',
-            ]),
         ]);
     }
 
@@ -34,7 +28,7 @@ class IntermediaryController extends Controller
             return back()->with('danger', 'Error saving intermediary, try again please');
         }
 
-        return redirect()->route('intermediaries.index')->with('success', "Intermediary {$intermediary->name} saved");
+        return redirect()->route('intermediaries.index')->with('success', "Intermediary <b>{$intermediary->name}</b> saved");
     }
 
     public function show(Intermediary $intermediary)
@@ -48,11 +42,6 @@ class IntermediaryController extends Controller
     {
         return view('intermediaries.edit', [
             'intermediary' => $intermediary,
-            'countries' => CountryManager::only('US'),
-            'default' => collect([
-                'country_code' => 'US',
-                'state_code' => 'TX',
-            ]),
         ]);
     }
 
@@ -62,7 +51,7 @@ class IntermediaryController extends Controller
             return back()->with('danger', 'Error updating intermediary, try again please');
         }
 
-        return redirect()->route('intermediaries.edit', $intermediary)->with('success', "Intermediary {$intermediary->name} updated");
+        return redirect()->route('intermediaries.edit', $intermediary)->with('success', "Intermediary <b>{$intermediary->name}</b> updated");
     }
 
     public function destroy(Intermediary $intermediary)
@@ -71,6 +60,6 @@ class IntermediaryController extends Controller
             return back()->with('danger', 'Error deleting intermediary, try again please');
         }
 
-        return redirect()->route('intermediaries.index')->with('success', "Intermediary {$intermediary->name} deleted");
+        return redirect()->route('intermediaries.index')->with('success', "Intermediary <b>{$intermediary->name}</b> deleted");
     }
 }

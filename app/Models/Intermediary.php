@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\CountryManager;
+use App\Models\Kernel\HasAvailableTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,7 @@ class Intermediary extends Model
     use HasFactory;
     use SoftDeletes;
     use HasCountryStateCodesTrait;
+    use HasAvailableTrait;
     
     protected $fillable = [
         'name',
@@ -28,6 +30,7 @@ class Intermediary extends Model
         'state_code',
         'city',
         'notes',
+        'is_available',
     ];
 
     public function setContactAttribute($value)

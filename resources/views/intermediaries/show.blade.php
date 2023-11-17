@@ -18,6 +18,17 @@
             </x-slot>
         
             <p>
+                <small class="text-secondary d-block">Status</small>
+                @if( $intermediary->isAvailable() )
+                <span class="badge text-bg-success">Available</span>
+
+                @else
+                <span class="badge text-bg-secondary">Unavailable</span>
+                
+                @endif
+            </p>
+
+            <p>
                 <small class="text-secondary">Contact</small>
                 <span class="d-block">{{ $intermediary->contact }}</span>
                 <span class="d-block">{{ $intermediary->phone_number }}</span>

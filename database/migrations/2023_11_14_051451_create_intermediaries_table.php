@@ -27,6 +27,7 @@ class CreateIntermediariesTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
             $table->text('notes')->nullable();
+            $table->boolean('is_available')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

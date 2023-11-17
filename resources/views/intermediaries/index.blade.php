@@ -15,6 +15,7 @@
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Alias</th>
                 <th>Contact</th>
@@ -26,6 +27,9 @@
         </x-slot>
         @foreach($intermediaries as $intermediary)
         <tr>
+            <td class="{{ $intermediary->isAvailable() ? 'text-success' : 'text-light' }}" style="width:1%">
+                <i class="bi bi-circle-fill"></i>
+            </td>
             <td>{{ $intermediary->name }}</td>
             <td>{{ $intermediary->alias }}</td>
             <td>{{ $intermediary->contact }}</td>

@@ -18,8 +18,8 @@
                 <tr>
                     <th>Job</th>
                     <th>Client</th>
-                    <th>Zip code</th>
-                    <th>Scheduled</th>
+                    <th>Zip Code</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
             </thead>
@@ -28,16 +28,29 @@
                 <tr>
                     <td class="text-nowrap">{{ $order->job->name }}</td>
                     <td class="text-nowrap">
-                        <span class="d-block">{{ $order->client->address }}</span>
-                        <small>{{ $order->client->fullname }} | {{ $order->client->contact }}</small>
+                        <span>{{ $order->client->street }}, {{ $order->client->location_country_code }}</span>
+                        <a href="#!" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="{{ $order->client->fullname }}<br>{{ $order->client->phone_number }}">
+                            <i class="bi bi-info-circle"></i>
+                        </a>
                     </td>
-                    <td class="text-nowrap">
-                        <span class="d-block">{{ $order->client->zip_code }}</span>
-                        <small>{{ $order->client->city }}, {{ $order->client->state }}</small>
-                    </td>
-                    <td class="text-nowrap">
-                        <span class="d-block">{{ $order->scheduled_date_human }}</span>
-                        <small>{{ $order->scheduled_time_human }}</small>
+                    <td class="text-nowrap">{{ $order->client->zip_code }}</td>
+                    <td class="text-nowrap text-center">
+                        @if( mt_rand(0, 1) )
+                        <span class="badge w-100 text-bg-primary">New</span>
+                        
+                        @elseif( mt_rand(0,1) )
+                        <span class="badge w-100 text-bg-warning">Working</span>
+                        
+                        @elseif( mt_rand(0,1) )
+                        <span class="badge w-100 text-bg-success">Done</span>
+                        
+                        @elseif( mt_rand(0,1) )
+                        <span class="badge w-100 text-bg-secondary">Canceled</span>
+                        
+                        @else
+                        <span class="badge w-100 text-bg-dark">Closed</span>
+
+                        @endif
                     </td>
                     <td class="text-nowrap text-end">
                         <a href="{{ route('orders.edit', $order) }}" class="btn btn-outline-warning">

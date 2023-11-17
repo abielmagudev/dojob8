@@ -6,6 +6,7 @@ use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Client;
+use App\Models\Intermediary;
 use App\Models\Job;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Collection;
@@ -28,7 +29,8 @@ class OrderController extends Controller
 
         return view('orders.create', [
             'client' => $client,
-            'jobs' => Job::all(),
+            'jobs' => Job::orderBy('name')->get(),
+            'intermediaries' => Intermediary::orderBy('name')->get(),
             'order' => new Order,
         ]);
     }
@@ -50,10 +52,12 @@ class OrderController extends Controller
         return redirect($route)->with('success', "Order <b>#{$order->id}: {$order->job->name}</b> saved");
     }
 
-    public function show(Order $order)
+    public function show(Request $request, Order $order)
     {
         return view('orders.show', [
             'order' => $order,
+            'prev_order' => Order::wherePrev($request, $order)->first(),
+            'next_order' => Order::whereNext($request, $order)->first(),
         ]);
     }
 
@@ -64,6 +68,7 @@ class OrderController extends Controller
         return view('orders.edit', [
             'order' => $order,
             'client' => $order->client,
+            'intermediaries' => Intermediary::orderBy('name')->get(),
         ]);
     }
 
@@ -82,9 +87,15 @@ class OrderController extends Controller
         return redirect()->route('orders.edit', $order)->with('success', "Order <b>#{$order->id}: {$order->job->name}</b> updated");
     }
 
-    public function destroy(Order $order)
+    public function destroy(Request $request, Order $order)
     {
-        return $order;
+        if(! $order->delete() ) {
+            return back()->with('danger', 'Error deleting order, try again please');
+        }        
+
+        // Delete on extensions job
+
+        return redirect()->route('orders.index')->with('success', "Order #{$order->id} deleted");
     }
 
 

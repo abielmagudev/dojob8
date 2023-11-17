@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class Order extends Model
 {
@@ -54,6 +55,16 @@ class Order extends Model
         $jobs_id = Job::all('id')->pluck('id')->toArray();
         
         return $query->whereIn('job_id', $jobs_id);
+    }
+
+    public function scopeWherePrev($query, Request $request, Order $order)
+    {
+        return $query->where('id', '<', $order->id)->orderBy('id', 'desc');
+    }
+
+    public function scopeWhereNext($query, Request $request, Order $order)
+    {
+        return $query->where('id', '>', $order->id)->orderBy('id', 'asc');
     }
 
 

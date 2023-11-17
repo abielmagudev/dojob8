@@ -23,7 +23,7 @@ class ClientController extends Controller
         if(! $client = Client::create( $request->validated() ) )
             return back()->with('danger', 'Error saving client, please try again');
 
-        $route = $request->get('redirect') == 'orders.create' ? route('orders.create', $client) : route('clients.index');
+        $route = $request->has('after_saving') ? route('orders.create', $client) : route('clients.index');
 
         return redirect($route)->with('success', "Client <b>{$client->fullname}</b> saved");
     }
@@ -48,6 +48,10 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
-        return $client;
+        if(! $client->delete() ) {
+            return back()->with('danger', 'Error deleting client, try again please');
+        }
+
+        return redirect()->route('clients.index')->with('success', "Client <b>{$client->fullname}</b> deleted");
     }
 }

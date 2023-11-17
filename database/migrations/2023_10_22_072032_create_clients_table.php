@@ -17,16 +17,18 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->string('name')->index();
             $table->string('lastname')->index();
-            $table->string('address')->index();
+            $table->string('fullname')->index();
+            $table->string('street')->index();
             $table->string('zip_code')->index();
+            $table->string('country_code');
+            $table->string('state_code')->index();
             $table->string('city')->index();
-            $table->string('state')->index();
-            $table->string('country');
             $table->string('phone_number')->nullable()->index();
             $table->string('mobile_number')->nullable()->index();
             $table->string('email')->nullable()->index();
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

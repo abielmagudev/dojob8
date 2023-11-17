@@ -2,21 +2,24 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasCountryStateCodesTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
     use HasFactory;
+    use HasCountryStateCodesTrait;
 
     protected $fillable = [
         'name',
         'lastname',
-        'address',
+        'fullname',
+        'street',
         'zip_code',
+        'country_code',
+        'state_code',
         'city',
-        'state',
-        'country',
         'phone_number',
         'mobile_number',
         'email',
@@ -26,31 +29,13 @@ class Client extends Model
 
     // Attributes 
 
-    public function getFullnameAttribute()
+    public function getContactInfoCollectionAttribute()
     {
-        return sprintf('%s %s', $this->name, $this->lastname);
-    }
-
-    public function getLocationAttribute()
-    {
-        $segments = array_filter([
-            $this->city,
-            $this->state,
-            $this->country,
+        return collect([
+            'phone'  => $this->phone_number,
+            'mobile' => $this->mobile_number,
+            'email'  => $this->email,
         ]);
-
-        return implode(', ', $segments);
-    }
-
-    public function getContactAttribute()
-    {
-        $segments = array_filter([
-            $this->phone_number,
-            $this->mobile_number,
-            $this->email,
-        ]);
-        
-        return implode(', ', $segments);
     }
 
 
@@ -58,18 +43,13 @@ class Client extends Model
 
     public function scopeSearch($query, $value)
     {
-        $query = $query->where('address', 'like', "%{$value}%");
-
-        if( is_numeric($value) )
-        {
-            return $query->orWhere('zip_code', 'like', "%{$value}%")
-                        ->orWhere('phone_number', 'like', "%{$value}%")
-                        ->orWhere('mobile_number', 'like', "%{$value}%");
-        }
-
-        return $query->orWhere('name', 'like', "%{$value}%")
-                    ->orWhere('lastname', 'like', "%{$value}%")
-                    ->orWhere('email', 'like', "%{$value}%");
+        return $query->where('fullname', 'like', "%{$value}%")
+                    ->orWhere('phone_number', 'like', "%{$value}%")
+                    ->orWhere('mobile_number', 'like', "%{$value}%")
+                    ->orWhere('email', 'like', "%{$value}%")
+                    ->orWhere('street', 'like', "%{$value}%")
+                    ->orWhere('zip_code', 'like', "%{$value}%")
+                    ->orWhere('city', 'like', "%{$value}%");
     }
 
     // Relations

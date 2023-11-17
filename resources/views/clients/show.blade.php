@@ -9,47 +9,43 @@
 
 @section('content')
 <div class="row">
-
-    {{-- Information --}}
-    <div class="col-sm col-sm-4">
-        <x-card title="Information">
+    <div class="col-sm">
+        <x-card>
             <x-slot name="options">
                 <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </x-slot>
-
             <p>
-                <small class="d-block text-secondary">Address</small>
-                {{ $client->address }}
-                <small class="d-block">{{ $client->location }}</small>
+                <small class="text-secondary">Address</small>
+                <span class="d-block">{{ $client->street }}</span>
+                <span class="d-block">{{ $client->location_country_code }}</span>
+                <span class="d-block">{{ $client->zip_code }}</span>
             </p>
+    
             <p>
-                <small class="d-block text-secondary">Zip code</small>
-                {{ $client->zip_code }}
+                <small class="text-secondary">Contact</small>
+                @foreach($client->contact_info_collection->filter() as $value)
+                <span class="d-block">{{ $value }}</span>
+                @endforeach
             </p>
-            <p>
-                <small class="d-block text-secondary">Contact</small>
-                <span class="d-block">{{ $client->phone_number }}</span>
-                <span class="d-block">{{ $client->mobile_number }}</span>
-                <span class="d-block">{{ $client->email }}</span>
-            </p>
+    
             <p>
                 <small class="d-block text-secondary">Notes</small>
-                {{ $client->notes }}
+                <span>{{ $client->notes }}</span>
             </p>
         </x-card>
     </div>
 
-    {{-- Work Orders --}}
-    <div class="col-sm">
+    <div class="col-sm col-md-9">
         <x-card title="Orders">
             <x-slot name="options">
                 <a href="{{ route('orders.create', $client) }}" class="btn btn-primary px-3">
                     <b>+</b>
                 </a>
             </x-slot>
-
+        
+            @if( $client->orders->count() )          
             <x-table class="align-middle ">
                 @foreach($client->orders as $order)
                 <tr>
@@ -63,7 +59,10 @@
                 </tr>
                 @endforeach
             </x-table>
+            @endif
         </x-card>
     </div>
 </div>
+<br>
+
 @endsection

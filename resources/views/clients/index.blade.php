@@ -12,7 +12,7 @@
         </a>
     </x-slot>
 
-    <x-table>
+    <x-table class="align-middle ">
         <x-slot name="thead">
             <tr>
                 <th>Fullname</th>
@@ -26,10 +26,7 @@
         @foreach($clients as $client)
         <tr>
             <td class="text-nowrap">{{ $client->fullname }}</td>
-            <td class="text-nowrap">
-                <p class="m-0">{{ $client->address }}</p>
-                <small class="text-secondary">{{ $client->location }}</small>
-            </td>
+            <td class="text-nowrap">{{ $client->street }}, {{ $client->location_without_country }}</td>
             <td class="text-nowrap">{{ $client->zip_code }}</td>
             <td>{{ $client->orders_count }}</td>
             <td class="text-nowrap text-end">

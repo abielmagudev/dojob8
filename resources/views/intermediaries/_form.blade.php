@@ -72,7 +72,7 @@
 </div>
 <div class="row align-items-center mb-3">
     <div class="col-md">
-        <label for="countrySelect" class="form-label">Country</label>
+        <label for="countryCodeSelect" class="form-label">Country</label>
     </div>
     <div class="col-md col-md-9 col-lg-10">
         <x-custom.select-country-code :old="old('country_code', $intermediary->country_code)" required />
@@ -81,7 +81,7 @@
 </div>
 <div class="row align-items-center mb-3">
     <div class="col-md">
-        <label for="stateSelect" class="form-label">State</label>
+        <label for="stateCodeSelect" class="form-label">State</label>
     </div>
     <div class="col-md col-md-9 col-lg-10">
         <x-custom.select-state-code :country="old('country_code', $intermediary->country_code)" :old="old('state_code', $intermediary->state_code)" required />

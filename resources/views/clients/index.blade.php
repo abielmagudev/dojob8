@@ -18,6 +18,7 @@
                 <th>Fullname</th>
                 <th>Address</th>
                 <th>Zip code</th>
+                <th>Phone</th>
                 <th>Orders</th>
                 <th></th>
             </tr>
@@ -28,7 +29,12 @@
             <td class="text-nowrap">{{ $client->fullname }}</td>
             <td class="text-nowrap">{{ $client->street }}, {{ $client->location_without_country }}</td>
             <td class="text-nowrap">{{ $client->zip_code }}</td>
-            <td>{{ $client->orders_count }}</td>
+            <td class="text-nowrap">{{ $client->phone_number }}</td>
+            <td class="text-center">
+                @if( $client->orders_count )
+                <span class="badge rounded-pill text-bg-primary">{{ $client->orders_count }}</span>
+                @endif
+            </td>
             <td class="text-nowrap text-end">
                 <a href="{{ route('orders.create', $client) }}" class="btn btn-outline-success px-3">
                     <b>+</b>

@@ -33,7 +33,7 @@
         <label for="inputCountry" class="form-label">Country</label>
     </div>
     <div class="col-sm col-md-9 col-lg-10">
-        <x-custom.select-country-code :old="old('country_code', $client->country_code)" />
+        <x-custom.select-country-code :old="old('country_code', $client->country_code)" required />
         <x-error name="country_code" />
     </div>
 </div>
@@ -42,7 +42,7 @@
         <label for="stateCodeSelect" class="form-label">State</label>
     </div>
     <div class="col-sm col-md-9 col-lg-10">
-        <x-custom.select-state-code :country="old('country_code', $client->country_code)" :old="old('state_code', $client->state_code)" />
+        <x-custom.select-state-code :country="old('country_code', $client->country_code)" :old="old('state_code', $client->state_code)" required />
         <x-error name="state_code" />
     </div>
 </div>
@@ -51,16 +51,16 @@
         <label for="inputCity" class="form-label">City</label>
     </div>
     <div class="col-sm col-md-9 col-lg-10">
-        <x-custom.input-city :old="old('city', $client->city)" />
+        <x-custom.input-city :old="old('city', $client->city)" required />
         <x-error name="city" />
     </div>
 </div>
 <div class="row align-items-center mb-3">
     <div class="col-sm">
-        <label for="inputPhoneNumber" class="form-label form-label-optional">Phone</label>
+        <label for="inputPhoneNumber" class="form-label">Phone</label>
     </div>
     <div class="col-sm col-md-9 col-lg-10">
-        <input id="inputPhoneNumber" type="text" class="form-control" name="phone_number" value="{{ old('phone_number', $client->phone_number) }}">
+        <input id="inputPhoneNumber" type="text" class="form-control" name="phone_number" value="{{ old('phone_number', $client->phone_number) }}" required>
         <x-error name="phone_number" />
     </div>
 </div>

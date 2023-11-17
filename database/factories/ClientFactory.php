@@ -34,7 +34,7 @@ class ClientFactory extends Factory
             'country_code' => $country->get('code'), // $this->faker->country(),
             'state_code' => $this->faker->randomElement( $country->get('states')->keys() ), // $this->faker->state(),
             'city' => $this->faker->city(),
-            'phone_number' => $this->faker->optional()->phoneNumber(),
+            'phone_number' => $this->faker->phoneNumber(),
             'mobile_number' => $this->faker->optional()->phoneNumber(),
             'email' => $this->faker->optional()->email(),
             'notes' => $this->faker->optional()->text(),

@@ -49,7 +49,7 @@ class ClientSaveRequest extends FormRequest
                 'string',
             ],
             'phone_number' => [
-                'nullable',
+                'required',
             ],
             'mobile_number' => [
                 'nullable',

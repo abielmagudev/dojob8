@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-hover {{ $attributes->get('class', '') }}">
+    <table class="table {{ $attributes->get('class', '') }} {{ $attributes->has('not-hover') ?: 'table-hover' }}">
         
         @isset( $caption )
         <caption>{{ $caption }}</caption>

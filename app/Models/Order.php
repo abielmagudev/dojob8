@@ -19,22 +19,26 @@ class Order extends Model
         'scheduled_time',
     ];
 
+    protected $casts = [
+        'scheduled_date' => 'date',
+    ];
+
 
     // Attributes
 
     public function getScheduledDatetimeAttribute()
     {
-        return sprintf('%s %s', $this->scheduled_date, $this->scheduled_time);
+        return sprintf('%s %s', $this->scheduled_date->format('Y-m-d'), $this->scheduled_time);
     }
 
     public function getScheduledDatetimeHumanAttribute()
     {
-        return $this->id ? Carbon::parse( $this->scheduled_datetime )->toDayDateTimeString() : null;
+        return $this->id ? $this->scheduled_date->toDayDateTimeString() : null;
     }
 
     public function getScheduledDateHumanAttribute()
     {
-        return $this->id ? Carbon::parse($this->scheduled_date)->format('D M d, Y') : null;
+        return $this->id ? $this->scheduled_date->format('D M d, Y') : null;
     }
 
     public function getScheduledTimeHumanAttribute()

@@ -22,8 +22,8 @@ $items = [
         'active' => request()->routeIs('intermediaries.*'),
     ],
     'Users' => [
-        'route' => '#users-admins-coordinators-operators-intermediaries-guests',
-        'active' => false,
+        'route' => route('users.index'),
+        'active' => request()->routeIs('users.*'),
     ],
     'Clients' => [
         'route' => route('clients.index'),

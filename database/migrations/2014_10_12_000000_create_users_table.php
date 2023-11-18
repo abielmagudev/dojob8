@@ -17,10 +17,23 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            /**
+             * last-session
+             * IP address
+             * morph-type
+             * morph-id
+             * username or name
+             * is_active
+             * mobile_number for SMS
+             * created_by
+             * updated_by
+             */
         });
     }
 

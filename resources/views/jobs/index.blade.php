@@ -20,14 +20,16 @@
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Extensions</th>
-                <th scope="col">Orders</th>
+                <th></th>
+                <th>Name</th>
+                <th>Extensions</th>
+                <th>Orders</th>
                 <th></th>
             </tr>
         </x-slot>
         @foreach($jobs as $job)               
         <tr>
+            <x-custom.td-available :model="$job"/>
             <td>{{ $job->name }}</td>
             <td>{{ $job->extensions_count }}</td>
             <td>{{ $job->orders_count }}</td>

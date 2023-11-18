@@ -51,4 +51,15 @@ class JobSaveRequest extends FormRequest
     {
         $this->job_id = $this->route('job')->id ?? 0;
     }
+
+    public function validated()
+    {
+        if( $this->isMethod('POST') ) {
+            return parent::validated();
+        }
+
+        return array_merge(parent::validated(), [
+            'is_available' => $this->has('available') ? 1 : 0,
+        ]);
+    }
 }

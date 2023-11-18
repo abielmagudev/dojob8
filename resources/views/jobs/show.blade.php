@@ -18,14 +18,23 @@
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </x-slot>
+
             <p>
-                <small class="text-body-secondary">Description</small>
-                <br>
+                <small class="d-block text-body-secondary">Status</small>
+                @if( $job->isAvailable() )
+                <span class="badge text-bg-success">Available</span>
+
+                @else
+                <span class="badge text-bg-secondary">Unavailable</span>
+                    
+                @endif
+            </p>
+            <p>
+                <small class="d-block text-body-secondary">Description</small>
                 <span>{{ $job->description ?? 'Without description' }}</span>
             </p>
             <p>
-                <small class="text-body-secondary">Successful inspections</small>
-                <br>
+                <small class="d-block text-body-secondary">Successful inspections</small>
                 <span>{{ $job->successful_inspections }}</span>
             </p>
         </x-card>

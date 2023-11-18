@@ -27,9 +27,7 @@
         </x-slot>
         @foreach($intermediaries as $intermediary)
         <tr>
-            <td class="{{ $intermediary->isAvailable() ? 'text-success' : 'text-light' }}" style="width:1%">
-                <i class="bi bi-circle-fill"></i>
-            </td>
+            <x-custom.td-available :model="$intermediary"/>
             <td>{{ $intermediary->name }}</td>
             <td>{{ $intermediary->alias }}</td>
             <td>{{ $intermediary->contact }}</td>

@@ -16,7 +16,7 @@
             <div class="col-md col-md-8 mb-3 mb-md-0">
                 <div class="form-check form-switch">
                     <input class="form-check-input" id="switchAfterSaving" type="checkbox" role="switch" name="after_saving" value="1" checked>
-                    <label class="form-check-label" for="switchAfterSaving">After saving the client, create a new work order for this client.</label>
+                    <label class="form-check-label" for="switchAfterSaving">After saving the client, create a new order again for this client.</label>
                 </div>
             </div>
             <div class="col-md text-end">

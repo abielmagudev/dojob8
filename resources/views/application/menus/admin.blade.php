@@ -2,8 +2,8 @@
 
 $items = [
     'Dashboard' => [
-        'route' => '#dashboard',
-        'active' => false,
+        'route' => route('dashboard.index'),
+        'active' => request()->routeIs('dashboard.*'),
     ],
     'Orders' => [
         'route' => route('orders.index'),

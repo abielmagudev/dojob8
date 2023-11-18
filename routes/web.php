@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
 use App\Http\Controllers\IntermediaryController;
@@ -22,7 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn() => redirect()->route('orders.index') );
+// Route::get('/', fn() => redirect()->route('orders.index') );
+
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
 Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');

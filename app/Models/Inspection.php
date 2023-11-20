@@ -74,6 +74,15 @@ class Inspection extends Model
         return $this->status == 0;
     }
 
+    public function hasObservations()
+    {
+        return ! empty($this->observations);
+    }
+
+    public function hasNotes()
+    {
+        return $this->notes <> null;
+    }
 
 
     public function inspector()
@@ -85,7 +94,6 @@ class Inspection extends Model
     {
         return $this->belongsTo(Order::class);
     }
-
 
 
     public static function getAllStatus()

@@ -14,6 +14,6 @@ class InspectorSeeder extends Seeder
      */
     public function run()
     {
-        Inspector::factory(2)->create();
+        Inspector::factory(3)->create();
     }
 }

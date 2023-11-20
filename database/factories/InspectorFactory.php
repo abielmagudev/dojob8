@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class InspectorFactory extends Factory
 {
+    public $fake_names = [
+        'City', 
+        'Lyte', 
+        'Roez', 
+        'CPS', 
+        'UsC', 
+        'SATx', 
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -14,7 +23,7 @@ class InspectorFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->randomElement(['City', 'Lytle', 'Rodriguez', 'Cps', 'Self']),
+            'name' => $this->faker->unique()->randomElement( $this->fake_names ),
             'notes' => $this->faker->optional()->sentence(),
         ];
     }

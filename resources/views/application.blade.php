@@ -25,15 +25,19 @@
         .dropdown-toggle-without-caret::after {
             content: none !important;
         }
-        .hover-bg-darken:hover {
-            background-color: rgba(0, 0, 0, 0.025) !important;
-        }
         .form-label-optional::after {
             color: #BBB;
             content: "(Optional)";
             /* font-size: .75rem; */
             font-style: italic;
             margin-left: 0.25rem;
+        }
+        .last-tr-borderless > tbody > tr:last-child > td,
+        .last-tr-borderless > tr:last-child > td {
+            border: none !important;
+        }
+        .hover-bg-darken:hover {
+            background-color: rgba(0, 0, 0, 0.025) !important;
         }
     </style>
 </head>

@@ -40,6 +40,17 @@ class Client extends Model
         ]);
     }
 
+    public function getAddressAttribute()
+    {
+        $data = [
+            $this->street,
+            $this->location_country_code,
+            $this->zip_code,
+        ];
+
+        return implode(', ', $data);
+    }
+
 
     // Scopes
 

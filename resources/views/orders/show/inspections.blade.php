@@ -22,21 +22,13 @@
     <br>
 
     <x-table class="align-middle">
-        <x-slot name="thead">
-            <tr>
-                <th>Schedule</th>
-                <th>Inspector</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-        </x-slot>
         @foreach($order->inspections->sortByDesc('scheduled_date')->load('inspector') as $inspection)
         <tr>
-            <td class="text-nowrap ">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
-            <td>{{ $inspection->inspector->name }}</td>
             <td style="max-width:64px">
                 <x-custom.badge-status :color="$inspection->status_color">{{ $inspection->status_label }}</x-custom.badge-status>
             </td>
+            <td class="text-nowrap ">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
+            <td>{{ $inspection->inspector->name }}</td>
             <td class="text-end">
                 <a href="{{ route('inspections.edit', [$inspection, 'back' => 'order']) }}" class="btn btn-outline-warning">
                     <i class="bi bi-pencil-fill"></i>

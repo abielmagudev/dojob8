@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             JobSeeder::class,
             OrderSeeder::class,
             InspectorSeeder::class,
+            InspectionSeeder::class,
             ExtensionSeeder::class,
         ]);
     }

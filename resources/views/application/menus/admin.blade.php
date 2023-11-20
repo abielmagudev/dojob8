@@ -13,9 +13,9 @@ $items = [
         'route' => route('jobs.index'),
         'active' => request()->routeIs('jobs.*') || request()->routeIs('extensions.*'),
     ],
-    'Inspectors' => [
-        'route' => route('inspectors.index'),
-        'active' => request()->routeIs('inspectors.*'),
+    'Inspections' => [
+        'route' => route('inspections.index'),
+        'active' => request()->routeIs('inspections.*') || request()->routeIs('inspectors.*'),
     ],
     'Staff' => [
         'route' => '#employees-crews',

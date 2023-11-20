@@ -1,35 +1,40 @@
 <x-card class="h-100" title="Inspections">
-    <small class="text-secondary">Successful inspections</small>
-    <p>1 / {{ $order->job->successful_inspections }}</p>
+    <x-slot name="options">
+        <a href="{{ route('inspections.create', $order) }}" class="btn btn-primary">
+            <b>+</b>
+        </a>
+    </x-slot>
 
-    <table class="table table-sm table-borderless">
+    <div class="hstack justify-content-between text-center text-uppercase ">
+        <div>
+            <small class="d-block text-secondary">Total</small>
+            <b>{{ $order->inspections->count() }}</b>
+        </div>
+        <div>
+            <small class="d-block text-secondary">Approved</small>
+            <b>{{ $order->inspections->where('is_approved', 1)->count() }}</b>
+        </div>
+        <div>
+            <small class="d-block text-secondary">Required</small>
+            <b>{{ $order->job->successful_inspections }}</b>
+        </div>
+    </div>
+    <br>
+
+    <x-table class="align-middle">
+        @foreach($order->inspections->sortByDesc('id') as $inspection)
         <tr>
-            <td>Inspector</td>
-            <td class="text-nowrap ">{{ date('Y-m-d') }}</td>
+            <td class="text-nowrap ">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
+            <td>{{ $inspection->inspector->name }}</td>
             <td>
-                <div class="badge w-100 text-bg-dark">Pending</div>
+                <span class="badge text-uppercase w-100 text-bg-{{ $inspection->status_color }}">{{ $inspection->status_label }}</span>
+            </td>
+            <td class="text-end">
+                <a href="{{ route('inspections.edit', [$inspection, 'back' => 'order']) }}" class="btn btn-warning">
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
             </td>
         </tr>
-        <tr>
-            <td>Inspector</td>
-            <td class="text-nowrap ">{{ date('Y-m-d') }}</td>
-            <td>
-                <div class="badge w-100 text-bg-danger">Denied</div>
-            </td>
-        </tr>
-        <tr>
-            <td>Inspector</td>
-            <td class="text-nowrap ">{{ date('Y-m-d') }}</td>
-            <td>
-                <div class="badge w-100 text-bg-success">Passed</div>
-            </td>
-        </tr>
-        <tr>
-            <td>Inspector</td>
-            <td class="text-nowrap ">{{ date('Y-m-d') }}</td>
-            <td>
-                <div class="badge w-100 text-bg-danger">Denied</div>
-            </td>
-        </tr>
-    </table>
+        @endforeach
+    </x-table>
 </x-card>

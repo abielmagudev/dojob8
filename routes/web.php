@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
+use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectorController;
 use App\Http\Controllers\IntermediaryController;
 use App\Http\Controllers\JobController;
@@ -41,6 +42,9 @@ Route::resource('clients', ClientController::class);
 
 Route::resource('intermediaries', IntermediaryController::class);
 Route::resource('inspectors', InspectorController::class);
+
+Route::resource('inspections', InspectionController::class)->except('create');
+Route::get('inspections/create/{order}', [InspectionController::class, 'create'])->name('inspections.create');
 
 Route::resource('orders', OrderController::class)->except('create');
 Route::get('orders/create/{client}', [OrderController::class, 'create'])->name('orders.create');

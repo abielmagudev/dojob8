@@ -83,4 +83,9 @@ class Order extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function inspections()
+    {
+        return $this->hasMany(Inspection::class);
+    }
 }

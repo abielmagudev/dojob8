@@ -24,11 +24,11 @@
     <x-table class="align-middle">
         @foreach($order->inspections->sortByDesc('scheduled_date')->load('inspector') as $inspection)
         <tr>
-            <td style="max-width:64px">
+            <td class="text-center" style="max-width:64px">
                 <x-custom.badge-status :color="$inspection->status_color">{{ $inspection->status_label }}</x-custom.badge-status>
             </td>
-            <td class="text-nowrap ">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
-            <td>{{ $inspection->inspector->name }}</td>
+            <td class="text-center text-nowrap">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
+            <td class="text-center">{{ $inspection->inspector->name }}</td>
             <td class="text-end">
                 <a href="{{ route('inspections.edit', [$inspection, 'back' => 'order']) }}" class="btn btn-outline-warning">
                     <i class="bi bi-pencil-fill"></i>

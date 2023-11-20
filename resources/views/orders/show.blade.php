@@ -30,6 +30,8 @@
     <div class="col-md mb-4">
         @include('orders.show.inspections')
     </div>
+</div>
+<div class="row">
     <div class="col-md mb-4">
         @include('orders.show.comments')
     </div>

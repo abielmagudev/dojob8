@@ -1,13 +1,13 @@
 <x-card title="Participants" class="h-100">
-    <small class="text-secondary">Crew</small>
-    <p>Sharks</p>
+    <x-custom.p-label label="Crew">
+        Sharks
+    </x-custom.p-label>
 
-    <small class="text-secondary">Operators</small>
-    <p>Pedro, Pancho, Paco</p>
+    <x-custom.p-label label="Operators">
+        Pedro, Pancho, Paco
+    </x-custom.p-label>
 
-    <small class="text-secondary">Intermediary</small>
-    <p>Road Runner (RR)</p>
-
-    <small class="text-secondary">Inspectors</small>
-    <p>Moi Yette</p>
+    <x-custom.p-label label="Intermediary">
+        Road Runner (RR)
+    </x-custom.p-label>
 </x-card>

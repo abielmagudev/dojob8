@@ -1,29 +1,34 @@
-<x-card class="h-100" title="Job">    
-    <small class="text-secondary">Name</small>
-    <p class="mb-0">
-        <b>{{ $order->job->name }}</b>
-    </p>
-    <p>
+<x-card class="h-100" title="Job">
+    <x-custom.p-label label="Status">
+        <x-custom.badge-status>{{ $order->status ?? 'Done' }}</x-custom.badge-status>
+    </x-custom.p-label>
+
+    <x-custom.p-label label="Name">
+        <span class="d-block">{{ $order->job->name }}</span>
         <small>{{ $order->job->description }}</small>
-    </p>
-    
-    <small class="text-secondary">Status</small>
-    <p>
-        <span class="badge text-bg-warning">Started</span>
-    </p>
-
-    <small class="text-secondary">Created by</small>
-    <p>Username | {{ now() }}</p>
-
-    <small class="text-secondary">Updated by</small>
-    <p>Username | {{ now() }}</p>
+    </x-custom.p-label>
 
     @if( $order->job->hasExtensions() )
-    <small class="text-secondary">Extensions</small>
-
-    @foreach($order->job->extensions as $extension)
-    <div>{{ $extension->name }}</div>
-    @endforeach
-
+    <x-custom.p-label label="Extensions">
+        @foreach($order->job->extensions as $extension)
+        <div>{{ $extension->name }}</div>
+        @endforeach
+    </x-custom.p-label>
     @endif
+
+    <x-custom.p-label label="Approved inspections required">
+        {{ $order->job->successful_inspections }}
+    </x-custom.p-label>
+
+    <x-custom.p-label label="Notes">
+        {{ $order->notes }}
+    </x-custom.p-label>
+
+    <x-custom.p-label label="Created by">
+        Username, {{ now() }}
+    </x-custom.p-label>
+
+    <x-custom.p-label label="Updated by">
+        Username, {{ now() }}
+    </x-custom.p-label>
 </x-card>

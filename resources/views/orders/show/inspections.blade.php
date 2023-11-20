@@ -5,7 +5,7 @@
         </a>
     </x-slot>
 
-    <div class="hstack justify-content-between text-center text-uppercase ">
+    <div class="hstack justify-content-around text-center text-uppercase">
         <div>
             <small class="d-block text-secondary">Total</small>
             <b>{{ $order->inspections->count() }}</b>
@@ -14,23 +14,27 @@
             <small class="d-block text-secondary">Approved</small>
             <b>{{ $order->inspections->where('is_approved', 1)->count() }}</b>
         </div>
-        <div>
-            <small class="d-block text-secondary">Required</small>
-            <b>{{ $order->job->successful_inspections }}</b>
-        </div>
     </div>
     <br>
 
     <x-table class="align-middle">
-        @foreach($order->inspections->sortByDesc('id') as $inspection)
+        <x-slot name="thead">
+            <tr>
+                <th>Schedule</th>
+                <th>Inspector</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </x-slot>
+        @foreach($order->inspections->sortByDesc('id')->load('inspector') as $inspection)
         <tr>
             <td class="text-nowrap ">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
             <td>{{ $inspection->inspector->name }}</td>
-            <td>
-                <span class="badge text-uppercase w-100 text-bg-{{ $inspection->status_color }}">{{ $inspection->status_label }}</span>
+            <td style="max-width:64px">
+                <x-custom.badge-status :color="$inspection->status_color">{{ $inspection->status_label }}</x-custom.badge-status>
             </td>
             <td class="text-end">
-                <a href="{{ route('inspections.edit', [$inspection, 'back' => 'order']) }}" class="btn btn-warning">
+                <a href="{{ route('inspections.edit', [$inspection, 'back' => 'order']) }}" class="btn btn-outline-warning">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>

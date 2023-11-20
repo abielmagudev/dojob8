@@ -12,13 +12,7 @@
 
     {{-- Inspection --}}
     <div class="col-sm">
-        <x-card title="Information" class="h-100">
-            <x-slot name="options">
-                <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-warning">
-                    <i class="bi bi-pencil-fill"></i>
-                </a>
-            </x-slot>
-        
+        <x-card title="Information" class="h-100">        
             <p>
                 <small class="d-block text-secondary">Status</small>
                 <span class="badge text-uppercase text-bg-{{ $inspection->status_color }}">{{ $inspection->status_label }}</span>

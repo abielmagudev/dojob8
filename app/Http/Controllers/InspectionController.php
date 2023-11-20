@@ -47,7 +47,6 @@ class InspectionController extends Controller
         return view('inspections.edit', [
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
-            'back' => $request->get('back') == 'order' ? route('orders.show', $inspection->order_id) : route('inspections.show', $inspection), 
         ]);
     }
 

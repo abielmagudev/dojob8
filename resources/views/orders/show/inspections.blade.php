@@ -26,7 +26,7 @@
                 <th></th>
             </tr>
         </x-slot>
-        @foreach($order->inspections->sortByDesc('id')->load('inspector') as $inspection)
+        @foreach($order->inspections->sortByDesc('scheduled_date')->load('inspector') as $inspection)
         <tr>
             <td class="text-nowrap ">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
             <td>{{ $inspection->inspector->name }}</td>

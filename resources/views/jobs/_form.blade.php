@@ -10,7 +10,7 @@
     <x-error name="description" />
 </div>
 <div class="mb-3">
-    <label for="inputSuccessfulInspections" class="form-label">Successful inspections</label>
-    <input type="number" step="1" min="0" class="form-control" id="inputSuccessfulInspections" name="successful_inspections" value="{{ old('successful_inspections', ($job->successful_inspections ?? 0)) }}" required>
-    <x-error name="successful_inspections" />
+    <label for="inputApprovedInspectionsRequired" class="form-label">Approved inspections required</label>
+    <input type="number" step="1" min="0" class="form-control" id="inputApprovedInspectionsRequired" name="approved_inspections_required" value="{{ old('approved_inspections_required', ($job->approved_inspections_required ?? 0)) }}" required>
+    <x-error name="approved_inspections_required" />
 </div>

@@ -14,6 +14,10 @@
             <small class="d-block text-secondary">Approved</small>
             <b>{{ $order->inspections->where('is_approved', 1)->count() }}</b>
         </div>
+        <div>
+            <small class="d-block text-secondary">Required</small>
+            <b>{{ $order->job->approved_inspections_required }}</b>
+        </div>
     </div>
     <br>
 

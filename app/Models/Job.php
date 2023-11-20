@@ -14,7 +14,7 @@ class Job extends Model
     protected $fillable = [
         'name',
         'description',
-        'successful_inspections',
+        'approved_inspections_required',
         'is_available',
     ];
 

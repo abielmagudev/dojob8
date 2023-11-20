@@ -15,11 +15,7 @@
         @endforeach
     </x-custom.p-label>
     @endif
-
-    <x-custom.p-label label="Approved inspections required">
-        {{ $order->job->successful_inspections }}
-    </x-custom.p-label>
-
+    
     <x-custom.p-label label="Notes">
         {{ $order->notes }}
     </x-custom.p-label>

@@ -25,7 +25,7 @@ class JobSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'successful_inspections' => [
+            'approved_inspections_required' => [
                 'required',
                 'integer',
                 'min:0',

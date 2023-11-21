@@ -23,10 +23,13 @@
         @include('orders.show.timeline')
     </div>
 </div>
+
+@include('orders.show.inspections')
+<br>
+@include('orders.show.media')
+<br>
+
 <div class="row">
-    <div class="col-md mb-4">
-        @include('orders.show.inspections')
-    </div>
     <div class="col-md mb-4">
         @include('orders.show.comments')
     </div>
@@ -34,5 +37,4 @@
         @include('orders.show.log')
     </div>
 </div>
-@include('orders.show.media')
 @endsection

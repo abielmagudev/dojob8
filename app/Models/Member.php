@@ -69,6 +69,11 @@ class Member extends Model
         return $this->birthdate->isBirthday();
     }
 
+    public function scopeOperative($query)
+    {
+        return $query->where('category', 'operative');
+    }
+
     
 
     public static function getScopes()

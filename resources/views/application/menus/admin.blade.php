@@ -18,8 +18,8 @@ $items = [
         'active' => request()->routeIs('inspections.*') || request()->routeIs('inspectors.*'),
     ],
     'Staff' => [
-        'route' => '#employees-crews',
-        'active' => false,
+        'route' => route('members.index'),
+        'active' => request()->routeIs('members.*') || request()->routeIs('crews.*'),
     ],
     'Intermediaries' => [
         'route' => route('intermediaries.index'),

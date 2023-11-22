@@ -1,0 +1,3 @@
+<x-modal id="helpScopesModal" title="Scopes" header-close>
+    ...
+</x-modal>

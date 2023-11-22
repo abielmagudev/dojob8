@@ -1,0 +1,3 @@
+<x-modal id="helpCategoriesModal" title="Categories" header-close>
+    ...
+</x-modal>

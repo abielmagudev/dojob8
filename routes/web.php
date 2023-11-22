@@ -9,6 +9,7 @@ use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectorController;
 use App\Http\Controllers\IntermediaryController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderJobExtensionsAjaxController;
 use App\Http\Controllers\UserController;
@@ -39,6 +40,8 @@ Route::resource('jobs', JobController::class);
 
 Route::get('clients/ajax', [ClientAjaxController::class, 'search'])->name('clients.ajax.search');
 Route::resource('clients', ClientController::class);
+
+Route::resource('members', MemberController::class);
 
 Route::resource('intermediaries', IntermediaryController::class);
 Route::resource('inspectors', InspectorController::class);

@@ -17,7 +17,6 @@
             <tr>
                 <th></th>
                 <th>Name</th>
-                <th>Alias</th>
                 <th>Contact</th>
                 <th>Phone</th>
                 <th>Mobile</th>
@@ -27,9 +26,12 @@
         </x-slot>
         @foreach($intermediaries as $intermediary)
         <tr>
-            <x-custom.td-available :model="$intermediary"/>
-            <td>{{ $intermediary->name }}</td>
-            <td>{{ $intermediary->alias }}</td>
+            <td>
+                <span data-bs-toggle="tooltip" data-bs-title="{{ $intermediary->isAvailable() ? 'Available' : 'Unavailable' }}">
+                    <x-custom.circle-off-on :switcher="$intermediary->isAvailable()" />
+                </span>
+            </td>
+            <td>{{ $intermediary->name }} <em>({{ $intermediary->alias }})</em></td>
             <td>{{ $intermediary->contact }}</td>
             <td>{{ $intermediary->phone_number }}</td>
             <td>{{ $intermediary->mobile_number }}</td>

@@ -28,6 +28,8 @@ class CreateIntermediariesTable extends Migration
             $table->string('email')->nullable();
             $table->text('notes')->nullable();
             $table->boolean('is_available')->default(1);
+            $table->foreignId('created_by');
+            $table->foreignId('updated_by');
             $table->timestamps();
             $table->softDeletes();
         });

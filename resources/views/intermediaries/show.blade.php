@@ -16,9 +16,8 @@
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </x-slot>
-        
+            
             <p>
-                <small class="text-secondary d-block">Status</small>
                 @if( $intermediary->isAvailable() )
                 <span class="badge text-bg-success">Available</span>
 
@@ -27,24 +26,24 @@
                 
                 @endif
             </p>
-
-            <p>
-                <small class="text-secondary">Contact</small>
+            <x-custom.p-label label="Contact">
                 <span class="d-block">{{ $intermediary->contact }}</span>
                 <span class="d-block">{{ $intermediary->phone_number }}</span>
                 <span class="d-block">{{ $intermediary->mobile_number }}</span>
-                <span class="d-block">{{ $intermediary->email }}</span>
-            </p>
-            <p>
-                <small class="text-secondary">Address</small>
+                <span>{{ $intermediary->email }}</span>
+            </x-custom.p-label>
+
+            <x-custom.p-label label="Address">
                 <span class="d-block">{{ $intermediary->street }}</span>
                 <span class="d-block">{{ $intermediary->location_country_code }}</span>
                 <span class="d-block">{{ $intermediary->zip_code }}</span>
-            </p>
-            <p>
-                <small class="text-secondary">Notes</small>
-                <em class="d-block ">{{ $intermediary->notes }}</em>
-            </p>
+            </x-custom.p-label>
+
+            <x-custom.p-label label="Notes">
+                <em>{{ $intermediary->notes }}</em>
+            </x-custom.p-label>
+
+            <x-custom.p-label-modifiers :model="$intermediary" />
         </x-card>
     </div>
 

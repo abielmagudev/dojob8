@@ -98,7 +98,7 @@
     <x-error name="city" />
 </x-custom.form-control-horizontal>
 
-<x-custom.form-control-horizontal class="align-items-center">
+<x-custom.form-control-horizontal>
     <x-slot name="label">
         <label for="notesTextarea" class="form-label form-label-optional">Notes</label>
     </x-slot>
@@ -106,3 +106,16 @@
     <textarea id="notesTextarea" class="form-control {{ bsInputInvalid( $errors->has('notes') ) }}" rows="3" name="notes">{{ old('notes', $intermediary->notes) }}</textarea>
     <x-error name="notes" />
 </x-custom.form-control-horizontal>
+
+@if( $intermediary->id )
+<br>
+<div class="mb-3">
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="availableSwitch" name="available" value="1" {{ isChecked( $intermediary->isAvailable() ) }}>
+        <label class="form-check-label" for="availableSwitch">
+            <b>Available.</b>
+            <span>If you deactivate this option, you will not be able to use this intermediary for new orders and all of his user accounts will also be deactivated.</span>
+        </label>
+    </div>
+</div>
+@endif

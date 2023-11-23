@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\CountryManager;
 use App\Models\Kernel\HasAvailableTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
+use App\Models\Kernel\HasModifiersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,8 +15,9 @@ class Intermediary extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    use HasCountryStateCodesTrait;
     use HasAvailableTrait;
+    use HasCountryStateCodesTrait;
+    use HasModifiersTrait;
     
     protected $fillable = [
         'name',
@@ -41,6 +43,16 @@ class Intermediary extends Model
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = strtolower($value);
+    }
+
+    public function isAvailable()
+    {
+        return (bool) $this->is_available;
+    }
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('is_available', 1);
     }
 
     public function orders()

@@ -21,9 +21,7 @@ class InspectorObserver
 
     public function updating(Inspector $inspector)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $inspector->updated_by = $fake_user_id;
+        $inspector->updated_by = mt_rand(1, 10);
     }
 
 
@@ -32,12 +30,17 @@ class InspectorObserver
         //
     }
 
+    public function deleting(Inspector $inspector)
+    {
+        $inspector->timestamps = false;
+        $inspector->deleted_by = mt_rand(1, 10);
+        $inspector->save();
+        $inspector->timtestamps = true;
+    }
+
     public function deleted(Inspector $inspector)
     {
-        $fake_user_id = mt_rand(1, 10);
 
-        $inspector->updated_by = $fake_user_id;
-        $inspector->save();
     }
 
     public function restored(Inspector $inspector)

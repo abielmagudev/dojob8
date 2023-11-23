@@ -19,6 +19,7 @@ class CreateInspectorsTable extends Migration
             $table->text('notes')->nullable();
             $table->foreignId('created_by');
             $table->foreignId('updated_by');
+            $table->foreignId('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

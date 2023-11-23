@@ -1,20 +1,4 @@
 @csrf
-@if( $member->id <> null ) 
-<x-custom.form-control-horizontal>
-    <x-slot name="label">
-        <label for="activeSwitch" class="form-label">Active</label>
-    </x-slot>
-
-    <div class="form-control">
-        <div class="form-check form-switch">
-            <input class="form-check-input" id="isActiveSwitch" type="checkbox" role="switch" name="is_active" value="1" {{ isChecked( old('is_active', $member->is_active) == 1 ) }}>
-            <label class="form-check-label" for="isActiveSwitch">If deactivated, it will not be able to be used in new orders, it will be removed from your crew and your user account will be deactivated.</label>
-        </div>
-    </div>
-    <x-error name="is_active" />
-</x-custom.form-control-horizontal>
-@endif
-
 <x-custom.form-control-horizontal>
     <x-slot name="label">
         <label for="nameInput" class="form-label">Name</label>
@@ -124,3 +108,14 @@
     <textarea id="notesTextarea" class="form-control" rows="3" name="notes">{{ old('notes', $member->notes) }}</textarea>
     <x-error name="notes" />
 </x-custom.form-control-horizontal>
+
+@if( $member->id <> null ) 
+<br>
+<div class="mb-3">
+    <div class="form-check form-switch">
+        <input class="form-check-input" id="isActiveSwitch" type="checkbox" role="switch" name="is_active" value="1" {{ isChecked( old('is_active', $member->is_active) == 1 ) }}>
+        <label class="form-check-label" for="isActiveSwitch"><b>Active.</b> If deactivated, it will not be able to be used in new orders, it will be removed from your crew and your user account will be deactivated.</label>
+    </div>
+    <x-error name="is_active" />
+</div>
+@endif

@@ -24,6 +24,8 @@
 <x-custom.modal-confirm-delete :route="route('members.destroy', $member)" concept="member">
     <p>¿Do you want to continue to delete the member <br> <b><?= $member->fullname ?> (role)</b>?</p>
 </x-custom.modal-confirm-delete>
+
 @include('members._modal-help-categories')
 @include('members._modal-help-scopes')
+
 @endsection

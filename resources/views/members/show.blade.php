@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-sm">
+    <div class="col-md col-md-4">
         <x-card title="Information">
             <x-slot name="options">
                 <a href="{{ route('members.edit', $member) }}" class="btn btn-warning">
@@ -17,9 +17,9 @@
                 </a>
             </x-slot>
 
-            <x-custom.p-label label="Status">
+            <p>
                 <x-badge :color="$member->isActive() ? 'success' : 'dark'" class="text-uppercase">{{ $member->isActive() ? 'Active' : 'Inactive' }}</x-badge>
-            </x-custom.p-label>
+            </p>
 
             <x-custom.p-label label="Birthdate">
                 {{ $member->birthdate_human }}
@@ -44,16 +44,13 @@
             <x-custom.p-label label="Notes">
                 <em>{{ $member->notes }}</em>
             </x-custom.p-label>
-        </x-card>
-    </div>
-    <div class="col-sm">
-        <x-card title="Crew">
 
+            <x-custom.p-label-modifiers :model="$member" />
         </x-card>
     </div>
-    <div class="col-sm">
+    <div class="col-md col-md-8">
         <x-card title="Log">
-
+            
         </x-card>
     </div>
 </div>

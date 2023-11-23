@@ -5,8 +5,10 @@ namespace App\Providers;
 // Models / Observers
 use App\Models\Client;
 use App\Models\Intermediary;
+use App\Models\Member;
 use App\Observers\ClientObserver;
 use App\Observers\IntermediaryObserver;
+use App\Observers\MemberObserver;
 // Dependences 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -37,5 +39,6 @@ class EventServiceProvider extends ServiceProvider
 
         Client::observe(ClientObserver::class);
         Intermediary::observe(IntermediaryObserver::class);
+        Member::observe(MemberObserver::class);
     }
 }

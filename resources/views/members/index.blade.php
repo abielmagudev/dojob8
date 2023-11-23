@@ -32,7 +32,9 @@
         @foreach($members as $member)
         <tr>
             <td style="width:1%">
-                <x-custom.circle-off-on :switch="$member->isActive()" />
+                <span data-bs-toggle="tooltip" data-bs-title="{{ $member->isActive() ? 'Active' : 'Inactive' }}">
+                    <x-custom.circle-off-on :switcher="$member->isActive()" />
+                </span>
             </td>
             <td>{{ $member->fullname }}</td>
             <td>{{ $member->phone_number }}</td>
@@ -40,9 +42,6 @@
             <td>{{ $member->email }}</td>
             <td></td>
             <td class="text-end">
-                <a href="{{ route('members.edit', $member) }}" class="btn btn-outline-warning">
-                    <i class="bi bi-pencil-fill"></i>
-                </a>
                 <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>

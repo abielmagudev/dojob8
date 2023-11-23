@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             InspectorSeeder::class,
             InspectionSeeder::class,
             MemberSeeder::class,
+            CrewSeeder::class,
             ExtensionSeeder::class,
         ]);
     }

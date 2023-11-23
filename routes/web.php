@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CrewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
@@ -42,6 +43,7 @@ Route::get('clients/ajax', [ClientAjaxController::class, 'search'])->name('clien
 Route::resource('clients', ClientController::class);
 
 Route::resource('members', MemberController::class);
+Route::resource('crews', CrewController::class);
 
 Route::resource('intermediaries', IntermediaryController::class);
 Route::resource('inspectors', InspectorController::class);

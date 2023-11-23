@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Kernel\HasCountryStateCodesTrait;
+use App\Models\Kernel\HasModifiersTrait;
+use App\Models\Kernel\HasPreviousNextTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +14,8 @@ class Client extends Model
     use HasFactory;
     use SoftDeletes;
     use HasCountryStateCodesTrait;
+    use HasModifiersTrait;
+    use HasPreviousNextTrait;
 
     protected $fillable = [
         'name',

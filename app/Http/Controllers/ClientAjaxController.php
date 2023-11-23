@@ -19,7 +19,7 @@ class ClientAjaxController extends Controller
         return response()->json([
             'status' => 200, 
             'search' => $request->search,
-            'clients' => $request->filled('search') ? Client::search($request->search)->limit(5)->get() : [],
+            'clients' => $request->filled('search') ? Client::search($request->search)->limit(7)->get() : [],
         ]);
     }
 }

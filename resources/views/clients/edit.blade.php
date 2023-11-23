@@ -21,9 +21,7 @@
     </form>
 </x-card>
 <br>
-{{-- 
 <x-custom.modal-confirm-delete route="{{ route('clients.destroy', $client) }}" concept="client">
     <p>¿Do you want to continue to delete the client <br> <b><?= $client->fullname ?></b>?</p>
 </x-custom.modal-confirm-delete>
---}}
 @endsection

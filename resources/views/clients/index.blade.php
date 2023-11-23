@@ -32,7 +32,7 @@
             <td class="text-nowrap">{{ $client->phone_number }}</td>
             <td class="text-center">
                 @if( $client->orders_count )
-                <span class="badge rounded text-bg-primary">{{ $client->orders_count }}</span>
+                <span class="badge rounded text-bg-dark">{{ $client->orders_count }}</span>
                 @endif
             </td>
             <td class="text-nowrap text-end">

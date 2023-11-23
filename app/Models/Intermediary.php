@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\CountryManager;
-use App\Models\Kernel\HasAvailableTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasModifiersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +13,6 @@ class Intermediary extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    use HasAvailableTrait;
     use HasCountryStateCodesTrait;
     use HasModifiersTrait;
     

@@ -1,5 +1,5 @@
 <div class="btn-group">
-    <a href="{{ $attributes->get('prev') ?? '#!' }}" class="btn btn-primary {{ $attributes->get('prev') ?: 'disabled' }}">
+    <a href="{{ $attributes->get('previous') ?? '#!' }}" class="btn btn-primary {{ $attributes->get('previous') ?: 'disabled' }}">
         <i class="bi bi-caret-left-fill"></i>
     </a>
     <a href="{{ $attributes->get('next') ?? '#!' }}" class="btn btn-primary {{ $attributes->get('next') ?: 'disabled' }}">

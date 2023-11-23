@@ -15,8 +15,10 @@ class CreateInspectorsTable extends Migration
     {
         Schema::create('inspectors', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->index();
+            $table->string('name')->unique();
             $table->text('notes')->nullable();
+            $table->foreignId('created_by');
+            $table->foreignId('updated_by');
             $table->timestamps();
             $table->softDeletes();
         });

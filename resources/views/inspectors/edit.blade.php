@@ -4,7 +4,7 @@
 <x-header title="Inspectors" :breadcrumbs="[
     'Back to inspectors' => route('inspectors.index'),
     $inspector->name => route('inspectors.show', $inspector),
-    'Edit'
+    'Edit' => null,
 ]" />
 @endsection
 

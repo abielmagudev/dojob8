@@ -1,10 +1,17 @@
 @extends('application')
 
 @section('header')
-<x-header title="Inspector {{ $inspector->name }}" :breadcrumbs="[
+<x-header title="{{ $inspector->name }}" :breadcrumbs="[
     'Back to inspectors' => route('inspectors.index'),
-    $inspector->id => null
-]" />
+    'Inspector' => null
+]">
+    <x-slot name="options">
+        <x-custom.pagination-simple-routes
+            :previous="$routes['previous']"
+            :next="$routes['next']"
+        />
+    </x-slot>
+</x-header>
 @endsection
 
 @section('content')
@@ -15,9 +22,10 @@
         </a>
     </x-slot>
 
-    <p>
-        <small class="d-block text-secondary">Notes</small>
+    <x-custom.p-label label="Notes">
         {{ $inspector->notes }}
-    </p>
+    </x-custom.p-label>
+
+    <x-custom.p-label-modifiers :model="$inspector" />
 </x-card>
 @endsection

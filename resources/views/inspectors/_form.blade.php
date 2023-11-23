@@ -5,7 +5,7 @@
     <x-error name="name" />
 </div>
 <div class="mb-3">
-    <label for="notesTextarea" class="form-label {{ bsInputInvalid( $errors->has('notes') ) }}">Notes</label>
+    <label for="notesTextarea" class="form-label form-label-optional {{ bsInputInvalid( $errors->has('notes') ) }}">Notes</label>
     <textarea id="notesTextarea" class="form-control" name="notes" rows="3">{{ old('notes', $inspector->notes) }}</textarea>
     <x-error name="notes" />
 </div>

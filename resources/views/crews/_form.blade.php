@@ -17,7 +17,7 @@
     <x-slot name="label">
         <label for="colorInput" class="form-label form-label-optional">Color</label>
     </x-slot>
-    <input type="color" class="form-control form-control-color" style="height:36px" name="color" value="{{ old('color', $crew->color) }}">
+    <input type="color" class="form-control form-control-color" style="width:80px" name="color" value="{{ old('color', $crew->color) }}">
 </x-custom.form-control-horizontal>
 <br>
 

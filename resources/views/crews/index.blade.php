@@ -16,28 +16,7 @@
         </a>
     </x-slot>
 
-    <div class="d-flex justify-content-center mb-4">
-        <div>
-            <span class="text-secondary">
-                <i class="bi bi-circle"></i>
-            </span>
-            <span>Inactive</span>
-        </div>
-        <div class="mx-3">
-            <span class="text-dark">
-                <i class="bi bi-question-circle-fill"></i>
-            </span>
-            <span>Colorless</span>
-        </div>
-        <div>
-            <span class="text-dark">
-                <i class="bi bi-circle-fill"></i>
-            </span>
-            <span>Colored</span>
-        </div>
-    </div>
-
-    <x-table class="align-middle ">
+    <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
                 <th></th>
@@ -51,17 +30,17 @@
         <tr>
             <td class="text-center" style="width:1%; font-size:1.25rem">
                 @if(! $crew->isActive() )
-                <span class="text-secondary">
+                <span class="text-secondary" data-bs-toggle="tooltip" data-bs-title="Inactive">
                     <i class="bi bi-circle"></i>
                 </span>
 
                 @elseif(! $crew->hasColor() )
-                <span class="text-dark">
+                <span class="text-dark" data-bs-toggle="tooltip" data-bs-title="No color">
                     <i class="bi bi-question-circle-fill"></i>
                 </span>
                     
                 @else
-                <span style="color:{{ $crew->color }}">
+                <span style="color:{{ $crew->color }}" data-bs-toggle="tooltip" data-bs-title="Active">
                     <i class="bi bi-circle-fill"></i>
                 </span>
 
@@ -74,10 +53,10 @@
             </td>
             <td class="text-end">
                 <button class="btn btn-outline-primary" type="button">
-                    <i class="bi bi-people"></i>
+                    <i class="bi bi-people-fill"></i>
                 </button>
-                <a href="{{ route('crews.edit', $crew) }}" class="btn btn-outline-warning">
-                    <i class="bi bi-pencil-fill"></i>
+                <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary">
+                    <i class="bi bi-eye-fill"></i>
                 </a>
             </td>
         </tr>        

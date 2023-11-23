@@ -33,8 +33,6 @@ class CrewController extends Controller
 
     public function show(Crew $crew)
     {
-        return redirect()->route('crews.index');
-
         return view('crews.show', [
             'crew' => $crew,
         ]);

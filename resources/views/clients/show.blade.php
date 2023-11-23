@@ -6,7 +6,7 @@
     'Client' => null
 ]">
     <x-slot name="options">
-        <x-custom.previous-next-route-buttons
+        <x-custom.pagination-simple-routes
             :previous="$routes['previous']" 
             :next="$routes['next']" 
         />

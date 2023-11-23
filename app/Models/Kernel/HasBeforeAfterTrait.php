@@ -2,14 +2,14 @@
 
 namespace App\Models\Kernel;
 
-trait HasPreviousNextTrait
+trait HasBeforeAfterTrait
 {
-    public function scopeWherePrevious($query, int $id, int $limit = 1)
+    public function scopeBefore($query, int $id, int $limit = 1)
     {
         return $query->where('id', '<', $id)->orderBy('id', 'desc')->limit($limit);
     }
 
-    public function scopeWhereNext($query, int $id, int $limit = 1)
+    public function scopeAfter($query, int $id, int $limit = 1)
     {
         return $query->where('id', '>', $id)->orderBy('id', 'asc')->limit($limit);
     }

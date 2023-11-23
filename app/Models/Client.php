@@ -13,9 +13,9 @@ class Client extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
     use HasModifiersTrait;
-    use HasBeforeAfterTrait;
 
     protected $fillable = [
         'name',

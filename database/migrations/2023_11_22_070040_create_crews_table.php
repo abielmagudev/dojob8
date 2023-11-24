@@ -20,8 +20,9 @@ class CreateCrewsTable extends Migration
             $table->string('color')->nullable();
             // $table->foreignId('member_id')->nullable(); // Leader
             $table->boolean('is_active')->default(true);
-            $table->foreignId('created_by');
-            $table->foreignId('updated_by');
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
+            $table->foreignId('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

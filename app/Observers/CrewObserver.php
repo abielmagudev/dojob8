@@ -3,25 +3,20 @@
 namespace App\Observers;
 
 use App\Models\Crew;
+use App\Observers\Kernel\HasObserverConstructor;
+use App\Observers\Kernel\HookUserSetters;
 
 class CrewObserver
 {
+    use HasObserverConstructor;
+    use HookUserSetters;
+
     public function creating(Crew $crew)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $crew->fill([
-            'created_by' => $fake_user_id,
-            'updated_by' => $fake_user_id,
-        ]);
+        $this->creatingBy($crew, mt_rand(1, 10));
+        $this->updatingBy($crew, mt_rand(1, 10));
     }
 
-    /**
-     * Handle the Crew "created" event.
-     *
-     * @param  \App\Models\Crew  $crew
-     * @return void
-     */
     public function created(Crew $crew)
     {
         //
@@ -29,50 +24,29 @@ class CrewObserver
 
     public function updating(Crew $crew)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $crew->updated_by = $fake_user_id;
+        $this->updatingBy($crew, mt_rand(1, 10));
     }
 
-    /**
-     * Handle the Crew "updated" event.
-     *
-     * @param  \App\Models\Crew  $crew
-     * @return void
-     */
     public function updated(Crew $crew)
     {
         //
     }
 
-    /**
-     * Handle the Crew "deleted" event.
-     *
-     * @param  \App\Models\Crew  $crew
-     * @return void
-     */
+    public function deleting(Crew $crew)
+    {
+        $this->deletingBy($crew, mt_rand(1, 10));
+    }
+
     public function deleted(Crew $crew)
     {
         //
     }
 
-    /**
-     * Handle the Crew "restored" event.
-     *
-     * @param  \App\Models\Crew  $crew
-     * @return void
-     */
     public function restored(Crew $crew)
     {
         //
     }
 
-    /**
-     * Handle the Crew "force deleted" event.
-     *
-     * @param  \App\Models\Crew  $crew
-     * @return void
-     */
     public function forceDeleted(Crew $crew)
     {
         //

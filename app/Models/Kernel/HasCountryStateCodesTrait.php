@@ -2,7 +2,7 @@
 
 namespace App\Models\Kernel;
 
-use App\Helpers\CountryManager;
+use App\Suppliers\CountryManager;
 
 trait HasCountryStateCodesTrait
 {

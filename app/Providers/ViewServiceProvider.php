@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Helpers\CountryManager;
+use App\Suppliers\CountryManager;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 

@@ -10,10 +10,8 @@ class ClientObserver
     {
         $fake_user_id = mt_rand(1, 10);
 
-        $client->fill([
-            'created_by' => $fake_user_id,
-            'updated_by' => $fake_user_id,
-        ]);
+        $client->created_by = $fake_user_id;
+        $client->updated_by = $fake_user_id;
     }
 
     public function created(Client $client)
@@ -23,44 +21,32 @@ class ClientObserver
 
     public function updating(Client $client)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $client->updated_by = $fake_user_id;
+        $client->updated_by = mt_rand(1, 10);
     }
 
     public function updated(Client $client)
     {
-        
+        //
     }
 
-    /**
-     * Handle the Client "deleted" event.
-     *
-     * @param  \App\Models\Client  $client
-     * @return void
-     */
+    public function deleting(Client $client)
+    {
+        $client->timestamps = false;
+        $client->deleted_by = mt_rand(1, 10);
+        $client->save();
+        $client->timtestamps = true;
+    }
+
     public function deleted(Client $client)
     {
         //
     }
 
-    /**
-     * Handle the Client "restored" event.
-     *
-     * @param  \App\Models\Client  $client
-     * @return void
-     */
     public function restored(Client $client)
     {
         //
     }
 
-    /**
-     * Handle the Client "force deleted" event.
-     *
-     * @param  \App\Models\Client  $client
-     * @return void
-     */
     public function forceDeleted(Client $client)
     {
         //

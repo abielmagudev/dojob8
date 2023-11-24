@@ -6,7 +6,7 @@
     'Intermediary' => null,
 ]">
     <x-slot name="options">
-        <x-custom.pagination-simple-routes 
+        <x-paginate
             :previous="$routes['previous']"
             :next="$routes['next']"
         />

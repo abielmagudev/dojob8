@@ -48,5 +48,5 @@
     </x-table>
 </x-card>
 <br>
-<x-pagination-simple :collection="$clients" />
+<x-pagination-simple-eloquent :collection="$clients" />
 @endsection

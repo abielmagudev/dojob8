@@ -39,5 +39,5 @@
     </x-table>
 </x-card>
 <br>
-<x-pagination-simple :collection="$inspectors" />
+<x-pagination-simple-eloquent :collection="$inspectors" />
 @endsection

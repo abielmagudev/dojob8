@@ -6,7 +6,10 @@
     'Order' => null,
 ]">
     <x-slot name="options">
-        <x-custom.cursor-routes :prev="$prev_order ? route('orders.show', $prev_order) : false" :next="$next_order ? route('orders.show', $next_order) : false" />
+        <x-paginate 
+            :previous="$prev_order ? route('orders.show', $prev_order) : false" 
+            :next="$next_order ? route('orders.show', $next_order) : false" 
+        />
     </x-slot>
 </x-header>
 @endsection

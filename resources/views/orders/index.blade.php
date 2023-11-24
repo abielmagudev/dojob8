@@ -67,6 +67,6 @@
     </div>
 </x-card>
 <br>
-<x-pagination-simple :collection="$orders" />
+<x-pagination-simple-eloquent :collection="$orders" />
 @include('clients.modal-search')
 @endsection

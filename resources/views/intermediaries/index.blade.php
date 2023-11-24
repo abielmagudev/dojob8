@@ -46,5 +46,5 @@
     </x-table>
 </x-card>
 <br>
-<x-pagination-simple :collection="$intermediaries" />
+<x-pagination-simple-eloquent :collection="$intermediaries" />
 @endsection

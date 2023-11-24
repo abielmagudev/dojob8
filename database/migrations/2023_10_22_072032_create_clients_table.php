@@ -27,8 +27,8 @@ class CreateClientsTable extends Migration
             $table->string('mobile_number')->nullable()->index();
             $table->string('email')->nullable()->index();
             $table->text('notes')->nullable();
-            $table->foreignId('created_by');
-            $table->foreignId('updated_by');
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
             $table->foreignId('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();

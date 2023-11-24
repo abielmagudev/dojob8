@@ -3,15 +3,18 @@
 namespace App\Observers;
 
 use App\Models\Client;
+use App\Observers\Kernel\HasObserverConstructor;
+use App\Observers\Kernel\HookUserSetters;
 
 class ClientObserver
 {
+    use HasObserverConstructor;
+    use HookUserSetters;
+
     public function creating(Client $client)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $client->created_by = $fake_user_id;
-        $client->updated_by = $fake_user_id;
+        $this->storingBy($client, mt_rand(1, 10));
+        $this->updatingBy($client, mt_rand(1, 10));
     }
 
     public function created(Client $client)
@@ -21,7 +24,7 @@ class ClientObserver
 
     public function updating(Client $client)
     {
-        $client->updated_by = mt_rand(1, 10);
+        $this->updatingBy($client, mt_rand(1, 10));
     }
 
     public function updated(Client $client)
@@ -31,10 +34,7 @@ class ClientObserver
 
     public function deleting(Client $client)
     {
-        $client->timestamps = false;
-        $client->deleted_by = mt_rand(1, 10);
-        $client->save();
-        $client->timtestamps = true;
+        $this->deletingBy($client, mt_rand(1, 10));
     }
 
     public function deleted(Client $client)

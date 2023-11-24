@@ -32,7 +32,7 @@
         @foreach($members as $member)
         <tr>
             <td style="width:1%">
-                <span data-bs-toggle="tooltip" data-bs-title="{{ $member->isActive() ? 'Active' : 'Inactive' }}">
+                <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($member->active_status) }}">
                     <x-custom.circle-off-on :switcher="$member->isActive()" />
                 </span>
             </td>

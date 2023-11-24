@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasAvailableTrait;
+use App\Models\Kernel\HasAvailabilityTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
     use HasFactory;
-    use HasAvailableTrait;
+    use HasAvailabilityTrait;
 
     protected $fillable = [
         'name',
@@ -19,14 +19,16 @@ class Job extends Model
     ];
 
 
+    
     // Validators
-
+    
     public function hasExtensions(): bool
     {
         return (bool) ($this->extensions_count ?? $this->extensions->count());
     }
 
-    
+
+
     // Relationships
 
     public function extensions()

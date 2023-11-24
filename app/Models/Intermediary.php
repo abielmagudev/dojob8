@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasHookUsersTrait;
@@ -14,6 +15,7 @@ class Intermediary extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasAvailabilityTrait;
     use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
     use HasHookUsersTrait;
@@ -34,6 +36,9 @@ class Intermediary extends Model
         'is_available',
     ];
 
+
+    // Attributes
+
     public function setContactAttribute($value)
     {
         $this->attributes['contact'] = Str::title($value);
@@ -46,19 +51,13 @@ class Intermediary extends Model
 
     public function getStatusAttribute()
     {
-        return $this->isAvailable() ? 'available' : 'unavailable';
+        return $this->isAvailable() ? 'available' : 'not available';
     }
 
-    public function isAvailable()
-    {
-        return (bool) $this->is_available;
-    }
 
-    public function scopeAvailable($query)
-    {
-        return $query->where('is_available', 1);
-    }
 
+    // Relationships
+    
     public function orders()
     {
         return $this->hasMany(Order::class);

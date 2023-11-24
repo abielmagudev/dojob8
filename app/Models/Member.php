@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ class Member extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasAvailabilityTrait;
     use HasHookUsersTrait;
 
     protected $fillable = [
@@ -42,6 +44,9 @@ class Member extends Model
         'internal' => 'Internal description',
     ];
 
+
+    // Attributes
+
     public function getBirthdateInputAttribute()
     {
         return $this->birthdate ? $this->birthdate->format('Y-m-d') : null;
@@ -61,10 +66,8 @@ class Member extends Model
         ]);
     }
 
-    public function isActive()
-    {
-        return (bool) $this->is_active;
-    }
+
+    // Validators 
 
     public function isHappyBirthday()
     {
@@ -77,7 +80,8 @@ class Member extends Model
     }
 
     
-
+    // Statics
+    
     public static function getScopes()
     {
         return array_keys(self::$scopes_descriptions);

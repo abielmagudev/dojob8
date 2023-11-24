@@ -18,7 +18,7 @@
             </x-slot>
 
             <p>
-                <x-badge :color="$member->isActive() ? 'success' : 'dark'" class="text-uppercase">{{ $member->isActive() ? 'Active' : 'Inactive' }}</x-badge>
+                <x-badge :color="$member->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $member->active_status }}</x-badge>
             </p>
 
             <x-custom.p-label label="Birthdate">

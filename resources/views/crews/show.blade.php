@@ -18,7 +18,7 @@
             </x-slot>
         
             <p>
-                <x-badge :color="$crew->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $crew->isActive() ? 'Active' : 'Inactive' }}</x-badge>
+                <x-badge :color="$crew->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $crew->active_status }}</x-badge>
                 <span class="align-middle" style="color: {{ $crew->color }}">
                     <i class="bi bi-circle-fill"></i>
                 </span>

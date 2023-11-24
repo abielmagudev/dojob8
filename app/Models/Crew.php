@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ class Crew extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasAvailabilityTrait;
     use HasHookUsersTrait;
 
     protected $fillable = [
@@ -23,10 +25,5 @@ class Crew extends Model
     public function hasColor()
     {
         return $this->color <> null;
-    }
-
-    public function isActive()
-    {
-        return (bool) $this->is_active;
     }
 }

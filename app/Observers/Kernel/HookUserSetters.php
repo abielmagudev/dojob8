@@ -10,7 +10,7 @@ trait HookUserSetters
      * Establece el valor de "created_by" con el id del usuario autenticado
      * en el hook "creating" de Eloquent.
      */
-    public function storingBy(Model $model, int $auth_id)
+    public function creatingBy(Model $model, int $auth_id)
     {
         $model->created_by = $auth_id;
     }

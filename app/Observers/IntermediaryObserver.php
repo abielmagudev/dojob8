@@ -13,7 +13,7 @@ class IntermediaryObserver
 
     public function creating(Intermediary $intermediary)
     {
-        $this->storingBy($intermediary, mt_rand(1,10));
+        $this->creatingBy($intermediary, mt_rand(1,10));
         $this->updatingBy($intermediary, mt_rand(1,10));
     }
 

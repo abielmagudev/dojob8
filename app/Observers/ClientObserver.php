@@ -13,7 +13,7 @@ class ClientObserver
 
     public function creating(Client $client)
     {
-        $this->storingBy($client, mt_rand(1, 10));
+        $this->creatingBy($client, mt_rand(1, 10));
         $this->updatingBy($client, mt_rand(1, 10));
     }
 

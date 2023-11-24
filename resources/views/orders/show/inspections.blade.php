@@ -38,7 +38,7 @@
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
             <td style="min-width:240px; max-width:512px">{{ $inspection->observations }}</td>
             <td>
-                <x-badge :color="$inspection->status_color" class="text-uppercase">{{ $inspection->status_label }}</x-badge>
+                <x-badge :color="$inspection->approved_color" class="text-uppercase">{{ $inspection->approved_status }}</x-badge>
             </td>
             <td class="text-nowrap text-end">
                 @if( $inspection->hasNotes() )

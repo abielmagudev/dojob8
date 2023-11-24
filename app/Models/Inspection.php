@@ -32,25 +32,11 @@ class Inspection extends Model
         1 => 'approved',
     ];
 
-    public function getStatusAttribute()
-    {
-        return $this->is_approved;
-    }
 
-    public function getStatusLabelAttribute()
-    {
-        if( $this->isHoldOn() ) {
-            return 'hold on';
-        }
 
-        if( $this->isFailed() ) {
-            return 'failed';
-        }
+    // Attributes
 
-        return 'approved';
-    }
-
-    public function getStatusColorAttribute()
+    public function getApprovedColorAttribute()
     {
         if( $this->isHoldOn() ) {
             return 'secondary';
@@ -63,19 +49,36 @@ class Inspection extends Model
         return 'success';
     }
 
+    public function getApprovedStatusAttribute()
+    {
+        if( $this->isHoldOn() ) {
+            return 'hold on';
+        }
+
+        if( $this->isFailed() ) {
+            return 'failed';
+        }
+
+        return 'approved';
+    }
+
+
+
+    // Validations
+
     public function isHoldOn()
     {
-        return is_null($this->status);
+        return is_null($this->is_approved);
     }
 
     public function isApproved()
     {
-        return $this->status == 1;
+        return $this->is_approved == 1;
     }
 
     public function isFailed()
     {
-        return $this->status == 0;
+        return $this->is_approved == 0;
     }
 
     public function hasObservations()
@@ -89,6 +92,9 @@ class Inspection extends Model
     }
 
 
+
+    // Relationships
+
     public function inspector()
     {
         return $this->belongsTo(Inspector::class);
@@ -99,6 +105,9 @@ class Inspection extends Model
         return $this->belongsTo(Order::class);
     }
 
+
+
+    // Statics
 
     public static function getAllStatus()
     {

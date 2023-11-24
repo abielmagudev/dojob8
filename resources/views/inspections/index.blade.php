@@ -29,7 +29,7 @@
             <td>{{ $inspection->order->job->name }}</td>
             <td>{{ $inspection->inspector->name }}</td>
             <td style="max-width:128px">
-                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase w-100">{{ $inspection->status_label }}</x-badge>
+                <x-badge color="{{ $inspection->approved_color }}" class="text-uppercase w-100">{{ $inspection->approved_status }}</x-badge>
             </td>
             <td class="text-end">
                 <a href="{{ route('inspections.show', $inspection) }}" class="btn btn-outline-primary">

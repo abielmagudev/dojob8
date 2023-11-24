@@ -46,8 +46,8 @@
     </x-slot>
 
     <select id="statusSelect" class="form-select" name="status">
-        @foreach($inspection::getAllStatus() as $key => $label)
-        <option value="{{ $key }}" {{ isSelected( ($key === $inspection->status) ) }}>{{ ucfirst($label) }}</option>
+        @foreach($inspection::getAllStatus() as $status => $label)
+        <option value="{{ $status }}" {{ isSelected( ($status === $inspection->is_approved) ) }}>{{ ucfirst($label) }}</option>
         @endforeach
     </select>
 </x-custom.form-control-horizontal>

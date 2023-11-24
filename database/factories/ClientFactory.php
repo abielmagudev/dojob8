@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Helpers\CountryManager;
+use App\Suppliers\CountryManager;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClientFactory extends Factory

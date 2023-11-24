@@ -11,7 +11,7 @@ class IntermediaryController extends Controller
     public function index()
     {
         return view('intermediaries.index', [
-            'intermediaries' => Intermediary::orderBy('name')->paginate(25),
+            'intermediaries' => Intermediary::orderBy('id', 'desc')->paginate(25),
         ]);
     }
 
@@ -28,13 +28,20 @@ class IntermediaryController extends Controller
             return back()->with('danger', 'Error saving intermediary, try again please');
         }
 
-        return redirect()->route('intermediaries.index')->with('success', "Intermediary <b>{$intermediary->name}</b> saved");
+        return redirect()->route('intermediaries.index')->with('success', "You saved the intermediary <b>{$intermediary->name}</b>");
     }
 
     public function show(Intermediary $intermediary)
     {
+        $previous = Intermediary::before($intermediary->id)->first();
+        $next = Intermediary::after($intermediary->id)->first();
+
         return view('intermediaries.show', [
             'intermediary' => $intermediary,
+            'routes' => [
+                'previous' => $previous ? route('intermediaries.show', $previous) : false,
+                'next' => $next ? route('intermediaries.show', $next) : false,
+            ],
         ]);
     }
 
@@ -51,7 +58,7 @@ class IntermediaryController extends Controller
             return back()->with('danger', 'Error updating intermediary, try again please');
         }
 
-        return redirect()->route('intermediaries.edit', $intermediary)->with('success', "Intermediary <b>{$intermediary->name}</b> updated");
+        return redirect()->route('intermediaries.edit', $intermediary)->with('success', "You updated the intermediary <b>{$intermediary->name}</b>");
     }
 
     public function destroy(Intermediary $intermediary)
@@ -60,6 +67,6 @@ class IntermediaryController extends Controller
             return back()->with('danger', 'Error deleting intermediary, try again please');
         }
 
-        return redirect()->route('intermediaries.index')->with('success', "Intermediary <b>{$intermediary->name}</b> deleted");
+        return redirect()->route('intermediaries.index')->with('success', "You deleted the intermediary <b>{$intermediary->name}</b>");
     }
 }

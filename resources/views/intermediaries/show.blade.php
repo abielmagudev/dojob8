@@ -4,7 +4,14 @@
 <x-header title="{{ $intermediary->name }} ({{ $intermediary->alias }})" :breadcrumbs="[
     'Back to intermediaries' => route('intermediaries.index'),
     'Intermediary' => null,
-]" />
+]">
+    <x-slot name="options">
+        <x-custom.pagination-simple-routes 
+            :previous="$routes['previous']"
+            :next="$routes['next']"
+        />
+    </x-slot>
+</x-header>
 @endsection
 
 @section('content')
@@ -26,6 +33,7 @@
                 
                 @endif
             </p>
+            
             <x-custom.p-label label="Contact">
                 <span class="d-block">{{ $intermediary->contact }}</span>
                 <span class="d-block">{{ $intermediary->phone_number }}</span>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasModifiersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +14,7 @@ class Intermediary extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
     use HasModifiersTrait;
     
@@ -40,6 +42,11 @@ class Intermediary extends Model
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = strtolower($value);
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->isAvailable() ? 'available' : 'unavailable';
     }
 
     public function isAvailable()

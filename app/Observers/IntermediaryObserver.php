@@ -3,25 +3,19 @@
 namespace App\Observers;
 
 use App\Models\Intermediary;
+use App\Observers\Kernel\HasHookModifiers;
+use App\Observers\Kernel\HasObserverConstructor;
 
 class IntermediaryObserver
 {
+    use HasHookModifiers;
+    use HasObserverConstructor;
+
     public function creating(Intermediary $intermediary)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $intermediary->fill([
-            'created_by' => $fake_user_id,
-            'updated_by' => $fake_user_id,
-        ]);
+        $this->storingBy($intermediary);
     }
 
-    /**
-     * Handle the Intermediary "created" event.
-     *
-     * @param  \App\Models\Intermediary  $intermediary
-     * @return void
-     */
     public function created(Intermediary $intermediary)
     {
         //
@@ -29,50 +23,29 @@ class IntermediaryObserver
 
     public function updating(Intermediary $intermediary)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $intermediary->updated_by = $fake_user_id;
+        $this->updatingBy($intermediary);
     }
 
-    /**
-     * Handle the Intermediary "updated" event.
-     *
-     * @param  \App\Models\Intermediary  $intermediary
-     * @return void
-     */
     public function updated(Intermediary $intermediary)
     {
         //
     }
 
-    /**
-     * Handle the Intermediary "deleted" event.
-     *
-     * @param  \App\Models\Intermediary  $intermediary
-     * @return void
-     */
+    public function deleting(Intermediary $intermediary)
+    {
+        $this->deletingBy($intermediary);
+    }
+
     public function deleted(Intermediary $intermediary)
     {
         //
     }
 
-    /**
-     * Handle the Intermediary "restored" event.
-     *
-     * @param  \App\Models\Intermediary  $intermediary
-     * @return void
-     */
     public function restored(Intermediary $intermediary)
     {
         //
     }
 
-    /**
-     * Handle the Intermediary "force deleted" event.
-     *
-     * @param  \App\Models\Intermediary  $intermediary
-     * @return void
-     */
     public function forceDeleted(Intermediary $intermediary)
     {
         //

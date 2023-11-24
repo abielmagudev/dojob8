@@ -27,7 +27,7 @@
         @foreach($intermediaries as $intermediary)
         <tr>
             <td>
-                <span data-bs-toggle="tooltip" data-bs-title="{{ $intermediary->isAvailable() ? 'Available' : 'Unavailable' }}">
+                <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($intermediary->status) }}">
                     <x-custom.circle-off-on :switcher="$intermediary->isAvailable()" />
                 </span>
             </td>

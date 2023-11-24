@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
-use App\Models\Kernel\HasModifiersTrait;
+use App\Models\Kernel\HasHookUsersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,7 +16,7 @@ class Intermediary extends Model
     use SoftDeletes;
     use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
-    use HasModifiersTrait;
+    use HasHookUsersTrait;
     
     protected $fillable = [
         'name',

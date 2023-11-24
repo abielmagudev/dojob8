@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\HasBeforeAfterTrait;
-use App\Models\Kernel\HasModifiersTrait;
+use App\Models\Kernel\HasHookUsersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class Inspection extends Model
 {
     use HasFactory;
     use HasBeforeAfterTrait;
-    use HasModifiersTrait;
+    use HasHookUsersTrait;
 
     protected $fillable = [
         'scheduled_date',

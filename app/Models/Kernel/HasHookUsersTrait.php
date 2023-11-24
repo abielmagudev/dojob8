@@ -4,7 +4,7 @@ namespace App\Models\Kernel;
 
 use App\Models\User;
 
-trait HasModifiersTrait
+trait HasHookUsersTrait
 {
     public function creator()
     {
@@ -16,7 +16,7 @@ trait HasModifiersTrait
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    public function eliminator()
+    public function deleter()
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }

@@ -4,7 +4,14 @@
 <x-header title="Inspection {{ $inspection->id }}" :breadcrumbs="[
     'Back to inspections' => route('inspections.index'),
     'Show' => null
-]" />
+]">
+    <x-slot name="options">
+        <x-custom.pagination-simple-routes 
+            :previous="$routes['previous']"
+            :next="$routes['next']"
+        />
+    </x-slot>
+</x-header>
 @endsection
 
 @section('content')
@@ -12,66 +19,57 @@
 
     {{-- Inspection --}}
     <div class="col-sm">
-        <x-card title="Information" class="h-100">        
+        <x-card title="Information" class="h-100">  
             <p>
-                <small class="d-block text-secondary">Status</small>
-                <span class="badge text-uppercase text-bg-{{ $inspection->status_color }}">{{ $inspection->status_label }}</span>
-            </p>
+                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase">{{ $inspection->status_label }}</x-badge>
+            </p>      
         
-            <p>
-                <small class="d-block text-secondary">Scheduled</small>
+            <x-custom.p-label label="Scheduled">
                 {{ $inspection->scheduled_date->format('D d M, Y') }}
-            </p>
+            </x-custom.p-label>
         
-            <p>
-                <small class="d-block text-secondary">Inspector</small>
+            <x-custom.p-label label="Inspector">
                 {{ $inspection->inspector->name }}
-            </p>
+            </x-custom.p-label>
         
-            <p>
-                <small class="d-block text-secondary">Observations</small>
+            <x-custom.p-label label="Observations">
                 {{ $inspection->observations }}
-            </p>
+            </x-custom.p-label>
         
-            <p>
-                <small class="d-block text-secondary">Notes</small>
+            <x-custom.p-label label="Notes">
                 {{ $inspection->notes }}
-            </p>
+            </x-custom.p-label>
+
+            <x-custom.p-label-modifiers :model="$inspection" />
         </x-card>
     </div>
 
     {{-- Order --}}
     <div class="col-sm">
-        <x-card title="Order {{ $inspection->order->id }}" class="h-100">
+        <x-card title="Order #{{ $inspection->order->id }}" class="h-100">
             <x-slot name="options">
                 <a href="{{ route('orders.show', $inspection->order) }}" class="btn btn-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </x-slot>
 
-            <p>
-                <small class="d-block text-secondary">Scheduled</small>
+            <x-custom.p-label label="Scheduled">
                 {{ $inspection->order->scheduled_date_human }}
-            </p>
+            </x-custom.p-label>
 
-            <p>
-                <small class="d-block text-secondary">Job</small>
+            <x-custom.p-label label="Job">
                 {{ $inspection->order->job->name }}
-            </p>
+            </x-custom.p-label>
             
-            <p>
-                <small class="d-block text-secondary">Client</small>
-                {{ $inspection->order->client->fullname }}
-                <br>
-                {{ $inspection->order->client->address }}
-                <br>
-                {{ $inspection->order->client->contact_info_collection->filter()->implode(',') }}
-            </p>
+            <x-custom.p-label label="Client">
+                <span class="d-block">{{ $inspection->order->client->fullname }}</span>
+                <span class="d-block">{{ $inspection->order->client->address }}</span>
+                <span class="d-block">{{ $inspection->order->client->contact_info_collection->filter()->implode(',') }}</span>
+            </x-custom.p-label>
 
-            <p>
-                <small class="d-block text-secondary">Notes</small>
+            <x-custom.p-label label="Notes">
                 {{ $inspection->order->notes }}
-            </p>
+            </x-custom.p-label>
         </x-card>
     </div>
 

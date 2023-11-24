@@ -21,6 +21,8 @@ class CreateInspectionsTable extends Migration
             $table->boolean('is_approved')->nullable()->index();
             $table->foreignId('inspector_id');
             $table->foreignId('order_id');
+            $table->foreignId('created_by');
+            $table->foreignId('updated_by');
             $table->timestamps();
         });
     }

@@ -37,8 +37,15 @@ class InspectionController extends Controller
 
     public function show(Inspection $inspection)
     {
+        $previous = Inspection::before($inspection->id)->first();
+        $next = Inspection::after($inspection->id)->first();
+
         return view('inspections.show', [
             'inspection' => $inspection,
+            'routes' => [
+                'previous' => $previous ? route('inspections.show', $previous) : false,
+                'next' => $next ? route('inspections.show', $next) : false,
+            ],
         ]);
     }
 
@@ -65,6 +72,6 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error deleting inspection, try again please');
         }
 
-        return redirect()->route('inspections.index')->with('success', "You deleted inspection <b>{$inspection->id}</b>");
+        return redirect()->route('orders.show', $inspection->order_id)->with('success', "You deleted inspection <b>{$inspection->id}</b>");
     }
 }

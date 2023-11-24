@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasBeforeAfterTrait;
+use App\Models\Kernel\HasModifiersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Inspection extends Model
 {
     use HasFactory;
-
-    public static $all_status = [
-        null => 'hold on',
-        0 => 'failed',
-        1 => 'approved',
-    ];
+    use HasBeforeAfterTrait;
+    use HasModifiersTrait;
 
     protected $fillable = [
         'scheduled_date',
@@ -26,6 +24,12 @@ class Inspection extends Model
 
     protected $casts = [
         'scheduled_date' => 'date',
+    ];
+
+    public static $all_status = [
+        null => 'hold on',
+        0 => 'failed',
+        1 => 'approved',
     ];
 
     public function getStatusAttribute()

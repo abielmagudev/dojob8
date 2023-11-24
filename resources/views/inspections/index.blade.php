@@ -14,8 +14,8 @@
         <x-slot name="thead">
             <tr>
                 <th>Name</th>
-                <th>Job</th>
                 <th>Client</th>
+                <th>Job</th>
                 <th>Inspector</th>
                 <th>Status</th>
                 <th></th>
@@ -29,7 +29,7 @@
             <td>{{ $inspection->order->job->name }}</td>
             <td>{{ $inspection->inspector->name }}</td>
             <td style="max-width:128px">
-                <span class="badge text-uppercase w-100 text-bg-{{ $inspection->status_color }}">{{ $inspection->status_label }}</span>
+                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase w-100">{{ $inspection->status_label }}</x-badge>
             </td>
             <td class="text-end">
                 <a href="{{ route('inspections.show', $inspection) }}" class="btn btn-outline-primary">

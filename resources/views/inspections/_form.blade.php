@@ -38,3 +38,17 @@
     <textarea id="notesTextarea" class="form-control" name="notes" rows="3">{{ old('notes', $inspection->notes) }}</textarea>
     <x-error name="notes" />
 </x-custom.form-control-horizontal>
+
+@if( $inspection->id )
+<x-custom.form-control-horizontal class="align-items-center">
+    <x-slot name="label">
+        <label for="statusSelect" class="form-label">Status</label>
+    </x-slot>
+
+    <select id="statusSelect" class="form-select" name="status">
+        @foreach($inspection::getAllStatus() as $key => $label)
+        <option value="{{ $key }}" {{ isSelected( ($key === $inspection->status) ) }}>{{ ucfirst($label) }}</option>
+        @endforeach
+    </select>
+</x-custom.form-control-horizontal>
+@endif

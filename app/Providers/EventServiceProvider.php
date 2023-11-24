@@ -5,11 +5,13 @@ namespace App\Providers;
 // Models / Observers
 use App\Models\Client;
 use App\Models\Crew;
+use App\Models\Inspection;
 use App\Models\Inspector;
 use App\Models\Intermediary;
 use App\Models\Member;
 use App\Observers\ClientObserver;
 use App\Observers\CrewObserver;
+use App\Observers\InspectionObserver;
 use App\Observers\InspectorObserver;
 use App\Observers\IntermediaryObserver;
 use App\Observers\MemberObserver;
@@ -43,6 +45,7 @@ class EventServiceProvider extends ServiceProvider
 
         Client::observe(ClientObserver::class);
         Crew::observe(CrewObserver::class);
+        Inspection::observe(InspectionObserver::class);
         Inspector::observe(InspectorObserver::class);
         Intermediary::observe(IntermediaryObserver::class);
         Member::observe(MemberObserver::class);

@@ -3,8 +3,15 @@
 @section('header')
 <x-header title="{{ $user->name }}" :breadcrumbs="[
     'Back to users' => route('users.index'),
-    'Show' => null
-]" />
+    'User' => null
+]">
+    <x-slot name="options">
+        <x-paginate 
+            :previous="$routes['previous']" 
+            :next="$routes['next']" 
+        />
+    </x-slot>
+</x-header>
 @endsection
 
 @section('content')

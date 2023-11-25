@@ -54,10 +54,15 @@ class OrderController extends Controller
 
     public function show(Request $request, Order $order)
     {
+        $previous = Order::before($order->id)->first();
+        $next = Order::after($order->id)->first();
+
         return view('orders.show', [
             'order' => $order,
-            'prev_order' => Order::wherePrev($request, $order)->first(),
-            'next_order' => Order::whereNext($request, $order)->first(),
+            'routes' => [
+                'previous' => $previous ? route('orders.show', $previous) : false,
+                'next' => $next ? route('orders.show', $next) : false,
+            ],
         ]);
     }
 

@@ -35,8 +35,15 @@ class MemberController extends Controller
 
     public function show(Member $member)
     {
+        $previous = Member::before($member->id)->first();
+        $next = Member::after($member->id)->first();
+
         return view('members.show', [
             'member' => $member,
+            'routes' => [
+                'previous' => $previous ? route('members.show', $previous) : false,
+                'next' => $next ? route('members.show', $next) : false,
+            ],
         ]);
     }
 

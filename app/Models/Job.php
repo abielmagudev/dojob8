@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\HasAvailabilityTrait;
+use App\Models\Kernel\HasBeforeAfterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,7 @@ class Job extends Model
 {
     use HasFactory;
     use HasAvailabilityTrait;
+    use HasBeforeAfterTrait;
 
     protected $fillable = [
         'name',

@@ -3,7 +3,7 @@
 @section('header')
 <x-header title="Inspection {{ $inspection->id }}" :breadcrumbs="[
     'Back to inspections' => route('inspections.index'),
-    'Show' => null
+    'Inspection' => null
 ]">
     <x-slot name="options">
         <x-paginate

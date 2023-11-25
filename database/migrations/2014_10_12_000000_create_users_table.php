@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
              * is_active
              * mobile_number for SMS
              * IP address
+             * Device
              */
         });
     }

@@ -16,7 +16,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-sm">
+    <div class="col-md col-md-4">
         <x-card title="Information" class="h-100">
             <x-slot name="options">
                 <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">
@@ -53,24 +53,16 @@
         </x-card>    
     </div>
 
-    <div class="col-sm">
-        <x-card title="Log | Jorunal" class="h-100">
-            <p>
-                <span class="d-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit.</span>
-                <small>{{ now() }}</small>
-            </p>
-            <p>
-                <span class="d-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit.</span>
-                <small>{{ now() }}</small>
-            </p>
-            <p>
-                <span class="d-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit.</span>
-                <small>{{ now() }}</small>
-            </p>
-            <p>
-                <span class="d-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit.</span>
-                <small>{{ now() }}</small>
-            </p>
+    <div class="col-md">
+        <x-card title="Activities" class="h-100">
+            <ul class="list-group list-group-flush">
+                @foreach($user->activities as $activity)
+                <li class="list-group-item">
+                    {!! $activity->description !!}
+                    <small class="d-block">{{ $activity->created_at }}</small>
+                </li>
+                @endforeach
+              </ul>
         </x-card>
     </div>
 </div>

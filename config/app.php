@@ -182,6 +182,7 @@ return [
          * Additional 
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
 
     ],
 
@@ -242,7 +243,7 @@ return [
          * Additional 
          */
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
 ];

@@ -19,8 +19,8 @@ class Client extends Model
 
     protected $fillable = [
         'name',
-        'lastname',
-        'fullname',
+        'last_name',
+        'full_name',
         'street',
         'zip_code',
         'country_code',
@@ -60,7 +60,7 @@ class Client extends Model
 
     public function scopeSearch($query, $value)
     {
-        return $query->where('fullname', 'like', "%{$value}%")
+        return $query->where('full_name', 'like', "%{$value}%")
                     ->orWhere('phone_number', 'like', "%{$value}%")
                     ->orWhere('mobile_number', 'like', "%{$value}%")
                     ->orWhere('email', 'like', "%{$value}%")
@@ -74,5 +74,10 @@ class Client extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function history()
+    {
+        return $this->morphMany(History::class, 'model');
     }
 }

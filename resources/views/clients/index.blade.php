@@ -15,24 +15,29 @@
     <x-table class="align-middle ">
         <x-slot name="thead">
             <tr>
-                <th>Fullname</th>
+                <th class="text-nowrap">Full name</th>
                 <th>Address</th>
-                <th>Zip code</th>
+                <th class="text-nowrap">Zip code</th>
                 <th>Phone</th>
-                <th>Orders</th>
+                <th class="text-nowrap">Work orders</th>
                 <th></th>
             </tr>
         </x-slot>
 
         @foreach($clients as $client)
         <tr>
-            <td class="text-nowrap">{{ $client->fullname }}</td>
+            <td class="text-nowrap">{{ $client->full_name }}</td>
             <td class="text-nowrap">{{ $client->street }}, {{ $client->location_without_country }}</td>
             <td class="text-nowrap">{{ $client->zip_code }}</td>
             <td class="text-nowrap">{{ $client->phone_number }}</td>
             <td class="text-center">
                 @if( $client->orders_count )
-                <span class="badge rounded text-bg-dark">{{ $client->orders_count }}</span>
+                <span class="badge rounded text-bg-dark" data-bs-toggle="tooltip" data-bs-title="Total">{{ $client->orders_count }}</span>
+                
+                @if(mt_rand(0,1))
+                <span class="badge rounded text-bg-danger" data-bs-toggle="tooltip" data-bs-title="Pending">{{ mt_rand(1, $client->orders_count) }}</span>
+                @endif
+
                 @endif
             </td>
             <td class="text-nowrap text-end">

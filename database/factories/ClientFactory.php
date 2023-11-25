@@ -14,9 +14,9 @@ class ClientFactory extends Factory
      */
     public function definition()
     {
-        $firstname = $this->faker->firstName();
+        $first_name = $this->faker->firstName();
 
-        $lastname = $this->faker->lastName();
+        $last_name = $this->faker->lastName();
 
         $country = CountryManager::get( 
             $this->faker->randomElement( CountryManager::codes() )
@@ -26,9 +26,9 @@ class ClientFactory extends Factory
         $country = CountryManager::get('US');
 
         return [
-            'name' => $firstname,
-            'lastname' => $lastname,
-            'fullname' => "{$firstname} {$lastname}",
+            'name' => $first_name,
+            'last_name' => $last_name,
+            'full_name' => "{$first_name} {$last_name}",
             'street' => $this->faker->streetAddress(),
             'zip_code' => $this->faker->postcode(),
             'country_code' => $country->get('code'), // $this->faker->country(),

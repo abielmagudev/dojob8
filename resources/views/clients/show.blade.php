@@ -1,7 +1,7 @@
 @extends('application')
 
 @section('header')
-<x-header title="{{ $client->fullname }}" :breadcrumbs="[
+<x-header title="{{ $client->full_name }}" :breadcrumbs="[
     'Back to clients' => route('clients.index'),
     'Client' => null
 ]">
@@ -16,7 +16,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md col-md-4">
+    <div class="col-md">
         <x-card title="Information">
             <x-slot name="options">
                 <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">
@@ -52,32 +52,36 @@
         </x-card>
     </div>
 
-    <div class="col-md col-md-8">
-        <x-card title="Orders" class="h-100">
-            <x-slot name="options">
-                <a href="{{ route('orders.create', $client) }}" class="btn btn-primary">
-                    <b>+</b>
-                </a>
-            </x-slot>
-        
-            @if( $client->orders->count() )          
-            <x-table class="align-middle ">
-                @foreach($client->orders as $order)
-                <tr>
-                    <td>{{ $order->job->name }}</td>
-                    <td>{{ $order->scheduled_datetime_human }}</td>
-                    <td class="text-end">
-                        <a href="{{ route('orders.show', $order) }}" class="btn btn-outline-primary">
-                            <i class="bi bi-eye-fill"></i>
-                        </a>
-                    </td>
-                </tr>
-                @endforeach
-            </x-table>
-            @endif
+    <div class="col-md">
+        <x-card title="History" class="h-100">
+            <div class="h-100" style="max-height:450px;overflow-y: auto">
+                <x-custom.list-group-history :history="$client->history->sortByDesc('id')" :except="['link']" />
+            </div>
         </x-card>
     </div>
 </div>
 <br>
+<x-card title="Work orders" class="h-100">
+    <x-slot name="options">
+        <a href="{{ route('orders.create', $client) }}" class="btn btn-primary">
+            <b>+</b>
+        </a>
+    </x-slot>
 
+    @if( $client->orders->count() )          
+    <x-table class="align-middle ">
+        @foreach($client->orders as $order)
+        <tr>
+            <td>{{ $order->job->name }}</td>
+            <td>{{ $order->scheduled_datetime_human }}</td>
+            <td class="text-end">
+                <a href="{{ route('orders.show', $order) }}" class="btn btn-outline-primary">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
+            </td>
+        </tr>
+        @endforeach
+    </x-table>
+    @endif
+</x-card>
 @endsection

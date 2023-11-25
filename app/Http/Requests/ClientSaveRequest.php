@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\CountryManager;
+use App\Suppliers\CountryManager;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
@@ -24,7 +24,7 @@ class ClientSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'lastname' => [
+            'last_name' => [
                 'required',
                 'string',
             ],
@@ -86,8 +86,8 @@ class ClientSaveRequest extends FormRequest
     {
         return array_merge(parent::validated(), [
             'name' => Str::title($this->name),
-            'lastname' => Str::title($this->lastname),
-            'fullname' => sprintf('%s %s', Str::title($this->name), Str::title($this->lastname)),
+            'last_name' => Str::title($this->last_name),
+            'full_name' => sprintf('%s %s', Str::title($this->name), Str::title($this->last_name)),
             'street' => Str::title($this->street),
             'city' => Str::title($this->city),
         ]);

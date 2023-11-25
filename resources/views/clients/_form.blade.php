@@ -6,9 +6,11 @@
 
     <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name', $client->name) }}" placeholder="Name(s)" required>
     <x-error name="name" />
+    
     <div class="mb-3"></div>
-    <input id="lastnameInput" type="text" class="form-control" name="lastname" value="{{ old('lastname', $client->lastname) }}" placeholder="Lastname" required>
-    <x-error name="lastname" />
+
+    <input id="lastNameInput" type="text" class="form-control" name="last_name" value="{{ old('last_name', $client->last_name) }}" placeholder="Last name" required>
+    <x-error name="last_name" />
 </x-custom.form-control-horizontal>
 
 <x-custom.form-control-horizontal class="align-items-center">

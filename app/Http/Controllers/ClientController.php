@@ -10,7 +10,9 @@ class ClientController extends Controller
 {
     public function index()
     {
-        return view('clients.index')->with('clients', Client::withCount('orders')->orderByDesc('id')->paginate(25));
+        return view('clients.index', [
+            'clients' => Client::withCount('orders')->orderByDesc('id')->paginate(25)
+        ]);
     }
 
     public function create()
@@ -25,7 +27,7 @@ class ClientController extends Controller
 
         $route = $request->has('after_saving') ? route('orders.create', $client) : route('clients.index');
 
-        return redirect($route)->with('success', "Client <b>{$client->fullname}</b> saved");
+        return redirect($route)->with('success', "You created the client <b>{$client->full_name}</b>");
     }
 
     public function show(Client $client)
@@ -34,7 +36,7 @@ class ClientController extends Controller
         $next = Client::after($client->id)->first();
 
         return view('clients.show', [
-            'client' => $client->load('orders.job'),
+            'client' => $client->load(['orders.job', 'history.user']),
             'routes' => [
                 'previous' => $previous ? route('clients.show', $previous) : false,
                 'next' => $next ? route('clients.show', $next) : false,
@@ -52,7 +54,7 @@ class ClientController extends Controller
         if(! $client->fill( $request->validated() )->save() )
             return back()->with('danger', 'Error updating client, please try again');
 
-        return redirect()->route('clients.edit', $client)->with('success', "Client <b>{$client->fullname}</b> updated");
+        return redirect()->route('clients.edit', $client)->with('success', "You updated the client <b>{$client->full_name}</b>");
     }
 
     public function destroy(Client $client)
@@ -61,6 +63,6 @@ class ClientController extends Controller
             return back()->with('danger', 'Error deleting client, try again please');
         }
 
-        return redirect()->route('clients.index')->with('success', "Client <b>{$client->fullname}</b> deleted");
+        return redirect()->route('clients.index')->with('success', "You deleted the client <b>{$client->full_name}</b>");
     }
 }

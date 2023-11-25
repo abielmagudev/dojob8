@@ -3,25 +3,20 @@
 namespace App\Observers;
 
 use App\Models\Member;
+use App\Observers\Kernel\HasObserverConstructor;
+use App\Observers\Kernel\HookUserSetters;
 
 class MemberObserver
 {
+    use HasObserverConstructor;
+    use HookUserSetters;
+
     public function creating(Member $member)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $member->fill([
-            'created_by' => $fake_user_id,
-            'updated_by' => $fake_user_id,
-        ]);
+        $this->creatingBy($member, mt_rand(1,10));
+        $this->updatingBy($member, mt_rand(1,10));
     }
 
-    /**
-     * Handle the Member "created" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
     public function created(Member $member)
     {
         //
@@ -29,50 +24,29 @@ class MemberObserver
 
     public function updating(Member $member)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $member->updated_by = $fake_user_id;
+        $this->updatingBy($member, mt_rand(1,10));
     }
 
-    /**
-     * Handle the Member "updated" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
     public function updated(Member $member)
     {
         //
     }
 
-    /**
-     * Handle the Member "deleted" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
+    public function deleting(Member $member)
+    {
+        $this->deletingBy($member, mt_rand(1,10));
+    }
+
     public function deleted(Member $member)
     {
         //
     }
 
-    /**
-     * Handle the Member "restored" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
     public function restored(Member $member)
     {
         //
     }
 
-    /**
-     * Handle the Member "force deleted" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
     public function forceDeleted(Member $member)
     {
         //

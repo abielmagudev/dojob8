@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\HasBeforeAfterTrait;
+use App\Models\Kernel\HasHookUsersTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
     use HasBeforeAfterTrait;
+    use HasHookUsersTrait;
 
     /**
      * The attributes that are mass assignable.

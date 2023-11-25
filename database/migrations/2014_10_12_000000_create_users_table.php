@@ -20,19 +20,20 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
+            $table->foreignId('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             /**
-             * last-session
-             * IP address
+             * username or name
              * morph-type
              * morph-id
-             * username or name
+             * last-session
              * is_active
              * mobile_number for SMS
-             * created_by
-             * updated_by
+             * IP address
              */
         });
     }

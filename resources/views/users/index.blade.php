@@ -26,9 +26,6 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td class="text-end">
-                <a href="{{ route('users.edit', $user) }}" class="btn btn-outline-warning">
-                    <i class="bi bi-pencil-fill"></i>
-                </a>
                 <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>
@@ -38,5 +35,5 @@
     </x-table>
 </x-card>
 <br>
-<x-pagination-simple :collection="$users" />
+<x-pagination-simple-eloquent :collection="$users" />
 @endsection

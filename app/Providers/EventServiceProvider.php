@@ -9,12 +9,14 @@ use App\Models\Inspection;
 use App\Models\Inspector;
 use App\Models\Intermediary;
 use App\Models\Member;
+use App\Models\User;
 use App\Observers\ClientObserver;
 use App\Observers\CrewObserver;
 use App\Observers\InspectionObserver;
 use App\Observers\InspectorObserver;
 use App\Observers\IntermediaryObserver;
 use App\Observers\MemberObserver;
+use App\Observers\UserObserver;
 // Dependences 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -49,5 +51,6 @@ class EventServiceProvider extends ServiceProvider
         Inspector::observe(InspectorObserver::class);
         Intermediary::observe(IntermediaryObserver::class);
         Member::observe(MemberObserver::class);
+        User::observe(UserObserver::class);
     }
 }

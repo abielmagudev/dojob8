@@ -25,40 +25,36 @@
             </x-slot>
 
             <p>
-                <small class="d-block text-secondary">Status</small>
                 @if( mt_rand(0,1) )
-                <span class="badge text-bg-success">Active</span>
-
+                <x-badge color="success" class="text-uppercase">Active</x-badge>
+                
                 @else
-                <span class="badge text-bg-secondary">Inactive</span>
+                <x-badge color="secondary" class="text-uppercase">Inactive</x-badge>
 
                 @endif
             </p>
 
-            <p>
-                <small class="d-block text-secondary">Email</small>
-                <span>{{ $user->email }}</span>
-            </p>
+            <x-custom.p-label label="Email">
+                {{ $user->email }}
+            </x-custom.p-label>
 
-            <p>
-                <small class="d-block text-secondary">Type</small>
-                <span>{{ mt_rand(0,1) ? 'Staff ' : 'Intermediary' }}</span>
-            </p>
+            <x-custom.p-label label="Profile">
+                {{ mt_rand(0,1) ? 'Staff ' : 'Intermediary' }}
+            </x-custom.p-label>
 
-            <p>
-                <small class="d-block text-secondary">Role</small>
-                <span>{{ mt_rand(0,1) ? 'Administrator' : 'Operator' }}</span>
-            </p>
+            <x-custom.p-label label="Role">
+                {{ mt_rand(0,1) ? 'Administrator' : 'Operator' }}
+            </x-custom.p-label>
 
-            <p>
-                <small class="d-block text-secondary">Last session</small>
+            <x-custom.p-label label="Last session">
                 <span class="d-block">{{ now() }}</span>
-                <span>127.0.0.1</span>
-            </p>
+                <span class="d-block">127.0.0.1</span>
+            </x-custom.p-label>
         </x-card>    
     </div>
+
     <div class="col-sm">
-        <x-card title="Journal" class="h-100">
+        <x-card title="Log | Jorunal" class="h-100">
             <p>
                 <span class="d-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit.</span>
                 <small>{{ now() }}</small>

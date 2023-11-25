@@ -67,6 +67,6 @@ class UserController extends Controller
             return back()->with('danger', 'Error deleting user, try again please');
         }
 
-        return redirect()->route('users.index')->with('success', "You deleted the user {$user->name}");
+        return redirect()->route('users.index')->with('success', "You deleted the user <b>{$user->name}</b>");
     }
 }

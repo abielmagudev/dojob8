@@ -56,7 +56,7 @@
     <div class="col-md">
         <x-card title="History" class="h-100">
             <ul class="list-group list-group-flush">
-                @foreach($user->history as $activity)
+                @foreach($history as $activity)
                 <li class="list-group-item">
                     <div class="mb-2">
                         {!! $activity->description !!}

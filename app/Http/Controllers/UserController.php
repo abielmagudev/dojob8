@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserSaveRequest;
+use App\Models\History;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -42,6 +43,10 @@ class UserController extends Controller
                 'previous' => $previous ? route('users.show', $previous) : false,
                 'next' => $next ? route('users.show', $next) : false,
             ],
+            'history' => History::where('user_id', $user->id)
+                                ->where('model_type', '<>',User::class)
+                                ->where('model_id', '<>', $user->id)
+                                ->get()
         ]);
     }
 

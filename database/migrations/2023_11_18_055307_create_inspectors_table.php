@@ -17,8 +17,8 @@ class CreateInspectorsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('notes')->nullable();
-            $table->foreignId('created_by');
-            $table->foreignId('updated_by');
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
             $table->foreignId('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();

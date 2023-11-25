@@ -3,15 +3,18 @@
 namespace App\Observers;
 
 use App\Models\Inspector;
+use App\Observers\Kernel\HasObserverConstructor;
+use App\Observers\Kernel\HookUserSetters;
 
 class InspectorObserver
 {
+    use HasObserverConstructor;
+    use HookUserSetters;
+
     public function creating(Inspector $inspector)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $inspector->created_by = $fake_user_id;
-        $inspector->updated_by = $fake_user_id;
+        $this->creatingBy($inspector, mt_rand(1, 10));
+        $this->updatingBy($inspector, mt_rand(1, 10));
     }
 
     public function created(Inspector $inspector)
@@ -21,7 +24,7 @@ class InspectorObserver
 
     public function updating(Inspector $inspector)
     {
-        $inspector->updated_by = mt_rand(1, 10);
+        $this->updatingBy($inspector, mt_rand(1, 10));
     }
 
 
@@ -32,10 +35,7 @@ class InspectorObserver
 
     public function deleting(Inspector $inspector)
     {
-        $inspector->timestamps = false;
-        $inspector->deleted_by = mt_rand(1, 10);
-        $inspector->save();
-        $inspector->timtestamps = true;
+        $this->deletingBy($inspector, mt_rand(1, 10));
     }
 
     public function deleted(Inspector $inspector)

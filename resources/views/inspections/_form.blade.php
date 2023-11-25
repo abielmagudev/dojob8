@@ -15,7 +15,7 @@
 
     <select id="inspectorSelect" class="form-select" name="inspector">
         @foreach($inspectors as $inspector)
-        <option value="{{ $inspector->id }}">{{ $inspector->name }}</option>
+        <option value="{{ $inspector->id }}" {{ isSelected($inspector->id == $inspection->inspector_id) }}>{{ $inspector->name }}</option>
         @endforeach
     </select>
     <x-error name="inspector" />

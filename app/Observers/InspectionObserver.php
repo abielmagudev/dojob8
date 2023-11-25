@@ -3,15 +3,18 @@
 namespace App\Observers;
 
 use App\Models\Inspection;
+use App\Observers\Kernel\HasObserverConstructor;
+use App\Observers\Kernel\HookUserSetters;
 
 class InspectionObserver
 {
+    use HasObserverConstructor;
+    use HookUserSetters;
+
     public function creating(Inspection $inspection)
     {
-        $fake_user_id = mt_rand(1, 10);
-
-        $inspection->created_by = $fake_user_id;
-        $inspection->updated_by = $fake_user_id;
+        $this->creatingBy($inspection, mt_rand(1, 10));
+        $this->updatingBy($inspection, mt_rand(1, 10));
     }
 
     public function created(Inspection $inspection)
@@ -21,7 +24,7 @@ class InspectionObserver
 
     public function updating(Inspection $inspection)
     {
-        $inspection->updated_by = mt_rand(1, 10);
+        $this->updatingBy($inspection, mt_rand(1, 10));
     }
 
     public function updated(Inspection $inspection)

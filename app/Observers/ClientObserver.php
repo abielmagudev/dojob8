@@ -22,7 +22,7 @@ class ClientObserver
     {
         History::create([
             'description' => sprintf("<em>{$client->full_name}</em> client was created."),
-            'link' => route('users.show', $client),
+            'link' => route('clients.show', $client),
             'model_type' => get_class($client),
             'model_id' => $client->id,
             'user_id' => mt_rand(1,10),
@@ -40,7 +40,7 @@ class ClientObserver
         {
             History::create([
                 'description' => sprintf("<em>{$client->full_name}</em> client was updated."),
-                'link' => route('users.show', $client),
+                'link' => route('clients.show', $client),
                 'model_type' => get_class($client),
                 'model_id' => $client->id,
                 'user_id' => mt_rand(1,10),

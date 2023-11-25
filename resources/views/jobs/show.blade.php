@@ -18,7 +18,7 @@
 <div class="row">
 
     {{-- Information --}}
-    <div class="col-sm mb-3">
+    <div class="col-md col-md-4 mb-3">
         <x-card title="Information">
             <x-slot name="options">
                 <a href="{{ route('jobs.edit', $job) }}" class="btn btn-warning">
@@ -27,28 +27,21 @@
             </x-slot>
 
             <p>
-                <small class="d-block text-body-secondary">Status</small>
-                @if( $job->isAvailable() )
-                <span class="badge text-bg-success">Available</span>
+                <x-badge :color="$job->isAvailable() ? 'success' : 'secondary' " class="text-uppercase">{{ ucfirst($job->available_status) }}</x-badge>
+            </p>
 
-                @else
-                <span class="badge text-bg-secondary">Unavailable</span>
-                    
-                @endif
-            </p>
-            <p>
-                <small class="d-block text-body-secondary">Description</small>
-                <span>{{ $job->description ?? 'Without description' }}</span>
-            </p>
-            <p>
-                <small class="d-block text-body-secondary">Successful inspections</small>
-                <span>{{ $job->successful_inspections }}</span>
-            </p>
+            <x-custom.p-label label="Description">
+                {{ $job->description }}
+            </x-custom.p-label>
+
+            <x-custom.p-label label="Approved inspections required">
+                {{ $job->approved_inspections_required }}
+            </x-custom.p-label>
         </x-card>
     </div>
 
     {{-- Extensions --}}
-    <div class="col-sm">
+    <div class="col-md">
         <x-card title="Extensions">
             <x-slot name="options">
                 @if( $extensions->count() )

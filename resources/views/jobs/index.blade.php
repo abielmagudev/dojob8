@@ -29,7 +29,11 @@
         </x-slot>
         @foreach($jobs as $job)               
         <tr>
-            <x-custom.td-available :model="$job"/>
+            <td style="width:1%">
+                <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($job->available_status) }}">
+                    <x-custom.circle-off-on :switcher="$job->isAvailable()" />
+                </span>
+            </td>
             <td>{{ $job->name }}</td>
             <td>{{ $job->extensions_count }}</td>
             <td>{{ $job->orders_count }}</td>
@@ -41,6 +45,7 @@
         </tr>
         @endforeach
     </x-table>
-
 </x-card>
+<br>
+<x-pagination-simple-eloquent :collection="$jobs" />
 @endsection

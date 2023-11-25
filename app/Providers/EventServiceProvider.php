@@ -8,6 +8,7 @@ use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Inspector;
 use App\Models\Intermediary;
+use App\Models\Job;
 use App\Models\Member;
 use App\Models\User;
 use App\Observers\ClientObserver;
@@ -15,6 +16,7 @@ use App\Observers\CrewObserver;
 use App\Observers\InspectionObserver;
 use App\Observers\InspectorObserver;
 use App\Observers\IntermediaryObserver;
+use App\Observers\JobObserver;
 use App\Observers\MemberObserver;
 use App\Observers\UserObserver;
 // Dependences 
@@ -50,6 +52,7 @@ class EventServiceProvider extends ServiceProvider
         Inspection::observe(InspectionObserver::class);
         Inspector::observe(InspectorObserver::class);
         Intermediary::observe(IntermediaryObserver::class);
+        Job::observe(JobObserver::class);
         Member::observe(MemberObserver::class);
         User::observe(UserObserver::class);
     }

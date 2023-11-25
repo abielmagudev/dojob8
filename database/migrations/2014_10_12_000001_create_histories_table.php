@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserActivitiesTable extends Migration
+class CreateHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateUserActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_activities', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->text('description');
             $table->string('link')->nullable();
-            $table->string('device')->nullable();
             $table->string('model_type')->index();
             $table->unsignedInteger('model_id')->index();
             $table->foreignId('user_id')->index();
@@ -32,6 +31,6 @@ class CreateUserActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_activities');
+        Schema::dropIfExists('histories');
     }
 }

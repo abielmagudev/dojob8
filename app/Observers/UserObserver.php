@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\User;
-use App\Models\UserActiviy;
+use App\Models\History;
 use App\Observers\Kernel\HasObserverConstructor;
 use App\Observers\Kernel\HookUserSetters;
 use Jenssegers\Agent\Facades\Agent;
@@ -21,9 +21,8 @@ class UserObserver
 
     public function created(User $user)
     {
-        UserActiviy::create([
+        History::create([
             'description' => sprintf("The <em>{$user->name}</em> user was created."),
-            'device' => Agent::deviceType(),
             'link' => route('users.show', $user),
             'model_type' => get_class($user),
             'model_id' => $user->id,
@@ -40,9 +39,8 @@ class UserObserver
     {
         if(! $this->request->isMethod('delete') )
         {
-            UserActiviy::create([
+            History::create([
                 'description' => sprintf("The <em>{$user->name}</em> user was updated."),
-                'device' => Agent::deviceType(),
                 'link' => route('users.show', $user),
                 'model_type' => get_class($user),
                 'model_id' => $user->id,
@@ -58,9 +56,8 @@ class UserObserver
 
     public function deleted(User $user)
     {
-        UserActiviy::create([
+        History::create([
             'description' => sprintf("The <em>{$user->name}</em> user was deleted."),
-            'device' => Agent::deviceType(),
             'model_type' => get_class($user),
             'model_id' => $user->id,
             'user_id' => mt_rand(1,10),

@@ -53,13 +53,8 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function activities()
+    public function history()
     {
-        return $this->hasMany(UserActiviy::class);
-    }
-
-    public function changes()
-    {
-        return $this->morphMany(UserActiviy::class, 'model');
+        return $this->hasMany(History::class);
     }
 }

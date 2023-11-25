@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserActiviy extends Model
+class History extends Model
 {
-    protected $table = 'user_activities';
+    protected $table = 'histories';
 
     protected $fillable = [
         'description',
-        'changes_link',
-        'device',
+        'link',
         'model_type',
         'model_id',
         'user_id',
@@ -26,11 +25,6 @@ class UserActiviy extends Model
     public function hasLink()
     {
         return ! empty($this->link);
-    }
-
-    public function hasDevice()
-    {
-        return ! empty($this->device);
     }
 
 

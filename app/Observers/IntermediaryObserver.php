@@ -8,8 +8,8 @@ use App\Observers\Kernel\HookUserSetters;
 
 class IntermediaryObserver
 {
-    use HookUserSetters;
     use HasObserverConstructor;
+    use HookUserSetters;
 
     public function creating(Intermediary $intermediary)
     {

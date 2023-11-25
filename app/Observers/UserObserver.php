@@ -22,8 +22,11 @@ class UserObserver
     public function created(User $user)
     {
         UserActiviy::create([
-            'description' => sprintf('The <a href="%s">%s</a> user was created', route('users.show', $user), $user->name),
+            'description' => sprintf("The <em>{$user->name}</em> user was created."),
             'device' => Agent::deviceType(),
+            'link' => route('users.show', $user),
+            'model_type' => get_class($user),
+            'model_id' => $user->id,
             'user_id' => mt_rand(1,10),
         ]);
     }
@@ -38,8 +41,11 @@ class UserObserver
         if(! $this->request->isMethod('delete') )
         {
             UserActiviy::create([
-                'description' => sprintf('The <a href="%s">%s</a> user was updated', route('users.show', $user), $user->name),
+                'description' => sprintf("The <em>{$user->name}</em> user was updated."),
                 'device' => Agent::deviceType(),
+                'link' => route('users.show', $user),
+                'model_type' => get_class($user),
+                'model_id' => $user->id,
                 'user_id' => mt_rand(1,10),
             ]);
         }
@@ -53,8 +59,10 @@ class UserObserver
     public function deleted(User $user)
     {
         UserActiviy::create([
-            'description' => sprintf('The %s user was deleted', $user->name),
+            'description' => sprintf("The <em>{$user->name}</em> user was deleted."),
             'device' => Agent::deviceType(),
+            'model_type' => get_class($user),
+            'model_id' => $user->id,
             'user_id' => mt_rand(1,10),
         ]);
     }

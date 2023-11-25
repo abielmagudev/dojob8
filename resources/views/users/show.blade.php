@@ -58,11 +58,40 @@
             <ul class="list-group list-group-flush">
                 @foreach($user->activities as $activity)
                 <li class="list-group-item">
-                    {!! $activity->description !!}
-                    <small class="d-block">{{ $activity->created_at }}</small>
+                    <div class="mb-2">
+                        {!! $activity->description !!}
+                        <small class="d-block">{{ $activity->created_at }} by {{ $activity->user->name }}</small>             
+                    </div>
+
+                    @if( $activity->hasLink() )
+                    <small>
+                        <a href="{{ $activity->link }}" >See changes</a>
+                    </small>
+                    @endif
                 </li>
                 @endforeach
               </ul>
+        </x-card>
+    </div>
+
+    <div class="col-md">
+        <x-card title="Changes" class="h-100">
+            <ul class="list-group list-group-flush">
+                @foreach($user->changes->load('user') as $change)
+                <li class="list-group-item">
+                    <div class="mb-1">
+                        {!! $change->description !!}          
+                        <small class="d-block">{{ $change->created_at }} by {{ $change->user->name }}</small>
+                    </div>
+
+                    @if( $change->hasLink() )
+                    <small>
+                        <a href="{{ $change->link }}" >See changes</a>
+                    </small>
+                    @endif     
+                </li>
+                @endforeach
+            </ul>
         </x-card>
     </div>
 </div>

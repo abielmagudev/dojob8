@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserActiviy::class);
     }
+
+    public function changes()
+    {
+        return $this->morphMany(UserActiviy::class, 'model');
+    }
 }

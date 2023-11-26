@@ -7,22 +7,39 @@ use Illuminate\Support\Collection;
 trait HasHistoryChangesTrait
 {
     /**
+     * Nombres de propiedades escondidas o ignoradas por default.
+     */
+    protected $hidden_changes = [
+        'id',
+        'created_by', 
+        'updated_by', 
+        'deleted_by',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    /**
      * IMPORTANTE:
      * 
-     * Declarar "protected $ignore_changes" con un valor array.
+     * Declarar "protected $ignore_changes" con un valor array con los nombres de
+     * las propiedades a ignorar o excluir de la muestra de las propiedades modificadas.
      * 
-     * Esta propiedad es para ignorar aquellas propiedades que no son de interés
-     * en el cambio de su estado o son confidenciales.
-     * 
+     * En caso de NO estar declarada, por default se fusiona con array vacio.
      */
+    public function getExceptChanges()
+    {
+        return array_merge($this->hidden_changes, ($this->ignore_changes ?? []));
+    }
+
     public function getOriginalWasChanged(): Collection
     {
         $changes = collect( $this->getChanges() )->except( 
-            $this->ignore_changes 
+            $this->getExceptChanges() 
         );
 
         $original = collect( $this->getOriginal() )->except(
-            $this->ignore_changes
+            $this->getExceptChanges()
         );
 
         return $original->intersectByKeys($changes);

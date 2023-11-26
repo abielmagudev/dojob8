@@ -10,7 +10,8 @@
                     <i class="bi bi-geo-alt"></i>
                 </td>
                 <td>
-                    <span>{{ $client->street }}, {{ $client->location_country_code }}, {{ $client->zip_code }}</span>
+                    <span class="d-block">{{ $client->street }}, {{ $client->location_country_code }}</span>
+                    <span class="d-block">{{ $client->zip_code }}, District {{ $client->district }}</span>
                 </td>
             </tr>
         </table>
@@ -21,7 +22,7 @@
                     <i class="bi bi-person" style="font-size:1.2rem; margin-top:-4px"></i>
                 </td>
                 <td>
-                    <span class="d-block">{{ $client->fullname }}</span>
+                    <span class="d-block">{{ $client->full_name }}</span>
                     <span class="d-block">{{ $client->contact_info_collection->only(['phone','mobile'])->filter()->implode(', ') }}</span>
                     <span class="d-block">{{ $client->email }}</span>
                     @if( $client->notes )

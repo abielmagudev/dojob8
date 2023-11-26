@@ -1,39 +1,29 @@
 @extends('application')
 
 @section('header')
-<x-header title="Orders" :breadcrumbs="[
-    'Back to orders' => route('orders.index'),
+<x-header title="Work orders" :breadcrumbs="[
+    'Back to work orders' => route('orders.index'),
     'Create' => null,
 ]" />
 @endsection
 
 @section('content')
-<x-card title="New order">
+<x-card title="New work order">
     <form action="{{ route('orders.store') }}" method="post">
         @include('orders._form')
         <input type="hidden" name="client" value="{{ $client->id }}">
         <br>
-        <div class="text-end">
-            <div class="d-inline-block">
-                <div class="dropdown">
-                    <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span>Save order</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <button class="dropdown-item" type="submit" name="after_saving" value="1">
-                                <span>...and create another order</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="dropdown-item" type="submit" name="after_saving" value="0">
-                                <span>...and finish</span>
-                            </button>
-                        </li>
-                    </ul>
+        <div class="row justify-content-between">
+            <div class="col-md">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="afterSavingCheckbox" name="after_saving" value="1" checked>
+                    <label class="form-check-label" for="afterSavingCheckbox">After saving, create a new work order for this client again.</label>
                 </div>
             </div>
-            <a href="{{ route('orders.index') }}" class="btn btn-primary">Cancel</a>
+            <div class="col-md text-end">
+                <button class="btn btn-success" type="submit">Save work order</button>
+                <a href="{{ route('orders.index') }}" class="btn btn-primary">Cancel</a>
+            </div>
         </div>
     </form>
 </x-card>

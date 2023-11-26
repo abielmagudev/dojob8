@@ -5,7 +5,7 @@
 
     <div class="row">
         <div class="col-sm">
-            <input type="date" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" id="inputScheduleDate" name="scheduled_date" value="{{ old('scheduled_date', $order->scheduled_date) }}" required>
+            <input type="date" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" id="inputScheduleDate" name="scheduled_date" value="{{ old('scheduled_date', $order->scheduled_date_input) }}" required>
             <x-error name="scheduled_date"></x-error>
         </div>
         <div class="col-sm">

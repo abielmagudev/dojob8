@@ -46,7 +46,7 @@
 
     {{-- Order --}}
     <div class="col-sm">
-        <x-card title="Order #{{ $inspection->order->id }}" class="h-100">
+        <x-card title="Work order #{{ $inspection->order->id }}" class="h-100">
             <x-slot name="options">
                 <a href="{{ route('orders.show', $inspection->order) }}" class="btn btn-primary">
                     <i class="bi bi-eye-fill"></i>

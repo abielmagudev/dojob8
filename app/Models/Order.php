@@ -28,6 +28,11 @@ class Order extends Model
 
     // Attributes
 
+    public function getScheduledDateInputAttribute()
+    {
+        return $this->scheduled_date->format('Y-m-d');
+    }
+
     public function getScheduledDatetimeAttribute()
     {
         return sprintf('%s %s', $this->scheduled_date->format('Y-m-d'), $this->scheduled_time);

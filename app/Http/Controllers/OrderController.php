@@ -19,7 +19,10 @@ class OrderController extends Controller
     public function index()
     {
         return view('orders.index', [
-            'orders' => Order::with(['job', 'client'])->orderBy('scheduled_date', 'desc')->orderBy('scheduled_time', 'asc')->paginate(25),
+            'orders' => Order::with(['job', 'client'])
+                            ->orderBy('scheduled_date', 'desc')
+                            ->orderBy('scheduled_time', 'asc')
+                            ->paginate(25),
         ]);
     }
 
@@ -38,7 +41,7 @@ class OrderController extends Controller
     public function store(OrderStoreRequest $request)
     {
         if(! $order = Order::create($request->validated()) )
-            return back()->with('danger', "Error saving order, try again please");
+            return back()->with('danger', "Error saving work order, try again please");
 
         $this->saveOrderByExtensions(
             $request->cache['extensions'],
@@ -49,7 +52,7 @@ class OrderController extends Controller
         
         $route = $request->get('after_saving') == 1 ? route('orders.create', $order->client_id) : route('orders.index');
 
-        return redirect($route)->with('success', "Order <b>#{$order->id}: {$order->job->name}</b> saved");
+        return redirect($route)->with('success', "You saved the work order <b>#{$order->id}: {$order->job->name}</b>");
     }
 
     public function show(Request $request, Order $order)
@@ -80,7 +83,7 @@ class OrderController extends Controller
     public function update(OrderUpdateRequest $request, Order $order)
     {
         if(! $order->fill( $request->validated() )->save() )
-            return back()->with('danger', 'Error updating order, try again please');
+            return back()->with('danger', 'Error updating work order, try again please');
 
         $this->saveOrderByExtensions(
             $request->cache['extensions'],
@@ -89,18 +92,18 @@ class OrderController extends Controller
             'update'
         );
 
-        return redirect()->route('orders.edit', $order)->with('success', "Order <b>#{$order->id}: {$order->job->name}</b> updated");
+        return redirect()->route('orders.edit', $order)->with('success', "You updated the work order <b>#{$order->id}: {$order->job->name}</b>");
     }
 
     public function destroy(Request $request, Order $order)
     {
         if(! $order->delete() ) {
-            return back()->with('danger', 'Error deleting order, try again please');
+            return back()->with('danger', 'Error deleting work order, try again please');
         }        
 
         // Delete on extensions job
 
-        return redirect()->route('orders.index')->with('success', "Order #{$order->id} deleted");
+        return redirect()->route('orders.index')->with('success', "You deleted the work order #{$order->id}");
     }
 
 

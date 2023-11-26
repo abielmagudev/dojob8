@@ -27,7 +27,7 @@ class History extends Model
         'inspector' => Inspector::class,
         'intermediaries' => Intermediary::class,
         'jobs' => Job::class,
-        'orders' => Order::class,
+        'work orders' => Order::class,
         'staff' => Member::class,
         'users' => User::class,
     ];

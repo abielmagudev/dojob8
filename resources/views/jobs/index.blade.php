@@ -17,7 +17,7 @@
                 <th></th>
                 <th>Name</th>
                 <th>Extensions</th>
-                <th>Orders</th>
+                <th class="text-nowrap">Work orders</th>
                 <th></th>
             </tr>
         </x-slot>

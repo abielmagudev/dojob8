@@ -1,4 +1,4 @@
-<x-custom.form-control-horizontal class="align-items-center">
+<x-custom.form-control-horizontal>
     <x-slot name="label">
         <label for="textareaNotes" class="form-label">Notes</label>
     </x-slot>

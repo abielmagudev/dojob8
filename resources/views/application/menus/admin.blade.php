@@ -5,7 +5,7 @@ $items = [
         'route' => route('dashboard.index'),
         'active' => request()->routeIs('dashboard.*'),
     ],
-    'Orders' => [
+    'Work orders' => [
         'route' => route('orders.index'),
         'active' => request()->routeIs('orders.*'),
     ],

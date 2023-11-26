@@ -36,7 +36,7 @@ class ClientController extends Controller
         $next = Client::after($client->id)->first();
 
         return view('clients.show', [
-            'client' => $client->load(['orders.job', 'history.user']),
+            'client' => $client->load(['orders.job']),
             'routes' => [
                 'previous' => $previous ? route('clients.show', $previous) : false,
                 'next' => $next ? route('clients.show', $next) : false,

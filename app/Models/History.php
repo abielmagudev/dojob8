@@ -29,6 +29,40 @@ class History extends Model
 
 
 
+    // Scopes
+
+    public function scopeWhereModel($query, $classname, $id)
+    {
+        return $query->where('model_type', $classname)->where('model_id', $id);
+    }
+
+    public function scopeWhereNotModel($query, $classname, $id)
+    {
+        return $query->where('model_type', '<>', $classname)->where('model_id', '<>', $id);
+    }
+
+    public function scopeWhereUser($query, $id)
+    {
+        return $query->where('user_id', $id);
+    }
+
+    public function scopeWhereNotUser($query, $id)
+    {
+        return $query->where('user_id', '<>', $id);
+    }
+
+    public function scopeHasLink($query)
+    {
+        return $query->whereNotNull('link');
+    }
+
+    public function scopeNotHasLink($query)
+    {
+        return $query->whereNull('link');
+    }
+
+
+
     // Relationships
 
     public function user()

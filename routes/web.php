@@ -6,6 +6,7 @@ use App\Http\Controllers\CrewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectorController;
 use App\Http\Controllers\IntermediaryController;
@@ -58,3 +59,5 @@ Route::get('orders/ajax/create/{job}', [OrderJobExtensionsAjaxController::class,
 Route::get('orders/ajax/edit/{order}', [OrderJobExtensionsAjaxController::class, 'edit'])->name('orders.ajax.edit');
 
 Route::resource('users', UserController::class);
+
+Route::get('history', HistoryController::class)->name('history.index');

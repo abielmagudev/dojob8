@@ -33,6 +33,10 @@ $items = [
         'route' => route('users.index'),
         'active' => request()->routeIs('users.*'),
     ],
+    'History' => [
+        'route' => route('history.index'),
+        'active' => request()->routeIs('history.*'),
+    ],
 ];
 
 ?>

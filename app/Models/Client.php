@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
+use App\Models\Kernel\HasHistoryChangesTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Client extends Model
     use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
     use HasHookUsersTrait;
+    use HasHistoryChangesTrait;
 
     protected $fillable = [
         'name',
@@ -31,6 +33,17 @@ class Client extends Model
         'mobile_number',
         'email',
         'notes',
+    ];
+
+    protected $ignore_changes = [
+        'id',
+        'full_name',
+        'created_by', 
+        'created_at',
+        'updated_by', 
+        'updated_at',
+        'deleted_by',
+        'deleted_at',
     ];
 
 
@@ -70,6 +83,7 @@ class Client extends Model
                     ->orWhere('zip_code', 'like', "%{$value}%")
                     ->orWhere('city', 'like', "%{$value}%");
     }
+
 
     // Relations
 

@@ -38,8 +38,10 @@ class ClientObserver
     {
         if(! $this->request->isMethod('delete') )
         {
+            $before_changes = $client->getOriginalWasChanged()->implode(', ');
+
             History::create([
-                'description' => sprintf("<em>{$client->full_name}</em> client was updated."),
+                'description' => sprintf("<em>{$client->full_name}</em> client was updated. Before {$before_changes}."),
                 'link' => route('clients.show', $client),
                 'model_type' => get_class($client),
                 'model_id' => $client->id,

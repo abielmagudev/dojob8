@@ -43,9 +43,10 @@ class UserController extends Controller
                 'previous' => $previous ? route('users.show', $previous) : false,
                 'next' => $next ? route('users.show', $next) : false,
             ],
-            'history' => History::where('user_id', $user->id)
-                                ->where('model_type', '<>',User::class)
-                                ->where('model_id', '<>', $user->id)
+            'history' => History::whereNotModel(User::class, $user->id)
+                                ->whereUser($user->id)
+                                ->orderByDesc('id')
+                                ->limit(5)
                                 ->get()
         ]);
     }

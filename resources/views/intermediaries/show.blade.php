@@ -67,7 +67,7 @@
 </div>
 <br>
 
-<x-card title="Orders">
+<x-card title="Work orders">
             
 </x-card>
 @endsection

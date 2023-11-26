@@ -26,6 +26,7 @@ class Client extends Model
         'country_code',
         'state_code',
         'city',
+        'district',
         'phone_number',
         'mobile_number',
         'email',
@@ -50,6 +51,7 @@ class Client extends Model
             $this->street,
             $this->location_country_code,
             $this->zip_code,
+            $this->district,
         ];
 
         return implode(', ', $data);

@@ -25,7 +25,8 @@
     <x-custom.p-label label="Address">
         <span class="d-block">{{ $client->street }}</span>
         <span class="d-block">{{ $client->location_country_code }}</span>
-        <span>{{ $client->zip_code }}</span>
+        <span class="d-block">{{ $client->zip_code }}</span>
+        <span>District {{ $client->district }}</span>
     </x-custom.p-label>
 
     <x-custom.p-label label="Contact">

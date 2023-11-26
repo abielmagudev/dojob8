@@ -48,6 +48,10 @@ class ClientSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'district' => [
+                'required',
+                'numeric',
+            ],
             'phone_number' => [
                 'required',
             ],

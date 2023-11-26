@@ -18,6 +18,7 @@
                 <th class="text-nowrap">Full name</th>
                 <th>Address</th>
                 <th class="text-nowrap">Zip code</th>
+                <th>District</th>
                 <th>Phone</th>
                 <th class="text-nowrap">Work orders</th>
                 <th></th>
@@ -29,6 +30,7 @@
             <td class="text-nowrap">{{ $client->full_name }}</td>
             <td class="text-nowrap">{{ $client->street }}, {{ $client->location_without_country }}</td>
             <td class="text-nowrap">{{ $client->zip_code }}</td>
+            <td class="text-nowrap text-center">{{ $client->district }}</td>
             <td class="text-nowrap">{{ $client->phone_number }}</td>
             <td class="text-center">
                 @if( $client->orders_count )

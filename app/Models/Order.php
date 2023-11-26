@@ -13,6 +13,8 @@ class Order extends Model
     use HasFactory;
     use HasBeforeAfterTrait;
 
+    protected $table = 'work_orders';
+
     protected $fillable = [
         'client_id',
         'job_id',

@@ -1,11 +1,7 @@
 @extends('application')
 
 @section('header')
-<x-header title="Staff">
-    <x-slot name="options">
-        <a href="{{ route('crews.index') }}" class="btn btn-primary">Crews</a>
-    </x-slot>
-</x-header>
+<x-header title="Staff" />
 @endsection
 
 @section('content')

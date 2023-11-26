@@ -11,15 +11,27 @@ $items = [
     ],
     'Jobs' => [
         'route' => route('jobs.index'),
-        'active' => request()->routeIs('jobs.*') || request()->routeIs('extensions.*'),
+        'active' => request()->routeIs('jobs.*'),
+    ],
+    'Extensions' => [
+        'route' => route('extensions.index'),
+        'active' => request()->routeIs('extensions.*'),
     ],
     'Inspections' => [
         'route' => route('inspections.index'),
-        'active' => request()->routeIs('inspections.*') || request()->routeIs('inspectors.*'),
+        'active' => request()->routeIs('inspections.*'),
+    ],
+    'Inspectors' => [
+        'route' => route('inspectors.index'),
+        'active' => request()->routeIs('inspectors.*'),
     ],
     'Staff' => [
         'route' => route('members.index'),
-        'active' => request()->routeIs('members.*') || request()->routeIs('crews.*'),
+        'active' => request()->routeIs('members.*'),
+    ],
+    'Crews' => [
+        'route' => route('crews.index'),
+        'active' => request()->routeIs('crews.*'),
     ],
     'Intermediaries' => [
         'route' => route('intermediaries.index'),

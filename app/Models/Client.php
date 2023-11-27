@@ -23,15 +23,15 @@ class Client extends Model
         'name',
         'last_name',
         'full_name',
-        'street',
-        'zip_code',
-        'country_code',
-        'state_code',
-        'city',
-        'district_code',
         'phone_number',
         'mobile_number',
         'email',
+        'street',
+        'city',
+        'state_code',
+        'country_code',
+        'zip_code',
+        'district_code',
         'notes',
     ];
 
@@ -42,7 +42,7 @@ class Client extends Model
 
     // Attributes 
 
-    public function getContactInfoCollectionAttribute()
+    public function getContactDataCollectionAttribute()
     {
         return collect([
             'phone'  => $this->phone_number,
@@ -61,16 +61,10 @@ class Client extends Model
         return implode(', ', $data);
     }
 
-    public function getFullAddressAttribute()
+    public function getAddressWithZipCodeAttribute()
     {
         return "{$this->address}, {$this->zip_code}";
     }
-
-    public function getExtendedAddressAttribute()
-    {
-        return "Zip Code {$this->full_address}, District {$this->district_code}";
-    }
-
 
 
     // Scopes

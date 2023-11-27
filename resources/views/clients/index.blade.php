@@ -38,16 +38,12 @@
                 <small>{{ $client->district_code }}</small>
             </td>
             <td class="text-nowrap">
-                @if( $client->work_orders_count )
-                <span class="badge rounded text-bg-dark" data-bs-toggle="tooltip" data-bs-title="Total">{{ $client->work_orders_count }}</span>
-                
-                @if(mt_rand(0,1))
-                <span class="badge rounded text-bg-danger" data-bs-toggle="tooltip" data-bs-title="Pending">{{ mt_rand(1, $client->work_orders_count) }}</span>
-                @endif
-
-                @endif
+                <span data-bs-toggle="tooltip" data-bs-title="Total">{{ $client->work_orders_count }}</span>
             </td>
             <td class="text-nowrap text-end">
+                @if( $client->work_orders_count && mt_rand(0,1) )
+                <button class="btn btn-warning px-3" data-bs-toggle="tooltip" data-bs-title="Pending work orders">{{ mt_rand(1, $client->work_orders_count) }}</button>
+                @endif
                 <a href="{{ route('clients.show', $client) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>

@@ -2,7 +2,7 @@ if( typeof CpsPMComponent == 'undefined' )
 {
     const CpsPMComponent = {
         element: document.getElementById('cpspmProductComponent'),
-        container: document.getElementById('cpspmProductsOrder'),
+        container: document.getElementById('cpspmProductsWorkOrder'),
         template: function (setup) {
             let clone = this.element.querySelector('template').content.cloneNode(true);
 
@@ -15,7 +15,6 @@ if( typeof CpsPMComponent == 'undefined' )
         },
         listen: function () {            
             this.element.addEventListener('click', (e) => {
-                console.log('clicked')
                 if(! e.target.matches('button.btn-primary, button.btn-primary > b') ) {
                     return;
                 }

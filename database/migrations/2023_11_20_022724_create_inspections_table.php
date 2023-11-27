@@ -20,7 +20,7 @@ class CreateInspectionsTable extends Migration
             $table->text('notes')->nullable();
             $table->boolean('is_approved')->nullable()->index();
             $table->foreignId('inspector_id');
-            $table->foreignId('order_id');
+            $table->foreignId('work_order_id');
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->timestamps();

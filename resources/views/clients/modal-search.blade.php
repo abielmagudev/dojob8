@@ -14,7 +14,7 @@
 
             {{-- Template list item --}}
             <template id="templateClientItem">
-                <a href="{{ route('orders.create', '?') }}" class="list-group-item list-group-item-action">
+                <a href="{{ route('work-orders.create', '?') }}" class="list-group-item list-group-item-action">
                     <b class="d-block"></b>
                     <small class="d-block"></small>
                     <small class="d-block"></small>
@@ -25,7 +25,7 @@
     </div>
     <div class="mt-2 text-end">
         <span class="text-secondary">...or</span>
-        <a href="{{ route('clients.create', ['redirect' => 'orders.create']) }}">create new client</a>
+        <a href="{{ route('clients.create', ['redirect' => 'work-orders.create']) }}">create new client</a>
     </div>
 </x-modal>
 

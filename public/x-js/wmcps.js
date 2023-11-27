@@ -2,7 +2,7 @@ if( typeof wmcpsProductComponent == 'undefined' )
 {
     const wmcpsProductComponent = {
         element: document.getElementById('wmcpsProductsComponent'),
-        container: document.getElementById('wmcpsProductsOrder'),
+        container: document.getElementById('wmcpsProductsWorkOrder'),
         template: function (setup) {
             let clone = this.element.querySelector('template').content.cloneNode(true);
 

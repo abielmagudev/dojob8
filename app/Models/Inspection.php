@@ -19,7 +19,7 @@ class Inspection extends Model
         'notes',
         'is_approved',
         'inspector_id',
-        'order_id',
+        'work_order_id',
     ];
 
     protected $casts = [
@@ -100,9 +100,9 @@ class Inspection extends Model
         return $this->belongsTo(Inspector::class);
     }
 
-    public function order()
+    public function work_order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(WorkOrder::class);
     }
 
 

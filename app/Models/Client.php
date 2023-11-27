@@ -80,9 +80,9 @@ class Client extends Model
 
     // Relations
 
-    public function orders()
+    public function work_orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(WorkOrder::class);
     }
 
     public function history()

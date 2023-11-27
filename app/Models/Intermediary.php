@@ -58,8 +58,8 @@ class Intermediary extends Model
 
     // Relationships
     
-    public function orders()
+    public function work_orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(WorkOrder::class);
     }
 }

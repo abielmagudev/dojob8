@@ -43,7 +43,7 @@
                 @endif
             </td>
             <td class="text-nowrap text-end">
-                <a href="{{ route('orders.create', $client) }}" class="btn btn-outline-success px-3">
+                <a href="{{ route('work-orders.create', $client) }}" class="btn btn-outline-success px-3">
                     <b>+</b>
                 </a>
                 <a href="{{ route('clients.show', $client) }}" class="btn btn-outline-primary">

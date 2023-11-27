@@ -11,7 +11,7 @@ class ClientController extends Controller
     public function index()
     {
         return view('clients.index', [
-            'clients' => Client::withCount('orders')->orderByDesc('id')->paginate(25)
+            'clients' => Client::withCount('work_orders')->orderByDesc('id')->paginate(25)
         ]);
     }
 
@@ -25,7 +25,7 @@ class ClientController extends Controller
         if(! $client = Client::create( $request->validated() ) )
             return back()->with('danger', 'Error saving client, please try again');
 
-        $route = $request->has('after_saving') ? route('orders.create', $client) : route('clients.index');
+        $route = $request->has('after_saving') ? route('work-orders.create', $client) : route('clients.index');
 
         return redirect($route)->with('success', "You created the client <b>{$client->full_name}</b>");
     }
@@ -36,7 +36,7 @@ class ClientController extends Controller
         $next = Client::after($client->id)->first();
 
         return view('clients.show', [
-            'client' => $client->load(['orders.job']),
+            'client' => $client->load(['work_orders.job']),
             'routes' => [
                 'previous' => $previous ? route('clients.show', $previous) : false,
                 'next' => $next ? route('clients.show', $next) : false,

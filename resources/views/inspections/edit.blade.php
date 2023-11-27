@@ -16,7 +16,7 @@
         <br>
         <div class="text-end">
             <button class="btn btn-warning" type="submit">Update inspection</button>
-            <a href="{{ route('orders.show', $inspection->order_id) }}" class="btn btn-primary">Back</a>
+            <a href="{{ route('work-orders.show', $inspection->work_order_id) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

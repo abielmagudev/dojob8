@@ -1,7 +1,7 @@
 <table>
     <thead>
         <tr>
-            <th>Order</th>
+            <th>Work order</th>
             <th>Item ID</th>
             <th>Product</th>
             <th>Material price</th>
@@ -15,7 +15,7 @@
         <?php $total = 0; ?>
         @foreach($measures as $measure)            
         <tr>
-            <td>{{ $measure->order->id }}</td>
+            <td>{{ $measure->work_order->id }}</td>
             <td>{{ $measure->product->item_price_id }}</td>
             <td>{{ $measure->product->name }}</td>
             <td>${{ $measure->product->material_price }}</td>

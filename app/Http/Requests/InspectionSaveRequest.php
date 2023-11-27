@@ -3,12 +3,12 @@
 namespace App\Http\Requests;
 
 use App\Models\Inspector;
-use App\Models\Order;
+use App\Models\WorkOrder;
 use Illuminate\Foundation\Http\FormRequest;
 
 class InspectionSaveRequest extends FormRequest
 {
-    public $order_rules = [];
+    public $work_order_rules = [];
 
     public function authorize()
     {
@@ -41,7 +41,7 @@ class InspectionSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'order' => $this->order_rules,
+            'work_order' => $this->work_order_rules,
         ];
     }
 
@@ -49,11 +49,11 @@ class InspectionSaveRequest extends FormRequest
     {
         if( $this->isMethod('POST') )
         {
-            $this->order_rules = [
+            $this->work_order_rules = [
                 'bail', 
                 'required', 
                 'integer', 
-                sprintf('exists:%s,id', Order::class),
+                sprintf('exists:%s,id', WorkOrder::class),
             ];
         }
     }
@@ -64,7 +64,7 @@ class InspectionSaveRequest extends FormRequest
             'is_approved' => $this->status,
             'scheduled_date' => $this->schedule,
             'inspector_id' => $this->inspector,
-            'order_id' =>  $this->isMethod('POST') ? $this->order : $this->route('inspection')->order_id,
+            'work_order_id' =>  $this->isMethod('POST') ? $this->work_order : $this->route('inspection')->work_order_id,
         ]);
     }
 }

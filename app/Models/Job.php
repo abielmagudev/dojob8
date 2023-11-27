@@ -42,8 +42,8 @@ class Job extends Model
         return $this->belongsToMany(Extension::class);
     }
 
-    public function orders()
+    public function work_orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(WorkOrder::class);
     }
 }

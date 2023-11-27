@@ -28,9 +28,9 @@ class Extension extends Model
         return sprintf('%s\Controllers\%sController', $this->namespace, $this->classname);
     }
 
-    public function getOrderControllerAttribute()
+    public function getWorkOrderControllerAttribute()
     {
-        return sprintf('%s\Controllers\%sOrderController', $this->namespace, $this->classname);
+        return sprintf('%s\Controllers\%sWorkOrderController', $this->namespace, $this->classname);
     }
 
 

@@ -2,7 +2,6 @@
 
 namespace App\Apix\CpsProductMeasures\Requests;
 
-use App\Apix\CpsProductMeasures\Models\Category;
 use App\Apix\CpsProductMeasures\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 

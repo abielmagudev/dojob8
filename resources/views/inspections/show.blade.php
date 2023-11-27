@@ -44,31 +44,32 @@
         </x-card>
     </div>
 
-    {{-- Order --}}
+    {{-- Work order --}}
     <div class="col-sm">
-        <x-card title="Work order #{{ $inspection->order->id }}" class="h-100">
+        <x-card title="Work order #{{ $inspection->work_order->id }}" class="h-100">
             <x-slot name="options">
-                <a href="{{ route('orders.show', $inspection->order) }}" class="btn btn-primary">
+                <a href="{{ route('work-orders.show', $inspection->work_order) }}" class="btn btn-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </x-slot>
 
             <x-custom.p-label label="Scheduled">
-                {{ $inspection->order->scheduled_date_human }}
+                {{ $inspection->work_order->scheduled_date_human }}
             </x-custom.p-label>
 
             <x-custom.p-label label="Job">
-                {{ $inspection->order->job->name }}
+                {{ $inspection->work_order->job->name }}
             </x-custom.p-label>
             
             <x-custom.p-label label="Client">
-                <span class="d-block">{{ $inspection->order->client->fullname }}</span>
-                <span class="d-block">{{ $inspection->order->client->address }}</span>
-                <span class="d-block">{{ $inspection->order->client->contact_info_collection->filter()->implode(',') }}</span>
+                <span class="d-block">{{ $inspection->work_order->client->full_name }}</span>
+                <span class="d-block">{{ $inspection->work_order->client->address }}</span>
+                <span class="d-block">{{ $inspection->work_order->client->zip_code }}, District {{ $inspection->work_order->client->district }}</span>
+                <span class="d-block">{{ $inspection->work_order->client->contact_info_collection->filter()->implode(', ') }}</span>
             </x-custom.p-label>
 
             <x-custom.p-label label="Notes">
-                {{ $inspection->order->notes }}
+                {{ $inspection->work_order->notes }}
             </x-custom.p-label>
         </x-card>
     </div>

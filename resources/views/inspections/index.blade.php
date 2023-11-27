@@ -21,8 +21,8 @@
         @foreach($inspections as $inspection)
         <tr>
             <td class="text-nowrap ">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
-            <td>{{ $inspection->order->client->address }}</td>
-            <td>{{ $inspection->order->job->name }}</td>
+            <td>{{ $inspection->work_order->client->address }}</td>
+            <td>{{ $inspection->work_order->job->name }}</td>
             <td>{{ $inspection->inspector->name }}</td>
             <td style="max-width:128px">
                 <x-badge color="{{ $inspection->approved_color }}" class="text-uppercase w-100">{{ $inspection->approved_status }}</x-badge>

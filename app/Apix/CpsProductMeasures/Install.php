@@ -17,7 +17,7 @@ return new class extends Installer
         return [
             'apix_cpspm_products' =>   app_path('Apix/CpsProductMeasures/migrations/create_apix_cpspm_products_table.php'),
             'apix_cpspm_categories' => app_path('Apix/CpsProductMeasures/migrations/create_apix_cpspm_categories_table.php'),
-            'apix_cpspm_orders' =>     app_path('Apix/CpsProductMeasures/migrations/create_apix_cpspm_orders_table.php'),
+            'apix_cpspm_work_orders' =>     app_path('Apix/CpsProductMeasures/migrations/create_apix_cpspm_work_orders_table.php'),
         ];
     }
 };

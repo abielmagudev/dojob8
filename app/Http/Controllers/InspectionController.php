@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InspectionSaveRequest;
 use App\Models\Inspection;
 use App\Models\Inspector;
-use App\Models\Order;
+use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
 class InspectionController extends Controller
@@ -13,16 +13,22 @@ class InspectionController extends Controller
     public function index()
     {
         return view('inspections.index', [
-            'inspections' => Inspection::with(['inspector', 'order.job', 'order.client'])->orderBy('scheduled_date', 'desc')->paginate(25),
+            'inspections' => Inspection::with([
+                                'inspector', 
+                                'work_order.job', 
+                                'work_order.client'
+                            ])
+                            ->orderBy('scheduled_date', 'desc')
+                            ->paginate(25),
         ]);
     }
 
-    public function create(Order $order)
+    public function create(WorkOrder $work_order)
     {
         return view('inspections.create', [
             'inspection' => new Inspection,
             'inspectors' => Inspector::all(),
-            'order' => $order,
+            'work_order' => $work_order,
         ]);
     }
 
@@ -32,7 +38,7 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error saving inspection, try again please');
         }
 
-        return redirect()->route('orders.show', $inspection->order_id)->with('success', "You saved inspection <b>{$inspection->id}</b>");
+        return redirect()->route('work-orders.show', $inspection->work_order_id)->with('success', "You saved inspection <b>{$inspection->id}</b>");
     }
 
     public function show(Inspection $inspection)
@@ -72,6 +78,6 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error deleting inspection, try again please');
         }
 
-        return redirect()->route('orders.show', $inspection->order_id)->with('success', "You deleted inspection <b>{$inspection->id}</b>");
+        return redirect()->route('work-orders.show', $inspection->work_order_id)->with('success', "You deleted inspection <b>{$inspection->id}</b>");
     }
 }

@@ -19,7 +19,7 @@ class InspectionFactory extends Factory
             'notes' => $this->faker->optional()->sentence(),
             'is_approved' => $this->faker->optional()->numberBetween(0, 1),
             'inspector_id' => $this->faker->numberBetween(1, 3),
-            'order_id' => $this->faker->numberBetween(1, 500),
+            'work_order_id' => $this->faker->numberBetween(1, 500),
         ];
     }
 }

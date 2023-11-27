@@ -12,8 +12,8 @@ use App\Http\Controllers\InspectorController;
 use App\Http\Controllers\IntermediaryController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderJobExtensionsAjaxController;
+use App\Http\Controllers\WorkOrderController;
+use App\Http\Controllers\WorkOrderJobExtensionsAjaxController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,14 +50,14 @@ Route::resource('intermediaries', IntermediaryController::class);
 Route::resource('inspectors', InspectorController::class);
 
 Route::resource('inspections', InspectionController::class)->except('create');
-Route::get('inspections/create/{order}', [InspectionController::class, 'create'])->name('inspections.create');
-
-Route::resource('orders', OrderController::class)->except('create');
-Route::get('orders/create/{client}', [OrderController::class, 'create'])->name('orders.create');
-
-Route::get('orders/ajax/create/{job}', [OrderJobExtensionsAjaxController::class, 'create'])->name('orders.ajax.create');
-Route::get('orders/ajax/edit/{order}', [OrderJobExtensionsAjaxController::class, 'edit'])->name('orders.ajax.edit');
+Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
 
 Route::resource('users', UserController::class);
 
 Route::get('history', HistoryController::class)->name('history.index');
+
+Route::resource('work-orders', WorkOrderController::class)->except('create');
+Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
+
+Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
+Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');

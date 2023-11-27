@@ -11,7 +11,7 @@ class JobController extends Controller
     public function index()
     {
         return view('jobs.index', [
-            'jobs' => Job::withCount(['extensions', 'orders'])
+            'jobs' => Job::withCount(['extensions', 'work_orders'])
                             ->orderBy('name')
                             ->paginate(25)
         ]);
@@ -37,7 +37,7 @@ class JobController extends Controller
 
         return view('jobs.show', [
             'extensions' => Extension::whereNotIn('id', $job->extensions->pluck('id'))->orderBy('name')->get(),
-            'job' => $job->load(['extensions', 'orders']),
+            'job' => $job->load(['extensions', 'work_orders']),
             'routes' => [
                 'previous' => $previous ? route('jobs.show', $previous) : false,
                 'next' => $next ? route('jobs.show', $next) : false,

@@ -36,15 +36,15 @@
             
             <x-custom.p-label label="Contact">
                 <span class="d-block">{{ $intermediary->contact }}</span>
-                <span class="d-block">{{ $intermediary->phone_number }}</span>
-                <span class="d-block">{{ $intermediary->mobile_number }}</span>
-                <span>{{ $intermediary->email }}</span>
+                @foreach($intermediary->contact_data_collection->filter() as $data)
+                <span class="d-block">{{ $data }}</span>
+                @endforeach
             </x-custom.p-label>
 
             <x-custom.p-label label="Address">
                 <span class="d-block">{{ $intermediary->street }}</span>
                 <span class="d-block">{{ $intermediary->location_country_code }}</span>
-                <span class="d-block">{{ $intermediary->zip_code }}</span>
+                <span class="d-block">{{ $intermediary->zip_code }} <em class="text-secondary">(Zip code)</em></span>
             </x-custom.p-label>
 
             <x-custom.p-label label="Notes">

@@ -16,11 +16,9 @@
         <x-slot name="thead">
             <tr>
                 <th></th>
-                <th>Name</th>
+                <th class="text-nowrap">Name & Alias</th>
                 <th>Contact</th>
-                <th>Phone</th>
-                <th>Mobile</th>
-                <th>Email</th>
+                <th class="text-nowrap">Work orders</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -31,12 +29,20 @@
                     <x-custom.circle-off-on :switcher="$intermediary->isAvailable()" />
                 </span>
             </td>
-            <td>{{ $intermediary->name }} <em>({{ $intermediary->alias }})</em></td>
-            <td>{{ $intermediary->contact }}</td>
-            <td>{{ $intermediary->phone_number }}</td>
-            <td>{{ $intermediary->mobile_number }}</td>
-            <td>{{ $intermediary->email }}</td>
+            <td>
+                <span class="d-block">{{ $intermediary->name }}</span>
+                <small>{{ $intermediary->alias }}</small>
+            </td>
+            <td>
+                <span class="d-block">{{ $intermediary->contact }}</span>
+                <small>{{ $intermediary->contact_data_collection->filter()->implode(', ') }}</small>
+            </td>
+            <td>{{ mt_rand(0,400) }}</td>
             <td class="text-end">
+                @if( $pending_work_orders = mt_rand(0, 200) )
+                <button class="btn btn-warning {{ $pending_work_orders > 10 ?: 'px-3' }}" type="button" data-bs-toggle="tooltip" data-bs-title="Pending work orders">{{ $pending_work_orders }}</button>
+                @endif
+
                 <a href="{{ route('intermediaries.show', $intermediary) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>

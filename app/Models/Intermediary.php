@@ -28,10 +28,10 @@ class Intermediary extends Model
         'mobile_number',
         'email',
         'street',
-        'zip_code',
-        'country_code',
-        'state_code',
         'city',
+        'state_code',
+        'country_code',
+        'zip_code',
         'notes',
         'is_available',
     ];
@@ -54,6 +54,14 @@ class Intermediary extends Model
         return $this->isAvailable() ? 'available' : 'not available';
     }
 
+    public function getContactDataCollectionAttribute()
+    {
+        return collect([
+            'phone'  => $this->phone_number,
+            'mobile' => $this->mobile_number,
+            'email'  => $this->email,
+        ]);
+    }
 
 
     // Relationships

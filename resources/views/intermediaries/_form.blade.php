@@ -64,20 +64,11 @@
 
 <x-custom.form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="zipCodeInput" class="form-label">Zip code</label>
+        <label for="cityInput" class="form-label">City</label>
     </x-slot>
 
-    <input id="zipCodeInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('zip_code') ) }}" name="zip_code" value="{{ old('zip_code', $intermediary->zip_code) }}">
-    <x-error name="zip_code" />
-</x-custom.form-control-horizontal>
-
-<x-custom.form-control-horizontal class="align-items-center">
-    <x-slot name="label">
-        <label for="countryCodeSelect" class="form-label">Country</label>
-    </x-slot>
-
-    <x-custom.select-country-code :old="old('country_code', $intermediary->country_code)" required />
-    <x-error name="country_code" />
+    <input id="cityInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('city') ) }}" name="city" value="{{ old('city', ($intermediary->city ?? 'San Antonio')) }}">
+    <x-error name="city" />
 </x-custom.form-control-horizontal>
 
 <x-custom.form-control-horizontal class="align-items-center">
@@ -91,11 +82,20 @@
 
 <x-custom.form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="cityInput" class="form-label">City</label>
+        <label for="countryCodeSelect" class="form-label">Country</label>
     </x-slot>
 
-    <input id="cityInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('city') ) }}" name="city" value="{{ old('city', ($intermediary->city ?? 'San Antonio')) }}">
-    <x-error name="city" />
+    <x-custom.select-country-code :old="old('country_code', $intermediary->country_code)" required />
+    <x-error name="country_code" />
+</x-custom.form-control-horizontal>
+
+<x-custom.form-control-horizontal class="align-items-center">
+    <x-slot name="label">
+        <label for="zipCodeInput" class="form-label">Zip code</label>
+    </x-slot>
+
+    <input id="zipCodeInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('zip_code') ) }}" name="zip_code" value="{{ old('zip_code', $intermediary->zip_code) }}">
+    <x-error name="zip_code" />
 </x-custom.form-control-horizontal>
 
 <x-custom.form-control-horizontal>

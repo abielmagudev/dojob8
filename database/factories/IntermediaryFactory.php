@@ -31,10 +31,10 @@ class IntermediaryFactory extends Factory
             'mobile_number' => $this->faker->optional()->phoneNumber(),
             'email' => $this->faker->optional()->companyEmail(),
             'street' => $this->faker->streetAddress(),
-            'zip_code' => $this->faker->postcode(),
-            'country_code' => $country->get('code'), // $this->faker->country(),
-            'state_code' => $this->faker->randomElement( $country->get('states')->keys() ), // $this->faker->state(),
             'city' => $this->faker->city(),
+            'state_code' => $this->faker->randomElement( $country->get('states')->keys() ), // $this->faker->state(),
+            'country_code' => $country->get('code'), // $this->faker->country(),
+            'zip_code' => $this->faker->postcode(),
             'notes' => $this->faker->optional()->text(),
             'is_available' => (int) $this->faker->boolean(),
         ];

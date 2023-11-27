@@ -16,16 +16,16 @@ class CreateIntermediariesTable extends Migration
         Schema::create('intermediaries', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('alias', 16)->unique();
+            $table->string('alias')->unique();
             $table->string('contact');
             $table->string('phone_number');
             $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
             $table->string('street');
-            $table->string('zip_code');
-            $table->string('country_code')->index();
-            $table->string('state_code')->index();
             $table->string('city')->index();
+            $table->string('state_code')->index();
+            $table->string('country_code');
+            $table->string('zip_code');
             $table->text('notes')->nullable();
             $table->boolean('is_available')->default(1);
             $table->foreignId('created_by')->nullable();

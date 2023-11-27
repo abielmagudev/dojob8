@@ -24,13 +24,16 @@ class IntermediarySaveRequest extends FormRequest
     {
         return [
             'name' => [
+                'bail',
                 'required',
                 'string',
                 sprintf('unique:%s,name,%s', Intermediary::class, $this->intermediary_id),
             ],
             'alias' => [
+                'bail',
                 'required',
                 'string',
+                'max:10',
                 sprintf('unique:%s,alias,%s', Intermediary::class, $this->intermediary_id),
             ],
             'contact' => [
@@ -53,21 +56,22 @@ class IntermediarySaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'zip_code' => [
+            'city' => [
                 'required',
                 'string',
-            ],
-            'country_code' => [
-                'required',
-                sprintf('in:%s', $this->country_codes),
             ],
             'state_code' => [
                 'required',
                 sprintf('in:%s', $this->state_codes),
             ],
-            'city' => [
+            'country_code' => [
+                'required',
+                sprintf('in:%s', $this->country_codes),
+            ],
+            'zip_code' => [
                 'required',
                 'string',
+                'min:5',
             ],
             'notes' => [
                 'nullable',
@@ -79,9 +83,6 @@ class IntermediarySaveRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone_number.required' => __('Phone number is required'),
-            'phone_number.string' => __('Enter a valid phone number'),
-            'mobile_number.string' => __('Enter a valid mobile number'),
             'country_code.required' => __('Choose the country'),
             'country_code.in' => __('Choose a valid country'),
             'state_code.required' => __('Choose the state'),

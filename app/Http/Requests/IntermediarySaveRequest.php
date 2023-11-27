@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\CountryManager;
+use App\Suppliers\CountryManager;
 use App\Models\Intermediary;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -50,11 +50,11 @@ class IntermediarySaveRequest extends FormRequest
                 'email',
             ],
             'street' => [
-                'nullable',
+                'required',
                 'string',
             ],
             'zip_code' => [
-                'nullable',
+                'required',
                 'string',
             ],
             'country_code' => [

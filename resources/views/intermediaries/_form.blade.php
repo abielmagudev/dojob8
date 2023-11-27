@@ -55,7 +55,7 @@
 
 <x-custom.form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="streetInput" class="form-label form-label-optional">Street</label>
+        <label for="streetInput" class="form-label">Street</label>
     </x-slot>
 
     <input id="streetInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('street') ) }}" name="street" value="{{ old('street', $intermediary->street) }}">
@@ -64,7 +64,7 @@
 
 <x-custom.form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="zipCodeInput" class="form-label form-label-optional">Zip code</label>
+        <label for="zipCodeInput" class="form-label">Zip code</label>
     </x-slot>
 
     <input id="zipCodeInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('zip_code') ) }}" name="zip_code" value="{{ old('zip_code', $intermediary->zip_code) }}">

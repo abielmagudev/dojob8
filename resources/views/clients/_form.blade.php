@@ -60,11 +60,11 @@
 
 <x-custom.form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="districtInput" class="form-label">District</label>
+        <label for="districtCodeInput" class="form-label">District code</label>
     </x-slot>
 
-    <input type="text" class="form-control {{ bsInputInvalid($errors->has('district')) }}" name="district" value="{{ old('district', $client->district) }}" required>
-    <x-error name="district" />
+    <input id="districtCodeInput" type="text" class="form-control {{ bsInputInvalid($errors->has('district_code')) }}" name="district_code" value="{{ old('district_code', $client->district_code) }}" required>
+    <x-error name="district_code" />
 </x-custom.form-control-horizontal>
 
 <x-custom.form-control-horizontal class="align-items-center">

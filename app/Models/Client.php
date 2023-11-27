@@ -28,7 +28,7 @@ class Client extends Model
         'country_code',
         'state_code',
         'city',
-        'district',
+        'district_code',
         'phone_number',
         'mobile_number',
         'email',
@@ -56,12 +56,21 @@ class Client extends Model
         $data = [
             $this->street,
             $this->location_country_code,
-            $this->zip_code,
-            $this->district,
         ];
 
         return implode(', ', $data);
     }
+
+    public function getFullAddressAttribute()
+    {
+        return "{$this->address}, {$this->zip_code}";
+    }
+
+    public function getExtendedAddressAttribute()
+    {
+        return "Zip Code {$this->full_address}, District {$this->district_code}";
+    }
+
 
 
     // Scopes

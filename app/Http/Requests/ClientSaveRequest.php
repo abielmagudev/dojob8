@@ -48,7 +48,7 @@ class ClientSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'district' => [
+            'district_code' => [
                 'required',
                 'numeric',
             ],

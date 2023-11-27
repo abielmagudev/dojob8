@@ -22,17 +22,17 @@
         </a>
     </x-slot>
 
+    <x-custom.p-label label="Contact">
+        @foreach($client->contact_info_collection->filter() as $value)
+        <span class="d-block">{{ $value }}</span>
+        @endforeach
+    </x-custom.p-label>
+    
     <x-custom.p-label label="Address">
         <span class="d-block">{{ $client->street }}</span>
         <span class="d-block">{{ $client->location_country_code }}</span>
         <span class="d-block">{{ $client->zip_code }}</span>
         <span>District {{ $client->district_code }}</span>
-    </x-custom.p-label>
-
-    <x-custom.p-label label="Contact">
-        @foreach($client->contact_info_collection->filter() as $value)
-        <span class="d-block">{{ $value }}</span>
-        @endforeach
     </x-custom.p-label>
 
     <x-custom.p-label label="Notes">

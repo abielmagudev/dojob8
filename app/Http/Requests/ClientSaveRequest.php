@@ -28,30 +28,6 @@ class ClientSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'street' => [
-                'required',
-                'string',
-            ],
-            'zip_code' => [
-                'required',
-                'min:5',
-            ],
-            'country_code' => [
-                'required',
-                sprintf('in:%s', $this->country_codes),
-            ],
-            'state_code' => [
-                'required',
-                sprintf('in:%s', $this->state_codes),
-            ],
-            'city' => [
-                'required',
-                'string',
-            ],
-            'district_code' => [
-                'required',
-                'numeric',
-            ],
             'phone_number' => [
                 'required',
             ],
@@ -61,6 +37,31 @@ class ClientSaveRequest extends FormRequest
             'email' => [
                 'nullable',
                 'email',
+            ],
+            'street' => [
+                'required',
+                'string',
+            ],
+            'city' => [
+                'required',
+                'string',
+            ],
+            'state_code' => [
+                'required',
+                sprintf('in:%s', $this->state_codes),
+            ],
+            'country_code' => [
+                'required',
+                sprintf('in:%s', $this->country_codes),
+            ],
+            'zip_code' => [
+                'required',
+                'min:5',
+            ],
+            'district_code' => [
+                'required',
+                'numeric',
+                'min:2',
             ],
             'notes' => [
                 'nullable',

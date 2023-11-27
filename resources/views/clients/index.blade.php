@@ -15,9 +15,9 @@
     <x-table class="align-middle ">
         <x-slot name="thead">
             <tr>
-                <th class="text-nowrap">Full name</th>
+                <th>Contact</th>
                 <th>Address</th>
-                <th>Zip</th>
+                <th class="text-nowrap">Zip code & District</th>
                 <th class="text-nowrap">Work orders</th>
                 <th></th>
             </tr>
@@ -35,7 +35,7 @@
             </td>
             <td class="text-nowrap">
                 <span class="d-block">{{ $client->zip_code }}</span>
-                <small>D-{{ $client->district_code }}</small>
+                <small>{{ $client->district_code }}</small>
             </td>
             <td class="text-nowrap">
                 @if( $client->work_orders_count )

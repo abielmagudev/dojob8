@@ -31,7 +31,7 @@
                     <x-circle-off-on :switcher="$member->isActive()" />
                 </span>
             </td>
-            <td>{{ $member->fullname }}</td>
+            <td>{{ $member->full_name }}</td>
             <td>{{ $member->phone_number }}</td>
             <td>{{ $member->mobile_number }}</td>
             <td>{{ $member->email }}</td>

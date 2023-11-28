@@ -20,8 +20,8 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
 
     protected $fillable = [
         'name',
-        'lastname',
-        'fullname',
+        'last_name',
+        'full_name',
         'birthdate',
         'phone_number',
         'mobile_number',
@@ -60,7 +60,7 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         return $this->birthdate ? $this->birthdate->format('d M, Y') : null;
     }
 
-    public function getContactCollectionAttribute()
+    public function getContactDataCollectionAttribute()
     {
         return collect([
             'phone' => $this->phone_number,
@@ -71,7 +71,7 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
 
     public function getMetaNameAttribute(): string
     {
-        return $this->fullname;
+        return $this->full_name;
     }
 
 

@@ -22,15 +22,15 @@ class MemberSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'lastname' => [
+            'last_name' => [
                 'required',
                 'string',
             ],
-            'fullname' => [
+            'full_name' => [
                 'bail',
                 'required',
                 'string',
-                sprintf('unique:%s,fullname,%s', Member::class, $this->member_id),
+                sprintf('unique:%s,full_name,%s', Member::class, $this->member_id),
             ],
             'birthdate' => [
                 'nullable',
@@ -76,7 +76,7 @@ class MemberSaveRequest extends FormRequest
         $this->member_id = $this->route('member')->id ?? 0;
 
         $this->merge([
-            'fullname' => sprintf('%s %s', $this->name, $this->lastname),
+            'full_name' => sprintf('%s %s', $this->name, $this->last_name),
         ]);
     }
 
@@ -84,8 +84,8 @@ class MemberSaveRequest extends FormRequest
     {
         return array_merge(parent::validated(), [
             'name' => Str::title($this->name),
-            'lastname' => Str::title($this->lastname),
-            'fullname' => Str::title($this->fullname),
+            'last_name' => Str::title($this->last_name),
+            'full_name' => Str::title($this->full_name),
             'is_active' => $this->isMethod('POST') || $this->has('is_active') ? 1 : 0,
         ]);
     }

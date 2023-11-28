@@ -30,7 +30,7 @@ class MemberController extends Controller
             return back()->with('danger', 'Error saving member, try again please');
         }
 
-        return redirect()->route('members.index')->with('success', "You saved the member <b>{$member->fullname}</b>");
+        return redirect()->route('members.index')->with('success', "You saved the member <b>{$member->full_name}</b>");
     }
 
     public function show(Member $member)
@@ -62,7 +62,7 @@ class MemberController extends Controller
             return back()->with('danger', 'Error updating member, try again please');
         }
 
-        return redirect()->route('members.edit', $member)->with('success', "You updated the member <b>{$member->fullname}</b>");
+        return redirect()->route('members.edit', $member)->with('success', "You updated the member <b>{$member->full_name}</b>");
     }
 
     public function destroy(Member $member)
@@ -71,6 +71,6 @@ class MemberController extends Controller
             return back()->with('danger', 'Error deleting member, try again please');
         }
 
-        return redirect()->route('members.index')->with('success', "You deleted the member <b>{$member->fullname}</b>");
+        return redirect()->route('members.index')->with('success', "You deleted the member <b>{$member->full_name}</b>");
     }
 }

@@ -14,15 +14,15 @@ class MemberFactory extends Factory
      */
     public function definition()
     {
-        $fullname = [
+        $full_name = [
             'name' => $this->faker->firstName(),
-            'lastname' => $this->faker->lastName()
+            'last_name' => $this->faker->lastName()
         ];
 
         return [
-            'name' => $fullname['name'],
-            'lastname' => $fullname['lastname'],
-            'fullname' => implode(' ', $fullname),
+            'name' => $full_name['name'],
+            'last_name' => $full_name['last_name'],
+            'full_name' => implode(' ', $full_name),
             'birthdate' => $this->faker->optional()->date(),
             'phone_number' => $this->faker->optional()->phoneNumber(),
             'mobile_number' => $this->faker->optional()->phoneNumber(),

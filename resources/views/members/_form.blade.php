@@ -6,17 +6,17 @@
 
     <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name', $member->name) }}" required>
     <x-error name="name" />
-    <x-error name="fullname" />
+    <x-error name="full_name" />
 </x-form-control-horizontal>
 
 <x-form-control-horizontal>
     <x-slot name="label">
-        <label for="lastnameInput" class="form-label">Lastname</label>
+        <label for="lastNameInput" class="form-label">Last name</label>
     </x-slot>
 
-    <input id="lastnameInput" type="text" class="form-control" name="lastname" value="{{ old('lastname', $member->lastname) }}" required>
-    <x-error name="lastname" />
-    <x-error name="fullname" />
+    <input id="lastNameInput" type="text" class="form-control" name="last_name" value="{{ old('last_name', $member->last_name) }}" required>
+    <x-error name="last_name" />
+    <x-error name="full_name" />
 </x-form-control-horizontal>
 
 <x-form-control-horizontal>

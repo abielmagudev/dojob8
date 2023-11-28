@@ -26,13 +26,13 @@
         <x-badge :color="$user->isActive() ? 'success' : 'secondary'" class="text-uppercase">Active</x-badge>
     </p>
 
-    <x-small-label label="Email">
-        {{ $user->email }}
-    </x-small-label>
-
     <x-small-label label="Profile">
         <span class="d-block">{{ $user->profile->meta_name }}</span>
-        <span class="d-block">{{ $user->profile_alias }}</span>
+        <span class="d-block text-capitalize">{{ $user->profile_alias }}</span>
+    </x-small-label>
+
+    <x-small-label label="Email">
+        {{ $user->email }}
     </x-small-label>
 
     <x-small-label label="Last session">

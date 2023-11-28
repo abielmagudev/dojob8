@@ -42,8 +42,11 @@
             </td>
             <td class="text-nowrap text-end">
                 @if( $client->work_orders_count && mt_rand(0,1) )
-                <button class="btn btn-warning px-3" data-bs-toggle="tooltip" data-bs-title="Pending work orders">{{ mt_rand(1, $client->work_orders_count) }}</button>
+                <x-tooltip title="Pending work orders">
+                <a href="{{ route('work-orders.index', ['client' => $client->id]) }}" class="btn btn-warning">{{ mt_rand(1, $client->work_orders_count) }}</a>
+                </x-tooltip>
                 @endif
+
                 <a href="{{ route('clients.show', $client) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>

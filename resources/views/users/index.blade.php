@@ -20,9 +20,9 @@
         @foreach($users as $user)
         <tr>
             <td style="width:1%">
-                <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($user->status) }}">
+                <x-tooltip title="{{ ucfirst($user->status) }}">
                     <x-circle-off-on :switcher="$user->isActive()" />
-                </span>
+                </x-tooltip>
             </td>
             <td>
                 <span class="d-block">{{ $user->name }}</span>

@@ -40,7 +40,9 @@
             <td>{{ mt_rand(0,400) }}</td>
             <td class="text-end">
                 @if( $pending_work_orders = mt_rand(0, 200) )
-                <button class="btn btn-warning {{ $pending_work_orders > 10 ?: 'px-3' }}" type="button" data-bs-toggle="tooltip" data-bs-title="Pending work orders">{{ $pending_work_orders }}</button>
+                <x-tooltip title="Pending work orders">
+                <a href="{{ route('work-orders.index', ['intermediary' => $intermediary->id]) }}" class="btn btn-warning">{{ $pending_work_orders }}</a>
+                </x-tooltip>
                 @endif
 
                 <a href="{{ route('intermediaries.show', $intermediary) }}" class="btn btn-outline-primary">

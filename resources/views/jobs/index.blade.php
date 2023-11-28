@@ -24,14 +24,20 @@
         @foreach($jobs as $job)               
         <tr>
             <td style="width:1%">
-                <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($job->available_status) }}">
+                <x-tooltip title="{{ ucfirst($job->available_status) }}">
                     <x-circle-off-on :switcher="$job->isAvailable()" />
-                </span>
+                </x-tooltip>
             </td>
             <td>{{ $job->name }}</td>
             <td>{{ $job->extensions_count }}</td>
             <td>{{ $job->work_orders_count }}</td>
             <td class="text-nowrap text-end">
+                @if( $pending_work_orders = mt_rand(0, $job->work_orders_count) )
+                <x-tooltip title="Pending work orders">
+                <a href="{{ route('work-orders.index', ['job' => $job->id]) }}" class="btn btn-warning">{{ $pending_work_orders }}</a>
+                </x-tooltip>
+                @endif
+
                 <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>

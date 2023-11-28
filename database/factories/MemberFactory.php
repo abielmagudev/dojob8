@@ -31,6 +31,7 @@ class MemberFactory extends Factory
             'category' => $this->faker->randomElement( Member::getCategories() ),
             'scope' => $this->faker->randomElement( Member::getScopes() ),
             'is_active' => $this->faker->boolean(),
+            'crew_id' => $this->faker->optional()->numberBetween(1, 10),
             'notes' => $this->faker->optional()->sentences(3, true),
         ];
     }

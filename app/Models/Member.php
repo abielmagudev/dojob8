@@ -48,6 +48,7 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
     ];
 
 
+
     // Attributes
 
     public function getBirthdateInputAttribute()
@@ -75,6 +76,7 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
     }
 
 
+
     // Validators 
 
     public function isHappyBirthday()
@@ -82,12 +84,13 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         return $this->birthdate->isBirthday();
     }
 
-    public function scopeOperative($query)
+    public function hasCrew()
     {
-        return $query->where('category', 'operative');
+        return $this->crew_id && $this->crew;
     }
 
     
+
     // Relationships
 
     public function user()
@@ -95,7 +98,42 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         return $this->morphOne(User::class, 'profile');
     }
 
+    public function crew()
+    {
+        return $this->belongsTo(Crew::class);
+    }
+
     
+
+    // Scopes
+
+    public function scopeWhereCategory($query, $value)
+    {
+        return $query->where('category', $value);
+    }
+
+    public function scopeAdministrative($query)
+    {
+        return $query->whereCategory('administrative');
+    }
+
+    public function scopeOperative($query)
+    {
+        return $query->whereCategory('operative');
+    }
+
+    public function scopeWhereCrew($query, int $crew_id)
+    {
+        return $query->where('crew_id', $crew_id);
+    }
+
+    public function scopeUpdateCrew($query, $crew_id)
+    {
+        return $query->update(['crew_id' => $crew_id]);
+    }
+
+
+
     // Statics
     
     public static function getScopes()

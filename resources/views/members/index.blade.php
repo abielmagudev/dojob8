@@ -20,6 +20,7 @@
                 <th>Phone</th>
                 <th>Mobile</th>
                 <th>Email</th>
+                <th>Crew</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -35,6 +36,7 @@
             <td>{{ $member->phone_number }}</td>
             <td>{{ $member->mobile_number }}</td>
             <td>{{ $member->email }}</td>
+            <td>{{ $member->hasCrew() ? $member->crew->name : '' }}</td>
             <td class="text-end">
                 <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>

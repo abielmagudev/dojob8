@@ -28,6 +28,7 @@ class CreateMembersTable extends Migration
             $table->enum('scope', Member::getScopes());
             $table->boolean('is_active')->default(true);
             $table->text('notes')->nullable();
+            $table->foreignId('crew_id')->nullable();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->foreignId('deleted_by')->nullable();

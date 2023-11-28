@@ -24,8 +24,40 @@ class Crew extends Model
         'is_active',
     ];
 
+
+
+    // Validators
+
     public function hasColor()
     {
         return $this->color <> null;
+    }
+
+    public function hasMembers()
+    {
+        return (bool) $this->isActive() && $this->loadCount('members');
+    }
+
+
+    
+    // Actions
+
+    public function addMembers(array $members_id)
+    {
+        return Member::whereIn('id', $members_id)->updateCrew($this->id);
+    }
+
+    public function removeMembers()
+    {
+        return Member::whereCrew($this->id)->updateCrew(null);
+    }
+
+
+
+    // Relationships
+
+    public function members()
+    {
+        return $this->hasMany(Member::class);
     }
 }

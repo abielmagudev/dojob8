@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CrewSaveRequest;
+use App\Http\Requests\CrewMemberUpdateRequest;
 use App\Models\Crew;
-use Illuminate\Http\Request;
+use App\Models\Member;
 
 class CrewController extends Controller
 {
     public function index()
     {
         return view('crews.index', [
-            'crews' => Crew::orderBy('name', 'asc')->get(),
+            'crews' => Crew::with('members')->orderBy('name')->get(),
         ]);
     }
 
@@ -35,9 +36,10 @@ class CrewController extends Controller
     {
         $previous = Crew::before($crew->id)->first();
         $next = Crew::after($crew->id)->first();
-
+        
         return view('crews.show', [
             'crew' => $crew,
+            'members_operative' => Member::operativeCategory()->orderBy('name')->get(),
             'routes' => [
                 'previous' => $previous ? route('crews.show', $previous) : false,
                 'next' => $next ? route('crews.show', $next) : false,
@@ -59,6 +61,10 @@ class CrewController extends Controller
             return back()->with('danger', 'Error updating crew, try again please');
         }
 
+        if( $crew->isInactive() ) {
+            $crew->removeMembers();
+        }
+
         return redirect()->route('crews.edit', $crew)->with('success', "You updated the crew <b>{$crew->name}</b>");
     }
 
@@ -68,6 +74,19 @@ class CrewController extends Controller
             return back()->with('danger', "Error deleting crew, try again please");
         }
 
+        $crew->removeMembers();
+
         return redirect()->route('crews.index')->with('success', "You deleted the crew <b>{$crew->name}</b>");
+    }
+
+    public function membersUpdate(CrewMemberUpdateRequest $request, Crew $crew)
+    {
+        $crew->removeMembers();
+
+        if( $request->filled('members') ) {
+            $crew->addMembers($request->members);
+        }
+
+        return redirect()->route('crews.show', $crew)->with('success', "You updated the members of the <b>{$crew->name}</b> crew");
     }
 }

@@ -11,7 +11,7 @@ class MemberController extends Controller
     public function index()
     {
         return view('members.index', [
-            'members' => Member::orderBy('name')->paginate(25),
+            'members' => Member::with('crew')->orderBy('name')->paginate(25),
         ]);
     }
 

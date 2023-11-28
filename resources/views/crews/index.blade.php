@@ -22,6 +22,7 @@
                 <th></th>
             </tr>
         </x-slot>
+
         @foreach($crews as $crew)
         <tr>
             <td class="text-center" style="width:1%; font-size:1.2rem">
@@ -45,7 +46,11 @@
             <td>{{ $crew->name }}</td>
             <td>{{ $crew->description }}</td>
             <td>
-                {{ mt_rand(0,5) }}
+                @if( $crew->members->count() )
+                <x-tooltip :title="$crew->members->pluck('full_name')->implode('<br>')" html>
+                    <x-badge color="dark">{{ $crew->members->count() }}</x-badge>
+                </x-tooltip> 
+                @endif
             </td>
             <td class="text-end">
                 @if( $pending_work_orders = mt_rand(0, 200) )
@@ -54,16 +59,13 @@
                 </x-tooltip>
                 @endif
 
-                <button class="btn btn-outline-primary" type="button">
-                    <i class="bi bi-people-fill"></i>
-                </button>
-
                 <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>
         </tr>        
         @endforeach
+
     </x-table>
 </x-card>
 @endsection

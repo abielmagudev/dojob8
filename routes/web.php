@@ -45,6 +45,8 @@ Route::get('clients/ajax', [ClientAjaxController::class, 'search'])->name('clien
 Route::resource('clients', ClientController::class);
 
 Route::resource('members', MemberController::class);
+
+Route::match(['put','patch'], 'crews/{crew}/members', [CrewController::class, 'membersUpdate'])->name('crews.members.update');
 Route::resource('crews', CrewController::class);
 
 Route::resource('intermediaries', IntermediaryController::class);

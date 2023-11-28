@@ -27,7 +27,7 @@ class Inspection extends Model
     ];
 
     public static $all_status = [
-        null => 'hold on',
+        null => 'on hold',
         0 => 'failed',
         1 => 'approved',
     ];
@@ -38,7 +38,7 @@ class Inspection extends Model
 
     public function getApprovedColorAttribute()
     {
-        if( $this->isHoldOn() ) {
+        if( $this->isOnHold() ) {
             return 'secondary';
         }
 
@@ -51,8 +51,8 @@ class Inspection extends Model
 
     public function getApprovedStatusAttribute()
     {
-        if( $this->isHoldOn() ) {
-            return 'hold on';
+        if( $this->isOnHold() ) {
+            return 'on hold';
         }
 
         if( $this->isFailed() ) {
@@ -62,11 +62,16 @@ class Inspection extends Model
         return 'approved';
     }
 
+    public function getScheduledDateInputAttribute()
+    {
+        return $this->scheduled_date ? $this->scheduled_date->format('Y-m-d') : null;
+    }
+
 
 
     // Validations
 
-    public function isHoldOn()
+    public function isOnHold()
     {
         return is_null($this->is_approved);
     }

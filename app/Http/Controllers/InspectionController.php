@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InspectionSaveRequest;
+use App\Http\Requests\InspectionStoreRequest;
+use App\Http\Requests\InspectionUpdateRequest;
 use App\Models\Inspection;
 use App\Models\Inspector;
 use App\Models\WorkOrder;
@@ -32,7 +33,7 @@ class InspectionController extends Controller
         ]);
     }
 
-    public function store(InspectionSaveRequest $request)
+    public function store(InspectionStoreRequest $request)
     {
         if(! $inspection = Inspection::create( $request->validated() ) ) {
             return back()->with('danger', 'Error saving inspection, try again please');
@@ -60,10 +61,11 @@ class InspectionController extends Controller
         return view('inspections.edit', [
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
+            'all_status' => Inspection::getAllStatus(),
         ]);
     }
 
-    public function update(InspectionSaveRequest $request, Inspection $inspection)
+    public function update(InspectionUpdateRequest $request, Inspection $inspection)
     {
         if(! $inspection->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating inspection, try again please');

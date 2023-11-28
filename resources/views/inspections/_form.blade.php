@@ -1,11 +1,11 @@
 @csrf
 <x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="scheduleInput" class="form-label">Schedule</label>
+        <label for="scheduledDateInput" class="form-label">Schedule</label>
     </x-slot>
 
-    <input id="scheduleInput" class="form-control {{ bsInputInvalid( $errors->has('schedule') ) }}" type="date" name="schedule" value="{{ old('schedule', ($inspection->scheduled_date ? $inspection->scheduled_date->format('Y-m-d') : null)) }}" required>
-    <x-error name="schedule" />
+    <input id="scheduledDateInput" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" type="date" name="scheduled_date" value="{{ old('scheduled_date', $inspection->scheduled_date_input) }}" required>
+    <x-error name="scheduled_date" />
 </x-form-control-horizontal>
 
 <x-form-control-horizontal class="align-items-center">
@@ -21,6 +21,7 @@
     <x-error name="inspector" />
 </x-form-control-horizontal>
 
+@if( $inspection->id )
 <x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="observationsTextarea" class="form-label {{ bsInputInvalid( $errors->has('observations') ) }}">Observations</label>
@@ -39,14 +40,13 @@
     <x-error name="notes" />
 </x-form-control-horizontal>
 
-@if( $inspection->id )
 <x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="statusSelect" class="form-label">Status</label>
     </x-slot>
 
     <select id="statusSelect" class="form-select" name="status">
-        @foreach($inspection::getAllStatus() as $status => $label)
+        @foreach($all_status as $status => $label)
         <option value="{{ $status }}" {{ isSelected( ($status === $inspection->is_approved) ) }}>{{ ucfirst($label) }}</option>
         @endforeach
     </select>

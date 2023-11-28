@@ -20,7 +20,7 @@
                 @endisset
 
                 @if( $attributes->has('footer-close') )
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <x-modal-button-close>Close</x-modal-button-close>
                 @endif
             </div>
             @endif

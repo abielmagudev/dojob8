@@ -26,8 +26,9 @@
             content: none !important;
         }
         .form-label-optional::after {
-            color: #BBB;
+            color: black;
             content: "(Optional)";
+            opacity: 0.33;
             /* font-size: .75rem; */
             font-style: italic;
             margin-left: 0.25rem;

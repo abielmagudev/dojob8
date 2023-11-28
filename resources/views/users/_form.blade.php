@@ -2,7 +2,7 @@
 
 <x-form-control-horizontal>
     <x-slot name="label">
-        <label class="form-label">Profile</label>
+        <label class="form-label mt-1">Profile</label>
     </x-slot>
     <div class="form-control">
         <div>{{ $profile->meta_name }}</div>
@@ -12,13 +12,15 @@
     <x-error name="profile_id" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal class="align-items-center">
+<x-form-control-horizontal>
     <x-slot name="label">
-        <label for="nameInput" class="form-label">Name</label>
+        <label for="nameInput" class="form-label mt-1">Name</label>
     </x-slot>
     
-    <input id="nameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" name="name" value="{{ old('name', $user->name) }}" required placeholder="Minimum 8 characters, only alphanumeric, underscores and dots">
-    <x-error name="name" />
+    <input id="nameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" name="name" value="{{ old('name', $user->name) }}" required>
+    <x-error name="name" important>
+        Minimum 6 characters, only alphanumeric, underscores and dots
+    </x-error>
 </x-form-control-horizontal>
 
 <x-form-control-horizontal class="align-items-center">
@@ -30,13 +32,13 @@
     <x-error name="email" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal class="align-items-center">
+<x-form-control-horizontal>
     <x-slot name="label">
-        <label for="passwordInput" class="form-label {{ $user->id ? 'form-label-optional' : '' }}">Password</label>
+        <label for="passwordInput" class="mt-1 form-label {{ $user->id ? 'form-label-optional' : '' }}">Password</label>
     </x-slot>
 
-    <input id="passwordInput" type="password" class="form-control {{ bsInputInvalid( $errors->has('password') ) }}" name="password" @if( is_null($user->id) ) required @endif placeholder="Minimum 8 characters">
-    <x-error name="password" />
+    <input id="passwordInput" type="password" class="form-control {{ bsInputInvalid( $errors->has('password') ) }}" name="password" @if( is_null($user->id) ) required @endif>
+    <x-error name="password">Minimum 8 characters</x-error>
 </x-form-control-horizontal>
 
 <x-form-control-horizontal class="align-items-center">

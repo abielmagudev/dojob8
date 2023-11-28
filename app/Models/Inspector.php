@@ -19,4 +19,9 @@ class Inspector extends Model
         'name',
         'notes',
     ];
+
+    public function inspections()
+    {
+        return $this->hasMany(Inspection::class);
+    }
 }

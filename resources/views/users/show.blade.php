@@ -23,31 +23,22 @@
     </x-slot>
 
     <p>
-        @if( mt_rand(0,1) )
-        <x-badge color="success" class="text-uppercase">Active</x-badge>
-        
-        @else
-        <x-badge color="secondary" class="text-uppercase">Inactive</x-badge>
-
-        @endif
+        <x-badge :color="$user->isActive() ? 'success' : 'secondary'" class="text-uppercase">Active</x-badge>
     </p>
 
-    <x-custom.p-label label="Email">
+    <x-small-label label="Email">
         {{ $user->email }}
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Profile" class="text-capitalize">
+    <x-small-label label="Profile">
         <span class="d-block">{{ $user->profile->meta_name }}</span>
         <span class="d-block">{{ $user->profile_alias }}</span>
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Role" class="text-capitalize">
-    </x-custom.p-label>
-
-    <x-custom.p-label label="Last session">
+    <x-small-label label="Last session">
         <span class="d-block">{{ $user->last_session_date_human }}</span>
         <span class="d-block">{{ $user->last_session_time_human }}</span>
         <span class="d-block text-capitalize">{{ $user->last_session_device }}</span>
-    </x-custom.p-label>
+    </x-small-label>
 </x-card>
 @endsection

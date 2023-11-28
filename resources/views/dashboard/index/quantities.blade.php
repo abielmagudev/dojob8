@@ -15,7 +15,7 @@
     </div>
     <div class="col-sm mb-3 mb-md-0">
         <x-card class="text-center">
-            <spa class="d-block text-uppercase small">Today</spa>
+            <span class="d-block text-uppercase small">Today</span>
             <span class="fs-3">{{ $orders->filter(function ($order) {
                 return $order->scheduled_date->day == date('d');
             })->count() }}</span>

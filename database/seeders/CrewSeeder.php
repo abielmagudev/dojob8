@@ -14,6 +14,6 @@ class CrewSeeder extends Seeder
      */
     public function run()
     {
-        Crew::factory(7)->create();
+        Crew::factory(10)->create();
     }
 }

@@ -17,9 +17,14 @@ class CreateWorkOrdersTable extends Migration
             $table->id();
             $table->date('scheduled_date');
             $table->time('scheduled_time');
+            $table->string('status')->nullable()->index();
             $table->text('notes')->nullable();
+            $table->foreignId('client_id')->index();
+            $table->foreignId('crew_id')->nullable();
+            $table->foreignId('intermediary_id')->nullable();
             $table->foreignId('job_id');
-            $table->foreignId('client_id');
+            $table->foreignId('created_by')->nullable()->index();
+            $table->foreignId('updated_by')->nullable()->index();
             $table->timestamps();
         });
     }

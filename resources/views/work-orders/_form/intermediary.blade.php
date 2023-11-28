@@ -6,7 +6,7 @@
     <select id="intermediarySelect" class="form-select" name="intermediary">
         <option disabled selected label="..."></option>
         @foreach($intermediaries as $intermediary)
-        <option value="{{ $intermediary->id }}">{{ $intermediary->name }} ({{ $intermediary->alias }})</option>
+        <option value="{{ $intermediary->id }}" {{ isSelected($intermediary->id == $work_order->intermediary_id) }}>{{ $intermediary->name }} ({{ $intermediary->alias }})</option>
         @endforeach
     </select>
 </x-form-control-horizontal>

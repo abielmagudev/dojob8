@@ -6,8 +6,10 @@ use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
 use App\Http\Requests\WorkOrderStoreRequest;
 use App\Http\Requests\WorkOrderUpdateRequest;
 use App\Models\Client;
+use App\Models\Crew;
 use App\Models\Intermediary;
 use App\Models\Job;
+use App\Models\Member;
 use App\Models\WorkOrder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -31,9 +33,12 @@ class WorkOrderController extends Controller
         $this->reflashInputErrors();
 
         return view('work-orders.create', [
+            'all_status' => WorkOrder::getAllStatus(),
             'client' => $client,
-            'jobs' => Job::orderBy('name')->get(),
+            'crews' => Crew::with('members')->get(),
             'intermediaries' => Intermediary::orderBy('name')->get(),
+            'jobs' => Job::orderBy('name')->get(),
+            'operators' => Member::operative()->orderBy('full_name')->get(),
             'work_order' => new WorkOrder,
         ]);
     }
@@ -74,9 +79,12 @@ class WorkOrderController extends Controller
         $this->reflashInputErrors();
 
         return view('work-orders.edit', [
-            'work_order' => $work_order,
+            'all_status' => WorkOrder::getAllStatus(),
             'client' => $work_order->client,
+            'crews' => Crew::with('members')->get(),
             'intermediaries' => Intermediary::orderBy('name')->get(),
+            'operators' => Member::operative()->orderBy('full_name')->get(),
+            'work_order' => $work_order,
         ]);
     }
 

@@ -16,6 +16,7 @@
         <table class="table table-hover align-middle">
             <thead>
                 <tr>
+                    <th>Crew</th>
                     <th>Job</th>
                     <th>Client</th>
                     <th>Zip Code</th>
@@ -26,6 +27,11 @@
             <tbody>
                 @foreach($work_orders as $work_order)           
                 <tr>
+                    <td class="text-nowrap">
+                        @if( $work_order->hasCrew() )
+                        <span class="badge {{ $work_order->crew->hasColor() ? '' : 'text-bg-dark' }}" @if( $work_order->crew->hasColor() ) style="background-color:{{ $work_order->crew->color }}" @endif>{{ $work_order->crew->name }}</span>
+                        @endif
+                    </td>
                     <td class="text-nowrap">{{ $work_order->job->name }}</td>
                     <td class="text-nowrap">
                         <span>{{ $work_order->client->street }}, {{ $work_order->client->location_country_code }}</span>
@@ -37,22 +43,7 @@
                     </td>
                     <td class="text-nowrap">{{ $work_order->client->zip_code }}</td>
                     <td class="text-nowrap text-center">
-                        @if( mt_rand(0, 1) )
-                        <span class="badge w-100 text-bg-primary">New</span>
-                        
-                        @elseif( mt_rand(0,1) )
-                        <span class="badge w-100 text-bg-warning">Working</span>
-                        
-                        @elseif( mt_rand(0,1) )
-                        <span class="badge w-100 text-bg-success">Done</span>
-                        
-                        @elseif( mt_rand(0,1) )
-                        <span class="badge w-100 text-bg-secondary">Canceled</span>
-                        
-                        @else
-                        <span class="badge w-100 text-bg-dark">Closed</span>
-
-                        @endif
+                        <span class="badge w-100 text-bg-primary">{{ $work_order->status }}</span>
                     </td>
                     <td class="text-nowrap text-end">
 

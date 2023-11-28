@@ -59,6 +59,15 @@ class WorkOrder extends Model
     }
 
 
+    // Validators
+
+    public function hasCrew()
+    {
+        return (bool) $this->crew_id && $this->crew;
+    }
+
+
+
     // Scopes
 
     public function scopeWhereJobsAvailable($query)
@@ -84,5 +93,25 @@ class WorkOrder extends Model
     public function inspections()
     {
         return $this->hasMany(Inspection::class);
+    }
+
+    public function crew()
+    {
+        return $this->belongsTo(Crew::class);
+    }
+
+
+    // Statics
+
+    public static function getAllStatus()
+    {
+        return [
+            'denialed',
+            'completed',
+            'pending',
+            'canceled',
+            'working',
+            'done',
+        ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\WorkOrder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WorkOrderFactory extends Factory
@@ -16,9 +17,14 @@ class WorkOrderFactory extends Factory
         return [
             'scheduled_date' => $this->faker->date(),
             'scheduled_time' => $this->faker->time(),
+            'status' => $this->faker->optional()->randomElement( WorkOrder::getAllStatus() ),
             'notes' => $this->faker->optional()->sentence(),
-            'job_id' => $this->faker->numberBetween(1, 10),
             'client_id' => $this->faker->numberBetween(1, 500),
+            'crew_id' => $this->faker->optional()->numberBetween(1,10),
+            'intermediary_id' => $this->faker->optional()->numberBetween(1,10),
+            'job_id' => $this->faker->numberBetween(1, 10),
+            'created_by' => $this->faker->optional()->numberBetween(1,10),
+            'updated_by' => $this->faker->optional()->numberBetween(1,10),
         ];
     }
 }

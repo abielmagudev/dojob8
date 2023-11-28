@@ -37,8 +37,14 @@
                 <a href="{{ $activity->link }}">See changes</a>
                 @endif
             </td>
-            <td class="text-nowrap">{{ $activity->created_at }}</td>
-            <td class="text-nowrap">{{ $activity->user->name }}</td>
+            <td class="text-nowrap">
+                <span>{{ $activity->created_date_human }}</span>
+                <span>{{ $activity->created_time_human }}</span>
+            </td>
+            <td class="text-nowrap">
+                {{ $activity->user->name }}
+                <small>({{ $activity->user->profile->meta_name }})</small>
+            </td>
         </tr>
         @endforeach
     </x-table>

@@ -17,8 +17,8 @@ class HistoryController extends Controller
         return view('history.index', [
             'request' => $request,
             'topics' => History::getTopics(),
-            'users' => User::all(),
-            'history' => History::with('user')
+            'users' => User::with('profile')->withTrashed()->get(),
+            'history' => History::with('user.profile')
                                 ->filters($request)
                                 ->orderBy('id', $request->get('sort'))
                                 ->paginate(25)

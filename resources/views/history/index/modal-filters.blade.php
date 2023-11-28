@@ -30,7 +30,7 @@
                 <option selected label="- Any user -"></option>
                 
                 @foreach($users as $user)
-                <option value="{{ $user->id }}" {{ isSelected($user->id == $request->get('user')) }}>{{ ucfirst($user->name) }}</option>
+                <option value="{{ $user->id }}" {{ isSelected($user->id == $request->get('user')) }}>{{ ucfirst($user->name) }} {{ $user->deleted_at ? '(Deleted)' : '' }}</option>
                 @endforeach
             </select>
         </div>

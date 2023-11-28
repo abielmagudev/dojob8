@@ -19,6 +19,10 @@ class History extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+
     public static $topics_classnames = [
         'clients' => Client::class,
         'crews' => Crew::class,
@@ -39,6 +43,19 @@ class History extends Model
     ];
 
     
+
+    // Attributes
+
+    public function getCreatedDateHumanAttribute()
+    {
+        return $this->created_at->format('D d, M Y'); 
+    }
+
+    public function getCreatedTimeHumanAttribute()
+    {
+        return $this->created_at->format('h:m A'); 
+    }
+
 
     // Validators
 
@@ -172,7 +189,7 @@ class History extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function model()

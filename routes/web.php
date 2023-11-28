@@ -12,9 +12,10 @@ use App\Http\Controllers\InspectorController;
 use App\Http\Controllers\IntermediaryController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\UserAjaxController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\WorkOrderJobExtensionsAjaxController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*

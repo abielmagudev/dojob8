@@ -36,17 +36,18 @@
         {{ $user->email }}
     </x-custom.p-label>
 
-    <x-custom.p-label label="Profile">
-        {{ mt_rand(0,1) ? 'Staff ' : 'Intermediary' }}
+    <x-custom.p-label label="Profile" class="text-capitalize">
+        <span class="d-block">{{ $user->profile->meta_name }}</span>
+        <span class="d-block">{{ $user->profile_alias }}</span>
     </x-custom.p-label>
 
-    <x-custom.p-label label="Role">
-        {{ mt_rand(0,1) ? 'Administrator' : 'Operator' }}
+    <x-custom.p-label label="Role" class="text-capitalize">
     </x-custom.p-label>
 
     <x-custom.p-label label="Last session">
-        <span class="d-block">{{ now() }}</span>
-        <span class="d-block">127.0.0.1</span>
+        <span class="d-block">{{ $user->last_session_date_human }}</span>
+        <span class="d-block">{{ $user->last_session_time_human }}</span>
+        <span class="d-block text-capitalize">{{ $user->last_session_device }}</span>
     </x-custom.p-label>
 </x-card>
 @endsection

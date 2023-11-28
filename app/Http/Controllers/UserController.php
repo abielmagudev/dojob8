@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserSaveRequest;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Models\Intermediary;
+use App\Models\Member;
 use App\Models\User;
+use App\Models\User\UserProfiler;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,18 +15,25 @@ class UserController extends Controller
     public function index()
     {
         return view('users.index', [
-            'users' => User::orderBy('id', 'desc')->paginate(25),
+            'users' => User::with('profile')->orderBy('id', 'desc')->paginate(25),
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        if(! $profile = UserProfiler::instanceProfileByRequest($request) ) {
+            abort(404);
+        }
+
         return view('users.create', [
+            'alias' => UserProfiler::getAliasNameRequest($request),
+            'profile' => $profile,
+            'request' => $request,
             'user' => new User,
         ]);
     }
 
-    public function store(UserSaveRequest $request)
+    public function store(UserStoreRequest $request)
     {
         if(! $user = User::create($request->validated()) ) {
             return back()->with('danger', 'Error saving user, try again please');
@@ -49,10 +60,12 @@ class UserController extends Controller
     {
         return view('users.edit', [
             'user' => $user,
+            'profile' => $user->profile,
+            'alias' => $user->profile_alias,
         ]);
     }
 
-    public function update(UserSaveRequest $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         if(! $user->fill($request->validated())->save() ) {
             return back()->with('danger', 'Error updating user, try again please');

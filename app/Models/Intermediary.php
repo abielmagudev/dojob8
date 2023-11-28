@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\AuthenticatedUserMetadataInterface;
 use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Intermediary extends Model
+class Intermediary extends Model implements AuthenticatedUserMetadataInterface
 {
     use HasFactory;
     use SoftDeletes;
@@ -63,11 +64,21 @@ class Intermediary extends Model
         ]);
     }
 
+    public function getMetaNameAttribute(): string
+    {
+        return "{$this->name} ($this->alias)";
+    }
+
 
     // Relationships
     
     public function work_orders()
     {
         return $this->hasMany(WorkOrder::class);
+    }
+
+    public function user()
+    {
+        return $this->morphMany(User::class, 'profile');
     }
 }

@@ -6,25 +6,36 @@
 
 @section('content')
 <x-card>
-    <x-slot name="options">
-        <a href="{{ route('users.create') }}" class="btn btn-primary">
-            <b>+</b>
-        </a>
-    </x-slot>
-
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
-                <th>Name</th>
-                <th>Email</th>
+                <th></th>
+                <th class="text-nowrap">Name & email</th>
+                <th>Profile</th>
+                <th>Last session</th>
                 <th></th>
             </tr>
         </x-slot>
 
         @foreach($users as $user)
         <tr>
-            <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
+            <td style="width:1%">
+                <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($user->status) }}">
+                    <x-custom.circle-off-on :switcher="$user->isActive()" />
+                </span>
+            </td>
+            <td>
+                <span class="d-block">{{ $user->name }}</span>
+                <small>{{ $user->email }}</small>
+            </td>
+            <td class="text-capitalize">
+                <span class="d-block">{{ $user->profile->meta_name  }}</span>
+                <small>{{ $user->profile_alias }}</small>
+            </td>
+            <td>
+                <span class="d-block">{{ $user->last_session_date_human }}</span>
+                <small>{{ $user->last_session_time_human }}</small>
+            </td>
             <td class="text-end">
                 <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User\UserProfiler;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -15,11 +16,19 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
             'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'profile_type' => $this->faker->randomElement( UserProfiler::getProfiles() ),
+            'profile_id' => $this->faker->numberBetween(1, 10),
+            'is_active' => (int) $this->faker->boolean(),
+            'last_session_device' => $this->faker->optional()->randomElement(['desktop','mobile','tablet']),
+            'last_session_latitude' => $this->faker->optional()->latitude(),
+            'last_session_longitude' => $this->faker->optional()->longitude(),
+            'last_session_ip' => $this->faker->optional()->ipv4(),
+            'last_session_at' => $this->faker->optional()->dateTime(),
+            'remember_token' => Str::random(10),
         ];
     }
 

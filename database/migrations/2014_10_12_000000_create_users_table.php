@@ -15,27 +15,25 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->morphs('profile');
+            $table->boolean('is_active')->default(true);
+            $table->string('last_session_device')->nullable();
+            $table->string('last_session_latitude')->nullable();
+            $table->string('last_session_longitude')->nullable();
+            $table->string('last_session_ip')->nullable();
+            $table->dateTime('last_session_at')->nullable();
+            $table->rememberToken()->nullable();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->foreignId('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            /**
-             * username or name
-             * morph-type
-             * morph-id
-             * last-session
-             * is_active
-             * mobile_number for SMS
-             * IP address
-             * Device
-             */
+            // mobile_number for SMS
         });
     }
 

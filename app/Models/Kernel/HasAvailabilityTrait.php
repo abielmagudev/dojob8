@@ -31,6 +31,11 @@ trait HasAvailabilityTrait
         return $query->where('is_available', 0);
     }
 
+    public function indispose()
+    {
+        return $this->fill(['is_available' => 0])->save();
+    }
+
 
     // Active
 
@@ -57,5 +62,10 @@ trait HasAvailabilityTrait
     public function scopeInactive($query)
     {
         return $query->where('is_active', 0);
+    }
+
+    public function deactivate()
+    {
+        return $this->fill(['is_active' => 0])->save();
     }
 }

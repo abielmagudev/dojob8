@@ -11,7 +11,9 @@ class InspectorController extends Controller
     public function index()
     {
         return view('inspectors.index', [
-            'inspectors' => Inspector::orderBy('name')->paginate(25),
+            'inspectors' => Inspector::with('inspections')
+                                     ->orderBy('name')
+                                     ->paginate(25),
         ]);
     }
 

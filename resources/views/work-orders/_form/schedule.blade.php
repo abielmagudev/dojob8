@@ -1,4 +1,4 @@
-<x-custom.form-control-horizontal class="align-items-center">
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="inputScheduleDate" class="form-label">Schedule</label>
     </x-slot>
@@ -13,4 +13,4 @@
             <x-error name="scheduled_time"></x-error>
         </div>
     </div>
-</x-custom.form-control-horizontal>
+</x-form-control-horizontal>

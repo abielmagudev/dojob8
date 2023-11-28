@@ -21,6 +21,7 @@
     </form>
 </x-card>
 <br>
+
 <x-custom.modal-confirm-delete :route="route('inspections.destroy', $inspection)" concept="inspection">
     <p>¿Do you want to continue to delete <br> the inspection <b><?= $inspection->id ?></b> of <b>Order #{{ $inspection->order_id }}</b>?</p>
 </x-custom.modal-confirm-delete>

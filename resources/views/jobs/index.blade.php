@@ -25,7 +25,7 @@
         <tr>
             <td style="width:1%">
                 <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($job->available_status) }}">
-                    <x-custom.circle-off-on :switcher="$job->isAvailable()" />
+                    <x-circle-off-on :switcher="$job->isAvailable()" />
                 </span>
             </td>
             <td>{{ $job->name }}</td>

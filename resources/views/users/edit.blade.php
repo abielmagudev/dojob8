@@ -21,6 +21,7 @@
     </form>
 </x-card>    
 <br>
+
 <x-custom.modal-confirm-delete :route="route('users.destroy', $user)" concept="user">
     <p>¿Do you want to continue to delete the user <br> <b><?= $user->name ?> ({{ $user->email }})</b>?</p>
 </x-custom.modal-confirm-delete>

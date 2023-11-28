@@ -20,7 +20,6 @@
                 <th>Phone</th>
                 <th>Mobile</th>
                 <th>Email</th>
-                <th>Role</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -29,14 +28,13 @@
         <tr>
             <td style="width:1%">
                 <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($member->active_status) }}">
-                    <x-custom.circle-off-on :switcher="$member->isActive()" />
+                    <x-circle-off-on :switcher="$member->isActive()" />
                 </span>
             </td>
             <td>{{ $member->fullname }}</td>
             <td>{{ $member->phone_number }}</td>
             <td>{{ $member->mobile_number }}</td>
             <td>{{ $member->email }}</td>
-            <td></td>
             <td class="text-end">
                 <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
@@ -47,5 +45,6 @@
     </x-table>
 </x-card>
 <br>
+
 <x-pagination-simple-eloquent :collection="$members" />
 @endsection

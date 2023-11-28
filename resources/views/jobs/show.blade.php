@@ -30,13 +30,15 @@
                 <x-badge :color="$job->isAvailable() ? 'success' : 'secondary' " class="text-uppercase">{{ ucfirst($job->available_status) }}</x-badge>
             </p>
 
-            <x-custom.p-label label="Description">
+            <x-small-label label="Description">
                 {{ $job->description }}
-            </x-custom.p-label>
+            </x-small-label>
 
-            <x-custom.p-label label="Approved inspections required">
+            <x-small-label label="Approved inspections required">
                 {{ $job->approved_inspections_required }}
-            </x-custom.p-label>
+            </x-small-label>
+            
+            <x-custom.small-label-hook-users :model="$job" />
         </x-card>
     </div>
 
@@ -70,6 +72,8 @@
         </x-card>
     </div>
 </div>
+
 @include('jobs.show.modal-add-extension')
 @include('jobs.show.modal-remove-extension')
+
 @endsection

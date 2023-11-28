@@ -21,7 +21,7 @@
         <tr>
             <td style="width:1%">
                 <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($user->status) }}">
-                    <x-custom.circle-off-on :switcher="$user->isActive()" />
+                    <x-circle-off-on :switcher="$user->isActive()" />
                 </span>
             </td>
             <td>

@@ -1,4 +1,4 @@
-<x-custom.form-control-horizontal class="align-items-center">
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label"></x-slot>
 
     {{-- Extensions of job selected or saved --}}
@@ -20,4 +20,4 @@
             <div class="alert alert-light"></div>
         </template>
     </div>
-</x-custom.form-control-horizontal>
+</x-form-control-horizontal>

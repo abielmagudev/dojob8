@@ -29,7 +29,7 @@
                     <td class="text-nowrap">{{ $work_order->job->name }}</td>
                     <td class="text-nowrap">
                         <span>{{ $work_order->client->street }}, {{ $work_order->client->location_country_code }}</span>
-                        <a href="#!" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="{{ $work_order->client->fullname }}<br>{{ $work_order->client->phone_number }}">
+                        <a href="#!" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="{{ $work_order->client->full_name }}<br>{{ $work_order->client->phone_number }}">
                             <i class="bi bi-info-circle"></i>
                         </a>
                     </td>
@@ -67,6 +67,7 @@
     </div>
 </x-card>
 <br>
+
 <x-pagination-simple-eloquent :collection="$work_orders" />
 @include('clients.modal-search')
 @endsection

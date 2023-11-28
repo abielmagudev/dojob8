@@ -29,6 +29,7 @@
 
 @include('work-orders.show.inspections')
 <br>
+
 @include('work-orders.show.media')
 <br>
 

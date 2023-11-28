@@ -21,6 +21,7 @@
     </form>
 </x-card>
 <br>
+
 <x-custom.modal-confirm-delete :route="route('inspectors.destroy', $inspector)" concept="inspector">
     <p>¿Do you want to continue to delete the inspector <br> <b><?= $inspector->name ?></b>?</p>
 </x-custom.modal-confirm-delete>

@@ -25,33 +25,27 @@
             </x-slot>
             
             <p>
-                @if( $intermediary->isAvailable() )
-                <span class="badge text-bg-success">Available</span>
-
-                @else
-                <span class="badge text-bg-secondary">Unavailable</span>
-                
-                @endif
+                <x-badge :color="$intermediary->isAvailable() ? 'success' : 'secondary'" class="text-uppercase">{{ $intermediary->status }}</x-badge> 
             </p>
             
-            <x-custom.p-label label="Contact">
+            <x-small-label label="Contact">
                 <span class="d-block">{{ $intermediary->contact }}</span>
                 @foreach($intermediary->contact_data_collection->filter() as $data)
                 <span class="d-block">{{ $data }}</span>
                 @endforeach
-            </x-custom.p-label>
+            </x-small-label>
 
-            <x-custom.p-label label="Address">
+            <x-small-label label="Address">
                 <span class="d-block">{{ $intermediary->street }}</span>
                 <span class="d-block">{{ $intermediary->location_country_code }}</span>
                 <span class="d-block">{{ $intermediary->zip_code }} <em class="text-secondary">(Zip code)</em></span>
-            </x-custom.p-label>
+            </x-small-label>
 
-            <x-custom.p-label label="Notes">
+            <x-small-label label="Notes">
                 <em>{{ $intermediary->notes }}</em>
-            </x-custom.p-label>
+            </x-small-label>
 
-            <x-custom.p-label-modifiers :model="$intermediary" />
+            <x-custom.small-label-hook-users :model="$intermediary" />
         </x-card>
     </div>
 

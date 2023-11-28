@@ -31,15 +31,15 @@
                 </span>
             </p>
         
-            <x-custom.p-label label="Name">
+            <x-small-label label="Name">
                 {{ $crew->name }}
-            </x-custom.p-label>
+            </x-small-label>
         
-            <x-custom.p-label label="Description">
+            <x-small-label label="Description">
                 {{ $crew->description }}
-            </x-custom.p-label>
+            </x-small-label>
         
-            <x-custom.p-label-modifiers :model="$crew" />
+            <x-custom.small-label-hook-users :model="$crew" />
         </x-card>
     </div>
     <div class="col-md col-md-8">

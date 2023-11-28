@@ -22,34 +22,27 @@
         </a>
     </x-slot>
 
-    <x-custom.p-label label="Contact">
+    <x-small-label label="Contact">
         @foreach($client->contact_data_collection->filter() as $value)
         <span class="d-block">{{ $value }}</span>
         @endforeach
-    </x-custom.p-label>
+    </x-small-label>
     
-    <x-custom.p-label label="Address">
+    <x-small-label label="Address">
         <span class="d-block">{{ $client->street }}</span>
         <span class="d-block">{{ $client->location_country_code }}</span>
         <span class="d-block">{{ $client->zip_code }} <em class="text-secondary">(Zip code)</em></span>
         <span>{{ $client->district_code }} <em class="text-secondary">(District)</em></span>
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Notes">
+    <x-small-label label="Notes">
         <span>{{ $client->notes }}</span>
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Created">
-        <span class="d-block">{{ $client->created_at }}</span>
-        <span class="d-block">{{ $client->creator->name }}</span>
-    </x-custom.p-label>
-
-    <x-custom.p-label label="Updated">
-        <span class="d-block">{{ $client->updated_at }}</span>
-        <span class="d-block">{{ $client->updater->name }}</span>
-    </x-custom.p-label>
+    <x-custom.small-label-hook-users :model="$client" />
 </x-card>
 <br>
+
 <x-card title="Work orders" class="h-100">
     <x-slot name="options">
         <a href="{{ route('work-orders.create', $client) }}" class="btn btn-primary">

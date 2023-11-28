@@ -1,4 +1,4 @@
-<x-custom.form-control-horizontal>
+<x-form-control-horizontal>
     <x-slot name="label">
         <label for="selectJob" class="form-label">Job</label>
     </x-slot>
@@ -18,4 +18,4 @@
     <div class="form-control">{{ $work_order->job->name }}</div>
 
     @endif
-</x-custom.form-control-horizontal>
+</x-form-control-horizontal>

@@ -26,7 +26,7 @@
         <tr>
             <td>
                 <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($intermediary->status) }}">
-                    <x-custom.circle-off-on :switcher="$intermediary->isAvailable()" />
+                    <x-circle-off-on :switcher="$intermediary->isAvailable()" />
                 </span>
             </td>
             <td>
@@ -52,5 +52,6 @@
     </x-table>
 </x-card>
 <br>
+
 <x-pagination-simple-eloquent :collection="$intermediaries" />
 @endsection

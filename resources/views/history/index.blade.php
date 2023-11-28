@@ -50,6 +50,7 @@
     </x-table>
 </x-card>
 <br>
+
 <x-pagination-simple-eloquent :collection="$history" />
 @include('history.index.modal-filters')
 @endsection

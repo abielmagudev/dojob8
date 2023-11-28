@@ -24,23 +24,23 @@
                 <x-badge color="{{ $inspection->approved_color }}" class="text-uppercase">{{ $inspection->approved_status }}</x-badge>
             </p>      
         
-            <x-custom.p-label label="Scheduled">
+            <x-small-label label="Scheduled">
                 {{ $inspection->scheduled_date->format('D d M, Y') }}
-            </x-custom.p-label>
+            </x-small-label>
         
-            <x-custom.p-label label="Inspector">
+            <x-small-label label="Inspector">
                 {{ $inspection->inspector->name }}
-            </x-custom.p-label>
+            </x-small-label>
         
-            <x-custom.p-label label="Observations">
+            <x-small-label label="Observations">
                 {{ $inspection->observations }}
-            </x-custom.p-label>
+            </x-small-label>
         
-            <x-custom.p-label label="Notes">
+            <x-small-label label="Notes">
                 {{ $inspection->notes }}
-            </x-custom.p-label>
+            </x-small-label>
 
-            <x-custom.p-label-modifiers :model="$inspection" />
+            <x-custom.small-label-hook-users :model="$inspection" />
         </x-card>
     </div>
 
@@ -53,24 +53,24 @@
                 </a>
             </x-slot>
 
-            <x-custom.p-label label="Scheduled">
+            <x-small-label label="Scheduled">
                 {{ $inspection->work_order->scheduled_date_human }}
-            </x-custom.p-label>
+            </x-small-label>
 
-            <x-custom.p-label label="Job">
+            <x-small-label label="Job">
                 {{ $inspection->work_order->job->name }}
-            </x-custom.p-label>
+            </x-small-label>
             
-            <x-custom.p-label label="Client">
+            <x-small-label label="Client">
                 <span class="d-block">{{ $inspection->work_order->client->full_name }}</span>
                 <span class="d-block">{{ $inspection->work_order->client->address }}</span>
                 <span class="d-block">{{ $inspection->work_order->client->zip_code }}, District {{ $inspection->work_order->client->district }}</span>
-                <span class="d-block">{{ $inspection->work_order->client->contact_info_collection->filter()->implode(', ') }}</span>
-            </x-custom.p-label>
+                <span class="d-block">{{ $inspection->work_order->client->contact_data_collection->filter()->implode(', ') }}</span>
+            </x-small-label>
 
-            <x-custom.p-label label="Notes">
+            <x-small-label label="Notes">
                 {{ $inspection->work_order->notes }}
-            </x-custom.p-label>
+            </x-small-label>
         </x-card>
     </div>
 

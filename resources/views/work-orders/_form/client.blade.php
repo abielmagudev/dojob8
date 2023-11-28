@@ -1,4 +1,4 @@
-<x-custom.form-control-horizontal>
+<x-form-control-horizontal>
     <x-slot name="label">
         <label class="form-label">Client</label>
     </x-slot>
@@ -23,7 +23,7 @@
                 </td>
                 <td>
                     <span class="d-block">{{ $client->full_name }}</span>
-                    <span class="d-block">{{ $client->contact_info_collection->only(['phone','mobile'])->filter()->implode(', ') }}</span>
+                    <span class="d-block">{{ $client->contact_data_collection->only(['phone','mobile'])->filter()->implode(', ') }}</span>
                     <span class="d-block">{{ $client->email }}</span>
                     @if( $client->notes )
                     <small class="d-block mt-1">
@@ -38,4 +38,4 @@
             <a href="{{ route('clients.show', $client) }}">See client</a>
         </div>
     </div>
-</x-custom.form-control-horizontal>
+</x-form-control-horizontal>

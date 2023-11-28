@@ -1,4 +1,4 @@
-<x-custom.form-control-horizontal class="align-items-center">
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="intermediarySelect" class="form-label">Intermediary</label>
     </x-slot>
@@ -9,4 +9,4 @@
         <option value="{{ $intermediary->id }}">{{ $intermediary->name }} ({{ $intermediary->alias }})</option>
         @endforeach
     </select>
-</x-custom.form-control-horizontal>
+</x-form-control-horizontal>

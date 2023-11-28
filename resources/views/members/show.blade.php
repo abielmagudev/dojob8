@@ -26,30 +26,30 @@
         <x-badge :color="$member->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $member->active_status }}</x-badge>
     </p>
 
-    <x-custom.p-label label="Birthdate">
+    <x-small-label label="Birthdate">
         {{ $member->birthdate_human }}
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Contact">
+    <x-small-label label="Contact">
         {!! $member->contact_collection->filter()->implode('<br>') !!}
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Position">
+    <x-small-label label="Position">
         {{ $member->position }}
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Category">
+    <x-small-label label="Category">
         {{ ucfirst($member->category) }}
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Scope">
+    <x-small-label label="Scope">
         {{ ucfirst($member->scope) }}
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label label="Notes">
+    <x-small-label label="Notes">
         <em>{{ $member->notes }}</em>
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label-modifiers :model="$member" />
+    <x-custom.small-label-hook-users :model="$member" />
 </x-card>
 @endsection

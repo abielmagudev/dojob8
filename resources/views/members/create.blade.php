@@ -19,7 +19,7 @@
     </form>
 </x-card>
 
-@include('members._modal-help-categories')
-@include('members._modal-help-scopes')
+@include('members._form.modal-help-categories')
+@include('members._form.modal-help-scopes')
 
 @endsection

@@ -22,10 +22,10 @@
         </a>
     </x-slot>
 
-    <x-custom.p-label label="Notes">
+    <x-small-label label="Notes">
         {{ $inspector->notes }}
-    </x-custom.p-label>
+    </x-small-label>
 
-    <x-custom.p-label-modifiers :model="$inspector" />
+    <x-custom.small-label-hook-users :model="$inspector" />
 </x-card>
 @endsection

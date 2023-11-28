@@ -39,7 +39,7 @@ class CrewController extends Controller
         
         return view('crews.show', [
             'crew' => $crew,
-            'members_operative' => Member::operativeCategory()->orderBy('name')->get(),
+            'members_operative' => Member::operative()->orderBy('name')->get(),
             'routes' => [
                 'previous' => $previous ? route('crews.show', $previous) : false,
                 'next' => $next ? route('crews.show', $next) : false,

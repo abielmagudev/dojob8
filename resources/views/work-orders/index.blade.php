@@ -29,9 +29,11 @@
                     <td class="text-nowrap">{{ $work_order->job->name }}</td>
                     <td class="text-nowrap">
                         <span>{{ $work_order->client->street }}, {{ $work_order->client->location_country_code }}</span>
-                        <a href="#!" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="{{ $work_order->client->full_name }}<br>{{ $work_order->client->phone_number }}">
-                            <i class="bi bi-info-circle"></i>
-                        </a>
+                        <x-tooltip title="{{ $work_order->client->full_name }}<br>{{ $work_order->client->phone_number }}" html>
+                            <a href="#!">
+                                <i class="bi bi-info-circle"></i>
+                            </a>
+                        </x-tooltip>
                     </td>
                     <td class="text-nowrap">{{ $work_order->client->zip_code }}</td>
                     <td class="text-nowrap text-center">
@@ -53,12 +55,15 @@
                         @endif
                     </td>
                     <td class="text-nowrap text-end">
+
                         <a href="{{ route('work-orders.edit', $work_order) }}" class="btn btn-outline-warning">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
+
                         <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary">
                             <i class="bi bi-eye-fill"></i>
                         </a>
+                        
                     </td>
                 </tr>
                 @endforeach

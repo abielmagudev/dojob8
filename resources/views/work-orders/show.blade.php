@@ -38,7 +38,7 @@
         @include('work-orders.show.comments')
     </div>
     <div class="col-md mb-4">
-        @include('work-orders.show.log')
+        @include('work-orders.show.history')
     </div>
 </div>
 @endsection

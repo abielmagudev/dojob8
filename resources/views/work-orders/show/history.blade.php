@@ -1,4 +1,4 @@
-<x-card class="h-100" title="Log">
+<x-card class="h-100" title="History">
     <ul class="list-group">
         <li class="list-group-item">
             <span class="d-block">Lorem ipsum dolor sit amet</span>

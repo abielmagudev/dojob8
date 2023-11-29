@@ -15,8 +15,8 @@ class CreateWorkOrdersTable extends Migration
     {
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
-            $table->date('scheduled_date');
-            $table->time('scheduled_time');
+            $table->date('scheduled_date')->index();
+            $table->time('scheduled_time')->nullable();
             $table->string('status')->nullable()->index();
             $table->text('notes')->nullable();
             $table->foreignId('client_id')->index();

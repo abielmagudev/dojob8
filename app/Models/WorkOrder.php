@@ -15,6 +15,18 @@ class WorkOrder extends Model
     use HasBeforeAfterTrait;
     use HasHookUsersTrait;
 
+    public static $status_colors_bs = [
+        'new' => 'text-bg-primary',
+        'working' => 'text-bg-warning',
+        'done' => 'text-bg-success animate__animated animate__pulse animate__infinite',
+        'completed' => 'text-bg-success animate__animated animate__tada animate__infinite',
+        'inspected' => 'text-bg-success',
+        'closed' => 'text-bg-dark',
+        'canceled' => 'text-bg-danger',
+        'denialed' => 'text-bg-danger',
+        'pending' => 'text-bg-purple',
+    ];
+
     protected $fillable = [
         'client_id',
         'crew_id',
@@ -31,6 +43,16 @@ class WorkOrder extends Model
 
 
     // Attributes
+
+    public function getStatusTextAttribute()
+    {
+        return $this->status ?? 'pending';
+    }
+
+    public function getStatusColorAttribute()
+    {
+        return self::getColorByStatus( $this->status_text );
+    }
 
     public function getScheduledDateInputAttribute()
     {
@@ -90,19 +112,14 @@ class WorkOrder extends Model
 
     // Relations
 
-    public function job()
-    {
-        return $this->belongsTo(Job::class);
-    }
-
     public function client()
     {
         return $this->belongsTo(Client::class);
     }
 
-    public function inspections()
+    public function job()
     {
-        return $this->hasMany(Inspection::class);
+        return $this->belongsTo(Job::class);
     }
 
     public function crew()
@@ -110,18 +127,31 @@ class WorkOrder extends Model
         return $this->belongsTo(Crew::class);
     }
 
+    public function intermediary()
+    {
+        return $this->belongsTo(Intermediary::class);
+    }
+
+    public function inspections()
+    {
+        return $this->hasMany(Inspection::class);
+    }
+
 
     // Statics
 
-    public static function getAllStatus()
+    public static function getStatusColorsBs()
     {
-        return [
-            'denialed',
-            'completed',
-            'pending',
-            'canceled',
-            'working',
-            'done',
-        ];
+        return collect( self::$status_colors_bs );
+    }
+
+    public static function getStatusKeys()
+    {
+        return self::getStatusColorsBs()->keys();
+    }
+
+    public static function getColorByStatus(string $status_key)
+    {
+        return self::getStatusColorsBs()[$status_key];
     }
 }

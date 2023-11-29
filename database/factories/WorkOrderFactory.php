@@ -16,11 +16,11 @@ class WorkOrderFactory extends Factory
     {
         return [
             'scheduled_date' => $this->faker->date(),
-            'scheduled_time' => $this->faker->time(),
-            'status' => $this->faker->optional()->randomElement( WorkOrder::getAllStatus() ),
+            'scheduled_time' => $this->faker->optional()->time(),
+            'status' => $this->faker->optional()->randomElement( WorkOrder::getStatusKeys() ),
             'notes' => $this->faker->optional()->sentence(),
             'client_id' => $this->faker->numberBetween(1, 500),
-            'crew_id' => $this->faker->optional()->numberBetween(1,10),
+            'crew_id' => $this->faker->numberBetween(1,10),
             'intermediary_id' => $this->faker->optional()->numberBetween(1,10),
             'job_id' => $this->faker->numberBetween(1, 10),
             'created_by' => $this->faker->optional()->numberBetween(1,10),

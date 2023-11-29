@@ -21,7 +21,7 @@ class WorkOrderController extends Controller
     public function index()
     {
         return view('work-orders.index', [
-            'work_orders' => WorkOrder::with(['job', 'client'])
+            'work_orders' => WorkOrder::with(['job', 'client', 'intermediary'])
                             ->orderBy('scheduled_date', 'desc')
                             ->orderBy('scheduled_time', 'asc')
                             ->paginate(25),

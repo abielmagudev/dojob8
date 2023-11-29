@@ -9,4 +9,9 @@
 <br>
 @include('dashboard.index.status')
 <br>
+<div class="row">
+    <div class="col-md">
+        @include('dashboard.index.jobs')
+    </div>
+</div>
 @endsection

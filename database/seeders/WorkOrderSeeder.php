@@ -14,6 +14,6 @@ class WorkOrderSeeder extends Seeder
      */
     public function run()
     {
-        WorkOrder::factory(500)->create();
+        WorkOrder::factory(1000)->create();
     }
 }

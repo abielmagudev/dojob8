@@ -61,7 +61,7 @@ class WorkOrder extends Model
 
     public function getScheduledTimeInputAttribute()
     {
-        return $this->id ?  Carbon::parse($this->scheduled_time)->format('H:i') : null;
+        return $this->getRawOriginal('scheduled_time') ? Carbon::parse($this->scheduled_time)->format('H:i') : null;
     }
 
     public function getScheduledDatetimeAttribute()
@@ -76,7 +76,7 @@ class WorkOrder extends Model
 
     public function getScheduledTimeHumanAttribute()
     {
-        return $this->id ? Carbon::parse($this->scheduled_time)->format('h:i A') : null;
+        return $this->getRawOriginal('scheduled_time') ? Carbon::parse($this->scheduled_time)->format('h:i A') : null;
     }
 
     public function getScheduledDatetimeHumanAttribute()

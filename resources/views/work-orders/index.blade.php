@@ -16,13 +16,12 @@
     <x-table class="align-middle">
         <x-slot name="thead">
         <tr>
-            <th class="text-center ">
-                <i class="bi bi-list-ol"></i>
-            </th>
+            <th>Priority</th>
             <th>Time</th>
             <th>Crew</th>
             <th>Job</th>
             <th>Client</th>
+            <th class="text-nowrap">Zip code & Distric</th>
             <th>Intermediary</th>
             <th>Status</th>
             <th></th>
@@ -32,7 +31,7 @@
         @foreach($work_orders as $work_order)           
         <tr>
             <td>
-                <input type="number" class="form-control form-control-sm" style="width:54px">
+                <input type="number" class="form-control form-control-sm" style="width:56px">
             </td>
             <td class="text-nowrap">{{ $work_order->scheduled_time_human }}</td>
             <td class="text-nowrap">
@@ -42,16 +41,20 @@
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
             <td class="text-nowrap">
-                <span>
+                <span class="d-block">
                     {{ $work_order->client->street }}, 
                     {{ $work_order->client->location_country_code }}, 
-                    <b>{{ $work_order->client->zip_code }}</b>
                 </span>
                 <small>
-                    <x-tooltip class="d-inline-block link-primary" :title="$work_order->client->full_name . '<br>' . $work_order->client->contact_data_collection->filter()->except('email')->implode('<br>')" html>
-                        <i class="bi bi-info-circle"></i>
-                    </x-tooltip>
+                    <span>{{ $work_order->client->full_name }}</span>
+                    @foreach($work_order->client->contact_data_collection->filter() as $data)
+                    <div class="badge text-bg-light">{{ $data }}</div>
+                    @endforeach
                 </small>
+            </td>
+            <td>
+                <span class="d-block">{{ $work_order->client->zip_code }}</span>
+                <small>District {{ $work_order->client->district_code }}</small>
             </td>
             <td class="text-nowrap text-center">
                 @if( $work_order->hasIntermediary() )

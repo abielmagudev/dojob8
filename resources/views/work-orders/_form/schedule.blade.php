@@ -9,7 +9,7 @@
             <x-error name="scheduled_date"></x-error>
         </div>
         <div class="col-sm">
-            <input type="time" class="form-control {{ bsInputInvalid( $errors->has('scheduled_time') ) }}" id="inputScheduleTime" name="scheduled_time" value="{{ old('scheduled_time', $work_order->scheduled_time_without_miliseconds) }}" required>
+            <input type="time" class="form-control {{ bsInputInvalid( $errors->has('scheduled_time') ) }}" id="inputScheduleTime" name="scheduled_time" value="{{ old('scheduled_time', $work_order->scheduled_time_input) }}" required>
             <x-error name="scheduled_time"></x-error>
         </div>
     </div>

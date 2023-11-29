@@ -7,9 +7,17 @@
 @section('content')
 <x-card>
     <x-slot name="options">
-        <x-modal-trigger modal-id="modalSearchClient">
-            <b>+</b>
-        </x-modal-trigger>
+        <div class="btn-group">
+            <button class="btn btn-primary d-none" data-bs-toggle="tooltip" data-bs-title="View">
+                <i class="bi bi-columns"></i>
+            </button>
+            <button class="btn btn-primary d-none" data-bs-toggle="tooltip" data-bs-title="Filter">
+                <i class="bi bi-filter"></i>
+            </button>
+            <x-modal-trigger modal-id="modalSearchClient">
+                <b>+</b>
+            </x-modal-trigger>
+        </div>
     </x-slot>
 
     @if( $work_orders->count() ) 
@@ -17,12 +25,11 @@
         <x-slot name="thead">
         <tr>
             <th>Priority</th>
-            <th>Time</th>
+            <th>Estimated</th>
             <th>Crew</th>
             <th>Job</th>
             <th>Client</th>
-            <th class="text-nowrap">Zip code & Distric</th>
-            <th>Intermediary</th>
+            <th>Contractor</th>
             <th>Status</th>
             <th></th>
         </tr>
@@ -31,7 +38,7 @@
         @foreach($work_orders as $work_order)           
         <tr>
             <td>
-                <input type="number" class="form-control form-control-sm" style="width:56px">
+                <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
             </td>
             <td class="text-nowrap">{{ $work_order->scheduled_time_human }}</td>
             <td class="text-nowrap">
@@ -41,20 +48,16 @@
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
             <td class="text-nowrap">
-                <span class="d-block">
+                <span>
                     {{ $work_order->client->street }}, 
                     {{ $work_order->client->location_country_code }}, 
                 </span>
-                <small>
-                    <span>{{ $work_order->client->full_name }}</span>
-                    @foreach($work_order->client->contact_data_collection->filter() as $data)
-                    <div class="badge text-bg-light">{{ $data }}</div>
-                    @endforeach
-                </small>
-            </td>
-            <td>
-                <span class="d-block">{{ $work_order->client->zip_code }}</span>
-                <small>District {{ $work_order->client->district_code }}</small>
+                <b>{{ $work_order->client->zip_code }}</b>
+                <x-tooltip :title="$work_order->client->full_name . '<br>' . $work_order->client->contact_data_collection->filter()->except('email')->implode('<br>')" html>
+                    <a href="#!">
+                        <i class="bi bi-info-circle"></i>
+                    </a>
+                </x-tooltip>
             </td>
             <td class="text-nowrap text-center">
                 @if( $work_order->hasIntermediary() )

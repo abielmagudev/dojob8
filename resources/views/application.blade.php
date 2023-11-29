@@ -52,7 +52,7 @@
     @include('application.navbar-menu')
     @include('application.sidebar-menu')
     
-    <div class="container">
+    <div class="container" id="main-container">
         <header class="mt-5 mb-4">
             @yield('header')
         </header>

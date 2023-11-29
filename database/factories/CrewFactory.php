@@ -17,9 +17,9 @@ class CrewFactory extends Factory
         $operators = Member::operative()->get();
 
         return [
-            'name' => $this->faker->domainName(),
+            'name' => strtoupper($this->faker->domainName()),
             'description' => $this->faker->optional()->sentence(),
-            'color' => $this->faker->optional()->hexColor(),
+            'color' => $this->faker->hexColor(),
             'is_active' => $this->faker->boolean(),
         ];
     }

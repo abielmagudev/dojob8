@@ -51,6 +51,31 @@ class Client extends Model
         ]);
     }
 
+    public function getContactDataApiHtmlAttribute()
+    {
+        return $this->contact_data_collection->filter()->map(function ($data, $key) {
+            if( $key == 'email' ) {
+                return "<a href='mailto:{$data}'>{$data}</a>";
+            }
+
+            return "<a href='tel:{$data}'>{$data}</a>";
+        });
+    }
+
+    public function getAddressDataCollectionAttribute()
+    {
+        return collect([
+            'street' => $this->street,
+            'city_name' => $this->city,
+            'state_code' => $this->state_code,
+            'state_name' => $this->state_name,
+            'country_code' => $this->country_,
+            'country_name' => $this->country_name,
+            'zip_code' => $this->zip_code,
+            'district' => $this->district,
+        ]);
+    }
+
     public function getAddressAttribute()
     {
         $data = [
@@ -66,6 +91,20 @@ class Client extends Model
         return "{$this->address}, {$this->zip_code}";
     }
 
+    public function getGoogleMapsUrlSearchAddressAttribute()
+    {
+        return sprintf("https://www.google.com.mx/maps/search/%s", 
+            $this
+            ->address_data_collection
+            ->only([
+                'street',
+                'city_name',
+                'state_code',
+                'zip_code',
+            ])
+            ->implode('+')
+        );
+    }
 
     // Scopes
 

@@ -13,6 +13,6 @@
     </div>
 
     <div class="border rounded" style="height:160px; overflow-y:scroll">
-        <x-custom.list-group-checkbox-member :members="$operators" :members-checked="$work_order->crew->members" />
+        <x-custom.list-group-checkbox-member :members="$operators" :members-checked="$work_order->hasCrew() ? $work_order->crew->members : collect([])" />
     </div>
 </x-form-control-horizontal>

@@ -34,7 +34,8 @@
                     </td>
                     <td class="text-nowrap">{{ $work_order->job->name }}</td>
                     <td class="text-nowrap">
-                        <span>{{ $work_order->client->street }}, {{ $work_order->client->location_country_code }}</span>
+                        <span class="d-block">{{ $work_order->client->street }}</span>
+                        <small>{{ $work_order->client->location_country_code }}</small>
                         <x-tooltip title="{{ $work_order->client->full_name }}<br>{{ $work_order->client->phone_number }}" html>
                             <a href="#!">
                                 <i class="bi bi-info-circle"></i>

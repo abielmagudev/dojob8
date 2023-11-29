@@ -48,16 +48,19 @@
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
             <td class="text-nowrap">
-                <span>
-                    {{ $work_order->client->street }}, 
-                    {{ $work_order->client->location_country_code }}, 
-                </span>
-                <b>{{ $work_order->client->zip_code }}</b>
-                <x-tooltip :title="$work_order->client->full_name . '<br>' . $work_order->client->contact_data_collection->filter()->except('email')->implode('<br>')" html>
-                    <a href="#!">
-                        <i class="bi bi-info-circle"></i>
+                <div>
+                    <span>{{ $work_order->client->address }}</span>
+                    <b>{{ $work_order->client->zip_code }}</b>
+                    <a href="{{ $work_order->client->google_maps_url_search_address }}" target="_blank">
+                        <i class="bi bi-geo-alt"></i>
                     </a>
-                </x-tooltip>
+                </div>
+                <small>
+                    <span>{{ $work_order->client->full_name }}</span>
+                    @foreach($work_order->client->contact_data_api_html as $data)
+                    <div class="badge text-bg-light">{!! $data !!}</div>
+                    @endforeach
+                </small>
             </td>
             <td class="text-nowrap text-center">
                 @if( $work_order->hasIntermediary() )

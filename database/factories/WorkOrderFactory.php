@@ -15,7 +15,7 @@ class WorkOrderFactory extends Factory
     public function definition()
     {
         return [
-            'scheduled_date' => $this->faker->date(),
+            'scheduled_date' => $this->faker->dateTimeBetween('-3 years'),
             'scheduled_time' => $this->faker->optional()->time(),
             'status' => $this->faker->optional()->randomElement( WorkOrder::getStatusKeys() ),
             'notes' => $this->faker->optional()->sentence(),

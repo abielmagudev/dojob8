@@ -17,7 +17,7 @@ class WorkOrderFactory extends Factory
         return [
             'scheduled_date' => $this->faker->dateTimeBetween('-3 years'),
             'scheduled_time' => $this->faker->optional()->time(),
-            'status' => $this->faker->optional()->randomElement( WorkOrder::getStatusKeys() ),
+            'status' => $this->faker->optional()->randomElement( WorkOrder::getAllStatusExceptPending() ),
             'notes' => $this->faker->optional()->sentence(),
             'client_id' => $this->faker->numberBetween(1, 500),
             'crew_id' => $this->faker->numberBetween(1,10),

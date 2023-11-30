@@ -11,6 +11,7 @@ use App\Models\Intermediary;
 use App\Models\Job;
 use App\Models\Member;
 use App\Models\WorkOrder;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -18,13 +19,41 @@ class WorkOrderController extends Controller
 {
     use ReflashInputErrorsTrait;
 
-    public function index()
+    public function index(Request $request)
     {
+        if( empty($request->except('page')) ) {
+            $request->merge([
+                'scheduled_date' => Carbon::today()->format('Y-m-d'),
+            ]);
+        }
+
         return view('work-orders.index', [
-            'work_orders' => WorkOrder::with(['job', 'client', 'intermediary'])
-                            ->orderBy('scheduled_date', 'desc')
-                            ->orderBy('scheduled_time', 'asc')
-                            ->paginate(25),
+            'request' => $request,
+            'url_unsolved_button' => route('work-orders.index', [
+                'scheduled_date_range' => [
+                    now()->format('Y-01-01'),
+                    now()->format('Y-m-d')
+                ],
+                'status_group' => [
+                    'new',
+                    'working',
+                    'done',
+                    'pending',
+                ],
+                'status_rule' => 'only',
+            ]),
+            'crews' => Crew::all(),
+            'intermediaries' => Intermediary::all(),
+            'jobs' => Job::all(),
+            'work_orders_status' => WorkOrder::getAllStatus(),
+            'work_orders' => WorkOrder::with(['job', 'client', 'intermediary', 'crew'])
+                ->filtersByRequest($request)
+                ->orderBy('scheduled_time', 'asc')
+                ->orderBy('scheduled_date', 'desc')
+                ->paginate(25)
+                ->appends( 
+                    $request->query()
+                ),
         ]);
     }
 

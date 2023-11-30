@@ -1,34 +1,46 @@
 @extends('application')
 
 @section('header')
-<x-header title="Work orders" />
+<x-header title="Work orders" subtitle="Total of {{ $work_orders->total() }}"/>
 @endsection
 
 @section('content')
 <x-card>
     <x-slot name="options">
-        <div class="btn-group">
-            <button class="btn btn-primary d-none" data-bs-toggle="tooltip" data-bs-title="View">
-                <i class="bi bi-columns"></i>
-            </button>
-            <button class="btn btn-primary d-none" data-bs-toggle="tooltip" data-bs-title="Filter">
-                <i class="bi bi-filter"></i>
-            </button>
-            <x-modal-trigger modal-id="modalSearchClient">
-                <b>+</b>
+        <x-tooltip title="Views">
+            <x-modal-trigger modal-id="modalWorkOrderViews" class="btn btn-primary">
+                <i class="bi bi-grid-1x2"></i>
             </x-modal-trigger>
+        </x-tooltip>
+
+        <div class="btn-group mx-3">
+            <x-tooltip title="Filters">
+                <x-modal-trigger modal-id="modalWorkOrdersFilter" class="btn btn-primary rounded-end-0">
+                    <i class="bi bi-funnel"></i>
+                </x-modal-trigger>
+            </x-tooltip>
+
+            <x-tooltip title="Unsolved until today">
+                <a href="<?= $url_unsolved_button ?>" class="btn btn-danger rounded-start-0">
+                    <i class="bi bi-stopwatch"></i>
+                </a>
+            </x-tooltip>
         </div>
+
+        <x-modal-trigger modal-id="modalSearchClient">
+            <b>+</b>
+        </x-modal-trigger>
     </x-slot>
 
     @if( $work_orders->count() ) 
-    <x-table class="align-middle">
+    <x-table>
         <x-slot name="thead">
-        <tr>
+        <tr class="text-center">
             <th>Priority</th>
-            <th>Estimated</th>
+            <th>Scheduled</th>
             <th>Crew</th>
             <th>Job</th>
-            <th>Client</th>
+            <th class="text-start">Client</th>
             <th>Contractor</th>
             <th>Status</th>
             <th></th>
@@ -36,7 +48,7 @@
         </x-slot>
 
         @foreach($work_orders as $work_order)           
-        <tr>
+        <tr class="text-center">
             <td>
                 <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
             </td>
@@ -47,29 +59,31 @@
                 @endif
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
-            <td class="text-nowrap">
+            <td class="text-nowrap text-start">
                 <div>
-                    <span>{{ $work_order->client->address }}</span>
+                    <span>{{ $work_order->client->address }}, </span>
                     <b>{{ $work_order->client->zip_code }}</b>
-                    <a href="{{ $work_order->client->google_maps_url_search_address }}" target="_blank">
-                        <i class="bi bi-geo-alt"></i>
-                    </a>
                 </div>
                 <small>
                     <span>{{ $work_order->client->full_name }}</span>
                     @foreach($work_order->client->contact_data_api_html as $data)
-                    <div class="badge text-bg-light">{!! $data !!}</div>
+                    <div class="badge text-bg-light mx-1">{!! $data !!}</div>
                     @endforeach
+                    <div class="badge text-bg-light">
+                        <a href="{{ $work_order->client->google_maps_url_search_address }}" target="_blank">
+                            Google maps
+                        </a>
+                    </div>
                 </small>
             </td>
-            <td class="text-nowrap text-center">
+            <td class="text-nowrap">
                 @if( $work_order->hasIntermediary() )
                 <x-tooltip :title="$work_order->intermediary->name">
                     <span>{{ $work_order->intermediary->alias }}</span>
                 </x-tooltip>
                 @endif
             </td>
-            <td class="text-nowrap text-center text-uppercase">
+            <td class="text-nowrap text-uppercase">
                 <span class="badge w-100 {{ $work_order->status_color }}">{{ $work_order->status_text }}</span>
             </td>
             <td class="text-nowrap text-end">
@@ -93,5 +107,9 @@
 <br>
 
 <x-pagination-simple-eloquent :collection="$work_orders" />
+
+@include('work-orders.index.modal-work-order-views')
+@include('work-orders.index.modal-work-orders-filter')
 @include('clients.modal-search')
+
 @endsection

@@ -1,13 +1,14 @@
 <x-card title="Jobs">
 
-    @foreach($jobs as $job)     
+    @foreach($jobs->sortBy('name') as $job)    
+     
     <?php 
             
     $work_orders_count_by_job = $work_orders->filter(function ($wo) use ($job) {
         return $wo->job_id == $job->id;
     })->count();
 
-    $work_orders_percent_by_job = ceil(($work_orders_count_by_job / $work_orders->count()) * 100);
+    $work_orders_percent_by_job = $work_orders->count() ? ceil(($work_orders_count_by_job / $work_orders->count()) * 100) : 0;
 
     ?>
 

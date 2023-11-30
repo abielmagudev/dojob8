@@ -16,10 +16,12 @@ class DashboardController extends Controller
         return view('dashboard.index', [
             'clients' => Client::all(),
             'intermediaries' => Intermediary::all(),
-            'work_orders' => WorkOrder::whereYear('scheduled_date', date('Y'))->orderBy('scheduled_date', 'desc')->get(),
-            'work_orders_status' => WorkOrder::getStatusKeys(),
-            'user' => User::all(),
             'jobs' => Job::withTrashed()->get(),
+            'user' => User::all(),
+            'work_orders_status' => WorkOrder::getStatusKeys(),
+            'work_orders' => WorkOrder::whereYear('scheduled_date', date('Y'))
+                ->orderBy('scheduled_date', 'desc')
+                ->get(),
         ]);
     }
 }

@@ -1,6 +1,8 @@
 <span 
     class="{{ $attributes->get('class', 'd-inline-block') }}" 
+
     data-bs-toggle="tooltip" 
+    
     data-bs-title="{{ $title }}"
     
     @if( $attributes->has('placement') )

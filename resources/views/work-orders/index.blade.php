@@ -1,7 +1,11 @@
 @extends('application')
 
 @section('header')
-<x-header title="Work orders" subtitle="Total of {{ $work_orders->total() }}"/>
+<x-header title="Work orders">
+    @slot('subtitle')
+    <span class="badge text-bg-dark align-middle">{{ $work_orders->total() }}</span>
+    @endslot
+</x-header>
 @endsection
 
 @section('content')

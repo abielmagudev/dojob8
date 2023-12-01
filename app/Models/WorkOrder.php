@@ -6,6 +6,7 @@ use App\Models\Kernel\HasActionsByRequestTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -143,6 +144,11 @@ class WorkOrder extends Model
 
     
     // Scopes
+
+    public function scopeUnifinishedStatus($query)
+    {
+        return $query->whereIn('status', self::getUnfinishedStatuses()->all());
+    }
 
     public function scopeWhereJobsAvailable($query)
     {
@@ -361,6 +367,13 @@ class WorkOrder extends Model
         ]);
 
         return route('work-orders.index', $arguments);
+    }
+
+    public static function filterByUnfinishedStatus(Collection $work_orders)
+    {
+        return $work_orders->filter(function ($wo) {
+            return in_array($wo->status, self::getUnfinishedStatuses()->all());
+        });
     }
 
     public static function getStatusesBsColors()

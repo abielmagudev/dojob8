@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasActionsByRequestTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
-use App\Models\Kernel\HasFiltersTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class WorkOrder extends Model
 {
     use HasFactory;
+    use HasActionsByRequestTrait;
     use HasBeforeAfterTrait;
     use HasHookUsersTrait;
-    use HasFiltersTrait;
 
     public static $status_colors_bs = [
         'pending' => 'text-bg-purple',
@@ -31,7 +30,7 @@ class WorkOrder extends Model
     ];
 
     public static $all_status = [
-        'pending',
+        'pending', // null
         'new',
         'working',
         'done',
@@ -40,6 +39,13 @@ class WorkOrder extends Model
         'closed',
         'denialed',
         'canceled',
+    ];
+
+    public static $statuses_unsolved = [
+        'pending',
+        'new',
+        'working',
+        'done',
     ];
 
     public static $inputs_filters = [
@@ -315,11 +321,6 @@ class WorkOrder extends Model
         return $query->whereScheduledDateBetween($scheduled_date_range);
     }
 
-    public function scopeFilterSort($query, $sort_parameters)
-    {
-        return $query;
-    }
-
 
 
 
@@ -369,6 +370,11 @@ class WorkOrder extends Model
     public static function getAllStatusExceptPending()
     {
         return self::getAllStatus()->filter(fn($status) => $status <> 'pending');
+    }
+
+    public static function getStatusesUnsolved()
+    {
+        return collect(self::$statuses_unsolved);
     }
 
     public static function getStatusColorsBs()

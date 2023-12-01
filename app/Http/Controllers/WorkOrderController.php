@@ -34,7 +34,7 @@ class WorkOrderController extends Controller
 
         $url_unsolved_button = route('work-orders.index', [
             'scheduled_date_range' => [now()->format('Y-01-01'), now()->format('Y-m-d')],
-            'status_group' => ['new','working','done','pending'],
+            'status_group' => WorkOrder::getStatusesUnsolved()->all(),
             'status_rule' => 'only',
         ]);
 

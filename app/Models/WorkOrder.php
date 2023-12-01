@@ -353,6 +353,16 @@ class WorkOrder extends Model
         return collect(self::$unfinished_statuses);
     }
 
+    public static function generateUrlUnfinishedStatus(array $extra_parameters = [])
+    {
+        $parameters = array_merge($extra_parameters, [
+            'status_rule' => 'only',
+            'status_group' => self::getUnfinishedStatuses()->all(),
+        ]);
+
+        return route('work-orders.index', $parameters);
+    }
+
     public static function getStatusesBsColors()
     {
         return collect( self::$statuses_bscolors );

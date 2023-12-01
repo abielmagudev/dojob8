@@ -30,11 +30,17 @@
             </td>
             <td>{{ $job->name }}</td>
             <td>{{ $job->extensions_count }}</td>
-            <td>{{ $job->work_orders_count }}</td>
+            <td>{{ $job->work_orders->count() }}</td>
             <td class="text-nowrap text-end">
-                @if( $pending_work_orders = mt_rand(0, $job->work_orders_count) )
-                <x-tooltip title="Pending work orders">
-                <a href="{{ route('work-orders.index', ['job' => $job->id]) }}" class="btn btn-warning">{{ $pending_work_orders }}</a>
+                @if( 
+                    $work_orders_unsolved = $job->work_orders->filter(function($work_order) use ($statuses_unsolved) {
+                        return in_array($work_order->status, $statuses_unsolved);
+                    })
+                )
+                <x-tooltip title="Work orders unsolver">
+                <a href="{{ route('work-orders.index', ['job' => $job->id, 'status_group' => $statuses_unsolved, 'status_rule' => 'only') }}" class="btn btn-warning">
+                    {{ $work_orders_unsolved->count() }}
+                </a>
                 </x-tooltip>
                 @endif
 

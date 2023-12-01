@@ -38,7 +38,11 @@
                     })
                 )
                 <x-tooltip title="Work orders unsolver">
-                <a href="{{ route('work-orders.index', ['job' => $job->id, 'status_group' => $statuses_unsolved, 'status_rule' => 'only') }}" class="btn btn-warning">
+                <a href="{{ route('work-orders.index', [
+                    'job' => $job->id, 
+                    'status_group' => $statuses_unsolved, 
+                    'status_rule' => 'only'
+                ]) }}" class="btn btn-warning">
                     {{ $work_orders_unsolved->count() }}
                 </a>
                 </x-tooltip>

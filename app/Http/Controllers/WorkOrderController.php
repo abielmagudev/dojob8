@@ -27,33 +27,33 @@ class WorkOrderController extends Controller
             ]);
         }
 
+        $scheduled_casted = $request->has('scheduled_date_range') ? [
+            Carbon::parse( $request->input('scheduled_date_range.0') ),
+            Carbon::parse( $request->input('scheduled_date_range.1') ),
+        ] : Carbon::parse( $request->get('scheduled_date') );
+
+        $url_unsolved_button = route('work-orders.index', [
+            'scheduled_date_range' => [now()->format('Y-01-01'), now()->format('Y-m-d')],
+            'status_group' => ['new','working','done','pending'],
+            'status_rule' => 'only',
+        ]);
+
+        $work_orders = WorkOrder::with(['job', 'client', 'intermediary', 'crew'])
+        ->filtersByRequest($request)
+        ->orderBy('scheduled_time', 'asc')
+        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->paginate(25)
+        ->appends( $request->query() );
+
         return view('work-orders.index', [
             'request' => $request,
-            'url_unsolved_button' => route('work-orders.index', [
-                'scheduled_date_range' => [
-                    now()->format('Y-01-01'),
-                    now()->format('Y-m-d')
-                ],
-                'status_group' => [
-                    'new',
-                    'working',
-                    'done',
-                    'pending',
-                ],
-                'status_rule' => 'only',
-            ]),
+            'scheduled_casted' => $scheduled_casted,
+            'url_unsolved_button' => $url_unsolved_button,
             'crews' => Crew::all(),
             'intermediaries' => Intermediary::all(),
             'jobs' => Job::all(),
             'work_orders_status' => WorkOrder::getAllStatus(),
-            'work_orders' => WorkOrder::with(['job', 'client', 'intermediary', 'crew'])
-                ->filtersByRequest($request)
-                ->orderBy('scheduled_time', 'asc')
-                ->orderBy('scheduled_date', 'desc')
-                ->paginate(25)
-                ->appends( 
-                    $request->query()
-                ),
+            'work_orders' => $work_orders,
         ]);
     }
 

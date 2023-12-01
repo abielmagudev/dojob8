@@ -7,12 +7,12 @@
         <option label="Any status" selected></option>
 
         @foreach($status_rules as $rule)
-        <option value="{{ $rule }}" {{ isSelected($rule == $request->get('status_rule')) }}>{{ $rule }}</option>
+        <option value="{{ $rule }}" {{ isSelected($rule == $request->get('status_rule')) }}>{{ $rule }}...</option>
         @endforeach
 
     </select>
 
-    <div id="statusGroupWrapper" class="rounded bg-light pt-1 px-3 pb-3 mx-3 {{ in_array($request->get('status_rule'), $status_rules) ? 'd-block' : 'd-none' }}">
+    <div id="statusGroupWrapper" class="rounded bg-light pt-1 px-3 pb-3 mx-2 {{ in_array($request->get('status_rule'), $status_rules) ? 'd-block' : 'd-none' }}">
         <div class="d-flex justify-content-between mb-1">
             <small>
                 <a href="#!" class="d-none">Clear</a>

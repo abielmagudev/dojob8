@@ -10,7 +10,20 @@
 
 @section('content')
 <x-card>
-    <x-slot name="options">
+
+    <x-slot name="title">
+        @if( is_array($scheduled_casted) )
+        <span class="text-nowrap">{{ $scheduled_casted[0]->format('D d, M y') }}</span>
+        <span class="d-block d-md-inline-block mx-0 mx-md-1">to</span>
+        <span class="text-nowrap">{{ $scheduled_casted[1]->format('D d, M y') }}</span>
+    
+        @else
+        <span class="text-nowrap">{{ $scheduled_casted->format('D d, M y') }}</span>
+    
+        @endif
+    </x-slot>
+
+    @slot('options')
         <x-tooltip title="Views">
             <x-modal-trigger modal-id="modalWorkOrderViews" class="btn btn-primary">
                 <i class="bi bi-grid-1x2"></i>
@@ -34,7 +47,7 @@
         <x-modal-trigger modal-id="modalSearchClient">
             <b>+</b>
         </x-modal-trigger>
-    </x-slot>
+    @endslot
 
     @if( $work_orders->count() ) 
     <x-table>
@@ -56,17 +69,29 @@
             <td>
                 <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
             </td>
-            <td class="text-nowrap">{{ $work_order->scheduled_time_human }}</td>
+            <td class="text-nowrap">
+                @if( is_array($scheduled_casted) )
+                <span class="d-block">{{ $work_order->scheduled_date_human }}</span>
+                @endif
+                <span>{{ $work_order->scheduled_time_human }}</span>
+            </td>
             <td class="text-nowrap">
                 @if( $work_order->hasCrew() )
-                <span class="badge w-100 {{ $work_order->crew->hasColor() ? '' : 'text-bg-dark' }}" @if( $work_order->crew->hasColor() ) style="background-color:{{ $work_order->crew->color }}" @endif>{{ $work_order->crew->name }}</span>
+                <span 
+                    class="badge w-100 {{ $work_order->crew->hasColor() ? '' : 'text-bg-dark' }}" 
+                    @if( $work_order->crew->hasColor() ) 
+                        style="background-color:{{ $work_order->crew->color }}" 
+                    @endif
+                >
+                    {{ $work_order->crew->name }}
+                </span>
                 @endif
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
             <td class="text-nowrap text-start">
                 <div>
                     <span>{{ $work_order->client->address }}, </span>
-                    <b>{{ $work_order->client->zip_code }}</b>
+                    <b>{{ $work_order->client->zip_code }} - D{{ $work_order->client->district_code }}</b>
                 </div>
                 <small>
                     <span>{{ $work_order->client->full_name }}</span>
@@ -83,7 +108,7 @@
             <td class="text-nowrap">
                 @if( $work_order->hasIntermediary() )
                 <x-tooltip :title="$work_order->intermediary->name">
-                    <span>{{ $work_order->intermediary->alias }}</span>
+                    <span class="badge text-bg-light" style="font-size:.9rem">{{ $work_order->intermediary->alias }}</span>
                 </x-tooltip>
                 @endif
             </td>

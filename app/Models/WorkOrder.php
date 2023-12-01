@@ -17,6 +17,8 @@ class WorkOrder extends Model
     use HasBeforeAfterTrait;
     use HasHookUsersTrait;
 
+    const FIRST_STATUS_WHEN_CREATED = 'new';
+
     public static $statuses_bscolors = [
         'pending' => 'text-bg-purple',
         'new' => 'text-bg-primary',
@@ -81,14 +83,9 @@ class WorkOrder extends Model
 
     // Attributes
 
-    public function getStatusTextAttribute()
-    {
-        return $this->status ?? 'pending';
-    }
-
     public function getStatusColorAttribute()
     {
-        return self::getColorByStatus( $this->status_text );
+        return self::getBsColorByStatus( $this->status );
     }
 
     public function getScheduledDateInputAttribute()
@@ -186,19 +183,11 @@ class WorkOrder extends Model
 
     public function scopeWhereStatusIn($query, array $status_array)
     {
-        if( in_array('pending', $status_array) ) { 
-            return $query->whereNull('status')->orWhereIn('status', $status_array);
-        }
-
         return $query->whereIn('status', $status_array);
     }
 
     public function scopeWhereStatusNotIn($query, array $status_array)
     {
-        if( in_array('pending', $status_array) ) {
-            return $query->whereNotNull('status')->whereNotIn('status', $status_array);
-        }
-
         return $query->whereNotIn('status', $status_array);
     }
 
@@ -269,10 +258,6 @@ class WorkOrder extends Model
     {
         if( is_null($status) ) {
             return $query;
-        }
-
-        if( $status == 'pending' ) {
-            $status = null;
         }
 
         return $query->whereStatus($status);
@@ -363,11 +348,6 @@ class WorkOrder extends Model
         return collect(self::$all_statuses);
     }
 
-    public static function getAllStatusesExceptPending()
-    {
-        return self::getAllStatuses()->filter(fn($status) => $status <> 'pending');
-    }
-    
     public static function getUnfinishedStatuses()
     {
         return collect(self::$unfinished_statuses);
@@ -378,8 +358,8 @@ class WorkOrder extends Model
         return collect( self::$statuses_bscolors );
     }
 
-    public static function getColorByStatus(string $status)
+    public static function getBsColorByStatus(string $status)
     {
-        return self::getStatusesBsColors()[$status];
+        return self::getStatusesBsColors()->get($status);
     }
 }

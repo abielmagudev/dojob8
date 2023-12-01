@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\WorkOrder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ class CreateWorkOrdersTable extends Migration
             $table->id();
             $table->date('scheduled_date')->index();
             $table->time('scheduled_time')->nullable();
-            $table->string('status')->nullable()->index();
+            $table->string('status')->index();
             $table->text('notes')->nullable();
             $table->foreignId('client_id')->index();
             $table->foreignId('crew_id')->nullable();

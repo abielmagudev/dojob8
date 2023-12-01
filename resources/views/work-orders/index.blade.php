@@ -66,15 +66,19 @@
 
         @foreach($work_orders as $work_order)           
         <tr class="text-center">
+
             <td>
                 <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
             </td>
+
             <td class="text-nowrap">
                 @if( is_array($scheduled_casted) )
                 <span class="d-block">{{ $work_order->scheduled_date_human }}</span>
                 @endif
+
                 <span>{{ $work_order->scheduled_time_human }}</span>
             </td>
+
             <td class="text-nowrap">
                 @if( $work_order->hasCrew() )
                 <span 
@@ -87,7 +91,9 @@
                 </span>
                 @endif
             </td>
+
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
+
             <td class="text-nowrap text-start">
                 <div>
                     <span>{{ $work_order->client->address }}, </span>
@@ -105,6 +111,7 @@
                     </div>
                 </small>
             </td>
+
             <td class="text-nowrap">
                 @if( $work_order->hasIntermediary() )
                 <x-tooltip :title="$work_order->intermediary->name">
@@ -112,20 +119,20 @@
                 </x-tooltip>
                 @endif
             </td>
-            <td class="text-nowrap text-uppercase">
-                <span class="badge w-100 {{ $work_order->status_color }}">{{ $work_order->status_text }}</span>
-            </td>
-            <td class="text-nowrap text-end">
 
+            <td class="text-nowrap text-uppercase">
+                <span class="badge w-100 {{ $work_order->status_color }}">{{ $work_order->status }}</span>
+            </td>
+
+            <td class="text-nowrap text-end">
                 <a href="{{ route('work-orders.edit', $work_order) }}" class="btn btn-outline-warning">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
-
                 <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>
                 </a>
-                
             </td>
+
         </tr>
         @endforeach
 

@@ -34,7 +34,7 @@ trait HasWorkOrdersTrait
         return $this->work_orders->filter(fn($work_order) => $work_order->status == $value);
     }
 
-    public function getUnfinishedStatusUrl(string $suffix = '')
+    public function getUrlUnfinishedWorkOrders(string $suffix = '')
     {
         $model = strtolower( class_basename( __CLASS__ ) . $suffix );
 

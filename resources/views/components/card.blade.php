@@ -9,7 +9,7 @@
             </div>
             <div>
                 @isset($options)       
-                <div class="d-inline-block">
+                <div class="{{ $attributes->get('options-class', 'd-inline-block') }}">
                     {!! $options !!}
                 </div>
                 @endisset

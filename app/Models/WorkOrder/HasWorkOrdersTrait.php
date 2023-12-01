@@ -17,7 +17,7 @@ trait HasWorkOrdersTrait
 
     public function getWorkOrdersUnfinishedCountAttribute()
     {
-        return $this->work_orders_unfinishied->count();
+        return $this->work_orders_unfinished ? $this->work_orders_unfinished->count() : 0;
     }
 
 
@@ -53,7 +53,7 @@ trait HasWorkOrdersTrait
 
     public function hasUnfinishedWorkOrders()
     {
-        return $this->work_orders_unfinished;
+        return (bool) $this->work_orders_unfinished_count;
     }
 
 

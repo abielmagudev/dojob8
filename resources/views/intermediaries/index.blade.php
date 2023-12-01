@@ -39,9 +39,9 @@
             </td>
             <td>{{ mt_rand(0,400) }}</td>
             <td class="text-end">
-                @if( $pending_work_orders = mt_rand(0, 200) )
-                <x-tooltip title="Pending work orders">
-                <a href="{{ route('work-orders.index', ['intermediary' => $intermediary->id]) }}" class="btn btn-warning">{{ $pending_work_orders }}</a>
+                @if( $intermediary->hasUnfinishedWorkOrders() )                  
+                <x-tooltip title="Unfinished work orders">
+                    <a href="{{ $intermediary->getUrlUnfinishedWorkOrders() }}" class="btn btn-warning">{{ $intermediary->work_orders_unfinished_count }}</a>
                 </x-tooltip>
                 @endif
 

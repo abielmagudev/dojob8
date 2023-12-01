@@ -6,6 +6,7 @@ use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasHistoryChangesTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,8 +17,9 @@ class Client extends Model
     use SoftDeletes;
     use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
-    use HasHookUsersTrait;
     use HasHistoryChangesTrait;
+    use HasHookUsersTrait;
+    use HasWorkOrdersTrait;
 
     protected $fillable = [
         'name',
@@ -38,6 +40,7 @@ class Client extends Model
     protected $ignore_changes = [
         'full_name',
     ];
+
 
 
     // Attributes 
@@ -106,6 +109,8 @@ class Client extends Model
         );
     }
 
+
+
     // Scopes
 
     public function scopeSearch($query, $value)
@@ -120,12 +125,8 @@ class Client extends Model
     }
 
 
-    // Relations
 
-    public function work_orders()
-    {
-        return $this->hasMany(WorkOrder::class);
-    }
+    // Relations
 
     public function history()
     {

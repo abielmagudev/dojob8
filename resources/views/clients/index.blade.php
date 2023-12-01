@@ -41,9 +41,9 @@
                 <span data-bs-toggle="tooltip" data-bs-title="Total">{{ $client->work_orders_count }}</span>
             </td>
             <td class="text-nowrap text-end">
-                @if( $client->work_orders_count && mt_rand(0,1) )
-                <x-tooltip title="Pending work orders">
-                <a href="{{ route('work-orders.index', ['client' => $client->id]) }}" class="btn btn-warning">{{ mt_rand(1, $client->work_orders_count) }}</a>
+                @if( $client->hasUnfinishedWorkOrders() )
+                <x-tooltip title="Unfinished work orders">
+                <a href="{{ $client->getUrlUnfinishedWorkOrders() }}" class="btn btn-warning">{{ $client->work_orders_unfinished_count }}</a>
                 </x-tooltip>
                 @endif
 

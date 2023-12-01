@@ -11,7 +11,7 @@ class IntermediaryController extends Controller
     public function index()
     {
         return view('intermediaries.index', [
-            'intermediaries' => Intermediary::orderBy('id', 'desc')->paginate(25),
+            'intermediaries' => Intermediary::with('work_orders')->orderBy('id', 'desc')->paginate(25),
         ]);
     }
 

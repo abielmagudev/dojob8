@@ -24,6 +24,7 @@ class DashboardController extends Controller
             'jobs' => Job::withTrashed()->get(),
             'user' => User::all(),
             'work_orders' => $work_orders,
+            'unfinished_work_orders' => WorkOrder::filterByUnfinishedStatus($work_orders),
         ]);
     }
 }

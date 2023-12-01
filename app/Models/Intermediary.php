@@ -7,6 +7,7 @@ use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,6 +21,7 @@ class Intermediary extends Model implements AuthenticatedUserMetadataInterface
     use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
     use HasHookUsersTrait;
+    use HasWorkOrdersTrait;
     
     protected $fillable = [
         'name',
@@ -71,11 +73,6 @@ class Intermediary extends Model implements AuthenticatedUserMetadataInterface
 
 
     // Relationships
-    
-    public function work_orders()
-    {
-        return $this->hasMany(WorkOrder::class);
-    }
 
     public function user()
     {

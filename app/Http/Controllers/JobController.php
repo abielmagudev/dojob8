@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\JobSaveRequest;
 use App\Models\Extension;
 use App\Models\Job;
+use App\Models\WorkOrder;
 
 class JobController extends Controller
 {
     public function index()
     {
         return view('jobs.index', [
-            'jobs' => Job::withCount(['extensions', 'work_orders'])
-                            ->orderBy('name')
-                            ->paginate(25)
+            'jobs' => Job::with('work_orders')->withCount('extensions')
+                        ->orderBy('name')
+                        ->paginate(25),
         ]);
     }
 

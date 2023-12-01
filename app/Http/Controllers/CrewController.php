@@ -12,7 +12,7 @@ class CrewController extends Controller
     public function index()
     {
         return view('crews.index', [
-            'crews' => Crew::with('members')->orderBy('name')->get(),
+            'crews' => Crew::with(['members', 'work_orders'])->orderBy('name')->get(),
         ]);
     }
 

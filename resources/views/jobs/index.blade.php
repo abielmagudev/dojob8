@@ -32,19 +32,11 @@
             <td>{{ $job->extensions_count }}</td>
             <td>{{ $job->work_orders->count() }}</td>
             <td class="text-nowrap text-end">
-                @if( 
-                    $work_orders_unsolved = $job->work_orders->filter(function($work_order) use ($statuses_unsolved) {
-                        return in_array($work_order->status, $statuses_unsolved);
-                    })
-                )
-                <x-tooltip title="Work orders unsolver">
-                <a href="{{ route('work-orders.index', [
-                    'job' => $job->id, 
-                    'status_group' => $statuses_unsolved, 
-                    'status_rule' => 'only'
-                ]) }}" class="btn btn-warning">
-                    {{ $work_orders_unsolved->count() }}
-                </a>
+                @if( $job->hasUnfinishedWorkOrders() )
+                <x-tooltip title="Unfinished work orders">
+                    <a href="{{ $job->getUrlUnfinishedWorkOrders() }}" class="btn btn-warning">
+                        {{ $job->work_orders_unfinished->count() }}
+                    </a>
                 </x-tooltip>
                 @endif
 

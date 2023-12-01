@@ -32,12 +32,6 @@ class WorkOrderController extends Controller
             Carbon::parse( $request->input('scheduled_date_range.1') ),
         ] : Carbon::parse( $request->get('scheduled_date') );
 
-        $url_unfinished_work_orders = route('work-orders.index', [
-            'scheduled_date_range' => [now()->format('Y-01-01'), now()->format('Y-m-d')],
-            'status_group' => WorkOrder::getUnfinishedStatuses()->all(),
-            'status_rule' => 'only',
-        ]);
-
         $work_orders = WorkOrder::with(['job', 'client', 'intermediary', 'crew'])
         ->filtersByRequest($request)
         ->orderBy('scheduled_time', 'asc')
@@ -52,7 +46,7 @@ class WorkOrderController extends Controller
             'jobs' => Job::all(),
             'request' => $request,
             'scheduled_casted' => $scheduled_casted,
-            'url_unfinished_work_orders' => $url_unfinished_work_orders,
+            'url_unfinished_status' => WorkOrder::generateUrlUnfinishedStatus(),
             'work_orders' => $work_orders,
         ]);
     }

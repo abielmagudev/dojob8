@@ -11,7 +11,7 @@ class ClientController extends Controller
     public function index()
     {
         return view('clients.index', [
-            'clients' => Client::withCount('work_orders')->orderByDesc('id')->paginate(25)
+            'clients' => Client::with('work_orders')->orderByDesc('id')->paginate(25)
         ]);
     }
 

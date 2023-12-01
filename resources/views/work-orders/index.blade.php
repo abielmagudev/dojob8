@@ -25,22 +25,21 @@
 
     @slot('options')
         <x-tooltip title="Views">
-            <x-modal-trigger modal-id="modalWorkOrderViews" class="btn btn-primary">
+            <x-modal-trigger modal-id="modalWorkOrderViews" class="btn btn-primary d-none">
                 <i class="bi bi-grid-1x2"></i>
             </x-modal-trigger>
         </x-tooltip>
 
         <div class="btn-group mx-3">
-            <x-tooltip title="Filters">
-                <x-modal-trigger modal-id="modalWorkOrdersFilter" class="btn btn-primary rounded-end-0">
-                    <i class="bi bi-funnel"></i>
-                </x-modal-trigger>
-            </x-tooltip>
-
             <x-tooltip title="Unsolved until today">
-                <a href="<?= $url_unfinished_work_orders ?>" class="btn btn-danger rounded-start-0">
+                <a href="<?= $url_unfinished_status ?>" class="btn btn-danger rounded-end-0">
                     <i class="bi bi-stopwatch"></i>
                 </a>
+            </x-tooltip>
+            <x-tooltip title="Filters">
+                <x-modal-trigger modal-id="modalWorkOrdersFilter" class="btn btn-primary rounded-start-0">
+                    <i class="bi bi-funnel"></i>
+                </x-modal-trigger>
             </x-tooltip>
         </div>
 
@@ -72,7 +71,7 @@
             </td>
 
             <td class="text-nowrap">
-                @if( is_array($scheduled_casted) )
+                @if(! $request->has('scheduled_date_range2') )
                 <span class="d-block">{{ $work_order->scheduled_date_human }}</span>
                 @endif
 

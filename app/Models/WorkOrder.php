@@ -17,7 +17,7 @@ class WorkOrder extends Model
     use HasBeforeAfterTrait;
     use HasHookUsersTrait;
 
-    public static $status_colors_bs = [
+    public static $statuses_bscolors = [
         'pending' => 'text-bg-purple',
         'new' => 'text-bg-primary',
         'working' => 'text-bg-warning',
@@ -29,8 +29,8 @@ class WorkOrder extends Model
         'canceled' => 'text-bg-danger',
     ];
 
-    public static $all_status = [
-        'pending', // null
+    public static $all_statuses = [
+        'pending',
         'new',
         'working',
         'done',
@@ -41,7 +41,7 @@ class WorkOrder extends Model
         'canceled',
     ];
 
-    public static $statuses_unsolved = [
+    public static $unfinished_statuses = [
         'pending',
         'new',
         'working',
@@ -186,10 +186,8 @@ class WorkOrder extends Model
 
     public function scopeWhereStatusIn($query, array $status_array)
     {
-        if( in_array('pending', $status_array) )
-        { 
+        if( in_array('pending', $status_array) ) { 
             return $query->whereNull('status')->orWhereIn('status', $status_array);
-            // array_push($status_array, DB::raw("null")); // DB::raw("null")
         }
 
         return $query->whereIn('status', $status_array);
@@ -197,10 +195,8 @@ class WorkOrder extends Model
 
     public function scopeWhereStatusNotIn($query, array $status_array)
     {
-        if( in_array('pending', $status_array) )
-        {
+        if( in_array('pending', $status_array) ) {
             return $query->whereNotNull('status')->whereNotIn('status', $status_array);
-            // array_push($status_array, null); // DB::raw("null")
         }
 
         return $query->whereNotIn('status', $status_array);
@@ -362,33 +358,28 @@ class WorkOrder extends Model
 
     // Statics
 
-    public static function getAllStatus()
+    public static function getAllStatuses()
     {
-        return collect(self::$all_status);
+        return collect(self::$all_statuses);
     }
 
-    public static function getAllStatusExceptPending()
+    public static function getAllStatusesExceptPending()
     {
-        return self::getAllStatus()->filter(fn($status) => $status <> 'pending');
+        return self::getAllStatuses()->filter(fn($status) => $status <> 'pending');
+    }
+    
+    public static function getUnfinishedStatuses()
+    {
+        return collect(self::$unfinished_statuses);
     }
 
-    public static function getStatusesUnsolved()
+    public static function getStatusesBsColors()
     {
-        return collect(self::$statuses_unsolved);
+        return collect( self::$statuses_bscolors );
     }
 
-    public static function getStatusColorsBs()
+    public static function getColorByStatus(string $status)
     {
-        return collect( self::$status_colors_bs );
-    }
-
-    public static function getStatusKeys()
-    {
-        return self::getStatusColorsBs()->keys();
-    }
-
-    public static function getColorByStatus(string $status_key)
-    {
-        return self::getStatusColorsBs()[$status_key];
+        return self::getStatusesBsColors()[$status];
     }
 }

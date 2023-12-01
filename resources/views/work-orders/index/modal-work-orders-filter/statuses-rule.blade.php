@@ -23,7 +23,7 @@
         </div>
         <div class="overflow-y-scroll border rounded" style="height:156px">
             <ul id="statusGroupList" class="list-group list-group-flush">
-                @foreach($work_orders_status as $status)
+                @foreach($all_statuses as $status)
                 <?php $checkbox_id = "checkboxStatus" . ucfirst($status) ?>
                 <li class="list-group-item list-group-item-action">
                     <div class="form-check">

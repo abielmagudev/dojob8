@@ -7,7 +7,7 @@
 @section('content')
 @include('dashboard.index.quantities')
 <br>
-@include('dashboard.index.status')
+@include('dashboard.index.statuses')
 <br>
 <div class="row">
     <div class="col-md">

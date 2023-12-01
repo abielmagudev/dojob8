@@ -38,7 +38,7 @@
             </x-tooltip>
 
             <x-tooltip title="Unsolved until today">
-                <a href="<?= $url_unsolved_button ?>" class="btn btn-danger rounded-start-0">
+                <a href="<?= $url_unfinished_work_orders ?>" class="btn btn-danger rounded-start-0">
                     <i class="bi bi-stopwatch"></i>
                 </a>
             </x-tooltip>

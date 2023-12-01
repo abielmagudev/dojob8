@@ -32,9 +32,9 @@ class WorkOrderController extends Controller
             Carbon::parse( $request->input('scheduled_date_range.1') ),
         ] : Carbon::parse( $request->get('scheduled_date') );
 
-        $url_unsolved_button = route('work-orders.index', [
+        $url_unfinished_work_orders = route('work-orders.index', [
             'scheduled_date_range' => [now()->format('Y-01-01'), now()->format('Y-m-d')],
-            'status_group' => WorkOrder::getStatusesUnsolved()->all(),
+            'status_group' => WorkOrder::getUnfinishedStatuses()->all(),
             'status_rule' => 'only',
         ]);
 
@@ -46,13 +46,13 @@ class WorkOrderController extends Controller
         ->appends( $request->query() );
 
         return view('work-orders.index', [
-            'request' => $request,
-            'scheduled_casted' => $scheduled_casted,
-            'url_unsolved_button' => $url_unsolved_button,
+            'all_statuses' => WorkOrder::getAllStatuses(),
             'crews' => Crew::all(),
             'intermediaries' => Intermediary::all(),
             'jobs' => Job::all(),
-            'work_orders_status' => WorkOrder::getAllStatus(),
+            'request' => $request,
+            'scheduled_casted' => $scheduled_casted,
+            'url_unfinished_work_orders' => $url_unfinished_work_orders,
             'work_orders' => $work_orders,
         ]);
     }
@@ -62,7 +62,7 @@ class WorkOrderController extends Controller
         $this->reflashInputErrors();
 
         return view('work-orders.create', [
-            'all_status' => WorkOrder::getAllStatus(),
+            'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $client,
             'crews' => Crew::with('members')->get(),
             'intermediaries' => Intermediary::orderBy('name')->get(),
@@ -108,7 +108,7 @@ class WorkOrderController extends Controller
         $this->reflashInputErrors();
 
         return view('work-orders.edit', [
-            'all_status' => WorkOrder::getAllStatus(),
+            'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $work_order->client,
             'crews' => Crew::with('members')->get(),
             'intermediaries' => Intermediary::orderBy('name')->get(),

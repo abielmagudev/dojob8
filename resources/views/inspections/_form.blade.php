@@ -46,9 +46,10 @@
     </x-slot>
 
     <select id="statusSelect" class="form-select" name="status">
-        @foreach($all_status as $status => $label)
-        <option value="{{ $status }}" {{ isSelected( ($status === $inspection->is_approved) ) }}>{{ ucfirst($label) }}</option>
+        @foreach($statuses_values as $status => $value)
+        <option value="{{ $value }}" {{ isSelected( ($value === $inspection->is_approved) ) }}>{{ ucfirst($status) }}</option>
         @endforeach
     </select>
+    <x-error name="status" />
 </x-form-control-horizontal>
 @endif

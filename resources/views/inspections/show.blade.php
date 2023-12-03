@@ -21,7 +21,7 @@
     <div class="col-sm">
         <x-card title="Information" class="h-100">  
             <p>
-                <x-badge color="{{ $inspection->approved_color }}" class="text-uppercase">{{ $inspection->approved_status }}</x-badge>
+                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase">{{ $inspection->status }}</x-badge>
             </p>      
         
             <x-small-label label="Scheduled">

@@ -29,9 +29,9 @@
             <td>{{ $inspector->inspections->count() }}</td>
             <td class="text-end">
 
-                @if( $inspections_hold_on = $inspector->inspections->filter(fn($inspection) => $inspection->isOnHold())->count() )
+                @if( $inspector->hasInspectionsOnHold() )
                 <x-tooltip title="Pending inspections">
-                    <a href="{{ route('inspections.index', ['inspector' => $inspector->id,'status' => 'hold-on']) }}" class="btn btn-warning">{{ $inspections_hold_on }}</a>
+                    <a href="{{ $inspector->url_pending_inspections }}" class="btn btn-warning">{{ $inspector->inspections_on_hold->count() }}</a>
                 </x-tooltip>
                 @endif
                 

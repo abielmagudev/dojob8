@@ -7,20 +7,38 @@ use App\Http\Requests\InspectionUpdateRequest;
 use App\Models\Inspection;
 use App\Models\Inspector;
 use App\Models\WorkOrder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InspectionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $inspections = Inspection::with([
+            'inspector', 
+            'work_order.job', 
+            'work_order.client'
+        ])
+        ->filtersByRequest($request)
+        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->paginate(25)
+        ->appends( $request->all() );
+
+        $scheduled_casted = $request->has('scheduled_date_range') ? [
+            Carbon::parse( $request->input('scheduled_date_range.0') ),
+            Carbon::parse( $request->input('scheduled_date_range.1') ),
+        ] : Carbon::parse( $request->get('scheduled_date') );
+
         return view('inspections.index', [
-            'inspections' => Inspection::with([
-                                'inspector', 
-                                'work_order.job', 
-                                'work_order.client'
-                            ])
-                            ->orderBy('scheduled_date', 'desc')
-                            ->paginate(25),
+            'request' => $request,
+            'inspections' => $inspections,
+            'inspectors' => Inspector::all(),
+            'statuses_values' => Inspection::getStatusesValues(),
+            'scheduled_casted' => $scheduled_casted,
+            'pending_inspections' => [
+                'count' => Inspection::pendings()->count(),
+                'url' => Inspection::generatePendingInspectionsUrl(),
+            ],
         ]);
     }
 
@@ -61,7 +79,7 @@ class InspectionController extends Controller
         return view('inspections.edit', [
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
-            'all_status' => Inspection::getAllStatus(),
+            'statuses_values' => Inspection::getStatusesValues(),
         ]);
     }
 

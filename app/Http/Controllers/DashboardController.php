@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Inspection;
 use App\Models\Intermediary;
 use App\Models\Job;
 use App\Models\WorkOrder;
@@ -22,9 +23,10 @@ class DashboardController extends Controller
             'clients' => Client::all(),
             'intermediaries' => Intermediary::all(),
             'jobs' => Job::withTrashed()->get(),
+            'unfinished_work_orders' => WorkOrder::filterByUnfinishedStatus($work_orders),
             'user' => User::all(),
             'work_orders' => $work_orders,
-            'unfinished_work_orders' => WorkOrder::filterByUnfinishedStatus($work_orders),
+            'inspections' => Inspection::with('inspector')->get(),
         ]);
     }
 }

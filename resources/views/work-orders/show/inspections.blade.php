@@ -32,7 +32,7 @@
             <td style="min-width:240px; max-width:480px">{{ $inspection->observations }}</td>
             <td style="min-width:240px; max-width:480px">{{ $inspection->notes }}</td>
             <td>
-                <x-badge :color="$inspection->approved_color" class="text-uppercase">{{ $inspection->approved_status }}</x-badge>
+                <x-badge :color="$inspection->status_color" class="text-uppercase">{{ $inspection->status }}</x-badge>
             </td>
             <td class="text-nowrap text-end">
                 <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-outline-warning">

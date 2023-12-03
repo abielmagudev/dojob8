@@ -20,6 +20,37 @@ class Inspector extends Model
         'notes',
     ];
 
+    // Attributes
+
+    public function getInspectionsOnHoldAttribute()
+    {
+        return $this->inspections->filter(fn($inspection) => $inspection->isOnHold());
+    }
+
+    public function getUrlPendingInspectionsAttribute()
+    {
+        $model = strtolower( class_basename(__CLASS__) );
+
+        return Inspection::generatePendingInspectionsUrl([
+            $model => $this->id,
+        ]);
+    }
+
+    // Validators
+
+    public function hasInspections()
+    {
+        return (bool) $this->inspections && $this->inspections->count();
+    }
+
+    public function hasInspectionsOnHold()
+    {
+        return (bool) $this->inspections_on_hold->count();
+    }
+
+
+    // Relationships
+
     public function inspections()
     {
         return $this->hasMany(Inspection::class);

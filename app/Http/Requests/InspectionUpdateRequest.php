@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Inspection;
 use App\Models\Inspector;
-use App\Models\WorkOrder;
 use Illuminate\Foundation\Http\FormRequest;
 
 class InspectionUpdateRequest extends FormRequest
@@ -37,9 +37,8 @@ class InspectionUpdateRequest extends FormRequest
                 'string',
             ],
             'status' => [
-                'nullable',
                 'numeric',
-                'in:0,1',
+                sprintf('in:%s', implode(',', Inspection::getStatusValues())),
             ],
         ];
     }

@@ -2,16 +2,42 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasActionsByRequestTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Inspection extends Model
 {
     use HasFactory;
+    use HasActionsByRequestTrait;
     use HasBeforeAfterTrait;
     use HasHookUsersTrait;
+    use HasWorkOrdersTrait;
+
+    public static $statuses_settings = [
+        'on hold' => [
+            'value' => 0, 
+            'bscolor' => 'secondary',
+        ],
+        'approved' => [
+            'value' => 1, 
+            'bscolor' => 'success',
+        ],
+        'failed' => [
+            'value' => -1,
+            'bscolor' => 'danger',
+        ],
+    ]; 
+
+    public static $inputs_filters = [
+        'status_rule' => ['filterByStatus', 'status_group'],
+        'inspector' => 'filterByInspector',
+        'scheduled_date_range' => 'filterByScheduledDateRange',
+    ];
 
     protected $fillable = [
         'scheduled_date',
@@ -26,40 +52,25 @@ class Inspection extends Model
         'scheduled_date' => 'date',
     ];
 
-    public static $all_status = [
-        null => 'on hold',
-        0 => 'failed',
-        1 => 'approved',
-    ];
-
 
 
     // Attributes
 
-    public function getApprovedColorAttribute()
+    public function getSettingsByIsApprovedAttribute()
     {
-        if( $this->isOnHold() ) {
-            return 'secondary';
-        }
-
-        if( $this->isFailed() ) {
-            return 'danger';
-        }
-
-        return 'success';
+        return self::getStatusesSettings()->filter(function ($settings) {
+            return $settings['value'] === $this->is_approved;
+        });
     }
 
-    public function getApprovedStatusAttribute()
+    public function getStatusAttribute()
     {
-        if( $this->isOnHold() ) {
-            return 'on hold';
-        }
+        return $this->settings_by_is_approved->keys()[0];
+    }
 
-        if( $this->isFailed() ) {
-            return 'failed';
-        }
-
-        return 'approved';
+    public function getStatusColorAttribute()
+    {
+        return $this->settings_by_is_approved->first()['bscolor'];
     }
 
     public function getScheduledDateInputAttribute()
@@ -73,7 +84,7 @@ class Inspection extends Model
 
     public function isOnHold()
     {
-        return is_null($this->is_approved);
+        return $this->is_approved == 0;
     }
 
     public function isApproved()
@@ -83,7 +94,7 @@ class Inspection extends Model
 
     public function isFailed()
     {
-        return $this->is_approved == 0;
+        return $this->is_approved == -1;
     }
 
     public function hasObservations()
@@ -98,6 +109,93 @@ class Inspection extends Model
 
 
 
+    // Scopes
+
+    public function scopePendings($query)
+    {
+        return $query->where('is_approved', 0);
+    }
+
+    public function scopeWhereInspector($query, int $inspector_id)
+    {
+        return $query->where('inspector_id', $inspector_id);
+    }
+
+    public function scopeWhereIsApproved($query, int $value)
+    {
+        return $query->where('is_approved', $value);
+    }
+
+    public function scopeWhereIsApprovedIn($query, array $values)
+    {
+        return $query->whereIn('is_approved', $values);
+    }
+
+    public function scopeWhereIsApprovedNotIn($query, array $values)
+    {    
+        return $query->whereNotIn('is_approved', $values);
+    }
+
+    public function scopeWhereScheduledDateFrom($query, $scheduled_date_from)
+    {
+        return $query->where('scheduled_date', '>=', $scheduled_date_from);
+    }
+
+    public function scopeWhereScheduledDateTo($query, $scheduled_date_to)
+    {
+        return $query->where('scheduled_date', '<=', $scheduled_date_to);
+    }
+
+    public function scopeWhereScheduledDateBetween($query, $scheduled_date_ranges)
+    {
+        return $query->whereBetween('scheduled_date', $scheduled_date_ranges);
+    }
+
+
+
+    // Filters
+
+    public function scopeFilterByInspector($query, $inspector_id)
+    {
+        if( is_null($inspector_id) ) {
+            return $query;
+        }
+
+        return $query->whereInspector($inspector_id);
+    }
+
+    public function scopeFilterByStatus($query, $status_rule, $status_group = [])
+    {
+        if( is_null($status_rule) ||! in_array($status_rule, ['only','except']) || empty($status_group) ) {
+            return $query;
+        }
+        if( $status_rule == 'only' ) {
+            return $query->whereIsApprovedIn($status_group);
+        }
+
+        return $query->whereIsApprovedNotIn($status_group);
+    }
+
+    public function scopeFilterByScheduledDateRange($query, $scheduled_date_range)
+    {
+        if(! isset($scheduled_date_range[0]) &&! isset($scheduled_date_range[1]) ) {
+            return $query;
+        }
+
+        if( isset($scheduled_date_range[0]) &&! isset($scheduled_date_range[1]) ) {
+            return $query->whereScheduledDateFrom($scheduled_date_range[0]);
+        }
+        
+        if(! isset($scheduled_date_range[0]) && isset($scheduled_date_range[1]) ) {
+            return $query->whereScheduledDateTo($scheduled_date_range[1]);
+        }
+
+        return $query->whereScheduledDateBetween($scheduled_date_range);
+    }
+
+
+
+
     // Relationships
 
     public function inspector()
@@ -105,17 +203,47 @@ class Inspection extends Model
         return $this->belongsTo(Inspector::class);
     }
 
-    public function work_order()
-    {
-        return $this->belongsTo(WorkOrder::class);
-    }
-
 
 
     // Statics
 
-    public static function getAllStatus()
+    public static function getStatusesSettings()
     {
-        return self::$all_status;
+        return collect(self::$statuses_settings);
+    }
+
+    public static function getStatusesValues()
+    {
+        foreach(self::getStatusesSettings()->all() as $status => $settings)
+        {   
+            $status_values[$status] = $settings['value'];
+        }
+
+        return $status_values;
+    }
+
+    public static function getStatuses()
+    {
+        return self::getStatusesSettings()->keys();
+    }
+
+    public static function getStatusValues()
+    {
+        return array_values( self::getStatusesValues() );
+    }
+
+    public static function getSettingsByStatus(string $status)
+    {
+        return self::getStatusesSettings()->get($status);
+    }
+
+    public static function generatePendingInspectionsUrl(array $parameters = [])
+    {
+        return route('inspections.index', array_merge([
+                'status_rule' => 'only',
+                'status_group' => [0],
+                'sort' => 'asc',
+            ], $parameters)
+        );
     }
 }

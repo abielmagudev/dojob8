@@ -30,14 +30,16 @@
             </x-modal-trigger>
         </x-tooltip>
 
-        <div class="btn-group mx-3">
-            <x-tooltip title="Unsolved until today">
-                <a href="<?= $url_unfinished_status ?>" class="btn btn-danger rounded-end-0">
-                    <i class="bi bi-stopwatch"></i>
+        <div class="d-inline-block mx-3">
+            <x-tooltip title="Unfinished until today">
+                <a href="<?= $unfinished_work_orders['url'] ?>" class="btn btn-warning">
+                    <i class="bi bi-alarm"></i>
+                    <span>{{ $unfinished_work_orders['count'] }}</span>
                 </a>
             </x-tooltip>
+    
             <x-tooltip title="Filters">
-                <x-modal-trigger modal-id="modalWorkOrdersFilter" class="btn btn-primary rounded-start-0">
+                <x-modal-trigger modal-id="modalWorkOrdersFilter" class="btn btn-primary">
                     <i class="bi bi-funnel"></i>
                 </x-modal-trigger>
             </x-tooltip>

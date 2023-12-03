@@ -46,7 +46,10 @@ class WorkOrderController extends Controller
             'jobs' => Job::all(),
             'request' => $request,
             'scheduled_casted' => $scheduled_casted,
-            'url_unfinished_status' => WorkOrder::generateUrlUnfinishedStatus(),
+            'unfinished_work_orders' => [
+                'url' => WorkOrder::generateUrlUnfinishedStatus(),
+                'count' => WorkOrder::unfinishedStatus()->count(),
+            ],
             'work_orders' => $work_orders,
         ]);
     }

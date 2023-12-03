@@ -145,7 +145,7 @@ class WorkOrder extends Model
     
     // Scopes
 
-    public function scopeUnifinishedStatus($query)
+    public function scopeUnfinishedStatus($query)
     {
         return $query->whereIn('status', self::getUnfinishedStatuses()->all());
     }

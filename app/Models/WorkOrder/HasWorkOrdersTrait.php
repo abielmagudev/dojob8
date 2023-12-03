@@ -64,4 +64,9 @@ trait HasWorkOrdersTrait
     {
         return $this->hasMany(WorkOrder::class);
     }
+
+    public function work_order()
+    {
+        return $this->belongsTo(WorkOrder::class);
+    }
 }

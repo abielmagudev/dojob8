@@ -92,6 +92,15 @@ class Client extends Model
 
 
 
+    // Validators
+
+    public function hasNotes()
+    {
+        return ! empty($this->notes);
+    }
+
+
+
     // Scopes
 
     public function scopeSearch($query, $value)

@@ -16,6 +16,8 @@
         <x-slot name="thead">
             <tr>
                 <th>Address</th>
+                <th>Name</th>
+                <th>Contact</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -23,7 +25,14 @@
         @foreach($clients as $client)
         <tr>
             <td class="text-nowrap">
-                @include('clients.__.address-table-cell')
+                @include('clients.__.address-table-cell', [
+                    'except' => ['full_name']
+                    ])
+            </td>
+            <td class="text-nowrap">
+                {{ $client->full_name }}
+            </td>
+            <td>
                 @include('clients.__.contact-table-cell', [
                     'except' => ['full_name']
                 ])
@@ -36,7 +45,7 @@
                 @endif
 
                 @if( $client->hasWorkOrders() )
-                <x-tooltip title="Total work orders">
+                <x-tooltip title="Work orders">
                     <a href="{{ $client->getUrlWorkOrdersFilteredBySelf() }}" class="btn btn-primary">{{ $client->work_orders->count() }}</a>
                 </x-tooltip>
                 @endif

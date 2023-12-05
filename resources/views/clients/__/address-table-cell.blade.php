@@ -17,6 +17,7 @@
         <b>{{ $client->zip_code }}</b>
         @endif
     </address>
+    
     @if(! in_array('google_maps', $except) )
     <x-tooltip title="Google Maps">
         <a href="{{ $client->url_search_address_google_maps }}" target="__blank">

@@ -23,7 +23,10 @@
         @foreach($clients as $client)
         <tr>
             <td class="text-nowrap">
-                @include('clients.__.address-contact-table-cell')
+                @include('clients.__.address-table-cell')
+                @include('clients.__.contact-table-cell', [
+                    'except' => ['full_name']
+                ])
             </td>
             <td class="text-nowrap text-end">
                 @if( $client->hasUnfinishedWorkOrders() )

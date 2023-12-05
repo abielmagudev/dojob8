@@ -7,6 +7,7 @@ use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,13 +16,14 @@ use Illuminate\Support\Str;
 
 class Contractor extends Model implements AuthenticatedUserMetadataInterface
 {
-    use HasFactory;
-    use SoftDeletes;
     use HasAvailabilityTrait;
     use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
+    use HasFactory;
     use HasHookUsersTrait;
+    use HasModelHelpersTrait;
     use HasWorkOrdersTrait;
+    use SoftDeletes;
     
     protected $fillable = [
         'name',
@@ -38,6 +40,7 @@ class Contractor extends Model implements AuthenticatedUserMetadataInterface
         'notes',
         'is_available',
     ];
+
 
 
     // Attributes
@@ -69,15 +72,6 @@ class Contractor extends Model implements AuthenticatedUserMetadataInterface
     public function getMetaNameAttribute(): string
     {
         return "{$this->name} ($this->alias)";
-    }
-
-
-
-    // Validators
-
-    public function hasNotes()
-    {
-        return ! empty($this->notes);
     }
 
 

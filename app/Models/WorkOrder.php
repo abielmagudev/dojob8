@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Kernel\HasActionsByRequestTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasModelHelpersTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,10 +14,11 @@ use Illuminate\Support\Facades\DB;
 
 class WorkOrder extends Model
 {
-    use HasFactory;
     use HasActionsByRequestTrait;
     use HasBeforeAfterTrait;
+    use HasFactory;
     use HasHookUsersTrait;
+    use HasModelHelpersTrait;
 
     const FIRST_STATUS_WHEN_CREATED = 'new';
 
@@ -78,10 +80,6 @@ class WorkOrder extends Model
 
 
 
-
-
-
-
     // Attributes
 
     public function getStatusColorAttribute()
@@ -121,10 +119,6 @@ class WorkOrder extends Model
 
 
 
-
-
-
-
     // Validators
 
     public function hasCrew()
@@ -136,10 +130,6 @@ class WorkOrder extends Model
     {
         return (bool) $this->contractor_id && is_a($this->contractor, Contractor::class);
     }
-
-
-
-
 
 
     
@@ -211,10 +201,6 @@ class WorkOrder extends Model
     {
         return $query->whereBetween('scheduled_date', $scheduled_date_ranges);
     }
-
-
-
-
 
 
 
@@ -310,10 +296,6 @@ class WorkOrder extends Model
 
 
 
-
-
-
-
     // Relations
 
     public function client()
@@ -340,10 +322,6 @@ class WorkOrder extends Model
     {
         return $this->hasMany(Inspection::class);
     }
-
-
-
-
 
 
 

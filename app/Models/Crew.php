@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,12 +13,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Crew extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
     use HasAvailabilityTrait;
     use HasBeforeAfterTrait;
+    use HasFactory;
     use HasHookUsersTrait;
+    use HasModelHelpersTrait;
     use HasWorkOrdersTrait;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',

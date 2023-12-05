@@ -4,18 +4,18 @@ namespace App\Models;
 
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasModelHelpers;
+use App\Models\Kernel\HasModelHelpersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inspector extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
     use HasBeforeAfterTrait;
+    use HasFactory;
     use HasHookUsersTrait;
-    use HasModelHelpers;
+    use HasModelHelpersTrait;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',

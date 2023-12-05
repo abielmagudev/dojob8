@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Kernel\HasActionsByRequestTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,10 +13,11 @@ use Illuminate\Support\Facades\DB;
 
 class Inspection extends Model
 {
-    use HasFactory;
     use HasActionsByRequestTrait;
     use HasBeforeAfterTrait;
+    use HasFactory;
     use HasHookUsersTrait;
+    use HasModelHelpersTrait;
     use HasWorkOrdersTrait;
 
     public static $statuses_settings = [
@@ -100,11 +102,6 @@ class Inspection extends Model
     public function hasObservations()
     {
         return ! empty($this->observations);
-    }
-
-    public function hasNotes()
-    {
-        return $this->notes <> null;
     }
 
 
@@ -192,7 +189,6 @@ class Inspection extends Model
 
         return $query->whereScheduledDateBetween($scheduled_date_range);
     }
-
 
 
 

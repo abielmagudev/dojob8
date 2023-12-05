@@ -6,17 +6,19 @@ use App\Models\Kernel\AuthenticatedUserMetadataInterface;
 use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasModelHelpersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model implements AuthenticatedUserMetadataInterface
 {
-    use HasFactory;
-    use SoftDeletes;
     use HasAvailabilityTrait;
     use HasBeforeAfterTrait;
+    use HasFactory;
     use HasHookUsersTrait;
+    use HasModelHelpersTrait;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',

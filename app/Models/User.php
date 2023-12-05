@@ -16,10 +16,10 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    use SoftDeletes;
     use HasAvailabilityTrait;
     use HasBeforeAfterTrait;
     use HasHookUsersTrait;
+    use SoftDeletes;
 
     const NAME_PATTERN = "/^[a-zA-Z0-9_.]+$/";
 

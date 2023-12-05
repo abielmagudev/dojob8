@@ -6,6 +6,7 @@ use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasHistoryChangesTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,13 +14,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
     use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
+    use HasFactory;
     use HasHistoryChangesTrait;
     use HasHookUsersTrait;
+    use HasModelHelpersTrait;
     use HasWorkOrdersTrait;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -88,15 +90,6 @@ class Client extends Model
     public function getAddressDetails(array $attributes)
     {
         return $this->address_data_collection->only($attributes);
-    }
-
-
-
-    // Validators
-
-    public function hasNotes()
-    {
-        return ! empty($this->notes);
     }
 
 

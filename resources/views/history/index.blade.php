@@ -2,6 +2,11 @@
 
 @section('header')
 <x-header title="History">
+    @slot('subtitle')
+    <small class="align-middle badge text-bg-dark">{{ $history->total() }}</small>
+    <span class="align-middle">Activities</span>
+    @endslot
+
     <x-slot name="options">
         <x-paginate
             :previous="$history->previousPageUrl()"
@@ -13,11 +18,6 @@
 
 @section('content')
 <x-card>
-
-    @slot('title')
-    <small class="align-middle badge text-bg-dark">{{ $history->total() }}</small>
-    <span class="align-middle">Activities</span>
-    @endslot
 
     @slot('options')
     <x-modal-trigger modal-id="historyFilterModal" class="btn btn-primary">

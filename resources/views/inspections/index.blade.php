@@ -37,9 +37,9 @@
         <x-slot name="thead">
             <tr>
                 <th>Scheduled</th>
-                <th>Client</th>
-                <th>Job</th>
                 <th>Inspector</th>
+                <th>Job</th>
+                <th>Client</th>
                 <th>Status</th>
                 <th></th>
             </tr>
@@ -48,11 +48,11 @@
         @foreach($inspections as $inspection)
         <tr>
             <td class="text-nowrap">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
+            <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
+            <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])
             </td>
-            <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
-            <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
             <td style="max-width:128px">
                 <x-badge color="{{ $inspection->status_color }}" class="text-uppercase w-100">{{ $inspection->status }}</x-badge>
             </td>

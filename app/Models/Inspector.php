@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasModelHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,12 +15,16 @@ class Inspector extends Model
     use SoftDeletes;
     use HasBeforeAfterTrait;
     use HasHookUsersTrait;
+    use HasModelHelpers;
 
     protected $fillable = [
         'name',
         'notes',
     ];
 
+
+
+    
     // Attributes
 
     public function getInspectionsOnHoldAttribute()
@@ -29,12 +34,24 @@ class Inspector extends Model
 
     public function getUrlPendingInspectionsAttribute()
     {
-        $model = strtolower( class_basename(__CLASS__) );
+        $parameter = strtolower( class_basename(__CLASS__) );
 
         return Inspection::generatePendingInspectionsUrl([
-            $model => $this->id,
+            $parameter => $this->id,
         ]);
     }
+
+    public function getUrlOwnInspectionsAttribute()
+    {
+        $parameter = strtolower( class_basename(__CLASS__) );
+
+        return route('inspections.index', [
+            $parameter => $this->id
+        ]);
+    }
+
+
+
 
     // Validators
 
@@ -47,6 +64,7 @@ class Inspector extends Model
     {
         return (bool) $this->inspections_on_hold->count();
     }
+
 
 
     // Relationships

@@ -17,7 +17,6 @@
             <tr>
                 <th>Name</th>
                 <th>Notes</th>
-                <th>Inspections</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -26,13 +25,17 @@
         <tr>
             <td>{{ $inspector->name }}</td>
             <td>{{ $inspector->notes }}</td>
-            <td>{{ $inspector->inspections->count() }}</td>
             <td class="text-end">
-
                 @if( $inspector->hasInspectionsOnHold() )
                 <x-tooltip title="Pending inspections">
                     <a href="{{ $inspector->url_pending_inspections }}" class="btn btn-warning">{{ $inspector->inspections_on_hold->count() }}</a>
                 </x-tooltip>
+                @endif
+                
+                @if( $inspector->hasInspections() )
+                <x-tooltip title="Inspections">
+                    <a href="{{ $inspector->url_own_inspections }}" class="btn btn-primary">{{ $inspector->inspections->count() }}</a>
+                </x-tooltip>                   
                 @endif
                 
                 <a href="{{ route('inspectors.show', $inspector) }}" class="btn btn-outline-primary">

@@ -20,6 +20,16 @@ trait HasWorkOrdersTrait
         return $this->work_orders_unfinished ? $this->work_orders_unfinished->count() : 0;
     }
 
+    public function getUrlUnfinishedWorkOrdersAttribute()
+    {
+        return $this->getUrlUnfinishedWorkOrders();
+    }
+
+    public function getUrlOwnWorkOrdersAttribute()
+    {
+        return $this->getUrlOwnWorkOrders();
+    }
+
 
 
     // Actions
@@ -43,7 +53,7 @@ trait HasWorkOrdersTrait
         ]);
     }
 
-    public function getUrlWorkOrdersFilteredBySelf(string $attr = 'id', string $suffix = '')
+    public function getUrlOwnWorkOrders(string $attr = 'id', string $suffix = '')
     {
         $parameter = strtolower( class_basename( __CLASS__ ) . $suffix );
 
@@ -53,6 +63,7 @@ trait HasWorkOrdersTrait
     }
 
     
+
     // Validators
 
     public function hasWorkOrders()

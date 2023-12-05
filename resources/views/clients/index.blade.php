@@ -40,13 +40,13 @@
             <td class="text-nowrap text-end">
                 @if( $client->hasUnfinishedWorkOrders() )
                 <x-tooltip title="Unfinished work orders">
-                    <a href="{{ $client->getUrlUnfinishedWorkOrders() }}" class="btn btn-warning">{{ $client->work_orders_unfinished_count }}</a>
+                    <a href="{{ $client->url_unfinished_work_orders }}" class="btn btn-warning">{{ $client->work_orders_unfinished_count }}</a>
                 </x-tooltip>
                 @endif
 
                 @if( $client->hasWorkOrders() )
                 <x-tooltip title="Work orders">
-                    <a href="{{ $client->getUrlWorkOrdersFilteredBySelf() }}" class="btn btn-primary">{{ $client->work_orders->count() }}</a>
+                    <a href="{{ $client->url_own_work_orders }}" class="btn btn-primary">{{ $client->work_orders->count() }}</a>
                 </x-tooltip>
                 @endif
 

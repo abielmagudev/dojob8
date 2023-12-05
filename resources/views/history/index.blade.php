@@ -25,34 +25,36 @@
     </x-modal-trigger>
     @endslot
 
-    <x-table>
+    <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
-                <th class="text-nowrap">Date & time</th>
                 <th>Activity</th>
-                <th>User</th>
+                <th>By</th>
+                <th>At</th>
             </tr>
         </x-slot>
 
         @foreach($history as $activity)
         <tr>
-            <td class="text-nowrap">
-                <span class="d-block">{{ $activity->created_date_human }}</span>
-                <small>{{ $activity->created_time_human }}</small>
-            </td>
-            <td style="min-width:216px">   
-                <div>{!! $activity->description !!}</div>
+            <td style="min-width:200px">   
+                {!! $activity->description !!}
 
                 @if( $activity->hasLink() )
                 <small>
                     <a href="{{ $activity->link }}">See changes</a>
                 </small>
-                @endif
+                @endif   
             </td>
-            <td class="text-nowrap">
-                <div>{{ $activity->user->name }}</div>
-                <small>{{ $activity->user->profile->meta_name }}</small>
+            <td>
+                <span>{{ $activity->user->profile->meta_name }}</span>
+                <span>-</span>
+                <em>{{ $activity->user->name }}</em>
             </td>
+            <td>
+                <span class="me-1">{{ $activity->created_date_human }}</span>
+                <span>{{ $activity->created_time_human }}</span>
+            </td>
+
         </tr>
         @endforeach
     </x-table>

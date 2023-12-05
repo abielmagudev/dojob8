@@ -59,7 +59,7 @@
 
     {{-- Summary --}}
     <div class="col-md">
-        <x-card title="Sumary"></x-card>
+        <x-card title="Sumary" class="h-100"></x-card>
     </div>
 </div>
 <br>

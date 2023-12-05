@@ -16,7 +16,6 @@
         <x-slot name="thead">
             <tr>
                 <th>Address</th>
-                <th class="text-nowrap text-center">Work orders</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -26,13 +25,16 @@
             <td class="text-nowrap">
                 @include('clients.__.address-contact-table-cell')
             </td>
-            <td class="text-center">
-                <span class="badge text-bg-dark">{{ $client->work_orders->count() }}</span>
-            </td>
             <td class="text-nowrap text-end">
                 @if( $client->hasUnfinishedWorkOrders() )
                 <x-tooltip title="Unfinished work orders">
-                <a href="{{ $client->getUrlUnfinishedWorkOrders() }}" class="btn btn-warning">{{ $client->work_orders_unfinished_count }}</a>
+                    <a href="{{ $client->getUrlUnfinishedWorkOrders() }}" class="btn btn-warning">{{ $client->work_orders_unfinished_count }}</a>
+                </x-tooltip>
+                @endif
+
+                @if( $client->hasWorkOrders() )
+                <x-tooltip title="Total work orders">
+                    <a href="{{ $client->getUrlWorkOrdersFilteredBySelf() }}" class="btn btn-primary">{{ $client->work_orders->count() }}</a>
                 </x-tooltip>
                 @endif
 

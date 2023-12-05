@@ -10,17 +10,13 @@ class HistoryController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->merge([
-            'sort' => in_array($request->get('sort'), ['asc', 'desc']) ? $request->get('sort') : 'desc',
-        ]);
-
         return view('history.index', [
             'request' => $request,
             'topics' => History::getTopics(),
             'users' => User::with('profile')->withTrashed()->get(),
             'history' => History::with('user.profile')
-                                ->filters($request)
-                                ->orderBy('id', $request->get('sort'))
+                                ->filtersByRequest($request)
+                                ->orderBy('id', $request->get('sort', 'desc'))
                                 ->paginate(25)
                                 ->appends( $request->query() ),
         ]);

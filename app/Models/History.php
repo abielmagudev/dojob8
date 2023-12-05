@@ -2,25 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasActionsByRequestTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class History extends Model
 {
-    protected $table = 'histories';
+    use HasActionsByRequestTrait;
 
-    protected $fillable = [
-        'description',
-        'link',
-        'model_type',
-        'model_id',
-        'user_id',
-    ];
-
-    public $timestamps = false;
-
-    protected $casts = [
-        'created_at' => 'datetime',
+    public static $inputs_filters = [
+        'from_date' => ['filterCreatedBetween', 'to_date'],
+        'topic' => 'filterTopic',
+        'user' => 'filterUser',
     ];
 
     public static $topics_classnames = [
@@ -36,10 +29,20 @@ class History extends Model
         'users' => User::class,
     ];
 
-    public static $inputs_filters = [
-        'between' => 'filterDoneBetween',
-        'topic' => 'filterTopic',
-        'user' => 'filterUser',
+    protected $table = 'histories';
+
+    protected $fillable = [
+        'description',
+        'link',
+        'model_type',
+        'model_id',
+        'user_id',
+    ];
+
+    public $timestamps = false;
+
+    protected $casts = [
+        'created_at' => 'datetime',
     ];
 
     
@@ -108,40 +111,40 @@ class History extends Model
         return $query->whereNull('link');
     }
 
-    public function scopeWhereDoneFrom($query, string $date)
+    public function scopeWhereCreatedFrom($query, string $date)
     {
         return $query->whereDate('created_at', '>=', $date);
     }
 
-    public function scopeWhereDoneTo($query, string $date)
+    public function scopeWhereCreatedTo($query, string $date)
     {
         return $query->whereDate('created_at', '<=', $date);
     }
 
-    public function scopeWhereDoneBetween($query, array $ranges)
+    public function scopeWhereCreatedBetween($query, array $from_to_dates)
     {
-        return $query->whereBetween('created_at', $ranges);
+        return $query->whereBetween('created_at', $from_to_dates);
     }
 
 
 
     // Filters
 
-    public function scopeFilterDoneBetween($query, array $ranges)
+    public function scopeFilterCreatedBetween($query, string $from_date = null, string $to_date = null)
     {
         // Both From and To
-        if( isset($ranges['from']) && isset($ranges['to']) ) {
-            return $query->whereDoneBetween($ranges);
+        if( isset($from_date) && isset($to_date) ) {
+            return $query->whereCreatedBetween([$from_date, $to_date]);
         }
         
         // Only From
-        if( isset($ranges['from']) &&! isset($ranges['to']) ) {
-            return $query->whereDoneFrom($ranges['from']);
+        if( isset($from_date) &&! isset($to_date) ) {
+            return $query->whereCreatedFrom($from_date);
         }
 
         // Only To
-        if(! isset($ranges['from']) && isset($ranges['to']) ) {
-            return $query->whereDoneTo($ranges['to']);
+        if(! isset($from_date) && isset($to_date) ) {
+            return $query->whereCreatedTo($to_date);
         }
 
         return $query;
@@ -165,22 +168,6 @@ class History extends Model
         }
 
         return $query->whereUser($user_id);
-    }
-
-    public function scopeFilters($query, Request $request)
-    {
-        foreach($request->all() as $input => $value)
-        {
-            if(! array_key_exists($input, self::$inputs_filters) ) {
-                continue;
-            }
-
-            $filter = self::$inputs_filters[$input];
-
-            $query = call_user_func([$query, $filter], $value);
-        }
-
-        return $query;
     }
 
 

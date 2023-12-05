@@ -12,38 +12,46 @@
 @endsection
 
 @section('content')
-<x-card title="Activities" subtitle="{{ $history->total() }}">
-    <x-slot name="options">
-        <x-modal-trigger modal-id="historyFilterModal" class="btn btn-light">
-            <i class="bi bi-filter"></i>
-        </x-modal-trigger>
-    </x-slot>
+<x-card>
+
+    @slot('title')
+    <small class="align-middle badge text-bg-dark">{{ $history->total() }}</small>
+    <span class="align-middle">Activities</span>
+    @endslot
+
+    @slot('options')
+    <x-modal-trigger modal-id="historyFilterModal" class="btn btn-primary">
+        <i class="bi bi-funnel"></i>
+    </x-modal-trigger>
+    @endslot
 
     <x-table>
         <x-slot name="thead">
             <tr>
+                <th class="text-nowrap">Date & time</th>
                 <th>Activity</th>
-                <th>Done</th>
                 <th>User</th>
             </tr>
         </x-slot>
 
         @foreach($history as $activity)
         <tr>
-            <td style="min-width:216px">
-                {!! $activity->description !!}
+            <td class="text-nowrap">
+                <span class="d-block">{{ $activity->created_date_human }}</span>
+                <small>{{ $activity->created_time_human }}</small>
+            </td>
+            <td style="min-width:216px">   
+                <div>{!! $activity->description !!}</div>
 
                 @if( $activity->hasLink() )
-                <a href="{{ $activity->link }}">See changes</a>
+                <small>
+                    <a href="{{ $activity->link }}">See changes</a>
+                </small>
                 @endif
             </td>
             <td class="text-nowrap">
-                <span>{{ $activity->created_date_human }}</span>
-                <span>{{ $activity->created_time_human }}</span>
-            </td>
-            <td class="text-nowrap">
-                {{ $activity->user->name }}
-                <small>({{ $activity->user->profile->meta_name }})</small>
+                <div>{{ $activity->user->name }}</div>
+                <small>{{ $activity->user->profile->meta_name }}</small>
             </td>
         </tr>
         @endforeach

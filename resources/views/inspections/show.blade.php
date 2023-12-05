@@ -62,10 +62,7 @@
             </x-small-label>
             
             <x-small-label label="Client">
-                <span class="d-block">{{ $inspection->work_order->client->full_name }}</span>
-                <span class="d-block">{{ $inspection->work_order->client->address }}</span>
-                <span class="d-block">{{ $inspection->work_order->client->zip_code }}, District {{ $inspection->work_order->client->district }}</span>
-                <span class="d-block">{{ $inspection->work_order->client->contact_data_collection->filter()->implode(', ') }}</span>
+                @include('clients.__.address', ['client' => $inspection->work_order->client])
             </x-small-label>
 
             <x-small-label label="Notes">

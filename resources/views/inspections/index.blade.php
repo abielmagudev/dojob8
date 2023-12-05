@@ -48,7 +48,9 @@
         @foreach($inspections as $inspection)
         <tr>
             <td class="text-nowrap">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
-            <td class="text-nowrap">{{ $inspection->work_order->client->address }}, <b>{{ $inspection->work_order->client->zip_code }}</b></td>
+            <td class="text-nowrap">
+                @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])
+            </td>
             <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
             <td style="max-width:128px">

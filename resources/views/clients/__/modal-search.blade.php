@@ -100,8 +100,8 @@ const clientsList = {
             link.setAttribute('href', link.href.replace('?', $client.id))
             link.children[0].innerText = $client.full_name;
             link.children[1].innerText = $client.street;
-            link.children[2].innerText = [$client.city, $client.state_code, $client.country_code, $client.zip_code, $client.district].filter(x => !!x).join(', ');
-            link.children[3].innerText = [$client.phone_number, $client.mobile_number,$client.email].filter(x => !!x).join(', ');
+            link.children[2].innerText = [$client.city, $client.state_code, $client.country_code, $client.zip_code].filter(x => !!x).join(', ');
+            link.children[3].innerText = [$client.phone_number, $client.mobile_number, $client.email].filter(x => !!x).join(', ');
         
             self.element.appendChild(link)
         })

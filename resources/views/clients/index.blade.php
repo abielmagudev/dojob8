@@ -12,13 +12,11 @@
         </a>
     </x-slot>
 
-    <x-table class="align-middle ">
+    <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
-                <th>Contact</th>
                 <th>Address</th>
-                <th class="text-nowrap">Zip code & District</th>
-                <th class="text-nowrap">Work orders</th>
+                <th class="text-nowrap text-center">Work orders</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -26,19 +24,10 @@
         @foreach($clients as $client)
         <tr>
             <td class="text-nowrap">
-                <span class="d-block">{{ $client->full_name }}</span>
-                <small>{{ $client->phone_number }}</small>
+                @include('clients.__.address-contact-table-cell')
             </td>
-            <td class="text-nowrap">
-                <span class="d-block">{{ $client->street }}</span>
-                <small>{{ $client->location_country_code }}</small>
-            </td>
-            <td class="text-nowrap">
-                <span class="d-block">{{ $client->zip_code }}</span>
-                <small>{{ $client->district_code }}</small>
-            </td>
-            <td class="text-nowrap">
-                <span data-bs-toggle="tooltip" data-bs-title="Total">{{ $client->work_orders_count }}</span>
+            <td class="text-center">
+                <span class="badge text-bg-dark">{{ $client->work_orders->count() }}</span>
             </td>
             <td class="text-nowrap text-end">
                 @if( $client->hasUnfinishedWorkOrders() )

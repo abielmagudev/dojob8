@@ -45,26 +45,6 @@ class Client extends Model
 
     // Attributes 
 
-    public function getContactDataCollectionAttribute()
-    {
-        return collect([
-            'phone'  => $this->phone_number,
-            'mobile' => $this->mobile_number,
-            'email'  => $this->email,
-        ]);
-    }
-
-    public function getContactDataApiHtmlAttribute()
-    {
-        return $this->contact_data_collection->filter()->map(function ($data, $key) {
-            if( $key == 'email' ) {
-                return "<a href='mailto:{$data}'>{$data}</a>";
-            }
-
-            return "<a href='tel:{$data}'>{$data}</a>";
-        });
-    }
-
     public function getAddressDataCollectionAttribute()
     {
         return collect([
@@ -79,34 +59,35 @@ class Client extends Model
         ]);
     }
 
-    public function getAddressAttribute()
+    public function getContactDataCollectionAttribute()
     {
-        $data = [
-            $this->street,
-            $this->location_country_code,
-        ];
-
-        return implode(', ', $data);
+        return collect([
+            'phone'  => $this->phone_number,
+            'mobile' => $this->mobile_number,
+            'email'  => $this->email,
+        ]);
     }
 
-    public function getAddressWithZipCodeAttribute()
+    public function getUrlSearchAddressGoogleMapsAttribute()
     {
-        return "{$this->address}, {$this->zip_code}";
+        $query_string = $this->address_data_collection->only([
+            'street',
+            'city_name',
+            'state_name',
+            'country_name',
+            'zip_code',
+        ])->implode('+');
+
+        return sprintf("https://www.google.com.mx/maps/search/%s", $query_string);
     }
 
-    public function getGoogleMapsUrlSearchAddressAttribute()
+
+
+    // Actions
+
+    public function getAddressDetails(array $attributes)
     {
-        return sprintf("https://www.google.com.mx/maps/search/%s", 
-            $this
-            ->address_data_collection
-            ->only([
-                'street',
-                'city_name',
-                'state_code',
-                'zip_code',
-            ])
-            ->implode('+')
-        );
+        return $this->address_data_collection->only($attributes);
     }
 
 
@@ -116,12 +97,12 @@ class Client extends Model
     public function scopeSearch($query, $value)
     {
         return $query->where('full_name', 'like', "%{$value}%")
-                    ->orWhere('phone_number', 'like', "%{$value}%")
-                    ->orWhere('mobile_number', 'like', "%{$value}%")
-                    ->orWhere('email', 'like', "%{$value}%")
-                    ->orWhere('street', 'like', "%{$value}%")
-                    ->orWhere('zip_code', 'like', "%{$value}%")
-                    ->orWhere('city', 'like', "%{$value}%");
+                     ->orWhere('phone_number', 'like', "%{$value}%")
+                     ->orWhere('mobile_number', 'like', "%{$value}%")
+                     ->orWhere('email', 'like', "%{$value}%")
+                     ->orWhere('street', 'like', "%{$value}%")
+                     ->orWhere('zip_code', 'like', "%{$value}%")
+                     ->orWhere('city', 'like', "%{$value}%");
     }
 
 

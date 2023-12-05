@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\JobSaveRequest;
 use App\Models\Extension;
 use App\Models\Job;
-use App\Models\WorkOrder;
 
 class JobController extends Controller
 {
@@ -26,9 +25,9 @@ class JobController extends Controller
     public function store(JobSaveRequest $request)
     {
         if(! $job = Job::create( $request->validated() ) )
-            return back()->with('danger', 'Job was not created, please try again');
+            return back()->with('danger', 'Error creating job, please try again');
 
-        return redirect()->route('jobs.index')->with('success', "Job <b>{$job->name}</b> created");
+        return redirect()->route('jobs.index')->with('success', "You created job <b>{$job->name}</b>");
     }
 
     public function show(Job $job)
@@ -57,16 +56,16 @@ class JobController extends Controller
     public function update(JobSaveRequest $request, Job $job)
     {
         if(! $job->fill( $request->validated() )->save() )
-            return back()->with('danger', 'Job was not updated, please try again'); 
+            return back()->with('danger', 'Error updating job, please try again'); 
 
-        return redirect()->route('jobs.edit', $job)->with('success', "Job <b>{$job->name}</b> updated");
+        return redirect()->route('jobs.edit', $job)->with('success', "You updated job <b>{$job->name}</b>");
     }
 
     public function destroy(Job $job)
     {
         if(! $job->delete() )
-            return back()->with('danger', 'Job was not deleted, please try again');
+            return back()->with('danger', 'Error deleting job, please try again');
 
-        return redirect()->route('jobs.index')->with('success', "Job <b>{$job->name}</b> deleted");
+        return redirect()->route('jobs.index')->with('success', "You deleted job <b>{$job->name}</b>");
     }
 }

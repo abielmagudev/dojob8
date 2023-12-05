@@ -1,7 +1,11 @@
 @extends('application')
 
 @section('header')
-<x-header title="Jobs" />
+<x-header title="Jobs">
+    @slot('subtitle')
+    <small class="align-middle badge text-bg-dark">{{ $jobs->total() }}</small>
+    @endslot
+</x-header>
 @endsection
 
 @section('content')
@@ -16,8 +20,8 @@
             <tr>
                 <th></th>
                 <th>Name</th>
+                <th>Description</th>
                 <th>Extensions</th>
-                <th class="text-nowrap">Work orders</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -29,13 +33,21 @@
                 </x-tooltip>
             </td>
             <td>{{ $job->name }}</td>
+            <td>{{ $job->description }}</td>
             <td>{{ $job->extensions_count }}</td>
-            <td>{{ $job->work_orders->count() }}</td>
             <td class="text-nowrap text-end">
                 @if( $job->hasUnfinishedWorkOrders() )
                 <x-tooltip title="Unfinished work orders">
-                    <a href="{{ $job->getUrlUnfinishedWorkOrders() }}" class="btn btn-warning">
+                    <a href="{{ $job->url_unfinished_work_orders }}" class="btn btn-warning">
                         {{ $job->work_orders_unfinished->count() }}
+                    </a>
+                </x-tooltip>
+                @endif
+
+                @if( $job->hasWorkOrders() )
+                <x-tooltip title="Work orders">
+                    <a href="{{ $job->url_own_work_orders }}" class="btn btn-primary">
+                        {{ $job->work_orders->count() }}
                     </a>
                 </x-tooltip>
                 @endif

@@ -1,19 +1,31 @@
 @csrf
-<div class="mb-3">
-    <label for="inputName" class="form-label">Name</label>
+<x-form-control-horizontal class="align-items-center">
+    <x-slot name="label">
+        <label for="inputName" class="form-label">Name</label>
+    </x-slot>
+    
     <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $job->name) }}" required>
     <x-error name="name" />
-</div>
-<div class="mb-3">
-    <label for="textareaDescription" class="form-label">Description <small class="text-body-secondary">(Optional)</small></label>
+</x-form-control-horizontal>
+
+<x-form-control-horizontal class="">
+    <x-slot name="label">
+        <label for="textareaDescription" class="form-label form-label-optional">Description</label>
+    </x-slot>
+    
     <textarea id="textareaDescription" rows="3" class="form-control" name="description">{{ old('description', $job->description) }}</textarea>
     <x-error name="description" />
-</div>
-<div class="mb-3">
-    <label for="inputApprovedInspectionsRequired" class="form-label">Approved inspections required</label>
+</x-form-control-horizontal>
+
+<x-form-control-horizontal class="align-items-center">
+    <x-slot name="label">
+        <label for="inputApprovedInspectionsRequired" class="form-label">Approved inspections</label>
+    </x-slot>
+    
     <input type="number" step="1" min="0" class="form-control" id="inputApprovedInspectionsRequired" name="approved_inspections_required" value="{{ old('approved_inspections_required', ($job->approved_inspections_required ?? 0)) }}" required>
     <x-error name="approved_inspections_required" />
-</div>
+</x-form-control-horizontal>
+
 
 @if( $job->id )
 <div class="mt-4">

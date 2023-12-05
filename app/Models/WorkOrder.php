@@ -342,6 +342,7 @@ class WorkOrder extends Model
         $arguments = array_merge($parameters, [
             'status_rule' => 'only',
             'status_group' => self::getUnfinishedStatuses()->all(),
+            'sort' => 'asc',
         ]);
 
         return route('work-orders.index', $arguments);

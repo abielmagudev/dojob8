@@ -78,4 +78,9 @@ trait HasCountryStateCodesTrait
             'state_code',
         ]);
     }
+
+    public function locationDataImplode(string $glue, string $attribute = 'location')
+    {
+        return $this->$attribute->implode($glue);
+    }
 }

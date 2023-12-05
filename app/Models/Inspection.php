@@ -38,7 +38,7 @@ class Inspection extends Model
     public static $inputs_filters = [
         'status_rule' => ['filterByStatus', 'status_group'],
         'inspector' => 'filterByInspector',
-        'scheduled_date_range' => 'filterByScheduledDateRange',
+        'between_dates' => 'filterBetweenScheduledDate',
     ];
 
     protected $fillable = [
@@ -143,9 +143,9 @@ class Inspection extends Model
         return $query->where('scheduled_date', '<=', $scheduled_date_to);
     }
 
-    public function scopeWhereScheduledDateBetween($query, $scheduled_date_ranges)
+    public function scopeWhereScheduledDateBetween($query, $between_dates)
     {
-        return $query->whereBetween('scheduled_date', $scheduled_date_ranges);
+        return $query->whereBetween('scheduled_date', $between_dates);
     }
 
 
@@ -173,21 +173,21 @@ class Inspection extends Model
         return $query->whereIsApprovedNotIn($status_group);
     }
 
-    public function scopeFilterByScheduledDateRange($query, $scheduled_date_range)
+    public function scopeFilterBetweenScheduledDate($query, $between_dates)
     {
-        if(! isset($scheduled_date_range[0]) &&! isset($scheduled_date_range[1]) ) {
+        if(! isset($between_dates['from']) &&! isset($between_dates['to']) ) {
             return $query;
         }
 
-        if( isset($scheduled_date_range[0]) &&! isset($scheduled_date_range[1]) ) {
-            return $query->whereScheduledDateFrom($scheduled_date_range[0]);
+        if( isset($between_dates['from']) &&! isset($between_dates['to']) ) {
+            return $query->whereScheduledDateFrom($between_dates['from']);
         }
         
-        if(! isset($scheduled_date_range[0]) && isset($scheduled_date_range[1]) ) {
-            return $query->whereScheduledDateTo($scheduled_date_range[1]);
+        if(! isset($between_dates['from']) && isset($between_dates['to']) ) {
+            return $query->whereScheduledDateTo($between_dates['to']);
         }
 
-        return $query->whereScheduledDateBetween($scheduled_date_range);
+        return $query->whereScheduledDateBetween($between_dates);
     }
 
 

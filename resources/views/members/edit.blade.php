@@ -1,9 +1,9 @@
 @extends('application')
 
 @section('header')
-<x-header title="Staff" :breadcrumbs="[
-    'Back to staff' => route('members.index'),
-    $member->fullname => route('members.show', $member),
+<x-header title="Members" :breadcrumbs="[
+    'Back to members' => route('members.index'),
+    $member->full_name => route('members.show', $member),
     'Edit' => null,
 ]" />
 @endsection

@@ -1,7 +1,7 @@
 @extends('application')
 
 @section('header')
-<x-header title="Staff" />
+<x-header title="Members" />
 @endsection
 
 @section('content')

@@ -2,7 +2,7 @@
 
 @section('header')
 <x-header :title="$member->full_name" :breadcrumbs="[
-    'Back to staff' => route('members.index'),
+    'Back to members' => route('members.index'),
     'Member' => null
 ]">
     <x-slot name="options">

@@ -1,7 +1,7 @@
 
 <x-card class="h-100" title="Information">
     <x-small-label label="Status">
-        <x-badge>{{ $work_order->status }}</x-badge>
+        <x-badge class="{{ $work_order->status_color }} text-uppercase">{{ $work_order->status }}</x-badge>
     </x-small-label>
     
     <x-small-label label="Job">

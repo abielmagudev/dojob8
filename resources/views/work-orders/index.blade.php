@@ -96,21 +96,13 @@
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
 
             <td class="text-nowrap text-start">
-                <div>
-                    <span>{{ $work_order->client->address }}, </span>
-                    <b>{{ $work_order->client->zip_code }} - D{{ $work_order->client->district_code }}</b>
-                </div>
-                <small>
-                    <span>{{ $work_order->client->full_name }}</span>
-                    @foreach($work_order->client->contact_data_api_html as $data)
-                    <div class="badge text-bg-light mx-1">{!! $data !!}</div>
-                    @endforeach
-                    <div class="badge text-bg-light">
-                        <a href="{{ $work_order->client->google_maps_url_search_address }}" target="_blank">
-                            Google maps
-                        </a>
-                    </div>
-                </small>
+                @include('clients.__.address-table-cell', [
+                    'client' => $work_order->client
+                ])
+                @include('clients.__.contact-table-cell', [
+                    'client' => $work_order->client, 
+                    'except' => ['full_name']
+                ])
             </td>
 
             <td class="text-nowrap">
@@ -147,6 +139,6 @@
 
 @include('work-orders.index.modal-work-order-views')
 @include('work-orders.index.modal-work-orders-filter')
-@include('clients.modal-search')
+@include('clients.__.modal-search')
 
 @endsection

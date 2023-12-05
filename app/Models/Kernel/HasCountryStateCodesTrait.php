@@ -81,6 +81,6 @@ trait HasCountryStateCodesTrait
 
     public function locationDataImplode(string $glue, string $attribute = 'location')
     {
-        return $this->$attribute->implode($glue);
+        return $this->$attribute->filter()->implode($glue);
     }
 }

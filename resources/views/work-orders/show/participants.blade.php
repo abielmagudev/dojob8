@@ -5,9 +5,15 @@
         ])
     </x-small-label>
 
-    <x-small-label label="Intermediary">
-        @if( $work_order->hasIntermediary() )
-        <div>{{ $work_order->intermediary->name }}</div>
+    <x-small-label label="Contractor">
+        @if( $work_order->hasContractor() )
+        @include('contractors.__.address', [
+            'contractor' => $work_order->contractor,
+        ])
+        @include('contractors.__.contact', [
+            'contractor' => $work_order->contractor,
+            'except' => ['name_alias'],
+        ])
         @endif
     </x-small-label>
     

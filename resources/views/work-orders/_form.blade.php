@@ -3,7 +3,7 @@
 @include('work-orders._form.schedule')
 @include('work-orders._form.job')
 @include('work-orders._form.extensions')
-@include('work-orders._form.intermediary')
+@include('work-orders._form.contractor')
 @include('work-orders._form.crew')
 @include('work-orders._form.status')
 @include('work-orders._form.notes')

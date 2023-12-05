@@ -4,7 +4,7 @@
         @include('work-orders.index.modal-work-orders-filter.statuses-rule')
         @include('work-orders.index.modal-work-orders-filter.job')
         @include('work-orders.index.modal-work-orders-filter.crew')
-        @include('work-orders.index.modal-work-orders-filter.intermediary')
+        @include('work-orders.index.modal-work-orders-filter.contractor')
         @include('work-orders.index.modal-work-orders-filter.sort')
     </form>
     

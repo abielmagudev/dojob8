@@ -54,7 +54,7 @@ class WorkOrder extends Model
     public static $inputs_filters = [
         'client' => 'filterByClient',
         'crew' => 'filterByCrew',
-        'intermediary' => 'filterByIntermediary',
+        'contractor' => 'filterByContractor',
         'job' => 'filterByJob',
         'status' => 'filterByStatus',
         'scheduled_date' => 'filterByScheduledDate',
@@ -65,7 +65,7 @@ class WorkOrder extends Model
     protected $fillable = [
         'client_id',
         'crew_id',
-        'intermediary_id',
+        'contractor_id',
         'job_id',
         'notes',
         'scheduled_date',
@@ -132,9 +132,9 @@ class WorkOrder extends Model
         return (bool) $this->crew_id && $this->crew;
     }
 
-    public function hasIntermediary()
+    public function hasContractor()
     {
-        return (bool) $this->intermediary_id && $this->intermediary;
+        return (bool) $this->contractor_id && is_a($this->contractor, Contractor::class);
     }
 
 
@@ -167,14 +167,14 @@ class WorkOrder extends Model
         return $query->where('crew_id', $crew_id);
     }
 
-    public function scopeWhereIntermediary($query, $intermediary_id)
+    public function scopeWhereContractor($query, $contractor_id)
     {
-        return $query->where('intermediary_id', $intermediary_id);
+        return $query->where('contractor_id', $contractor_id);
     }
 
-    public function scopeWhereNotIntermediary($query)
+    public function scopeWhereContractorNull($query)
     {
-        return $query->whereIsNull('intermediary_id');
+        return $query->whereIsNull('contractor_id');
     }
 
     public function scopeWhereJob($query, $job_id)
@@ -238,17 +238,17 @@ class WorkOrder extends Model
         return $query->whereCrew($crew_id);
     }
 
-    public function scopeFilterByIntermediary($query, $intermediary_id)
+    public function scopeFilterByContractor($query, $contractor_id)
     {
-        if( is_null($intermediary_id) ) {
+        if( is_null($contractor_id) ) {
             return $query;
         }
 
-        if( $intermediary_id == 0 ) {
-            return $query->whereNotIntermediary();
+        if( $contractor_id == 0 ) {
+            return $query->whereContractorNull();
         }
 
-        return $query->whereIntermediary($intermediary_id);
+        return $query->whereContractor($contractor_id);
     }
 
     public function scopeFilterByJob($query, $job_id)
@@ -331,9 +331,9 @@ class WorkOrder extends Model
         return $this->belongsTo(Crew::class);
     }
 
-    public function intermediary()
+    public function contractor()
     {
-        return $this->belongsTo(Intermediary::class);
+        return $this->belongsTo(Contractor::class);
     }
 
     public function inspections()

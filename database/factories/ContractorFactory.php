@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Suppliers\CountryManager;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class IntermediaryFactory extends Factory
+class ContractorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -26,7 +26,7 @@ class IntermediaryFactory extends Factory
         return [
             'name' => $company_name,
             'alias' => wordInitials($company_name),
-            'contact' => $this->faker->name,
+            'contact_name' => $this->faker->name,
             'phone_number' => $this->faker->phoneNumber(),
             'mobile_number' => $this->faker->optional()->phoneNumber(),
             'email' => $this->faker->optional()->companyEmail(),

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExtensionController;
@@ -9,7 +10,6 @@ use App\Http\Controllers\ExtensionJobController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectorController;
-use App\Http\Controllers\IntermediaryController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserAjaxController;
@@ -49,7 +49,7 @@ Route::resource('members', MemberController::class);
 Route::match(['put','patch'], 'crews/{crew}/members', [CrewController::class, 'membersUpdate'])->name('crews.members.update');
 Route::resource('crews', CrewController::class);
 
-Route::resource('intermediaries', IntermediaryController::class);
+Route::resource('contractors', ContractorController::class);
 Route::resource('inspectors', InspectorController::class);
 
 Route::resource('inspections', InspectionController::class)->except('create');

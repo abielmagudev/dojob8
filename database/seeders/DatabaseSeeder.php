@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ClientSeeder::class,
+            ContractorSeeder::class,
             CrewSeeder::class,
             ExtensionSeeder::class,
             InspectionSeeder::class,
             InspectorSeeder::class,
-            IntermediarySeeder::class,
             JobSeeder::class,
             MemberSeeder::class,
             UserSeeder::class,

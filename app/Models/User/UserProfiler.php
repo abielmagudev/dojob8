@@ -2,14 +2,14 @@
 
 namespace App\Models\User;
 
-use App\Models\Intermediary;
+use App\Models\Contractor;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
 class UserProfiler
 {
     public static $aliases_profiles = [
-        'intermediary' => Intermediary::class,
+        'contractor' => Contractor::class,
         'staff' => Member::class,
     ];
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIntermediariesTable extends Migration
+class CreateContractorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateIntermediariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('intermediaries', function (Blueprint $table) {
+        Schema::create('contractors', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('alias')->unique();
-            $table->string('contact');
+            $table->string('contact_name');
             $table->string('phone_number');
             $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
@@ -43,6 +43,6 @@ class CreateIntermediariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('intermediaries');
+        Schema::dropIfExists('contractors');
     }
 }

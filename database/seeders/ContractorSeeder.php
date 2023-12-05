@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Intermediary;
+use App\Models\Contractor;
 use Illuminate\Database\Seeder;
 
-class IntermediarySeeder extends Seeder
+class ContractorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class IntermediarySeeder extends Seeder
      */
     public function run()
     {
-        Intermediary::factory(10)->create();
+        Contractor::factory(10)->create();
     }
 }

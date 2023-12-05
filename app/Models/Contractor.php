@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Intermediary extends Model implements AuthenticatedUserMetadataInterface
+class Contractor extends Model implements AuthenticatedUserMetadataInterface
 {
     use HasFactory;
     use SoftDeletes;
@@ -26,7 +26,7 @@ class Intermediary extends Model implements AuthenticatedUserMetadataInterface
     protected $fillable = [
         'name',
         'alias',
-        'contact',
+        'contact_name',
         'phone_number',
         'mobile_number',
         'email',
@@ -42,9 +42,9 @@ class Intermediary extends Model implements AuthenticatedUserMetadataInterface
 
     // Attributes
 
-    public function setContactAttribute($value)
+    public function setContactNameAttribute($value)
     {
-        $this->attributes['contact'] = Str::title($value);
+        $this->attributes['contact_name'] = Str::title($value);
     }
 
     public function setEmailAttribute($value)
@@ -70,6 +70,16 @@ class Intermediary extends Model implements AuthenticatedUserMetadataInterface
     {
         return "{$this->name} ($this->alias)";
     }
+
+
+
+    // Validators
+
+    public function hasNotes()
+    {
+        return ! empty($this->notes);
+    }
+
 
 
     // Relationships

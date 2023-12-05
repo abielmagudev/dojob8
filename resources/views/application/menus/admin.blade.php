@@ -33,9 +33,9 @@ $items = [
         'route' => route('crews.index'),
         'active' => request()->routeIs('crews.*'),
     ],
-    'Intermediaries' => [
-        'route' => route('intermediaries.index'),
-        'active' => request()->routeIs('intermediaries.*'),
+    'Contractors' => [
+        'route' => route('contractors.index'),
+        'active' => request()->routeIs('contractors.*'),
     ],
     'Clients' => [
         'route' => route('clients.index'),

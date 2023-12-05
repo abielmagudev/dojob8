@@ -3,13 +3,12 @@
 namespace App\Http\Requests;
 
 use App\Suppliers\CountryManager;
-use App\Models\Intermediary;
-use Illuminate\Contracts\Validation\Validator;
+use App\Models\Contractor;
 use Illuminate\Foundation\Http\FormRequest;
 
-class IntermediarySaveRequest extends FormRequest
+class ContractorSaveRequest extends FormRequest
 {
-    public $intermediary_id;
+    public $contractor_id;
 
     public $country_codes;
 
@@ -27,16 +26,16 @@ class IntermediarySaveRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
-                sprintf('unique:%s,name,%s', Intermediary::class, $this->intermediary_id),
+                sprintf('unique:%s,name,%s', Contractor::class, $this->contractor_id),
             ],
             'alias' => [
                 'bail',
                 'required',
                 'string',
                 'max:10',
-                sprintf('unique:%s,alias,%s', Intermediary::class, $this->intermediary_id),
+                sprintf('unique:%s,alias,%s', Contractor::class, $this->contractor_id),
             ],
-            'contact' => [
+            'contact_name' => [
                 'required',
                 'string',
             ],
@@ -83,6 +82,8 @@ class IntermediarySaveRequest extends FormRequest
     public function messages()
     {
         return [
+            'contact_name.required' => __("Contact's name is required"),
+            'contact_name.string' => __("Contact's name must be written in a correct format"),
             'country_code.required' => __('Choose the country'),
             'country_code.in' => __('Choose a valid country'),
             'state_code.required' => __('Choose the state'),
@@ -92,7 +93,7 @@ class IntermediarySaveRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $this->intermediary_id = $this->route('intermediary')->id ?? 0;
+        $this->contractor_id = $this->route('contractor')->id ?? 0;
 
         $this->country_codes = CountryManager::codes()->implode(',');
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Inspection;
-use App\Models\Intermediary;
+use App\Models\Contractor;
 use App\Models\Job;
 use App\Models\WorkOrder;
 use App\Models\User;
@@ -21,7 +21,7 @@ class DashboardController extends Controller
         return view('dashboard.index', [
             'all_statuses_work_order' => WorkOrder::getAllStatuses(),
             'clients' => Client::all(),
-            'intermediaries' => Intermediary::all(),
+            'contractors' => Contractor::all(),
             'jobs' => Job::withTrashed()->get(),
             'unfinished_work_orders' => WorkOrder::filterByUnfinishedStatus($work_orders),
             'user' => User::all(),

@@ -106,9 +106,9 @@
             </td>
 
             <td class="text-nowrap">
-                @if( $work_order->hasIntermediary() )
-                <x-tooltip :title="$work_order->intermediary->name">
-                    <span class="badge text-bg-light" style="font-size:.9rem">{{ $work_order->intermediary->alias }}</span>
+                @if( $work_order->hasContractor() )
+                <x-tooltip :title="$work_order->contractor->name">
+                    <span class="badge text-bg-light" style="font-size:.9rem">{{ $work_order->contractor->alias }}</span>
                 </x-tooltip>
                 @endif
             </td>

@@ -6,8 +6,8 @@ use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
 use App\Http\Requests\WorkOrderStoreRequest;
 use App\Http\Requests\WorkOrderUpdateRequest;
 use App\Models\Client;
+use App\Models\Contractor;
 use App\Models\Crew;
-use App\Models\Intermediary;
 use App\Models\Job;
 use App\Models\Member;
 use App\Models\WorkOrder;
@@ -32,7 +32,7 @@ class WorkOrderController extends Controller
             Carbon::parse( $request->input('scheduled_date_range.1') ),
         ] : Carbon::parse( $request->get('scheduled_date') );
 
-        $work_orders = WorkOrder::with(['job', 'client', 'intermediary', 'crew'])
+        $work_orders = WorkOrder::with(['job', 'client', 'contractor', 'crew'])
         ->filtersByRequest($request)
         ->orderBy('scheduled_time', 'asc')
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
@@ -42,7 +42,7 @@ class WorkOrderController extends Controller
         return view('work-orders.index', [
             'all_statuses' => WorkOrder::getAllStatuses(),
             'crews' => Crew::all(),
-            'intermediaries' => Intermediary::all(),
+            'contractors' => Contractor::all(),
             'jobs' => Job::all(),
             'request' => $request,
             'scheduled_casted' => $scheduled_casted,
@@ -62,7 +62,7 @@ class WorkOrderController extends Controller
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $client,
             'crews' => Crew::with('members')->get(),
-            'intermediaries' => Intermediary::orderBy('name')->get(),
+            'contractors' => Contractor::orderBy('name')->get(),
             'jobs' => Job::orderBy('name')->get(),
             'operators' => Member::operative()->orderBy('full_name')->get(),
             'work_order' => new WorkOrder,
@@ -108,7 +108,7 @@ class WorkOrderController extends Controller
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $work_order->client,
             'crews' => Crew::with('members')->get(),
-            'intermediaries' => Intermediary::orderBy('name')->get(),
+            'contractors' => Contractor::orderBy('name')->get(),
             'operators' => Member::operative()->orderBy('full_name')->get(),
             'work_order' => $work_order,
         ]);

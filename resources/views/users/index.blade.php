@@ -10,9 +10,9 @@
         <x-slot name="thead">
             <tr>
                 <th></th>
-                <th class="text-nowrap">Name & email</th>
+                <th>Username</th>
                 <th>Profile</th>
-                <th>Last session</th>
+                <th class="text-nowrap">Last session</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -24,17 +24,11 @@
                     <x-circle-off-on :switcher="$user->isActive()" />
                 </x-tooltip>
             </td>
+            <td>{{ $user->name }}</td>
+            <td class="text-capitalize">{{ $user->profile->meta_name  }} - <em class="text-secondary">{{ $user->profile_alias }}</em></td>
             <td>
-                <span class="d-block">{{ $user->name }}</span>
-                <small>{{ $user->email }}</small>
-            </td>
-            <td class="text-capitalize">
-                <span class="d-block">{{ $user->profile->meta_name  }}</span>
-                <small>{{ $user->profile_alias }}</small>
-            </td>
-            <td>
-                <span class="d-block">{{ $user->last_session_date_human }}</span>
-                <small>{{ $user->last_session_time_human }}</small>
+                <span class="me-1">{{ $user->last_session_date_human }}</span>
+                <span>{{ $user->last_session_time_human }}</span>
             </td>
             <td class="text-end">
                 <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">

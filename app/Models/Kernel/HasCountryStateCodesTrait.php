@@ -30,18 +30,29 @@ trait HasCountryStateCodesTrait
         $data = array_filter([
             $this->city,
             $this->state_name,
-            $this->country_name
+            $this->country_name,
         ]);
         
         return implode(', ', $data);
     }
     
+    public function getLocationCodesAttribute()
+    {
+        $data = array_filter([
+            $this->city,
+            $this->state_code,
+            $this->country_code,
+        ]);
+        
+        return implode(', ', $data);
+    }
+
     public function getLocationCountryCodeAttribute()
     {
         $data = array_filter([
             $this->city,
             $this->state_name,
-            $this->country_code
+            $this->country_code,
         ]);
         
         return implode(', ', $data);
@@ -51,7 +62,17 @@ trait HasCountryStateCodesTrait
     {
         $data = array_filter([
             $this->city,
-            $this->state_name
+            $this->state_name,
+        ]);
+        
+        return implode(', ', $data);
+    }
+
+    public function getLocationStateCodeAttribute()
+    {
+        $data = array_filter([
+            $this->city,
+            $this->state_code,
         ]);
         
         return implode(', ', $data);

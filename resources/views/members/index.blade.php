@@ -1,7 +1,11 @@
 @extends('application')
 
 @section('header')
-<x-header title="Members" />
+<x-header title="Members">
+    @slot('subtitle')
+    <small class="align-middle badge text-bg-dark">{{ $members->total() }}</small>
+    @endslot
+</x-header>
 @endsection
 
 @section('content')
@@ -17,9 +21,7 @@
             <tr>
                 <th></th>
                 <th>Name</th>
-                <th>Phone</th>
-                <th>Mobile</th>
-                <th>Email</th>
+                <th>Contact</th>
                 <th>Crew</th>
                 <th></th>
             </tr>
@@ -33,9 +35,9 @@
                 </span>
             </td>
             <td>{{ $member->full_name }}</td>
-            <td>{{ $member->phone_number }}</td>
-            <td>{{ $member->mobile_number }}</td>
-            <td>{{ $member->email }}</td>
+            <td>
+                @include('members.__.contact-table-cell')
+            </td>
             <td>{{ $member->hasCrew() ? $member->crew->name : '' }}</td>
             <td class="text-end">
                 <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">

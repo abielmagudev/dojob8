@@ -10,7 +10,7 @@
     </p>
 
     <x-small-label label="Contact">
-        {!! $member->contact_data_collection->filter()->implode('<br>') !!}
+        @include('members.__.contact')
     </x-small-label>
 
     <x-small-label label="Position">
@@ -19,13 +19,17 @@
         <span class="d-block">{{ ucfirst($member->scope) }}</span>
     </x-small-label>
 
+    @if( $member->hasBirthdate() )      
     <x-small-label label="Birthdate">
         {{ $member->birthdate_human }}
     </x-small-label>
+    @endif
 
+    @if( $member->hasNotes() )      
     <x-small-label label="Notes">
         <em>{{ $member->notes }}</em>
     </x-small-label>
+    @endif
 
     <x-custom.small-label-hook-users :model="$member" />
 </x-card>

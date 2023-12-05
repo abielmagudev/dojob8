@@ -55,12 +55,12 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
 
     public function getBirthdateInputAttribute()
     {
-        return $this->birthdate ? $this->birthdate->format('Y-m-d') : null;
+        return $this->hasBirthdate() ? $this->birthdate->format('Y-m-d') : null;
     }
 
     public function getBirthdateHumanAttribute()
     {
-        return $this->birthdate ? $this->birthdate->format('d M, Y') : null;
+        return $this->hasBirthdate() ? $this->birthdate->format('d M, Y') : null;
     }
 
     public function getContactDataCollectionAttribute()
@@ -81,9 +81,14 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
 
     // Validators 
 
+    public function hasBirthdate()
+    {
+        return ! empty( $this->getOriginal('birthdate') );
+    }
+
     public function isHappyBirthday()
     {
-        return $this->birthdate->isBirthday();
+        return $this->hasBirthdate() && $this->birthdate->isBirthday();
     }
 
     public function hasCrew()

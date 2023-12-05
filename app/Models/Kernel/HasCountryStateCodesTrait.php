@@ -25,56 +25,57 @@ trait HasCountryStateCodesTrait
         return $this->country ? $this->country->get('states')->get($this->state_code) : null;
     }
 
+    public function getLocationDataCollectionAttribute()
+    {
+        return collect([
+            'city_name' => $this->city,
+            'state_code' => $this->state_code,
+            'state_name' => $this->state_name,
+            'country_code' => $this->country_code,
+            'coutnry_name' => $this->country_name,
+        ]);
+    }
+
     public function getLocationAttribute()
     {
-        $data = array_filter([
-            $this->city,
-            $this->state_name,
-            $this->country_name,
+        return $this->location_data_collection->only([
+            'city_name',
+            'state_name',
+            'country_name',
         ]);
-        
-        return implode(', ', $data);
     }
     
     public function getLocationCodesAttribute()
     {
-        $data = array_filter([
-            $this->city,
-            $this->state_code,
-            $this->country_code,
+        return $this->location_data_collection->only([
+            'city_name',
+            'state_code',
+            'country_code',
         ]);
-        
-        return implode(', ', $data);
     }
 
     public function getLocationCountryCodeAttribute()
     {
-        $data = array_filter([
-            $this->city,
-            $this->state_name,
-            $this->country_code,
+        return $this->location_data_collection->only([
+            'city_name',
+            'state_name',
+            'country_code',
         ]);
-        
-        return implode(', ', $data);
     }
 
     public function getLocationWithoutCountryAttribute()
     {
-        $data = array_filter([
-            $this->city,
-            $this->state_name,
+        return $this->location_data_collection->only([
+            'city_name',
+            'state_name',
         ]);
-        
-        return implode(', ', $data);
     }
 
     public function getLocationStateCodeAttribute()
     {
-        $data = array_filter([
-            $this->city,
-            $this->state_code,
+        return $this->location_data_collection->only([
+            'city_name',
+            'state_code',
         ]);
-        
-        return implode(', ', $data);
     }
 }

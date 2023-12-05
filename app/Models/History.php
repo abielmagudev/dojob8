@@ -29,7 +29,7 @@ class History extends Model
         'users' => User::class,
     ];
 
-    protected $table = 'histories';
+    protected $table = 'history';
 
     protected $fillable = [
         'description',

@@ -83,9 +83,19 @@ class Crew extends Model
 
     // Scopes
 
+    public function scopeWhereActive($query, $value)
+    {
+        return $query->where('is_active', $value);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', 1);
+    }
+
+    public function scopeInactive($query)
+    {
+        return $query->where('is_active', 0);
     }
 
 

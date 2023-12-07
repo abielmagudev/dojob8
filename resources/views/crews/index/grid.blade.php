@@ -23,6 +23,7 @@
                 @endif
             </div>
 
+            @if( $crew->isActive() )           
             <div class="list-group list-group-flush">
                 <div class="list-group-item">
                     <div class="text-center">
@@ -32,6 +33,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </x-card>
     </div>
 @endforeach

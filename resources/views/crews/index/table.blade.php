@@ -17,7 +17,7 @@
             <td class="text-center" style="width:1%; font-size:1.2rem">
                 @if(! $crew->isActive() )
                 <x-tooltip title="Inactive">
-                    <i class="bi bi-circle"></i>
+                    <i class="bi bi-dash-circle"></i>
                 </x-tooltip>
                     
                 @else
@@ -50,10 +50,11 @@
                     })
                 ] ?>
 
+                @if( $crew->isActive() )   
                 <x-modal-trigger modal-id="modalSetCrewMembers" class="btn btn-outline-primary" data-crew="{{ json_encode($modal_data) }}" link>
                     <i class="bi bi-plus-circle-dotted"></i>
                 </x-modal-trigger>
-
+                @endif
 
                 <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>

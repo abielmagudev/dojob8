@@ -1,29 +1,37 @@
 <x-card title="Members">
-    <x-slot name="options">
-        <x-tooltip title="Add or remove">
-            <x-modal-trigger modal-id="crewMembersUpdateModal">
-                <i class="bi bi-people-fill"></i>
-            </x-modal-trigger>
-        </x-tooltip>
-    </x-slot>
-
     @if( $crew->members->count() )       
     <x-table>
         <x-slot name="thead">
             <tr>
                 <th>Name</th>
-                <th>Phone</th>
-                <th>Mobile</th>
-                <th>Email</th>
+                <th>Contact</th>
+                <th></th>
             </tr>
         </x-slot>
 
         @foreach($crew->members as $member)
         <tr>
             <td>{{ $member->full_name }}</td>
-            <td>{{ $member->phone_number }}</td>
-            <td>{{ $member->mobile_number }}</td>
-            <td>{{ $member->email }}</td>
+            <td>
+                @foreach($member->contact_data_collection->filter() as $key => $value)
+                @if( $key <> 'email' )
+                    <span class="badge text-bg-light">
+                        <x-link-phone href="{{ $value }}">{{ $value }}</x-link-phone>
+                    </span>
+                
+                @else
+                    <span class="badge text-bg-light">
+                        <x-link-email href="{{ $value }}">{{ $value }}</x-link-email>
+                    </span>
+
+                @endif
+                @endforeach
+            </td>
+            <td class="text-end">
+                <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
+            </td>
         </tr>
         @endforeach
     </x-table>

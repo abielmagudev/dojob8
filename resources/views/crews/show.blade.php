@@ -26,5 +26,4 @@
     </div>
 </div>
 
-@include('crews.show.modal-crew-member-update')
 @endsection

@@ -7,18 +7,17 @@
 
     <p>
         <x-badge :color="$crew->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $crew->active_status }}</x-badge>
-        <span class="align-middle" style="color: {{ $crew->color }}">
-            <i class="bi bi-circle-fill"></i>
+
+        <span class="badge text-uppercase " style="background-color:{{ $crew->background_color }}; color: {{ $crew->text_color }}">
+            {{ $crew->text_color_mode }}
         </span>
     </p>
 
-    <x-small-label label="Name">
-        {{ $crew->name }}
-    </x-small-label>
-
+    @if( $crew->hasDescription() )        
     <x-small-label label="Description">
         {{ $crew->description }}
     </x-small-label>
+    @endif
 
     <x-custom.small-label-hook-users :model="$crew" />
 </x-card>

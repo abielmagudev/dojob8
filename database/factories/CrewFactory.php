@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Member;
+use App\Models\Crew\CrewPainter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CrewFactory extends Factory
@@ -14,12 +14,12 @@ class CrewFactory extends Factory
      */
     public function definition()
     {
-        $operators = Member::operative()->get();
-
         return [
             'name' => strtoupper($this->faker->domainName()),
             'description' => $this->faker->optional()->sentence(),
-            'color' => $this->faker->hexColor(),
+            'background_color' => $this->faker->hexColor(),
+            'text_color_mode' => $this->faker->randomElement( CrewPainter::getTextColorModes() ),
+            'lead_member_id' => $this->faker->optional()->numberBetween(1, 35),
             'is_active' => $this->faker->boolean(),
         ];
     }

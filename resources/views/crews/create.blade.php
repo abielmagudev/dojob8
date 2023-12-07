@@ -18,4 +18,8 @@
         </div>
     </form>
 </x-card>
+
+@push('scripts')
+@include('crews._form.script-background-text-color-mode')
+@endpush
 @endsection

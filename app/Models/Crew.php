@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Crew\CrewPainter;
 use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
@@ -24,26 +25,49 @@ class Crew extends Model
     protected $fillable = [
         'name',
         'description',
-        'color',
+        'background_color',
+        'text_color_mode',
         'is_active',
+        'lead_member_id',
     ];
 
 
 
-    // Validators
+    // Attributes
 
-    public function hasColor()
+    public function getTextColorAttribute()
     {
-        return $this->color <> null;
+        return $this->id ? CrewPainter::getTextColorByMode( $this->text_color_mode ) : CrewPainter::getTextColorByMode( CrewPainter::TEXT_COLOR_MODE_DEFAULT );
     }
+
+    public function getDatasetAttribute()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'members' => $this->members->map(function ($member) {
+                return [
+                    'id' => $member->id,
+                    'full_name' => $member->full_name,
+                ];
+            })
+        ];
+    }
+
+    public function getDatasetJsonAttribute()
+    {
+        return json_encode( $this->dataset );
+    }
+
+
+    // Validators
 
     public function hasMembers()
     {
-        return (bool) $this->isActive() && $this->loadCount('members');
+        return (bool) $this->isActive() && ($this->members_count ?? $this->loadCount('members'));
     }
 
 
-    
     // Actions
 
     public function addMembers(array $members_id)
@@ -56,6 +80,13 @@ class Crew extends Model
         return Member::whereCrew($this->id)->updateCrew(null);
     }
 
+
+    // Scopes
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
 
 
     // Relationships

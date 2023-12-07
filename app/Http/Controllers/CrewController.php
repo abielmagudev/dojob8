@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CrewSaveRequest;
 use App\Http\Requests\CrewMemberUpdateRequest;
 use App\Models\Crew;
+use App\Models\Crew\CrewPainter;
 use App\Models\Member;
+use Illuminate\Http\Request;
 
 class CrewController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return view('crews.index', [
-            'crews' => Crew::with(['members', 'work_orders'])->orderBy('name')->get(),
+            'crews' => Crew::with(['members', 'work_orders'])->withCount(['members', 'work_orders'])->active()->orderBy('name')->get(),
+            'show' => in_array($request->get('show'), ['grid', 'table']) ? $request->get('show') : 'grid',
+            'request' => $request,
+            'members' => Member::operative()->orderBy('name')->get(),
         ]);
     }
 
@@ -20,6 +25,7 @@ class CrewController extends Controller
     {        
         return view('crews.create', [
             'crew' => new Crew,
+            'text_color_modes_colors' => CrewPainter::getTextColorModesAndColors(),
         ]);
     }
 
@@ -39,7 +45,7 @@ class CrewController extends Controller
         
         return view('crews.show', [
             'crew' => $crew,
-            'members_operative' => Member::operative()->orderBy('name')->get(),
+            'members' => Member::operative()->orderBy('name')->get(),
             'routes' => [
                 'previous' => $previous ? route('crews.show', $previous) : false,
                 'next' => $next ? route('crews.show', $next) : false,
@@ -52,6 +58,7 @@ class CrewController extends Controller
         return view('crews.edit', [
             'crew' => $crew,
             'members' => [],
+            'text_color_modes_colors' => CrewPainter::getTextColorModesAndColors(),
         ]);
     }
 
@@ -87,6 +94,16 @@ class CrewController extends Controller
             $crew->addMembers($request->members);
         }
 
-        return redirect()->route('crews.show', $crew)->with('success', "You updated the members of the <b>{$crew->name}</b> crew");
+        if($request->ajax() || $request->wantsJson() || $request->header('X-Requested-With') === 'XMLHttpRequest')
+        {
+            $members = $crew->members->only($request->members)->map(fn($member) => ['name' => $member->full_name]);
+            return response()->json([
+                'message' => sprintf('You updated the members %s in the %s crew', $members->implode(', '), $crew->name),
+                'status' => 200,
+                'dataset' => $crew->dataset_json,
+            ]);
+        }
+
+        return redirect()->route('crews.index', ['show' => $request->get('show', 'grid')])->with('success', "You updated the members of the <b>{$crew->name}</b> crew");
     }
 }

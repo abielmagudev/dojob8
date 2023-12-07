@@ -5,7 +5,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <div>
                 <div class="lead">{{ $title ?? '' }}</div>
-                <div class="text-secondary">{{ $subtitle ?? '' }}</div>
+                <div class="text-secondary">{{ $attributes->get('subtitle', '') }}</div>
             </div>
             <div>
                 @isset($options)       

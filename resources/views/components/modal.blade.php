@@ -2,8 +2,11 @@
     <div class="modal-dialog {{ $attributes->get('dialog-class') }}">
         <div class="modal-content">
 
-            <div class="modal-header border-0 {{ $attributes->get('header-class', '') }}">
-                <h1 class="modal-title fs-5" id="{{ $attributes->get('id') }}Label">{{ $attributes->get('title') ?? $title ?? '' }}</h1>
+            <div class="modal-header align-items-start  border-0 {{ $attributes->get('header-class', '') }}">
+                <div>
+                    <h1 class="modal-title fs-5" id="{{ $attributes->get('id') }}Label">{{ $attributes->get('title') ?? $title ?? '' }}</h1>
+                    <small>{{ $attributes->get('subtitle', '') }}</small>
+                </div>
                 @if( $attributes->has('header-close') )     
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 @endif

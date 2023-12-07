@@ -21,9 +21,12 @@
         </a>
     </div>
 
-    {{--  --}}
-    <div>
-
+    {{-- On work orders --}}
+    <div class="mx-3">
+        <x-modal-trigger modal-id="modalSetOnWorkOrders" class="btn btn-warning d-none">
+            <span class="d-none d-md-inline-block">Set on</span>
+            <span>Work orders</span>
+        </x-modal-trigger>
     </div>
 
     {{-- Create crew --}}

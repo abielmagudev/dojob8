@@ -81,16 +81,12 @@
             </td>
 
             <td class="text-nowrap">
-                @if( $work_order->hasCrew() )
                 <span 
-                    class="badge w-100 {{ $work_order->crew->hasColor() ? '' : 'text-bg-dark' }}" 
-                    @if( $work_order->crew->hasColor() ) 
-                        style="background-color:{{ $work_order->crew->color }}" 
-                    @endif
+                    class="badge w-100 p-2" 
+                    style="background-color:{{ $work_order->crew->background_color }};color:{{ $work_order->crew->text_color }}"
                 >
                     {{ $work_order->crew->name }}
                 </span>
-                @endif
             </td>
 
             <td class="text-nowrap">{{ $work_order->job->name }}</td>

@@ -28,11 +28,10 @@ class MemberFactory extends Factory
             'mobile_number' => $this->faker->optional()->phoneNumber(),
             'email' => $this->faker->optional()->email(),
             'position' => $this->faker->optional()->jobTitle(),
-            'is_internal' => $this->faker->boolean(),
             'is_active' => $this->faker->boolean(),
-            'is_crew_member' => $this->faker->boolean(),
-            'crew_id' => $this->faker->optional()->numberBetween(1, 10),
+            'can_be_in_crews' => $this->faker->boolean(),
             'notes' => $this->faker->optional()->sentences(3, true),
+            'crew_id' => $this->faker->optional()->numberBetween(1, 10),
         ];
     }
 }

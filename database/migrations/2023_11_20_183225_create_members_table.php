@@ -24,10 +24,9 @@ class CreateMembersTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
             $table->string('position')->nullable();
-            $table->text('notes')->nullable();
-            $table->boolean('is_internal')->default(true);
             $table->boolean('is_active')->default(true);
-            $table->boolean('is_crew_member')->default(false);
+            $table->boolean('can_be_in_crews')->default(false);
+            $table->text('notes')->nullable();
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();

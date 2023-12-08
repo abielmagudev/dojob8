@@ -1,26 +1,24 @@
 @extends('application')
 
 @section('header')
-<x-header title="Members">
-    @slot('subtitle')
-    <small class="align-middle badge text-bg-dark">{{ $members->total() }}</small>
-    @endslot
-</x-header>
+<x-header title="Members" />
 @endsection
 
 @section('content')
 <x-card>
-    <x-slot name="options">
-        <a href="{{ route('members.create') }}" class="btn btn-primary">
-            <b>+</b>
-        </a>
+    <x-slot name="options">     
+        <x-modal-trigger modal-id="modalMembersFilters">
+            <i class="bi bi-funnel"></i>
+        </x-modal-trigger>
+
+        <x-custom.link-with-total total="{{ $members->count() }}" route="{{ route('members.create') }}" />
     </x-slot>
 
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
                 <th></th>
-                <th>Name</th>
+                <th>Full name</th>
                 <th>Contact</th>
                 <th></th>
             </tr>
@@ -49,4 +47,6 @@
 <br>
 
 <x-pagination-simple-eloquent :collection="$members" />
+
+@include('members.index.modal-member-filters')
 @endsection

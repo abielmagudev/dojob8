@@ -52,15 +52,11 @@ class MemberSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'is_internal' => [
-                'required',
-                'boolean',
-            ],
-            'is_crew_member' => [
-                'required',
-                'boolean',
-            ],
             'is_active' => [
+                'nullable',
+                'boolean',
+            ],
+            'can_be_in_crews' => [
                 'nullable',
                 'boolean',
             ],
@@ -87,6 +83,7 @@ class MemberSaveRequest extends FormRequest
             'last_name' => Str::title($this->last_name),
             'full_name' => Str::title($this->full_name),
             'is_active' => $this->isMethod('POST') || $this->has('is_active') ? 1 : 0,
+            'can_be_in_crews' => $this->isMethod('POST') || $this->get('can_be_in_crews') == 1 ? 1 : 0,
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedUserMetadataInterface;
+use App\Models\Kernel\HasActionsByRequestTrait;
 use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
@@ -13,12 +14,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model implements AuthenticatedUserMetadataInterface
 {
+    use HasActionsByRequestTrait;
     use HasAvailabilityTrait;
     use HasBeforeAfterTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use HasModelHelpersTrait;
     use SoftDeletes;
+
+    public static $inputs_filters = [
+        'status' => 'filterByStatus',
+        'can_be_in_crews' => 'filterByCanBeInCrews',
+        'sort_prop' => ['filterBySortProp', 'sort_prop_way'],
+    ];
 
     protected $fillable = [
         'name',
@@ -29,10 +37,10 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         'mobile_number',
         'email',
         'position',
-        'is_internal',
-        'is_crew_member',
         'is_active',
+        'can_be_in_crews',
         'notes',
+        'crew_id',
     ];
 
     protected $casts = [
@@ -62,11 +70,6 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         ]);
     }
 
-    public function getInternalStatusAttribute()
-    {
-        return $this->isInternal() ? 'internal' : 'external';
-    }
-
     public function getMetaNameAttribute(): string
     {
         return $this->full_name;
@@ -86,27 +89,86 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         return $this->hasBirthdate() && $this->birthdate->isBirthday();
     }
 
-    public function isInternal()
+    public function hasPosition()
     {
-        return (bool) $this->is_internal;
+        return ! empty($this->position);
     }
 
-    public function isExternal()
+    public function canBeInCrews()
     {
-        return ! (bool) $this->is_internal;
-    }
-
-    public function isCrewMember()
-    {
-        return (bool) $this->is_crew_member;
+        return (bool) $this->can_be_in_crews;
     }
 
     public function hasCrew()
     {
         return $this->crew_id && $this->crew;
     }
+ 
 
-    
+
+    // Scopes
+
+    public function scopeWhereCanBeInCrews($query, $value)
+    {
+        return $query->where('can_be_in_crews', $value);
+    }
+
+    public function scopeOnlyCanBeInCrews($query)
+    {
+        return $query->where('can_be_in_crews', true);
+    }
+
+    public function scopeOnlyCannotBeInCrews($query)
+    {
+        return $query->where('can_be_in_crews', false);
+    }
+
+    public function scopeWhereCrew($query, int $crew_id)
+    {
+        return $query->where('crew_id', $crew_id);
+    }
+
+    public function scopeUpdateCrew($query, $crew_id)
+    {
+        return $query->update(['crew_id' => $crew_id]);
+    }
+
+
+
+    // Filters
+
+    public function scopeFilterByStatus($query, $value)
+    {
+        if( is_null($value) ||! in_array($value, ['0', '1']) ) {
+            return $query;
+        }
+
+        return $query->whereActive($value);
+    }
+
+    public function scopeFilterByCanBeInCrews($query, $value)
+    {
+        if( is_null($value) ||! in_array($value, ['0', '1']) ) {
+            return $query;
+        }
+
+        return $query->whereCanBeInCrews($value);
+    }
+
+    public function scopeFilterBySortProp($query, $value, $way = null)
+    {
+        if( is_null($value) ||! in_array($value, ['name', 'last_name']) ) {
+            return $query;
+        }
+
+        if( is_null($way) ||! in_array($way, ['asc', 'desc']) ) {
+            return $query->orderByDesc($value);
+        }
+
+        return $query->orderBy($value, $way);
+    }
+
+
 
     // Relationships
 
@@ -118,29 +180,5 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
     public function crew()
     {
         return $this->belongsTo(Crew::class);
-    }
-
-    
-
-    // Scopes
-
-    public function scopeOnlyCrewMember($query)
-    {
-        return $query->where('is_crew_member', 1);
-    }
-
-    public function scopeWhereIsCrewMember($query, $value)
-    {
-        return $query->where('is_crew_member', $value);
-    }
-
-    public function scopeWhereCrew($query, int $crew_id)
-    {
-        return $query->where('crew_id', $crew_id);
-    }
-
-    public function scopeUpdateCrew($query, $crew_id)
-    {
-        return $query->update(['crew_id' => $crew_id]);
     }
 }

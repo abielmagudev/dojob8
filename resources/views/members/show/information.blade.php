@@ -9,15 +9,17 @@
         <x-badge :color="$member->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $member->active_status }}</x-badge>
     </p>
 
+    @if( $member->contact_data_collection->filter()->count() )      
     <x-small-label label="Contact">
         @include('members.__.contact')
     </x-small-label>
+    @endif
 
+    @if( $member->hasPosition() )      
     <x-small-label label="Position">
-        <span class="d-block">{{ ucfirst($member->category) }}</span>
         <span class="d-block">{{ $member->position }}</span>
-        <span class="d-block">{{ ucfirst($member->internal_status) }}</span>
     </x-small-label>
+    @endif
 
     @if( $member->hasBirthdate() )      
     <x-small-label label="Birthdate">

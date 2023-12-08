@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return view('members.index', [
-            'members' => Member::orderBy('name')->paginate(25),
+            'members' => Member::filtersByRequest($request)->orderBy('id', $request->get('sort', 'desc'))->paginate(25),
+            'request' => $request,
         ]);
     }
 

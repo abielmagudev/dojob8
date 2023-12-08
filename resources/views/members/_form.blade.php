@@ -1,5 +1,5 @@
 @csrf
-<x-form-control-horizontal>
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="nameInput" class="form-label">Name</label>
     </x-slot>
@@ -9,7 +9,7 @@
     <x-error name="full_name" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal>
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="lastNameInput" class="form-label">Last name</label>
     </x-slot>
@@ -19,7 +19,7 @@
     <x-error name="full_name" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal>
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="birthdateInput" class="form-label form-label-optional">Birthdate</label>
     </x-slot>
@@ -28,7 +28,7 @@
     <x-error name="birthdate" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal>
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="phoneNumberInput" class="form-label form-label-optional">Phone</label>
     </x-slot>
@@ -37,7 +37,7 @@
     <x-error name="phone_number" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal>
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="mobileNumberInput" class="form-label form-label-optional">Mobile</label>
     </x-slot>
@@ -46,7 +46,7 @@
     <x-error name="mobile_number" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal>
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="emailInput" class="form-label form-label-optional">Email</label>
     </x-slot>
@@ -55,7 +55,7 @@
     <x-error name="email" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal>
+<x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
         <label for="positionInput" class="form-label form-label-optional">Position</label>
     </x-slot>
@@ -66,47 +66,29 @@
 
 <x-form-control-horizontal>
     <x-slot name="label">
-        <label for="recruitmentInput" class="form-label">Recruitment</label>
-    </x-slot>
-
-    <div class="form-control">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="radioIsInternal" name="is_internal" value="1" {{ isChecked( old('is_internal', ($member->is_internal ?? 1)) === 1) }}>
-            <label class="form-check-label" for="radioIsInternal">Internal</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="radioIsExternal" name="is_internal" value="0" {{ isChecked( old('is_internal', $member->is_internal) === 0) }}>
-            <label class="form-check-label" for="radioIsExternal">External</label>
-        </div>
-    </div>
-    <x-error name="is_internal" />
-</x-form-control-horizontal>
-
-<x-form-control-horizontal>
-    <x-slot name="label">
-        <label for="recruitmentInput" class="form-label">Can be used crew?</label>
-    </x-slot>
-
-    <div class="form-control">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="radioIsNotCrewMember" name="is_crew_member" value="0" {{ isChecked( old('is_crew_member', ($member->is_crew_member ?? 0)) === 0) }}>
-            <label class="form-check-label" for="radioIsNotCrewMember">No, can't be used in a crew</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="radioIsCrewMember" name="is_crew_member" value="1" {{ isChecked( old('is_crew_member', $member->is_crew_member) === 1) }}>
-            <label class="form-check-label" for="radioIsCrewMember">Yes, can be used in a crew</label>
-        </div>
-    </div>
-    <x-error name="is_internal" />
-</x-form-control-horizontal>
-
-<x-form-control-horizontal>
-    <x-slot name="label">
         <label for="notesTextarea" class="form-label form-label-optional">Notes</label>
     </x-slot>
 
     <textarea id="notesTextarea" class="form-control" rows="3" name="notes">{{ old('notes', $member->notes) }}</textarea>
     <x-error name="notes" />
+</x-form-control-horizontal>
+
+<x-form-control-horizontal class="align-items-center">
+    <x-slot name="label">
+        <label for="recruitmentInput" class="form-label">Can it be in crews? {{ $member->can_be_in_crews}}</label>
+    </x-slot>
+
+    <div class="form-control">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="radioCannotBeInCrews" name="can_be_in_crews" value="0" {{ isChecked( old('can_be_in_crews', ($member->can_be_in_crews ?? 0)) === 0) }}>
+            <label class="form-check-label" for="radioCannotBeInCrews">No, it cannot be in crews.</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="radioCanBeInCrews" name="can_be_in_crews" value="1" {{ isChecked( old('can_be_in_crews', $member->can_be_in_crews) === 1) }}>
+            <label class="form-check-label" for="radioCanBeInCrews">Yes, it can be in crews.</label>
+        </div>
+    </div>
+    <x-error name="can_be_in_crews" />
 </x-form-control-horizontal>
 
 @if( $member->id <> null ) 

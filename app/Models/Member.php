@@ -29,24 +29,14 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         'mobile_number',
         'email',
         'position',
-        'category',
-        'scope',
+        'is_internal',
+        'is_crew_member',
         'is_active',
         'notes',
     ];
 
     protected $casts = [
         'birthdate' => 'date',
-    ];
-
-    public static $categories_descriptions = [
-        'administrative' => 'Administrative description',
-        'operative' => 'Operative description',
-    ];
-
-    public static $scopes_descriptions = [
-        'external' => 'External description',
-        'internal' => 'Internal description',
     ];
 
 
@@ -72,6 +62,11 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         ]);
     }
 
+    public function getInternalStatusAttribute()
+    {
+        return $this->isInternal() ? 'internal' : 'external';
+    }
+
     public function getMetaNameAttribute(): string
     {
         return $this->full_name;
@@ -89,6 +84,21 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
     public function isHappyBirthday()
     {
         return $this->hasBirthdate() && $this->birthdate->isBirthday();
+    }
+
+    public function isInternal()
+    {
+        return (bool) $this->is_internal;
+    }
+
+    public function isExternal()
+    {
+        return ! (bool) $this->is_internal;
+    }
+
+    public function isCrewMember()
+    {
+        return (bool) $this->is_crew_member;
     }
 
     public function hasCrew()
@@ -114,19 +124,14 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
 
     // Scopes
 
-    public function scopeWhereCategory($query, $value)
+    public function scopeOnlyCrewMember($query)
     {
-        return $query->where('category', $value);
+        return $query->where('is_crew_member', 1);
     }
 
-    public function scopeAdministrative($query)
+    public function scopeWhereIsCrewMember($query, $value)
     {
-        return $query->whereCategory('administrative');
-    }
-
-    public function scopeOperative($query)
-    {
-        return $query->whereCategory('operative');
+        return $query->where('is_crew_member', $value);
     }
 
     public function scopeWhereCrew($query, int $crew_id)
@@ -137,29 +142,5 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
     public function scopeUpdateCrew($query, $crew_id)
     {
         return $query->update(['crew_id' => $crew_id]);
-    }
-
-
-
-    // Statics
-    
-    public static function getScopes()
-    {
-        return array_keys(self::$scopes_descriptions);
-    }
-
-    public static function getScopesDescriptions()
-    {
-        return self::$scopes_descriptions;
-    }
-
-    public static function getCategories()
-    {
-        return array_keys(self::$categories_descriptions);
-    }
-
-    public static function getCategoriesDescriptions()
-    {
-        return self::$categories_descriptions;
     }
 }

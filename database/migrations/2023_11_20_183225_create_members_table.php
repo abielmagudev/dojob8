@@ -24,10 +24,10 @@ class CreateMembersTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
             $table->string('position')->nullable();
-            $table->enum('category', Member::getCategories());
-            $table->enum('scope', Member::getScopes());
-            $table->boolean('is_active')->default(true);
             $table->text('notes')->nullable();
+            $table->boolean('is_internal')->default(true);
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_crew_member')->default(false);
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();

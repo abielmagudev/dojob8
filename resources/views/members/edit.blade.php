@@ -26,7 +26,4 @@
     <p>¿Do you want to continue to delete the member <br> <b><?= $member->fullname ?> (role)</b>?</p>
 </x-custom.modal-confirm-delete>
 
-@include('members._form.modal-help-categories')
-@include('members._form.modal-help-scopes')
-
 @endsection

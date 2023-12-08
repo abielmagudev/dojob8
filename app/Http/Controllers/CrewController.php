@@ -17,7 +17,7 @@ class CrewController extends Controller
             'crews' => Crew::with(['members', 'work_orders'])->whereActive( $request->get('active', 1) )->orderBy('name')->get(),
             'show' => in_array($request->get('show'), ['grid', 'table']) ? $request->get('show') : 'grid',
             'request' => $request,
-            'members' => Member::operative()->orderBy('name')->get(),
+            'members' => Member::onlyCrewMember()->orderBy('name')->get(),
         ]);
     }
 

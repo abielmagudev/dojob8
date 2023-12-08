@@ -66,38 +66,38 @@
 
 <x-form-control-horizontal>
     <x-slot name="label">
-        <label for="categorySelect" class="form-label">
-            <span>Category</span>
-            <x-modal-trigger modal-id="helpCategoriesModal" class="align-middle" link>
-                <i class="bi bi-question-circle"></i>
-            </x-modal-trigger>
-        </label>
+        <label for="recruitmentInput" class="form-label">Recruitment</label>
     </x-slot>
 
-    <select id="categorySelect" name="category" class="form-select">
-        @foreach($categories as $category)
-        <option value="{{ $category }}" {{ isSelected( $category == old('category', $member->category) ) }}>{{ ucfirst($category) }}</option>
-        @endforeach
-    </select>
-    <x-error name="category" />
+    <div class="form-control">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="radioIsInternal" name="is_internal" value="1" {{ isChecked( old('is_internal', ($member->is_internal ?? 1)) === 1) }}>
+            <label class="form-check-label" for="radioIsInternal">Internal</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="radioIsExternal" name="is_internal" value="0" {{ isChecked( old('is_internal', $member->is_internal) === 0) }}>
+            <label class="form-check-label" for="radioIsExternal">External</label>
+        </div>
+    </div>
+    <x-error name="is_internal" />
 </x-form-control-horizontal>
 
 <x-form-control-horizontal>
     <x-slot name="label">
-        <label for="scopeSelect" class="form-label">
-            <span>Scope</span>
-            <x-modal-trigger modal-id="helpScopesModal" class="align-middle" link>
-                <i class="bi bi-question-circle"></i>
-            </x-modal-trigger>
-        </label>
+        <label for="recruitmentInput" class="form-label">Can be used crew?</label>
     </x-slot>
 
-    <select id="scopeSelect" name="scope" class="form-select">
-        @foreach($scopes as $scope)
-        <option value="{{ $scope }}" {{ isSelected( $scope == old('scope', $member->scope) ) }}>{{ ucfirst($scope) }}</option>
-        @endforeach
-    </select>
-    <x-error name="scope" />
+    <div class="form-control">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="radioIsNotCrewMember" name="is_crew_member" value="0" {{ isChecked( old('is_crew_member', ($member->is_crew_member ?? 0)) === 0) }}>
+            <label class="form-check-label" for="radioIsNotCrewMember">No, can't be used in a crew</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="radioIsCrewMember" name="is_crew_member" value="1" {{ isChecked( old('is_crew_member', $member->is_crew_member) === 1) }}>
+            <label class="form-check-label" for="radioIsCrewMember">Yes, can be used in a crew</label>
+        </div>
+    </div>
+    <x-error name="is_internal" />
 </x-form-control-horizontal>
 
 <x-form-control-horizontal>

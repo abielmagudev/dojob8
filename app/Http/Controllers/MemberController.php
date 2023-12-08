@@ -11,7 +11,7 @@ class MemberController extends Controller
     public function index()
     {
         return view('members.index', [
-            'members' => Member::with('crew')->orderBy('name')->paginate(25),
+            'members' => Member::orderBy('name')->paginate(25),
         ]);
     }
 
@@ -19,8 +19,6 @@ class MemberController extends Controller
     {
         return view('members.create', [
             'member' => new Member,
-            'categories' => Member::getCategories(),
-            'scopes' => array_reverse(Member::getScopes()),
         ]);
     }
 
@@ -51,8 +49,6 @@ class MemberController extends Controller
     {
         return view('members.edit', [
             'member' => $member,
-            'categories' => Member::getCategories(),
-            'scopes' => array_reverse(Member::getScopes()),
         ]);
     }
 

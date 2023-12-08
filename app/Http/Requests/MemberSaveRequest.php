@@ -52,13 +52,13 @@ class MemberSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'category' => [
+            'is_internal' => [
                 'required',
-                sprintf('in:%s', implode(',', Member::getCategories())),
+                'boolean',
             ],
-            'scope' => [
+            'is_crew_member' => [
                 'required',
-                sprintf('in:%s', implode(',', Member::getScopes())),
+                'boolean',
             ],
             'is_active' => [
                 'nullable',

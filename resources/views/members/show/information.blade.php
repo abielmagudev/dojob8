@@ -16,7 +16,7 @@
     <x-small-label label="Position">
         <span class="d-block">{{ ucfirst($member->category) }}</span>
         <span class="d-block">{{ $member->position }}</span>
-        <span class="d-block">{{ ucfirst($member->scope) }}</span>
+        <span class="d-block">{{ ucfirst($member->internal_status) }}</span>
     </x-small-label>
 
     @if( $member->hasBirthdate() )      

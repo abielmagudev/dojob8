@@ -97,7 +97,7 @@ class CrewController extends Controller
     public function membersUpdate(CrewMemberUpdateRequest $request, Crew $crew)
     {
         if($request->ajax() || $request->wantsJson() || $request->header('X-Requested-With') == 'XMLHttpRequest') {
-            return $this->membersUpdateAjaxForKeepCrews($request, $crew);
+            return $this->membersUpdateAjaxForKeepOthersCrews($request, $crew);
         }
 
         $crew->members()->sync( $request->get('members', []) );
@@ -109,8 +109,44 @@ class CrewController extends Controller
      * Esta funcion es cuando se hace con la interaccion de arrastre(dragdrop) 
      * con la libreria "SortableJs" de miembros entre crews.
      * 
-     * Aunque la interaccion de arrastre es de uno(1) member, esta funcion tiene como proceso de mantener
+     * Aunque la interaccion de arrastre es de uno(1) member, el proceso es mantener
      * los crews al que pertenece el o los members recibidos por request.
+     * 
+     * Excepto del crew de donde proviene, id del crew en la variable crew_old del request
+     */
+    public function membersUpdateAjaxForKeepOthersCrews(CrewMemberUpdateRequest $request, Crew $crew)
+    {
+        // If is null the input "members", return a empty array
+        $members_id = $request->get('members', []);
+
+        // Sync members and keep the crews of members
+        $crew->members()->sync($members_id);
+
+        // Get the members recent attached by sync
+        $members = $crew->members->only($members_id);
+
+        // Get the full names of members attached
+        $member_full_names = $members->map(fn($member) => ['full_name' => $member->full_name]);
+
+        // Removes the old crew from the members received in the request
+        if( $request->filled('crew_old') ) {
+            $members->each(fn($member) => $member->crews()->detach($request->get('crew_old')));
+        }
+
+        return response()->json([
+            'message' => sprintf('You updated the members %s in the %s crew', $member_full_names->implode(', '), $crew->name),
+            'status' => 200,
+            'dataset' => $crew->dataset_json,
+        ]);
+    }
+
+    /**
+     * Esta funcion es cuando se hace con la interaccion de arrastre(dragdrop) 
+     * con la libreria "SortableJs" de miembros entre crews.
+     * 
+     * Aunque la interaccion de arrastre es de uno(1) member, esta funcion se encarga de mantener
+     * los crews al que pertenece el o los members recibidos por request aun de donde proviene.
+     * NO remueve ningun crew
      */
     public function membersUpdateAjaxForKeepCrews(CrewMemberUpdateRequest $request, Crew $crew)
     {
@@ -121,11 +157,7 @@ class CrewController extends Controller
         $crew->members()->sync($members_id);
 
         // Get the full names of members attached
-        $member_full_names = $crew->members->only($members_id)->map(function($member) {
-            return [
-                'full_name' => $member->full_name,
-            ];
-        });
+        $member_full_names = $crew->members->only($members_id)->map(fn($member) => ['full_name' => $member->full_name]);
 
         return response()->json([
             'message' => sprintf('You updated the members %s in the %s crew', $member_full_names->implode(', '), $crew->name),

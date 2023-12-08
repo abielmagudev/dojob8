@@ -45,7 +45,8 @@
 <script>
 const setCrewMembersRequest = {
     route: "<?= route('crews.members.update', '?') ?>",
-    send: async function (members_id, crew_id) {
+    cache: {},
+    send: async function (members_id, crew_id, crew_old) {
         let route = this.route.replace('?', crew_id)
 
         let response = await fetch(route, {
@@ -56,7 +57,8 @@ const setCrewMembersRequest = {
                 'Accept': 'application/json',
             },
             body: JSON.stringify({
-                members: members_id
+                members: members_id,
+                crew_old: this.cache.crew_old,
             }),
         });
 
@@ -70,21 +72,24 @@ document.querySelectorAll('.list-sortable').forEach(function (listing) {
     new Sortable(listing, {
         group: {
             name: 'shared',
-            pull: 'clone',
+            // pull: 'clone',
         },
         animation: 150,
+        onChoose: function (evt) {
+            setCrewMembersRequest.cache.crew_old = evt.target.id.replace('crew', '');
+	    },
         onAdd: async function (evt) {
-            let wrapper = evt.target.closest('.list-group')
-            let crew_id = wrapper.id.replace('crew','');
-            let members_id = Array.from(wrapper.querySelectorAll('input[type="hidden"]')).map((input) => input.value)
+            let wrapper = evt.target
 
-            let data = await setCrewMembersRequest.send(
-                members_id,
-                crew_id
-            );
+            let crew_id = wrapper.id.replace('crew','');
+
+            let members_id = Array.from(
+                wrapper.querySelectorAll('input[type="hidden"]')
+            ).map((input) => input.value)
+
+            let data = await setCrewMembersRequest.send(members_id, crew_id, this.crew_old);
 
             wrapper.nextElementSibling.querySelector('a[data-crew]').dataset.crew = data.dataset
-
         }
     });
 }) 

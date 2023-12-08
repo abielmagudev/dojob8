@@ -5,8 +5,8 @@
             <label for="statusSelect" class="form-label">Status</label>
             <select id="statusSelect" name="status" class="form-select">
                 <option label="Any status" selected></option>
-                <option value="1" {{ isSelected( $request->get('status') == 1 ) }}>Active</option>
-                <option value="0" {{ isSelected( $request->get('status') == 0 ) }}>Inactive</option>
+                <option value="1" {{ isSelected( $request->get('status') === "1" ) }}>Active</option>
+                <option value="0" {{ isSelected( $request->get('status') === "0" ) }}>Inactive</option>
             </select>
         </div>
 
@@ -14,8 +14,8 @@
             <label for="canBeInCrewsSelect" class="form-label">Can be in crews?</label>
             <select id="canBeInCrewsSelect" name="can_be_in_crews" class="form-select">
                 <option label="Any option"></option>
-                <option value="1" {{ isSelected( $request->get('can_be_in_crews') == 1 ) }}>Yes, it can be in crews</option>
-                <option value="0" {{ isSelected( $request->get('can_be_in_crews') == 0 ) }}>No, it cannot be in crews</option>
+                <option value="1" {{ isSelected( $request->get('can_be_in_crews') === "1" ) }}>Yes, it can be in crews</option>
+                <option value="0" {{ isSelected( $request->get('can_be_in_crews') === "0" ) }}>No, it cannot be in crews</option>
             </select>
         </div>
 

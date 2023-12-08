@@ -1,8 +1,8 @@
 <div class="btn-group">
     @if(! isset($right) )
-    <button class="btn btn-primary active" data-bs-toggle="tooltip" data-bs-title="Total">
+    <span class="{{ $attributes->get('total-class', 'btn btn-primary active') }}" data-bs-toggle="tooltip" data-bs-title="Total">
         {{ $total }}
-    </button>
+    </span>
     @endif
 
     <a class="{{ $attributes->get('class', 'btn btn-primary') }}" href="{{ $route }}">
@@ -16,8 +16,8 @@
     </a>
 
     @isset( $right )
-    <button class="btn btn-primary active" data-bs-toggle="tooltip" data-bs-title="Total">
+    <span class="{{ $attributes->get('total-class', 'btn btn-primary active') }}" data-bs-toggle="tooltip" data-bs-title="Total">
         {{ $total }}
-    </button>
+    </span>
     @endisset
 </div>

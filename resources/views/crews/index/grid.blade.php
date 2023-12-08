@@ -28,7 +28,7 @@
                 <div class="list-group-item">
                     <div class="text-center">
                         <x-modal-trigger modal-id="modalSetCrewMembers" data-crew="{{ $crew->dataset_json }}" link>
-                            <i class="bi bi-plus-circle-dotted"></i>
+                            <i class="bi bi-arrow-repeat"></i>
                         </x-modal-trigger>
                     </div>
                 </div>
@@ -68,7 +68,10 @@ const setCrewMembersRequest = {
 
 document.querySelectorAll('.list-sortable').forEach(function (listing) {
     new Sortable(listing, {
-        group: 'shared',
+        group: {
+            name: 'shared',
+            pull: 'clone',
+        },
         animation: 150,
         onAdd: async function (evt) {
             let wrapper = evt.target.closest('.list-group')

@@ -52,7 +52,7 @@
 
                 @if( $crew->isActive() )   
                 <x-modal-trigger modal-id="modalSetCrewMembers" class="btn btn-outline-primary" data-crew="{{ json_encode($modal_data) }}" link>
-                    <i class="bi bi-plus-circle-dotted"></i>
+                    <i class="bi bi-arrow-repeat"></i>
                 </x-modal-trigger>
                 @endif
 

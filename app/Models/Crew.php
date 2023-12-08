@@ -37,7 +37,9 @@ class Crew extends Model
 
     public function getTextColorAttribute()
     {
-        return $this->id ? CrewPainter::getTextColorByMode( $this->text_color_mode ) : CrewPainter::getTextColorByMode( CrewPainter::TEXT_COLOR_MODE_DEFAULT );
+        return CrewPainter::getTextColorByMode( 
+            $this->text_color_mode ?? CrewPainter::TEXT_COLOR_MODE_DEFAULT
+        );
     }
 
     public function getDatasetAttribute()
@@ -64,21 +66,9 @@ class Crew extends Model
 
     public function hasMembers()
     {
-        return (bool) $this->isActive() && ($this->members_count ?? $this->loadCount('members'));
+        return (bool) $this->isActive() && $this->members_count || $this->members->count();
     }
 
-
-    // Actions
-
-    public function addMembers(array $members_id)
-    {
-        return Member::whereIn('id', $members_id)->updateCrew($this->id);
-    }
-
-    public function removeMembers()
-    {
-        return Member::whereCrew($this->id)->updateCrew(null);
-    }
 
 
     // Scopes
@@ -103,6 +93,6 @@ class Crew extends Model
 
     public function members()
     {
-        return $this->hasMany(Member::class);
+        return $this->belongsToMany(Member::class)->using(CrewMember::class);
     }
 }

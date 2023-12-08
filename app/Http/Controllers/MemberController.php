@@ -38,7 +38,7 @@ class MemberController extends Controller
         $next = Member::after($member->id)->first();
 
         return view('members.show', [
-            'member' => $member,
+            'member' => $member->load('crews.members'),
             'routes' => [
                 'previous' => $previous ? route('members.show', $previous) : false,
                 'next' => $next ? route('members.show', $next) : false,
@@ -57,6 +57,10 @@ class MemberController extends Controller
     {
         if(! $member->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating member, try again please');
+        }
+
+        if( $member->isInactive() ) {
+            $member->crews()->detach();
         }
 
         return redirect()->route('members.edit', $member)->with('success', "You updated the member <b>{$member->full_name}</b>");

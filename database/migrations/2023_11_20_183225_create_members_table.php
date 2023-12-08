@@ -27,7 +27,6 @@ class CreateMembersTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->boolean('can_be_in_crews')->default(false);
             $table->text('notes')->nullable();
-            $table->foreignId('crew_id')->nullable();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->foreignId('deleted_by')->nullable();

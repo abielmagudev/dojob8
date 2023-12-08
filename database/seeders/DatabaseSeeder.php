@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CrewMember;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
             InspectorSeeder::class,
             JobSeeder::class,
             MemberSeeder::class,
+            CrewMemberSeeder::class,
             UserSeeder::class,
             WorkOrderSeeder::class,
         ]);

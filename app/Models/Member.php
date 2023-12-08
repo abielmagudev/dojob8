@@ -40,7 +40,6 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         'is_active',
         'can_be_in_crews',
         'notes',
-        'crew_id',
     ];
 
     protected $casts = [
@@ -99,9 +98,9 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         return (bool) $this->can_be_in_crews;
     }
 
-    public function hasCrew()
+    public function hasCrews()
     {
-        return $this->crew_id && $this->crew;
+        return (bool) $this->isActive() && $this->crews_count || $this->crews->count();
     }
  
 
@@ -121,16 +120,6 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
     public function scopeOnlyCannotBeInCrews($query)
     {
         return $query->where('can_be_in_crews', false);
-    }
-
-    public function scopeWhereCrew($query, int $crew_id)
-    {
-        return $query->where('crew_id', $crew_id);
-    }
-
-    public function scopeUpdateCrew($query, $crew_id)
-    {
-        return $query->update(['crew_id' => $crew_id]);
     }
 
 
@@ -172,13 +161,13 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
 
     // Relationships
 
+    public function crews()
+    {
+        return $this->belongsToMany(Crew::class)->using(CrewMember::class);
+    }
+
     public function user()
     {
         return $this->morphOne(User::class, 'profile');
-    }
-
-    public function crew()
-    {
-        return $this->belongsTo(Crew::class);
     }
 }

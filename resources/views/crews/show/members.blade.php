@@ -1,6 +1,6 @@
 <x-card title="Members">
-    @if( $crew->members->count() )       
-    <x-table>
+    @if( $crew->hasMembers() )       
+    <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
                 <th>Name</th>

@@ -69,7 +69,7 @@ class CrewController extends Controller
         }
 
         if( $crew->isInactive() ) {
-            $crew->removeMembers();
+            $crew->members()->detach();
         }
 
         return redirect()->route('crews.edit', $crew)->with('success', "You updated the crew <b>{$crew->name}</b>");
@@ -86,24 +86,89 @@ class CrewController extends Controller
         return redirect()->route('crews.index')->with('success', "You deleted the crew <b>{$crew->name}</b>");
     }
 
+    /**
+     * En esta funcion tiene 2 procesos, cuando la peticion es por AJAX o sincronia de Http.
+     * 
+     * Si es por Http, significa que varios members seran agregados al crew seleccionado, lo cual
+     * NO se removeran los crews que pertenezcan los members recibidos por $request.
+     * 
+     * Excepto por los que no esten en la peticion, es por eso que se usa la funcion de "sync".
+     */
     public function membersUpdate(CrewMemberUpdateRequest $request, Crew $crew)
     {
-        $crew->removeMembers();
-
-        if( $request->filled('members') ) {
-            $crew->addMembers($request->members);
+        if($request->ajax() || $request->wantsJson() || $request->header('X-Requested-With') == 'XMLHttpRequest') {
+            return $this->membersUpdateAjaxForKeepCrews($request, $crew);
         }
 
-        if($request->ajax() || $request->wantsJson() || $request->header('X-Requested-With') === 'XMLHttpRequest')
-        {
-            $members = $crew->members->only($request->members)->map(fn($member) => ['name' => $member->full_name]);
-            return response()->json([
-                'message' => sprintf('You updated the members %s in the %s crew', $members->implode(', '), $crew->name),
-                'status' => 200,
-                'dataset' => $crew->dataset_json,
-            ]);
-        }
+        $crew->members()->sync( $request->get('members', []) );
 
         return redirect()->route('crews.index', ['show' => $request->get('show', 'grid')])->with('success', "You updated the members of the <b>{$crew->name}</b> crew");
+    }
+
+    /**
+     * Esta funcion es cuando se hace con la interaccion de arrastre(dragdrop) 
+     * con la libreria "SortableJs" de miembros entre crews.
+     * 
+     * Aunque la interaccion de arrastre es de uno(1) member, esta funcion tiene como proceso de mantener
+     * los crews al que pertenece el o los members recibidos por request.
+     */
+    public function membersUpdateAjaxForKeepCrews(CrewMemberUpdateRequest $request, Crew $crew)
+    {
+        // If is null the input "members", return a empty array
+        $members_id = $request->get('members', []);
+
+        // Sync members and keep the crews of members
+        $crew->members()->sync($members_id);
+
+        // Get the full names of members attached
+        $member_full_names = $crew->members->only($members_id)->map(function($member) {
+            return [
+                'full_name' => $member->full_name,
+            ];
+        });
+
+        return response()->json([
+            'message' => sprintf('You updated the members %s in the %s crew', $member_full_names->implode(', '), $crew->name),
+            'status' => 200,
+            'dataset' => $crew->dataset_json,
+        ]);
+    }
+
+
+    /**
+     * Esta funcion es cuando se hace con la interaccion de arrastre(dragdrop) 
+     * con la libreria "SortableJs" de miembros entre crews.
+     * 
+     * En esta interaccion, solamente se arrastra uno(1) member al crew deseado, por lo que los crews 
+     * que tenga el member seran removidos
+     */
+    public function membersUpdateAjaxForSingleCrew(CrewMemberUpdateRequest $request, Crew $crew)
+    {
+        // If is null the input "members", return a empty array
+        $members_id = $request->get('members', []);
+
+        // Get members from the request to remove crews they belong to
+        $members = Member::with('crews')->whereIn('id', $members_id)->get();
+
+        // Remove all crews they belong to
+        $members->each(function ($member) { 
+            $member->crews()->detach(); 
+        });
+
+        // Attach members on current crew
+        $crew->members()->attach($members_id);
+
+        // Get the full names of members attached
+        $member_full_names = $members->map(function($member) {
+            return [
+                'full_name' => $member->full_name,
+            ];
+        });
+
+        return response()->json([
+            'message' => sprintf('You updated the members %s in the %s crew', $member_full_names->implode(', '), $crew->name),
+            'status' => 200,
+            'dataset' => $crew->dataset_json,
+        ]);
     }
 }

@@ -1,40 +1,39 @@
 @if( $member->canBeInCrews() )
-    <x-card 
-        :title="$member->hasCrew() ? $member->crew->name : 'Crew'" 
-        :subtitle="$member->hasCrew() ? 'Crew' : 'None'"
-    >
-    @if( $member->hasCrew() && $member->crew->hasMembers() )
+    <x-card title="Crews">
 
-        <?php $crew_members = $member->crew->members->filter(function ($crew_member) use ($member) {
-            return $crew_member->id <> $member->id;
-        }) ?>
-
-        @if( $crew_members->count() )   
+        @if( $member->hasCrews() ) 
         <x-table class="align-middle">
-            
-            <x-slot name="thead">
-                <tr>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
-                </tr>
-            </x-slot>
-
-            @foreach($crew_members as $crew_member)
+            @slot('thead')
             <tr>
-                <td>{{ $crew_member->full_name }}</td>
-                <td>{{ $crew_member->phone_number }}</td>
-                <td>{{ $crew_member->mobile_number }}</td>
-                <td>{{ $crew_member->email }}</td>
+                <th>Name</th>
+                <th>Members</th>
+                <th></th>
+            </tr>
+            @endslot
+
+            @foreach($member->crews as $crew)
+            <tr>
+                <td>{{ $crew->name }}</td>
+                <td>
+                    @foreach($crew->members->except($member->id) as $member_crew)            
+                    <span class="badge text-bg-light">
+                        <a href="{{ route('members.show', $member_crew) }}" class="text-decoration-none">{{ $member_crew->full_name }}</a>
+                    </span>
+                    @endforeach
+                </td>
+                <td class="text-end">
+                    <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+                </td>
             </tr>
             @endforeach
         </x-table>
         @endif
-    @endif
     </x-card>
 
 @else
-<p class="text-center text-secondary">Cannot be in crews</p>
+<br>
+<p class="text-center text-secondary text-uppercase ">- Cannot be in crews -</p>
 
 @endif

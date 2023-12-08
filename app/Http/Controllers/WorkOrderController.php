@@ -61,18 +61,22 @@ class WorkOrderController extends Controller
         return view('work-orders.create', [
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $client,
-            'crews' => Crew::with('members')->get(),
+            'crews' => Crew::with('members')->active()->orderBy('name', 'asc')->get(),
             'contractors' => Contractor::orderBy('name')->get(),
             'jobs' => Job::orderBy('name')->get(),
-            'operators' => Member::operative()->orderBy('full_name')->get(),
             'work_order' => new WorkOrder,
         ]);
     }
 
     public function store(WorkOrderStoreRequest $request)
     {
-        if(! $work_order = WorkOrder::create($request->validated()) )
+        if(! $work_order = WorkOrder::create($request->validated()) ) {
             return back()->with('danger', "Error saving work order, try again please");
+        }
+        
+        $work_order->operators()->attach( 
+            $work_order->crew->members->pluck('id')
+        );
 
         $this->saveOrderByExtensions(
             $request->cache['extensions'],

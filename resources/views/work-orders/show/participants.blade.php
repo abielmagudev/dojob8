@@ -24,6 +24,6 @@
     </x-small-label>
 
     <x-small-label label="Operators">
-        ...
+        {!! $work_order->operators->map(function($member){ return $member->full_name; })->implode('<br>') !!}
     </x-small-label>
 </x-card>

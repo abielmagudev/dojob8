@@ -166,6 +166,11 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         return $this->belongsToMany(Crew::class)->using(CrewMember::class);
     }
 
+    public function work_orders()
+    {
+        return $this->belongsToMany(WorkOrder::class)->using(MemberWorkOrder::class);
+    }
+
     public function user()
     {
         return $this->morphOne(User::class, 'profile');

@@ -72,6 +72,7 @@ class WorkOrder extends Model
         'notes',
         'scheduled_date',
         'scheduled_time',
+        'status',
     ];
 
     protected $casts = [
@@ -129,6 +130,11 @@ class WorkOrder extends Model
     public function hasContractor()
     {
         return (bool) $this->contractor_id && is_a($this->contractor, Contractor::class);
+    }
+
+    public function hasOperators()
+    {
+        return (bool) $this->operators_count || $this->operators->count();
     }
 
 
@@ -321,6 +327,11 @@ class WorkOrder extends Model
     public function inspections()
     {
         return $this->hasMany(Inspection::class);
+    }
+
+    public function operators()
+    {
+        return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
     }
 
 

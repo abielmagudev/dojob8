@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\CrewMember;
+use App\Models\MemberWorkOrder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
             CrewMemberSeeder::class,
             UserSeeder::class,
             WorkOrderSeeder::class,
+            MemberWorkOrderSeeder::class,
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\WorkOrderRequest\ResolveExtensionRequestsTrait;
 use App\Models\Client;
+use App\Models\Crew;
 use App\Models\Job;
 use App\Models\WorkOrder;
 use Illuminate\Foundation\Http\FormRequest;
@@ -36,6 +37,10 @@ class WorkOrderStoreRequest extends FormRequest
                 'required',
                 sprintf('exists:%s,id', Job::class),
             ],
+            'crew' => [
+                'required', 
+                sprintf('exists:%s,id', Crew::class),
+            ],
             'notes' => [
                 'nullable',
             ],
@@ -62,6 +67,7 @@ class WorkOrderStoreRequest extends FormRequest
         return array_merge(parent::validated(), [
             'client_id' => $this->client,
             'job_id' => $this->job,
+            'crew_id' => $this->crew,
             'status' => WorkOrder::FIRST_STATUS_WHEN_CREATED,
         ]);
     }

@@ -21,6 +21,11 @@ trait HasAvailabilityTrait
         return ! $this->isAvailable();
     }
 
+    public function scopeWhereAvailable($query, $value)
+    {
+        return $query->where('is_available', $value);
+    }
+
     public function scopeAvailable($query)
     {
         return $query->where('is_available', 1);
@@ -52,6 +57,11 @@ trait HasAvailabilityTrait
     public function isInactive()
     {
         return ! $this->isActive();
+    }
+
+    public function scopeWhereActive($query, $value)
+    {
+        return $query->where('is_active', $value);
     }
 
     public function scopeActive($query)

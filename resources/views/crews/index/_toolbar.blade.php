@@ -31,12 +31,7 @@
 
     {{-- Create crew --}}
     <div>
-        <div class="btn-group">
-            <span class="btn btn-primary active" data-bs-toggle="tooltip" data-bs-title="Total">{{ $crews->count() }}</span>
-            <a href="{{ route('crews.create') }}" class="btn btn-primary">
-                <b>+</b>
-            </a>
-        </div>
+        <x-custom.link-with-total total="{{ $crews->count() }}" route="{{ route('crews.create') }}" />
     </div>
 </div>
 <br>

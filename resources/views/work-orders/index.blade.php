@@ -53,31 +53,23 @@
     @if( $work_orders->count() ) 
     <x-table>
         <x-slot name="thead">
-        <tr class="text-center">
+        <tr>
             <th>Priority</th>
-            <th>Scheduled</th>
             <th>Crew</th>
             <th>Job</th>
-            <th class="text-start">Client</th>
+            <th>Client</th>
             <th>Contractor</th>
+            <th>Scheduled</th>
             <th>Status</th>
             <th></th>
         </tr>
         </x-slot>
 
         @foreach($work_orders as $work_order)           
-        <tr class="text-center">
+        <tr>
 
             <td>
                 <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
-            </td>
-
-            <td class="text-nowrap">
-                @if(! $request->has('scheduled_date_range2') )
-                <span class="d-block">{{ $work_order->scheduled_date_human }}</span>
-                @endif
-
-                <span>{{ $work_order->scheduled_time_human }}</span>
             </td>
 
             <td class="text-nowrap">
@@ -91,7 +83,7 @@
 
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
 
-            <td class="text-nowrap text-start">
+            <td class="text-nowrap">
                 @include('clients.__.address-table-cell', [
                     'client' => $work_order->client
                 ])
@@ -107,6 +99,14 @@
                     <span class="badge text-bg-light" style="font-size:.9rem">{{ $work_order->contractor->alias }}</span>
                 </x-tooltip>
                 @endif
+            </td>
+
+            <td class="text-nowrap">
+                @if(! $request->has('scheduled_date_range2') )
+                <span class="d-block">{{ $work_order->scheduled_date_human }}</span>
+                @endif
+
+                <span>{{ $work_order->scheduled_time_human }}</span>
             </td>
 
             <td class="text-nowrap text-uppercase">

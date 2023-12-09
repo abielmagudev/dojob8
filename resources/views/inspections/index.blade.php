@@ -36,25 +36,25 @@
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
+                <th>Status</th>
                 <th>Scheduled</th>
                 <th>Inspector</th>
                 <th>Job</th>
                 <th>Client</th>
-                <th>Status</th>
                 <th></th>
             </tr>
         </x-slot>
     
         @foreach($inspections as $inspection)
         <tr>
+            <td style="max-width:128px">
+                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase w-100">{{ $inspection->status }}</x-badge>
+            </td>
             <td class="text-nowrap">{{ $inspection->scheduled_date->format('D d M, Y') }}</td>
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
             <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])
-            </td>
-            <td style="max-width:128px">
-                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase w-100">{{ $inspection->status }}</x-badge>
             </td>
             <td class="text-end">
                 <a href="{{ route('inspections.show', $inspection) }}" class="btn btn-outline-primary">

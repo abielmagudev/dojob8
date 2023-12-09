@@ -57,8 +57,8 @@
             <th>Priority</th>
             <th>Crew</th>
             <th>Job</th>
-            <th>Client</th>
             <th>Contractor</th>
+            <th>Client</th>
             <th>Scheduled</th>
             <th>Status</th>
             <th></th>
@@ -84,6 +84,14 @@
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
 
             <td class="text-nowrap">
+                @if( $work_order->hasContractor() )
+                <x-tooltip :title="$work_order->contractor->name">
+                    <span class="badge text-bg-light" style="font-size:.9rem">{{ $work_order->contractor->alias }}</span>
+                </x-tooltip>
+                @endif
+            </td>
+            
+            <td class="text-nowrap">
                 @include('clients.__.address-table-cell', [
                     'client' => $work_order->client
                 ])
@@ -91,14 +99,6 @@
                     'client' => $work_order->client, 
                     'except' => ['full_name']
                 ])
-            </td>
-
-            <td class="text-nowrap">
-                @if( $work_order->hasContractor() )
-                <x-tooltip :title="$work_order->contractor->name">
-                    <span class="badge text-bg-light" style="font-size:.9rem">{{ $work_order->contractor->alias }}</span>
-                </x-tooltip>
-                @endif
             </td>
 
             <td class="text-nowrap">

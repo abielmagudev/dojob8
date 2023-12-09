@@ -9,6 +9,6 @@
 @include("crews.index.{$show}")
 
 @include('crews.index._modal-set-crew-members-script')
-@include('crews.index._modal-set-on-work-orders')
+@include('crews.index._modal-update-work-order-operators')
 
 @endsection

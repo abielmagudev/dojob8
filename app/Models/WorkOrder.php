@@ -193,6 +193,11 @@ class WorkOrder extends Model
         return $query->whereNotIn('status', $status_array);
     }
 
+    public function scopeWhereScheduledDate($query, $value)
+    {
+        return $query->where('scheduled_date', $value);
+    }
+
     public function scopeWhereScheduledDateFrom($query, $scheduled_date_from)
     {
         return $query->where('scheduled_date', '>=', $scheduled_date_from);

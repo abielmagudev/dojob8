@@ -58,7 +58,7 @@
             <th>Priority</th>
             <th>Crew</th>
             <th>Job</th>
-            <th class="d-none">Contractor</th>
+            <th>Contractor</th>
             <th>Client</th>
             <th>Scheduled</th>
             <th>Status</th>
@@ -83,16 +83,13 @@
             </td>
 
             <td class="text-nowrap">
-                <span class="d-block">{{ $work_order->job->name }}</span>
-                @if( $work_order->hasContractor() )
-                <small class="badge text-bg-light">{{ $work_order->contractor->alias }}</small>
-                @endif
+                <span>{{ $work_order->job->name }}</span>
             </td>
 
-            <td class="text-nowrap d-none">
+            <td class="text-nowrap">
                 @if( $work_order->hasContractor() )
-                <x-tooltip :title="$work_order->contractor->name">
-                    <span class="badge text-bg-light" style="font-size:.9rem">{{ $work_order->contractor->alias }}</span>
+                <x-tooltip :title="$work_order->contractor->name" class="d-block">
+                    <span class="badge text-bg-light d-block" style="font-size:.9rem">{{ $work_order->contractor->alias }}</span>
                 </x-tooltip>
                 @endif
             </td>

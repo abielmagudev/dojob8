@@ -20,6 +20,7 @@ class InspectionController extends Controller
             'work_order.client'
         ])
         ->filtersByRequest($request)
+        ->orderBy('inspector_id', 'desc')
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->paginate(25)
         ->appends( $request->all() );

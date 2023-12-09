@@ -15,7 +15,7 @@
             <div class="list-group list-group-flush list-sortable" id="crew{{ $crew->id }}">
                 @if( $crew->hasMembers() )
                 @foreach($crew->members as $member)
-                <div class="list-group-item" role="button">
+                <div class="list-group-item list-group-item-action cursor-move" role="button">
                     <span>{{ $member->full_name }}</span>
                     <input type="hidden" name="members[]" value="{{ $member->id }}">
                 </div>
@@ -25,12 +25,10 @@
 
             @if( $crew->isActive() )           
             <div class="list-group list-group-flush">
-                <div class="list-group-item">
-                    <div class="text-center">
-                        <x-modal-trigger modal-id="modalSetCrewMembers" data-crew="{{ $crew->dataset_json }}" link>
-                            <i class="bi bi-arrow-repeat"></i>
-                        </x-modal-trigger>
-                    </div>
+                <div class="list-group-item list-group-item-action text-center">
+                    <x-modal-trigger modal-id="modalSetCrewMembers" data-crew="{{ $crew->dataset_json }}" class="d-block" link>
+                        <i class="bi bi-arrow-repeat"></i>
+                    </x-modal-trigger>
                 </div>
             </div>
             @endif

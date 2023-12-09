@@ -45,6 +45,9 @@
             background-color: #700ec1;
             color: white;
         }
+        .cursor-move {
+            cursor: move;
+        }
     </style>
 </head>
 <body class="bg-body-secondary">

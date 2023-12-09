@@ -84,7 +84,9 @@
 
             <td class="text-nowrap">
                 <span class="d-block">{{ $work_order->job->name }}</span>
-                <small>{{ $work_order->contractor->alias }}</small>
+                @if( $work_order->hasContractor() )
+                <small class="badge text-bg-light">{{ $work_order->contractor->alias }}</small>
+                @endif
             </td>
 
             <td class="text-nowrap d-none">

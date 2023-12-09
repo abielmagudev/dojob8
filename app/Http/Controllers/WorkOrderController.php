@@ -35,7 +35,7 @@ class WorkOrderController extends Controller
         $work_orders = WorkOrder::with(['job', 'client', 'contractor', 'crew'])
         ->filtersByRequest($request)
         ->orderBy('scheduled_time', 'asc')
-        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->orderBy('crew_id', $request->get('sort', 'desc'))
         ->paginate(25)
         ->appends( $request->query() );
 
@@ -113,7 +113,6 @@ class WorkOrderController extends Controller
             'client' => $work_order->client,
             'crews' => Crew::with('members')->get(),
             'contractors' => Contractor::orderBy('name')->get(),
-            'operators' => Member::operative()->orderBy('full_name')->get(),
             'work_order' => $work_order,
         ]);
     }

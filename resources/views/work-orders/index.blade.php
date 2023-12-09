@@ -52,13 +52,13 @@
 
     @if( $work_orders->count() ) 
     <x-table class="align-middle">
-        
+
         @slot('thead')
         <tr>
             <th>Priority</th>
             <th>Crew</th>
             <th>Job</th>
-            <th>Contractor</th>
+            <th class="d-none">Contractor</th>
             <th>Client</th>
             <th>Scheduled</th>
             <th>Status</th>
@@ -82,9 +82,12 @@
                 </span>
             </td>
 
-            <td class="text-nowrap">{{ $work_order->job->name }}</td>
-
             <td class="text-nowrap">
+                <span class="d-block">{{ $work_order->job->name }}</span>
+                <small>{{ $work_order->contractor->alias }}</small>
+            </td>
+
+            <td class="text-nowrap d-none">
                 @if( $work_order->hasContractor() )
                 <x-tooltip :title="$work_order->contractor->name">
                     <span class="badge text-bg-light" style="font-size:.9rem">{{ $work_order->contractor->alias }}</span>

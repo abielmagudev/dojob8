@@ -51,8 +51,9 @@
     @endslot
 
     @if( $work_orders->count() ) 
-    <x-table>
-        <x-slot name="thead">
+    <x-table class="align-middle">
+        
+        @slot('thead')
         <tr>
             <th>Priority</th>
             <th>Crew</th>
@@ -63,7 +64,7 @@
             <th>Status</th>
             <th></th>
         </tr>
-        </x-slot>
+        @endslot
 
         @foreach($work_orders as $work_order)           
         <tr>
@@ -90,14 +91,14 @@
                 </x-tooltip>
                 @endif
             </td>
-            
+
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', [
-                    'client' => $work_order->client
+                    'client' => $work_order->client,
+                    'except' => ['full_name'],
                 ])
                 @include('clients.__.contact-table-cell', [
                     'client' => $work_order->client, 
-                    'except' => ['full_name']
                 ])
             </td>
 

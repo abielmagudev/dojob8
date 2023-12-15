@@ -1,11 +1,7 @@
 @extends('application')
 
 @section('header')
-<x-header title="Work orders">
-    @slot('subtitle')
-    <span class="badge text-bg-dark align-middle">{{ $work_orders->total() }}</span>
-    @endslot
-</x-header>
+<x-header title="Work orders" />
 @endsection
 
 @section('content')
@@ -55,12 +51,12 @@
 
         @slot('thead')
         <tr>
+            <th>Scheduled</th>
             <th>Priority</th>
             <th>Crew</th>
             <th>Job</th>
             <th>Contractor</th>
             <th>Client</th>
-            <th>Scheduled</th>
             <th>Status</th>
             <th></th>
         </tr>
@@ -68,6 +64,14 @@
 
         @foreach($work_orders as $work_order)           
         <tr>
+
+            <td class="text-nowrap">
+                @if(! $request->has('scheduled_date_range2') )
+                <span class="d-block">{{ $work_order->scheduled_date_human }}</span>
+                @endif
+
+                <span>{{ $work_order->scheduled_time_human }}</span>
+            </td>
 
             <td>
                 <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
@@ -83,44 +87,25 @@
             </td>
 
             <td class="text-nowrap">
-                <span class="d-block">{{ $work_order->job->name }}</span>
-                
-                @if($work_order->job->approved_inspections_required)
-                <span class="badge text-bg-light">
-                    <a href="#!">Required {{ $work_order->job->approved_inspections_required }} inspections</a>
-                </span>
-                    
-                @else
-                <span class="badge text-bg-light">Does not require inspections</span>
-
-
-                @endif
+                {{ $work_order->job->name }}
             </td>
 
             <td class="text-nowrap">
                 @if( $work_order->hasContractor() )
                 <x-tooltip :title="$work_order->contractor->name" class="d-block">
-                    <span class="badge text-bg-light d-block" style="font-size:.9rem">{{ $work_order->contractor->alias }}</span>
+                    <span class="badge text-bg-light w-100">{{ $work_order->contractor->alias }}</span>
                 </x-tooltip>
+
+                @else
+                <span class="badge bg-light text-secondary w-100">N/A</span>
+                    
                 @endif
             </td>
 
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', [
                     'client' => $work_order->client,
-                    'except' => ['full_name'],
                 ])
-                @include('clients.__.contact-table-cell', [
-                    'client' => $work_order->client, 
-                ])
-            </td>
-
-            <td class="text-nowrap">
-                @if(! $request->has('scheduled_date_range2') )
-                <span class="d-block">{{ $work_order->scheduled_date_human }}</span>
-                @endif
-
-                <span>{{ $work_order->scheduled_time_human }}</span>
             </td>
 
             <td class="text-nowrap text-uppercase">

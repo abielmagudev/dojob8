@@ -1,10 +1,6 @@
 <?php if(! isset($except) ||! is_array($except) ) $except = [] ?>
 <div>
     <address class="d-inline-block m-0">
-        @if(! in_array('full_name', $except) )
-        {{ $client->full_name }}, 
-        @endif
-
         @if(! in_array('street', $except) )
         {{ $client->street }}, 
         @endif

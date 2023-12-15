@@ -1,6 +1,6 @@
 <div class="btn-group">
     @if(! isset($right) )
-    <span class="{{ $attributes->get('total-class', 'btn btn-primary active') }}" data-bs-toggle="tooltip" data-bs-title="Total">
+    <span class="{{ $attributes->get('total-class', 'btn btn-dark active') }}" data-bs-toggle="tooltip" data-bs-title="Total">
         {{ $total }}
     </span>
     @endif

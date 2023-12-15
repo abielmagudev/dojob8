@@ -1,26 +1,20 @@
 @extends('application')
 
 @section('header')
-<x-header title="Clients">
-    @slot('subtitle')
-    <small class="align-middle badge text-bg-dark">{{ $clients->total() }}</small>
-    @endslot
-</x-header>
+<x-header title="Clients" />
 @endsection
 
 @section('content')
 <x-card title="">
     <x-slot name="options">
-        <a href="{{ route('clients.create') }}" class="btn btn-primary">
-            <b>+</b>
-        </a>
+        <x-custom.link-with-total total="{{ $clients->total() }}" route="{{ route('clients.create') }}" />
     </x-slot>
 
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
+                <th>Full name</th>
                 <th>Address</th>
-                <th>Name</th>
                 <th>Contact</th>
                 <th></th>
             </tr>
@@ -29,29 +23,26 @@
         @foreach($clients as $client)
         <tr>
             <td class="text-nowrap">
-                @include('clients.__.address-table-cell', [
-                    'except' => ['full_name']
-                    ])
-            </td>
-            <td class="text-nowrap">
                 {{ $client->full_name }}
             </td>
+            <td class="text-nowrap">
+                @include('clients.__.address-table-cell')
+            </td>
             <td>
-                @include('clients.__.contact-table-cell', [
-                    'except' => ['full_name']
-                ])
+                @include('clients.__.contact-table-cell')
             </td>
             <td class="text-nowrap text-end">
                 @if( $client->hasUnfinishedWorkOrders() )
-                <x-tooltip title="Unfinished work orders">
-                    <a href="{{ $client->url_unfinished_work_orders }}" class="btn btn-warning">{{ $client->work_orders_unfinished_count }}</a>
-                </x-tooltip>
+                <x-custom.link-work-orders :parameters="['client' => $client->id]" class="btn btn-warning" unfinished>
+                    {{ $client->work_orders_unfinished_count }}
+                </x-custom.link-work-orders>
                 @endif
 
+
                 @if( $client->hasWorkOrders() )
-                <x-tooltip title="Work orders">
-                    <a href="{{ $client->url_own_work_orders }}" class="btn btn-primary">{{ $client->work_orders->count() }}</a>
-                </x-tooltip>
+                <x-custom.link-work-orders :parameters="['client' => $client->id]">
+                    {{ $client->work_orders->count() }}
+                </x-custom.link-work-orders>
                 @endif
 
                 <a href="{{ route('clients.show', $client) }}" class="btn btn-outline-primary">

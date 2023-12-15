@@ -54,7 +54,7 @@ class Client extends Model
             'city_name' => $this->city,
             'state_code' => $this->state_code,
             'state_name' => $this->state_name,
-            'country_code' => $this->country_,
+            'country_code' => $this->country_code,
             'country_name' => $this->country_name,
             'zip_code' => $this->zip_code,
             'district' => $this->district,
@@ -83,15 +83,10 @@ class Client extends Model
         return sprintf("https://www.google.com.mx/maps/search/%s", $query_string);
     }
 
-
-
-    // Actions
-
-    public function getAddressDetails(array $attributes)
+    public function getAddressAttribute()
     {
-        return $this->address_data_collection->only($attributes);
+        return $this->address_data_collection->only(['street', 'state_code', 'country_code', 'zip_code'])->implode(', ');
     }
-
 
 
     // Scopes

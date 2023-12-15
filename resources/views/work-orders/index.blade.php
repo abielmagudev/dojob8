@@ -83,7 +83,18 @@
             </td>
 
             <td class="text-nowrap">
-                <span>{{ $work_order->job->name }}</span>
+                <span class="d-block">{{ $work_order->job->name }}</span>
+                
+                @if($work_order->job->approved_inspections_required)
+                <span class="badge text-bg-light">
+                    <a href="#!">Required {{ $work_order->job->approved_inspections_required }} inspections</a>
+                </span>
+                    
+                @else
+                <span class="badge text-bg-light">Does not require inspections</span>
+
+
+                @endif
             </td>
 
             <td class="text-nowrap">

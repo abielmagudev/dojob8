@@ -14,13 +14,13 @@ trait HasBeforeAfterTrait
         return self::afterTo($this->id)->first();
     }
 
-    public function scopeBeforeTo($query, int $id)
+    public function scopeBeforeTo($query, int $id, int $limit = 1)
     {
-        return $query->where('id', '<', $id)->orderBy('id', 'desc');
+        return $query->where('id', '<', $id)->orderBy('id', 'desc')->limit($limit);
     }
 
-    public function scopeAfterTo($query, int $id)
+    public function scopeAfterTo($query, int $id, int $limit = 1)
     {
-        return $query->where('id', '>', $id)->orderBy('id', 'asc');
+        return $query->where('id', '>', $id)->orderBy('id', 'asc')->limit($limit);
     }
 }

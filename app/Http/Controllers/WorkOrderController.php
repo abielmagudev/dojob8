@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
+use App\Http\Controllers\WorkOrderController\ShowActionResponse;
 use App\Http\Requests\WorkOrderStoreRequest;
 use App\Http\Requests\WorkOrderUpdateRequest;
 use App\Models\Client;
@@ -34,8 +35,8 @@ class WorkOrderController extends Controller
 
         $work_orders = WorkOrder::with(['job', 'client', 'contractor', 'crew'])
         ->filtersByRequest($request)
-        ->orderBy('scheduled_time', 'asc')
         ->orderBy('crew_id', $request->get('sort', 'desc'))
+        ->orderBy('scheduled_date', 'desc')
         ->paginate(25)
         ->appends( $request->query() );
 
@@ -92,16 +93,16 @@ class WorkOrderController extends Controller
 
     public function show(Request $request, WorkOrder $work_order)
     {
-        $previous = WorkOrder::before($work_order->id)->first();
-        $next = WorkOrder::after($work_order->id)->first();
+        $show = new ShowActionResponse( $request->get('tab') );
 
-        return view('work-orders.show', [
+        if(! $show->validate() ) {
+            return abort(404);
+        }
+
+        return view('work-orders.show', $show->factory($work_order)->data([
+            'request' => $request,
             'work_order' => $work_order,
-            'routes' => [
-                'previous' => $previous ? route('work-orders.show', $previous) : false,
-                'next' => $next ? route('work-orders.show', $next) : false,
-            ],
-        ]);
+        ]));
     }
 
     public function edit(WorkOrder $work_order)

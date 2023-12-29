@@ -29,10 +29,6 @@ class WorkOrderStoreRequest extends FormRequest
                 'required',
                 'date',
             ],
-            'scheduled_time' => [
-                'required',
-                'date_format:H:i',
-            ],
             'job' => [
                 'required',
                 sprintf('exists:%s,id', Job::class),
@@ -68,7 +64,7 @@ class WorkOrderStoreRequest extends FormRequest
             'client_id' => $this->client,
             'job_id' => $this->job,
             'crew_id' => $this->crew,
-            'status' => WorkOrder::FIRST_STATUS_WHEN_CREATED,
+            'status' => WorkOrder::STATUS_WHEN_CREATED,
         ]);
     }
 }

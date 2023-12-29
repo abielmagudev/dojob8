@@ -16,7 +16,7 @@ use App\Http\Controllers\UserAjaxController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\WorkOrderJobExtensionsAjaxController;
-use App\Http\Controllers\WorkOrderOperatorController;
+use App\Http\Controllers\WorkOrderWorkerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,7 +60,7 @@ Route::resource('users', UserController::class);
 
 Route::get('history', HistoryController::class)->name('history.index');
 
-Route::patch('work-orders/operators', WorkOrderOperatorController::class)->name('work-orders.update.operators');
+Route::patch('work-orders/workers', WorkOrderWorkerController::class)->name('work-orders.update.workers');
 Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
 Route::resource('work-orders', WorkOrderController::class)->except('create');
 

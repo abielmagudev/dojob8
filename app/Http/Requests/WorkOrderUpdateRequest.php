@@ -21,10 +21,6 @@ class WorkOrderUpdateRequest extends FormRequest
                 'required',
                 'date',
             ],
-            'scheduled_time' => [
-                'required',
-                'date_format:H:i',
-            ],
             'notes' => [
                 'nullable',
             ],

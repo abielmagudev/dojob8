@@ -1,4 +1,3 @@
-
 <x-card class="h-100" title="Information">
     <x-small-label label="Status">
         <x-badge class="{{ $work_order->status_color }} text-uppercase">{{ $work_order->status }}</x-badge>

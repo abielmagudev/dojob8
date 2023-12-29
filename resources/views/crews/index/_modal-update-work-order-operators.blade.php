@@ -1,5 +1,5 @@
-<x-modal id="modalUpdateWorkOrderOperators" title="Work orders by scheduled date" header-close footer-close>
-    <form action="{{ route('work-orders.update.operators', ['show' => $show]) }}" method="post" autocomplete="off" id="formSetCrewMembersOnWorkOrders">
+<x-modal id="modalUpdateWorkOrderWorkers" title="Work orders by scheduled date" header-close footer-close>
+    <form action="{{ route('work-orders.update.workers', ['show' => $show]) }}" method="post" autocomplete="off" id="formSetCrewMembersOnWorkOrders">
         @method('patch')
         @csrf
         <div class="mb-3">
@@ -9,11 +9,13 @@
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" id="keepOldOperatorsCheckbox" type="checkbox" name="keep_old_operators" value="1" checked>
-            <label class="form-check-label" for="keepOldOperatorsCheckbox">Keep operators already saved in work orders.</label>
+            <input class="form-check-input" id="keepOldWorkersCheckbox" type="checkbox" name="keep_old_workers" value="1" checked>
+            <label class="form-check-label" for="keepOldWorkersCheckbox">Keep workers already saved in work orders.</label>
         </div>
     </form>
+
     <hr>
+    
     <p>Explicar su funcionamiento</p>
     <ul>
         <li>Solo trabajos no cerrados</li>
@@ -22,6 +24,6 @@
     </ul>
 
     @slot('footer')
-    <button class="btn btn-warning" type="submit" form="formSetCrewMembersOnWorkOrders">Update operators on work orders</button>
+    <button class="btn btn-warning" type="submit" form="formSetCrewMembersOnWorkOrders">Update workers on work orders</button>
     @endslot
 </x-modal>

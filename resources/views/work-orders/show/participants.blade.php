@@ -23,7 +23,7 @@
         @endif
     </x-small-label>
 
-    <x-small-label label="Operators">
-        {!! $work_order->operators->map(function($member){ return $member->full_name; })->implode('<br>') !!}
+    <x-small-label label="Workers">
+        {!! $work_order->workers->map(function($member){ return $member->full_name; })->implode('<br>') !!}
     </x-small-label>
 </x-card>

@@ -21,9 +21,9 @@
         </a>
     </div>
 
-    {{-- Update operators on work orders --}}
+    {{-- Update workers on work orders --}}
     <div class="mx-3">
-        <x-modal-trigger modal-id="modalUpdateWorkOrderOperators" class="btn btn-warning">
+        <x-modal-trigger modal-id="modalUpdateWorkOrderWorkers" class="btn btn-warning">
             <span>
                 <i class="bi bi-people"></i>
             </span>

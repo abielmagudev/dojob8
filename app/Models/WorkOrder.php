@@ -20,7 +20,7 @@ class WorkOrder extends Model
     use HasHookUsersTrait;
     use HasModelHelpersTrait;
 
-    const FIRST_STATUS_WHEN_CREATED = 'new';
+    const STATUS_WHEN_CREATED = 'new';
 
     public static $statuses_bscolors = [
         'pending' => 'text-bg-purple',
@@ -30,27 +30,32 @@ class WorkOrder extends Model
         'completed' => 'text-bg-success animate__animated animate__tada animate__infinite',
         'inspected' => 'text-bg-success',
         'closed' => 'text-bg-dark',
-        'denialed' => 'text-bg-danger',
         'canceled' => 'text-bg-danger',
     ];
 
-    public static $all_statuses = [
-        'pending',
+    public static $statuses = [
+        'pending', // Pending of what?
         'new',
-        'working',
-        'done',
-        'completed',
-        'inspected',
+        'working', // started
+        'done', // finished
+        'completed', // Ready, reviewed, checked
+        'inspected', // completed
         'closed',
-        'denialed',
         'canceled',
     ];
 
-    public static $unfinished_statuses = [
+    public static $unfinished_statuses = [ // Not ready, unready, incomplete
         'pending',
         'new',
         'working',
         'done',
+    ];
+
+    public static $finished_statuses = [
+        'completed',
+        'inspected',
+        'closed',
+        'canceled',
     ];
 
     public static $inputs_filters = [
@@ -65,14 +70,17 @@ class WorkOrder extends Model
     ];
 
     protected $fillable = [
+        'status',
         'client_id',
-        'crew_id',
         'contractor_id',
+        'crew_id',
         'job_id',
         'notes',
         'scheduled_date',
-        'scheduled_time',
-        'status',
+        'working_at',
+        'done_at',
+        'completed_at',
+        'closed_at',
     ];
 
     protected $casts = [
@@ -137,6 +145,15 @@ class WorkOrder extends Model
         return (bool) $this->operators_count || $this->operators->count();
     }
 
+    public function isFinished()
+    {
+        return self::getFinishedStatuses()->contains($this->status);
+    }
+
+    public function isUnfinished()
+    {
+        return self::getUnfinishedStatuses()->contains($this->status);
+    }
 
     
     // Scopes
@@ -334,7 +351,7 @@ class WorkOrder extends Model
         return $this->hasMany(Inspection::class);
     }
 
-    public function operators()
+    public function workers()
     {
         return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
     }
@@ -345,12 +362,27 @@ class WorkOrder extends Model
 
     public static function getAllStatuses()
     {
-        return collect(self::$all_statuses);
+        return collect(self::$statuses);
     }
 
     public static function getUnfinishedStatuses()
     {
         return collect(self::$unfinished_statuses);
+    }
+
+    public static function getFinishedStatuses()
+    {
+        return collect(self::$finished_statuses);
+    }
+
+    public static function isUnfinishedStatus(string $status)
+    {
+        return self::getUnfinishedStatuses()->contains($status);
+    }
+
+    public static function isFinishedStatus(string $status)
+    {
+        return self::getFinishedStatuses()->contains($status);
     }
 
     public static function generateUrlUnfinishedStatus(array $parameters = [])

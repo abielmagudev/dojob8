@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div>
-                <x-dropdown button-class="btn-outline-primary border-0 text-white " menu-class="dropdown-menu-end" no-caret>
+                <x-dropdown button-class="btn btn-outline-primary border-0 text-white " menu-class="dropdown-menu-end" no-caret>
                     <x-slot name="button">
                         <span class="align-middle me-1">username</span>
                         <i class="bi bi-person-circle align-middle" style="font-size:1.2rem"></i>

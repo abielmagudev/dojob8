@@ -7,7 +7,7 @@
 @section('content')
 <x-card>
 
-    <x-slot name="title">
+    @slot('title')
         @if( is_array($scheduled_casted) )
         <span class="text-nowrap">{{ $scheduled_casted[0]->format('D d, M y') }}</span>
         <span class="d-block d-md-inline-block mx-0 mx-md-1">to</span>
@@ -17,33 +17,51 @@
         <span class="text-nowrap">{{ $scheduled_casted->format('D d, M y') }}</span>
     
         @endif
-    </x-slot>
+    @endslot
 
     @slot('options')
-        <x-tooltip title="Views">
-            <x-modal-trigger modal-id="modalWorkOrderViews" class="btn btn-primary d-none">
-                <i class="bi bi-grid-1x2"></i>
-            </x-modal-trigger>
-        </x-tooltip>
-
-        <div class="d-inline-block mx-3">
-            <x-tooltip title="Unfinished until today">
-                <a href="<?= $unfinished_work_orders['url'] ?>" class="btn btn-warning">
-                    <i class="bi bi-alarm"></i>
-                    <span>{{ $unfinished_work_orders['count'] }}</span>
-                </a>
-            </x-tooltip>
-    
-            <x-tooltip title="Filters">
-                <x-modal-trigger modal-id="modalWorkOrdersFilter" class="btn btn-primary">
-                    <i class="bi bi-funnel"></i>
+        <div class="d-inline-block">
+            <x-tooltip title="Views">
+                <x-modal-trigger modal-id="modalWorkOrderViews" class="btn btn-primary d-none">
+                    <i class="bi bi-grid-1x2"></i>
                 </x-modal-trigger>
             </x-tooltip>
+    
+        
         </div>
 
-        <x-modal-trigger modal-id="modalSearchClient">
-            <b>+</b>
-        </x-modal-trigger>
+        <div class="d-inline-block align-middle ">
+            <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off">
+                <input type="date" class="form-control" onchange="this.closest('form').submit()" name="scheduled_date" value="{{ $request->get('scheduled_date', date('Y-m-d')) }}">
+            </form>
+        </div>
+
+        
+        @slot('dropoptions')
+            <li>
+                <x-modal-trigger modal-id="modalSearchClient" class="dropdown-item">
+                    <i class="bi bi-plus-lg"></i>
+                    <span class="ms-1">Create</span>
+                </x-modal-trigger>
+            </li>
+            <li>
+                <a href="<?= $unfinished_work_orders['url'] ?>" class="dropdown-item">
+                    <div class="float-end ms-3">
+                        <span class="badge text-bg-warning">{{ $unfinished_work_orders['count'] }}</span>
+                    </div>
+                    <div style="min-width:152px">
+                        <i class="bi bi-alarm"></i>
+                        <span class="ms-1">Unfinished</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <x-modal-trigger modal-id="modalWorkOrdersFilter" class="dropdown-item">
+                    <i class="bi bi-funnel"></i>
+                    <span class="ms-1">Filters</span>
+                </x-modal-trigger>
+            </li>
+        @endslot
     @endslot
 
     @if( $work_orders->count() ) 
@@ -51,11 +69,13 @@
 
         @slot('thead')
         <tr>
+            @if( $request->filled('scheduled_date_range') )
             <th>Scheduled</th>
+            @endif
             <th>Priority</th>
             <th>Crew</th>
-            <th>Job</th>
             <th>Contractor</th>
+            <th>Job</th>
             <th>Client</th>
             <th>Status</th>
             <th></th>
@@ -64,14 +84,11 @@
 
         @foreach($work_orders as $work_order)           
         <tr>
-
+            @if( $request->filled('scheduled_date_range') )
             <td class="text-nowrap">
-                @if(! $request->has('scheduled_date_range2') )
                 <span class="d-block">{{ $work_order->scheduled_date_human }}</span>
-                @endif
-
-                <span>{{ $work_order->scheduled_time_human }}</span>
             </td>
+            @endif
 
             <td>
                 <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
@@ -79,15 +96,11 @@
 
             <td class="text-nowrap">
                 <span 
-                    class="badge w-100 p-2" 
+                    class="badge w-100" 
                     style="background-color:{{ $work_order->crew->background_color }};color:{{ $work_order->crew->text_color }}"
                 >
                     {{ $work_order->crew->name }}
                 </span>
-            </td>
-
-            <td class="text-nowrap">
-                {{ $work_order->job->name }}
             </td>
 
             <td class="text-nowrap">
@@ -101,6 +114,11 @@
                     
                 @endif
             </td>
+            
+            <td class="text-nowrap">
+                {{ $work_order->job->name }}
+            </td>
+
 
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', [

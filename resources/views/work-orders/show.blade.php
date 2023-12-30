@@ -18,5 +18,5 @@
 
 @section('content')
 @include('work-orders.show._tabs')
-@include("work-orders.show.{$tab}")
+@include("work-orders.show.{$show}")
 @endsection

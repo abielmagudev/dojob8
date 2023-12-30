@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
-use App\Http\Controllers\WorkOrderController\ShowActionResponse;
+use App\Http\Controllers\WorkOrderController\ShowAction;
 use App\Http\Requests\WorkOrderStoreRequest;
 use App\Http\Requests\WorkOrderUpdateRequest;
 use App\Models\Client;
@@ -93,13 +93,9 @@ class WorkOrderController extends Controller
 
     public function show(Request $request, WorkOrder $work_order)
     {
-        $show = new ShowActionResponse( $request->get('tab') );
+        $handler = new ShowAction( $request->get('tab', ShowAction::DEFAULT_RESPONSE) );
 
-        if(! $show->validate() ) {
-            return abort(404);
-        }
-
-        return view('work-orders.show', $show->factory($work_order)->data([
+        return view('work-orders.show', $handler->factory($work_order)->data([
             'request' => $request,
             'work_order' => $work_order,
         ]));

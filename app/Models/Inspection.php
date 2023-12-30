@@ -80,6 +80,11 @@ class Inspection extends Model
         return $this->scheduled_date ? $this->scheduled_date->format('Y-m-d') : null;
     }
 
+    public function getScheduledDateHumanAttribute()
+    {
+        return $this->scheduled_date ? $this->scheduled_date->format('D d M, Y') : null;
+    }
+
 
 
     // Validations

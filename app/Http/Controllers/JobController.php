@@ -32,16 +32,9 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
-        $previous = Job::before($job->id)->first();
-        $next = Job::after($job->id)->first();
-
         return view('jobs.show', [
             'extensions' => Extension::whereNotIn('id', $job->extensions->pluck('id'))->orderBy('name')->get(),
             'job' => $job->load(['extensions', 'work_orders']),
-            'routes' => [
-                'previous' => $previous ? route('jobs.show', $previous) : false,
-                'next' => $next ? route('jobs.show', $next) : false,
-            ],
         ]);
     }
 

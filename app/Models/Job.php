@@ -37,6 +37,11 @@ class Job extends Model
         return (bool) ($this->extensions_count ?? $this->extensions->count());
     }
 
+    public function requireApprovedInspections()
+    {
+        return (bool) $this->approved_inspections_required; 
+    }
+
 
 
     // Relationships

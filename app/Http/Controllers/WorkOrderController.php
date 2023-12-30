@@ -9,6 +9,7 @@ use App\Http\Requests\WorkOrderUpdateRequest;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
+use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\Member;
 use App\Models\WorkOrder;
@@ -75,9 +76,19 @@ class WorkOrderController extends Controller
             return back()->with('danger', "Error saving work order, try again please");
         }
         
-        $work_order->operators()->attach( 
+        $work_order->workers()->attach( 
             $work_order->crew->members->pluck('id')
         );
+
+        if( $work_order->job->requireApprovedInspections() )
+        {
+            for($i = 1; $i <= $work_order->job->approved_inspections_required; $i++)
+            {
+                Inspection::create([
+                    'work_order_id' => $work_order->id,
+                ]);
+            }
+        }
 
         $this->saveOrderByExtensions(
             $request->cache['extensions'],

@@ -25,9 +25,9 @@ class MemberWorkOrderSeeder extends Seeder
             $crew = $crews->only( $work_order->crew_id )->first();
             
             if(! $crew->hasMembers() ) {
-                $work_order->operators()->attach( mt_rand(1, 35) );
+                $work_order->workers()->attach( mt_rand(1, 35) );
             } else {
-                $work_order->operators()->attach( $crew->members->pluck('id') );
+                $work_order->workers()->attach( $crew->members->pluck('id') );
             }
         }
     }

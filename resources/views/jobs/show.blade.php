@@ -6,9 +6,13 @@
     'Job' => null,
 ]">
     <x-slot name="options">
+        <?php 
+        $before = $job->before();
+        $after  = $job->after();
+        ?>
         <x-paginate
-            :previous="$routes['previous']"
-            :next="$routes['next']"
+            :previous="$before ? route('jobs.show', $before) : false"
+            :next="$after ? route('jobs.show', $after) : false"
         />
     </x-slot>
 </x-header>

@@ -1,16 +1,16 @@
-<x-card title="Inspections">
-
-    <x-slot name="subtitle">
-        <div class="badge text-bg-dark">Required {{ $work_order->job->approved_inspections_required }}</div>
-        <div class="badge text-bg-success">Approved {{ $work_order->inspections->where('is_approved', 1)->count() }}</div>
-        <div class="badge text-bg-primary">Total {{ $work_order->inspections->count() }}</div>
-    </x-slot>
+<x-card>
 
     <x-slot name="options">
         <a href="{{ route('inspections.create', $work_order) }}" class="btn btn-primary">
             <b>+</b>
         </a>
     </x-slot>
+
+    <div class="mb-3">
+        <div class="badge text-bg-dark">Required {{ $work_order->job->approved_inspections_required }}</div>
+        <div class="badge text-bg-success">Approved {{ $work_order->inspections->where('is_approved', 1)->count() }}</div>
+        <div class="badge text-bg-primary">Total {{ $work_order->inspections->count() }}</div>
+    </div>
 
     @if( $work_order->inspections->count() )
     <x-table>

@@ -1,4 +1,4 @@
-<x-card class="h-100" title="Timeline">  
+<x-card>  
     <table class="table table-sm table-borderless">
         <tr>
             <td class="text-secondary text-end">Scheduled</td>

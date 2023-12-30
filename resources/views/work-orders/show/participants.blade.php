@@ -1,4 +1,4 @@
-<x-card title="Participants" class="h-100">
+<x-card>
     <x-small-label label="Client">
         @include('clients.__.address',[
             'client' => $work_order->client,

@@ -1,8 +1,8 @@
-<x-card class="h-100" title="Information">
-    <x-small-label label="Status">
+<x-card class="h-100">
+    <div class="mb-3">
         <x-badge class="{{ $work_order->status_color }} text-uppercase">{{ $work_order->status }}</x-badge>
-    </x-small-label>
-    
+    </div>
+
     <x-small-label label="Job">
         <span class="d-block">{{ $work_order->job->name }}</span>
         <small>{{ $work_order->job->description }}</small>

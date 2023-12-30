@@ -1,4 +1,4 @@
-<x-card class="h-100" title="Comments">
+<x-card>
     <ul class="list-group">
         <li class="list-group-item">
             <small>Username:</small>

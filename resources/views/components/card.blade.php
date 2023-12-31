@@ -35,7 +35,9 @@
     <img src="{{ $attributes->get('image-top') }}" alt="{{ $attributes->get('image-alt', '') }}" class="card-img-top">
     @endif
 
+    @if( $slot->isNotEmpty() )
     <div class="card-body">{!! $slot !!}</div>
+    @endif
 
     @isset($footer)
     <div class="card-footer">

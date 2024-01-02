@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Inspector;
 use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,17 +26,12 @@ class JobSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'approved_inspections_required' => [
-                'required',
-                'integer',
-                'min:0',
-            ],
-            'extensions' => [
+            'preconfigured_required_inspections' => [
                 'nullable',
                 'array',
             ],
-            'extensions.*' => [
-                'integer',
+            'preconfigured_required_inspections.*' => [
+                sprintf('in:%s', Inspector::all()->pluck('id')->implode(','))
             ],
         ];
     }
@@ -44,6 +40,8 @@ class JobSaveRequest extends FormRequest
     {
         return [
             'extensions.*.integer' => __('Choose a valid extension'),
+            'preconfigured_required_inspections.array' => __('Select one of the inspectors shown'),
+            'preconfigured_required_inspections.*.in' => __('Choose a valid inspector'),
         ];
     }
 
@@ -54,12 +52,16 @@ class JobSaveRequest extends FormRequest
 
     public function validated()
     {
-        if( $this->isMethod('POST') ) {
-            return parent::validated();
+        $validated = parent::validated();
+
+        if( $this->filled('preconfigured_required_inspections') ) {
+            $validated['preconfigured_required_inspections'] = json_encode( $this->get('preconfigured_required_inspections') );
         }
 
-        return array_merge(parent::validated(), [
-            'is_available' => $this->has('available') ? 1 : 0,
-        ]);
+        if( in_array($this->method(), ['PATCH', 'PUT']) ) {
+            $validated['is_available'] = $this->has('available') ? 1 : 0;
+        }
+
+        return $validated;
     }
 }

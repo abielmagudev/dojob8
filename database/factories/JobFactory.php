@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Inspector;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class JobFactory extends Factory
@@ -16,7 +17,6 @@ class JobFactory extends Factory
         return [
             'name' => $this->faker->jobTitle(),
             'description' => $this->faker->optional()->sentence(),
-            'approved_inspections_required' => $this->faker->numberBetween(0,3),
             'is_available' => (int) $this->faker->boolean(),
         ];
     }

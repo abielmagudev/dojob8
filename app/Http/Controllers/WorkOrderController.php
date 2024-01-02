@@ -80,11 +80,11 @@ class WorkOrderController extends Controller
             $work_order->crew->members->pluck('id')
         );
 
-        if( $work_order->job->requireApprovedInspections() )
+        if( $work_order->job->requireInspections() )
         {
-            for($i = 1; $i <= $work_order->job->approved_inspections_required; $i++)
-            {
+            foreach($work_order->job->preconfigured_required_inspections_array as $inspector_id) {
                 Inspection::create([
+                    'inspector_id' => $inspector_id,
                     'work_order_id' => $work_order->id,
                 ]);
             }

@@ -17,15 +17,33 @@
     <x-error name="description" />
 </x-form-control-horizontal>
 
-<x-form-control-horizontal class="align-items-center">
+<x-form-control-horizontal class="">
     <x-slot name="label">
-        <label for="inputApprovedInspectionsRequired" class="form-label">Approved inspections</label>
+        <label for="textareaDescription" class="form-label form-label-optional">Preconfigure required inspections</label>
     </x-slot>
     
-    <input type="number" step="1" min="0" class="form-control" id="inputApprovedInspectionsRequired" name="approved_inspections_required" value="{{ old('approved_inspections_required', ($job->approved_inspections_required ?? 0)) }}" required>
-    <x-error name="approved_inspections_required" />
+    <div class="form-control p-0">
+        <x-table class="m-0">
+            @foreach($inspectors as $inspector)
+            <?php $checkbox_id = "inspector{$inspector->id}Checkbox" ?>
+            <tr>
+                <td style="width:1%" class="{{ $loop->last ? 'border-0' : '' }} bg-transparent">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="preconfigured_required_inspections[]" value="{{ $inspector->id }}" id="{{ $checkbox_id }}" {{ isChecked( in_array($inspector->id, $job->preconfigured_required_inspections_array) ) }}>
+                    </div>
+                </td>
+                <td class="{{ $loop->last ? 'border-0' : '' }} bg-transparent ">
+                    <label class="form-check-label" for="{{ $checkbox_id }}">
+                        {{ $inspector->name }}
+                    </label>
+                </td>
+            </tr>
+            @endforeach
+        </x-table>
+    </div>
+    <x-error name="preconfigured_required_inspections" />
+    <x-error name="preconfigured_required_inspections.*" />
 </x-form-control-horizontal>
-
 
 @if( $job->id )
 <div class="mt-4">

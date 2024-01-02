@@ -24,12 +24,25 @@ class Job extends Model
     protected $fillable = [
         'name',
         'description',
-        'approved_inspections_required',
+        'preconfigured_required_inspections',
         'is_available',
     ];
 
 
+
+    // Attributes
+
+    public function getPreconfiguredRequiredInspectionsArrayAttribute()
+    {
+        if( is_null($this->preconfigured_required_inspections) ) {
+            return array();
+        }
+
+        return json_decode($this->preconfigured_required_inspections); // (json_last_error() == JSON_ERROR_NONE)
+    }
+
     
+
     // Validators
     
     public function hasExtensions(): bool
@@ -37,9 +50,9 @@ class Job extends Model
         return (bool) ($this->extensions_count ?? $this->extensions->count());
     }
 
-    public function requireApprovedInspections()
+    public function requireInspections()
     {
-        return (bool) $this->approved_inspections_required; 
+        return (bool) count($this->preconfigured_required_inspections_array);
     }
 
 

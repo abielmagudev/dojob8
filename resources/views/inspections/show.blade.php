@@ -20,6 +20,12 @@
     {{-- Inspection --}}
     <div class="col-sm">
         <x-card title="Information" class="h-100">  
+            @slot('options')
+            <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-warning">
+                <i class="bi bi-pencil-fill"></i>
+            </a>
+            @endslot
+            
             <p>
                 <x-badge color="{{ $inspection->status_color }}" class="text-uppercase">{{ $inspection->status }}</x-badge>
             </p>      

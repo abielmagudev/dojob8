@@ -32,8 +32,8 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
-        $previous = Client::before($client->id)->first();
-        $next = Client::after($client->id)->first();
+        $previous = $client->before();
+        $next = $client->after();
 
         return view('clients.show', [
             'client' => $client->load(['work_orders.job']),

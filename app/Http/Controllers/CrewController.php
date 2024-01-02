@@ -40,8 +40,8 @@ class CrewController extends Controller
 
     public function show(Crew $crew)
     {
-        $previous = Crew::before($crew->id)->first();
-        $next = Crew::after($crew->id)->first();
+        $previous = $crew->before();
+        $next = $crew->after();
         
         return view('crews.show', [
             'crew' => $crew,

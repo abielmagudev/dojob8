@@ -35,8 +35,8 @@ class InspectorController extends Controller
 
     public function show(Inspector $inspector)
     {
-        $previous = Inspector::before($inspector->id)->first();
-        $next = Inspector::after($inspector->id)->first();
+        $previous = $inspector->before();
+        $next = $inspector->after();
 
         return view('inspectors.show', [
             'inspector' => $inspector,

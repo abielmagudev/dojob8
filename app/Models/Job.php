@@ -41,6 +41,11 @@ class Job extends Model
         return json_decode($this->preconfigured_required_inspections); // (json_last_error() == JSON_ERROR_NONE)
     }
 
+    public function getInspectionsRequiredCountAttribute()
+    {
+        return count($this->preconfigured_required_inspections_array);
+    }
+
     
 
     // Validators

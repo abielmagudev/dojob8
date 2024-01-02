@@ -8,8 +8,8 @@
         <small>{{ $work_order->job->description }}</small>
     </x-small-label>
 
-    <x-small-label label="Approved inspections required">
-        {{ $work_order->job->approved_inspections_required }}
+    <x-small-label label="Require inspections ">
+        {{ $work_order->job->requireInspections() ? 'Yes' : 'No' }}
     </x-small-label>
 
     <x-small-label label="Extensions">

@@ -23,7 +23,7 @@
 <br>
 
 @push('scripts')
-@include('crews._form.script-background-text-color-mode')
+@include('crews._form.script-text-color-mode')
 @endpush
 
 <x-custom.modal-confirm-delete :route="route('crews.destroy', $crew)" concept="crew">

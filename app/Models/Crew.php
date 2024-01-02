@@ -22,9 +22,15 @@ class Crew extends Model
     use HasWorkOrdersTrait;
     use SoftDeletes;
 
+    public static $all_task_types = [
+        'work orders',
+        'inspections',
+    ];
+
     protected $fillable = [
         'name',
         'description',
+        'task_types',
         'background_color',
         'text_color_mode',
         'is_active',
@@ -61,12 +67,22 @@ class Crew extends Model
         return json_encode( $this->dataset );
     }
 
+    public function getTaskTypesArrayAttribute()
+    {
+        return ! is_null($this->task_types) ? json_decode( $this->task_types ) : [];
+    }
+
 
     // Validators
 
     public function hasMembers()
     {
         return (bool) $this->isActive() && $this->members_count || $this->members->count();
+    }
+
+    public function hasTypeTask(string $type_task)
+    {
+        return in_array($type_task, $this->task_types_array);
     }
 
 
@@ -94,5 +110,13 @@ class Crew extends Model
     public function members()
     {
         return $this->belongsToMany(Member::class)->using(CrewMember::class);
+    }
+
+
+    // Static
+
+    public static function getTaskTypes()
+    {
+        return collect( self::$all_task_types );
     }
 }

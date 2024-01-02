@@ -28,6 +28,13 @@ class CrewSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
+            'task_types' => [
+                'required',
+                'array',
+            ],
+            'task_types.*' => [
+                sprintf('in:%s', Crew::getTaskTypes()->implode(',')),
+            ],
             'background_color' => [
                 'required',
                 'string',
@@ -44,6 +51,15 @@ class CrewSaveRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'task_types.required' => __('Choose at least one type of task from the list'),
+            'task_types.array' => __('Choose some type of task from the list'),
+            'task_types.*.in' => __('Choose some valid type of task'),
+        ];
+    }
+
     public function prepareForValidation()
     {
         $this->crew_id = $this->route('crew')->id ?? 0;
@@ -55,12 +71,14 @@ class CrewSaveRequest extends FormRequest
 
     public function validated()
     {
-        if( $this->isMethod('POST') ) {
-            return parent::validated();
+        $validated = parent::validated();
+
+        $validated['task_types'] = json_encode($this->get('task_types', []));
+        
+        if(! $this->isMethod('POST') ) {
+            $validated['is_active'] = (int) $this->has('is_active');
         }
 
-        return array_merge(parent::validated(), [
-            'is_active' => (int) $this->has('is_active'),
-        ]);
+        return $validated;
     }
 }

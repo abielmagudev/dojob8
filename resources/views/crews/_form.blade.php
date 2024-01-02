@@ -9,43 +9,54 @@
 
 <x-form-control-horizontal>
     <x-slot name="label">
-        <label for="descriptionTextarea" class="form-label form-label-optional">Description</label>
+        <label for="typeTaskOptions" class="form-label">Task types</label>
     </x-slot>
-    <textarea id="descriptionTextarea" rows="3" class="form-control" name="description">{{ old('description', $crew->description) }}</textarea>
-    <x-error name="description" />
+
+    <div class="form-control p-0">
+        <table class="table table-hover m-0">
+            @foreach($task_types as $type_task)
+            <?php $checkbox_id = "typeTask" . ucwords( str_replace([' ', '-'], '', $type_task) ) ?>
+            <tr>
+                <td class="{{ $loop->last ? 'border-0' : '' }} bg-transparent">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="task_types[]" value="{{ $type_task }}" id="{{ $checkbox_id }}" {{ isChecked( $crew->hasTypeTask($type_task) ) }}>
+                        <label class="form-check-label text-capitalize" for="{{ $checkbox_id }}">{{ $type_task }}</label>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <x-error name="task_types" />
+    <x-error name="task_types.*" />
 </x-form-control-horizontal>
 
 <x-form-control-horizontal>
     <x-slot name="label">
-        <label class="form-label">Colors</label>
+        <label class="form-label">Color</label>
     </x-slot>
 
-    <div class="row">
-        <div class="col-md">
-            <input id="backgroundColorInput" type="color" class="form-control form-control-color w-100" name="background_color" value="{{ old('background_color', ($crew->background_color ?? '#333333')) }}">
-            <x-error name="background_color">Background color</x-error>
-        </div>
-        <div class="col-md">
-            <div class="form-control form-control-color w-100">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="textColorModeSwitch" name="text_color_mode" value="light" {{ isChecked( old('text_color_mode', $crew->text_color_mode) == 'light' ) }}>
-                    <label class="form-check-label text-capitalize w-100" for="textColorModeSwitch">
-                      
-                        <div class="px-2 rounded text-center" style="background-color:{{ $crew->background_color }}; color:{{ $crew->text_color }}">
-                            <small class="{{ $crew->text_color_mode == 'dark' || is_null($crew->text_color_mode) ? 'd-block' : 'd-none' }}">
-                                <b>DARK</b>
-                            </small>
-                            <small class="{{ $crew->text_color_mode == 'light' ? 'd-block' : 'd-none' }}">
-                                <b>LIGHT</b>
-                            </small>
-                        </div>
-
-                    </label>
-                </div>
-            </div>
-            <x-error name="text_color_mode">Text color mode</x-error>
-        </div>
+    <div class="position-relative mb-1">
+        <div id="textColorModeFloating" class="position-absolute top-50 start-50 fw-bold text-uppercase" style="margin: -11px; color:{{ $crew->text_color }}">{{ $crew->text_color_mode ?? 'dark' }}</div>
+        <input id="backgroundColorInput" type="color" class="form-control form-control-color w-100" style="height:64px" name="background_color" value="{{ old('background_color', ($crew->background_color ?? '#999999')) }}">
     </div>
+    
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="textColorModeSwitch" name="text_color_mode" value="light" {{ isChecked( old('text_color_mode', $crew->text_color_mode) == 'light' ) }}>
+        <label class="form-check-label w-100" for="textColorModeSwitch">Dark or light text color</label>
+    </div>
+
+    <x-error name="background_color" />
+    <x-error name="text_color_mode" />
+</x-form-control-horizontal>
+
+<x-form-control-horizontal>
+    <x-slot name="label">
+        <label for="descriptionTextarea" class="form-label form-label-optional">Description</label>
+    </x-slot>
+    <textarea id="descriptionTextarea" rows="3" class="form-control" name="description">{{ old('description', $crew->description) }}</textarea>
+    <x-error name="description" />
 </x-form-control-horizontal>
 <br>
 

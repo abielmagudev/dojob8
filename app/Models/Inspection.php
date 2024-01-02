@@ -44,7 +44,6 @@ class Inspection extends Model
     protected $fillable = [
         'scheduled_date',
         'observations',
-        'notes',
         'is_approved',
         'inspector_id',
         'work_order_id',

@@ -33,15 +33,6 @@
 
 <x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="notesTextarea" class="form-label {{ bsInputInvalid( $errors->has('notes') ) }}">Notes</label>
-    </x-slot>
-    
-    <textarea id="notesTextarea" class="form-control" name="notes" rows="3">{{ old('notes', $inspection->notes) }}</textarea>
-    <x-error name="notes" />
-</x-form-control-horizontal>
-
-<x-form-control-horizontal class="align-items-center">
-    <x-slot name="label">
         <label for="statusSelect" class="form-label">Status</label>
     </x-slot>
 

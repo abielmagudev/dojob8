@@ -35,10 +35,6 @@
             <x-small-label label="Observations">
                 {{ $inspection->observations }}
             </x-small-label>
-        
-            <x-small-label label="Notes">
-                {{ $inspection->notes }}
-            </x-small-label>
 
             <x-custom.small-label-hook-users :model="$inspection" />
         </x-card>

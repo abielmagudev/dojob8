@@ -32,10 +32,6 @@ class InspectionUpdateRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'notes' => [
-                'nullable',
-                'string',
-            ],
             'status' => [
                 'numeric',
                 sprintf('in:%s', implode(',', Inspection::getStatusValues())),

@@ -8,10 +8,18 @@
 @endsection
 
 @section('content')
-<x-card title="New work order">
+<div class="alert alert-dark bg-transparent">
+    {{ $client->full_name }}
+    <br>
+    {{ $client->address_data_collection->filter()->implode(', ') }}
+    <br>
+    {{ $client->contact_data_collection->filter()->implode(', ') }}
+    {{-- @include('clients.__.address', ['client' => $client]) --}}
+</div>
+
+<x-card title="Create work order">
     <form action="{{ route('work-orders.store') }}" method="post">
         @include('work-orders._form')
-        <input type="hidden" name="client" value="{{ $client->id }}">
         <br>
         <div class="row justify-content-between">
             <div class="col-md">

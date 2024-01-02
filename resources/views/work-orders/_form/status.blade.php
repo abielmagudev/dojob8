@@ -4,7 +4,6 @@
     </x-slot>
 
     <select id="statusSelect" class="form-select text-capitalize" name="status">
-        <option disabled selected label="Without status..."></option>
         @foreach($all_statuses as $status)
         <option value="{{ $status }}" {{ isSelected($status == $work_order->status) }}>{{ $status }}</option>
         @endforeach

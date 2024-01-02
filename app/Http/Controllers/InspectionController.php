@@ -20,8 +20,9 @@ class InspectionController extends Controller
             'work_order.client'
         ])
         ->filtersByRequest($request)
-        ->orderBy('inspector_id', 'desc')
-        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->orderByRaw("scheduled_date IS NULL DESC, scheduled_date {$request->get('sort', 'desc')}, inspector_id ASC")
+        // ->orderBy('inspector_id', 'desc')
+        // ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->paginate(25)
         ->appends( $request->all() );
 
@@ -63,8 +64,8 @@ class InspectionController extends Controller
 
     public function show(Inspection $inspection)
     {
-        $previous = Inspection::before($inspection->id)->first();
-        $next = Inspection::after($inspection->id)->first();
+        $previous = $inspection->before();
+        $next = $inspection->after();
 
         return view('inspections.show', [
             'inspection' => $inspection,

@@ -25,7 +25,7 @@
             </p>      
         
             <x-small-label label="Scheduled">
-                {{ $inspection->scheduled_date->format('D d M, Y') }}
+                {{ $inspection->scheduled_date_human }}
             </x-small-label>
         
             <x-small-label label="Inspector">

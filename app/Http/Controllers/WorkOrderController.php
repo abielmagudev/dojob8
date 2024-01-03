@@ -63,9 +63,9 @@ class WorkOrderController extends Controller
         return view('work-orders.create', [
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $client,
-            'crews' => Crew::with('members')->active()->orderBy('name', 'asc')->get(),
             'contractors' => Contractor::orderBy('name')->get(),
-            'jobs' => Job::orderBy('name')->get(),
+            'crews' => Crew::active()->orderBy('name', 'asc')->get(),
+            'jobs' => Job::with('extensions')->orderBy('name')->get(),
             'work_order' => new WorkOrder,
         ]);
     }
@@ -119,16 +119,17 @@ class WorkOrderController extends Controller
         return view('work-orders.edit', [
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $work_order->client,
-            'crews' => Crew::with('members')->get(),
             'contractors' => Contractor::orderBy('name')->get(),
+            'crews' => Crew::with('members')->get(),
             'work_order' => $work_order,
         ]);
     }
 
     public function update(WorkOrderUpdateRequest $request, WorkOrder $work_order)
     {
-        if(! $work_order->fill( $request->validated() )->save() )
+        if(! $work_order->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating work order, try again please');
+        }
 
         $this->saveOrderByExtensions(
             $request->cache['extensions'],

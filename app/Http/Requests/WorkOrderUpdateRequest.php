@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\WorkOrderRequest\ResolveExtensionRequestsTrait;
+use App\Models\Crew;
+use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WorkOrderUpdateRequest extends FormRequest
@@ -21,6 +23,10 @@ class WorkOrderUpdateRequest extends FormRequest
                 'required',
                 'date',
             ],
+            'crew' => [
+                'required', 
+                sprintf('exists:%s,id', Crew::class),
+            ],
             'notes' => [
                 'nullable',
             ],
@@ -37,6 +43,13 @@ class WorkOrderUpdateRequest extends FormRequest
                     'update'
                 ),
             ],
+        ]);
+    }
+
+    public function validated()
+    {
+        return array_merge(parent::validated(), [
+            'crew_id' => $this->crew,
         ]);
     }
 }

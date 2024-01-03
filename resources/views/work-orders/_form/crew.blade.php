@@ -5,8 +5,12 @@
 
     <div>
         <select id="crewSelect" class="form-select" name="crew">
-            @foreach($crews as $crew)
+            @foreach($crews as $crew)          
+
+            @if( $crew->hasTypeTask('work orders') || $crew->id == $work_order->crew_id )
             <option value="{{ $crew->id }}" {{ isSelected($crew->id == $work_order->crew_id) }}>{{ $crew->name }}</option>
+            @endif
+
             @endforeach
         </select>
         <x-error name="crew" />

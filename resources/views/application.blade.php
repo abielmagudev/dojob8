@@ -55,7 +55,7 @@
     @include('application.navbar-menu')
     @include('application.sidebar-menu')
     
-    <div class="container" id="main-container">
+    <div class="container-fluid" id="main-container">
         <header class="mt-5 mb-4">
             @yield('header')
         </header>

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\WorkOrderRequest\ResolveExtensionRequestsTrait;
 use App\Models\Crew;
 use App\Models\Job;
+use App\Models\WorkOrder;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WorkOrderUpdateRequest extends FormRequest
@@ -29,6 +30,11 @@ class WorkOrderUpdateRequest extends FormRequest
             ],
             'notes' => [
                 'nullable',
+            ],
+            'status' => [
+                'required',
+                'string',
+                sprintf('in:%s', WorkOrder::getAllStatuses()->implode(','))
             ],
         ];
     }

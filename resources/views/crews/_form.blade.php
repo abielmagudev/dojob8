@@ -39,12 +39,12 @@
 
     <div class="position-relative mb-1">
         <div id="textColorModeFloating" class="position-absolute top-50 start-50 fw-bold text-uppercase" style="margin: -11px; color:{{ $crew->text_color }}">{{ $crew->text_color_mode ?? 'dark' }}</div>
-        <input id="backgroundColorInput" type="color" class="form-control form-control-color w-100" style="height:64px" name="background_color" value="{{ old('background_color', ($crew->background_color ?? '#999999')) }}">
+        <input id="backgroundColorInput" type="color" class="form-control form-control-color w-100" style="height:64px" name="background_color" value="{{ old('background_color', ($crew->background_color ?? '#BBBBBB')) }}">
     </div>
     
     <div class="form-check form-switch">
         <input class="form-check-input" type="checkbox" role="switch" id="textColorModeSwitch" name="text_color_mode" value="light" {{ isChecked( old('text_color_mode', $crew->text_color_mode) == 'light' ) }}>
-        <label class="form-check-label w-100" for="textColorModeSwitch">Dark or light text color</label>
+        <label class="form-check-label small" for="textColorModeSwitch">Dark or light text color</label>
     </div>
 
     <x-error name="background_color" />

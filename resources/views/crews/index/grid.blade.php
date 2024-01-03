@@ -2,7 +2,7 @@
 
 <div class="row">
 @foreach($crews as $crew)
-    <div class="col-md col-md-6 col-lg-4 mb-3">
+    <div class="col-md col-md-6 col-lg-3 mb-3">
         <x-card title="{{ $crew->name }}" class="h-100" style="border-top:0.8rem solid {{ $crew->background_color }} !important">
 
             @slot('options')

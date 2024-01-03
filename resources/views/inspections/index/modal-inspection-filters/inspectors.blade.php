@@ -1,6 +1,6 @@
 <div class="mb-3">
-    <label for="" class="form-label">Inpector</label>
-    <select id="" class="form-select" name="inspector">
+    <label for="inspectorSelect" class="form-label">Inpector</label>
+    <select id="inspectorSelect" class="form-select" name="inspector">
         <option label="Any inspector" selected></option>
         
         @foreach($inspectors as $inspector)

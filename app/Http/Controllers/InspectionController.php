@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InspectionStoreRequest;
 use App\Http\Requests\InspectionUpdateRequest;
+use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Inspector;
 use App\Models\WorkOrder;
@@ -15,6 +16,7 @@ class InspectionController extends Controller
     public function index(Request $request)
     {
         $inspections = Inspection::with([
+            'crew',
             'inspector', 
             'work_order.job', 
             'work_order.client'
@@ -35,6 +37,7 @@ class InspectionController extends Controller
             'request' => $request,
             'inspections' => $inspections,
             'inspectors' => Inspector::all(),
+            'crews' => (Crew::active()->get())->filter(fn($crew) => $crew->hasTypeTask('inspections')),
             'statuses_values' => Inspection::getStatusesValues(),
             'scheduled_casted' => $scheduled_casted,
             'pending_inspections' => [
@@ -47,6 +50,7 @@ class InspectionController extends Controller
     public function create(WorkOrder $work_order)
     {
         return view('inspections.create', [
+            'crews' => Crew::active()->orderBy('name')->get(),
             'inspection' => new Inspection,
             'inspectors' => Inspector::all(),
             'work_order' => $work_order,
@@ -79,9 +83,11 @@ class InspectionController extends Controller
     public function edit(Request $request, Inspection $inspection)
     {
         return view('inspections.edit', [
+            'crews' => Crew::active()->orderBy('name')->get(),
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
             'statuses_values' => Inspection::getStatusesValues(),
+            'url_back' => $request->filled('tab') ? route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections']) : route('inspections.show', $inspection),
         ]);
     }
 

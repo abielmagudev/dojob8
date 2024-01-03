@@ -15,7 +15,7 @@
         <br>
         <div class="text-end">
             <button class="btn btn-success" type="submit">Save inspection</button>
-            <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-primary">Cancel</a>
+            <a href="{{ route('work-orders.show', [$work_order, 'tab' => 'inspections']) }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

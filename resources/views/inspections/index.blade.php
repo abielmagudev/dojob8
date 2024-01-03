@@ -39,6 +39,7 @@
                 <th>Status</th>
                 <th>Scheduled</th>
                 <th>Inspector</th>
+                <th>Crew</th>
                 <th>Job</th>
                 <th>Client</th>
                 <th></th>
@@ -52,6 +53,11 @@
             </td>
             <td class="text-nowrap">{{ $inspection->scheduled_date_human }}</td>
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
+            <td class="text-nowrap">
+                @if( $inspection->hasCrew() )
+                <span class="badge" style="background-color:{{ $inspection->crew->background_color }};color: {{ $inspection->crew->text_color }}">{{ $inspection->crew->name }}</span>
+                @endif
+            </td>
             <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])

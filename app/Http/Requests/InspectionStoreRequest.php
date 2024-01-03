@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Crew;
 use App\Models\Inspector;
 use App\Models\WorkOrder;
 use Illuminate\Foundation\Http\FormRequest;
@@ -19,6 +20,12 @@ class InspectionStoreRequest extends FormRequest
             'scheduled_date' => [
                 'required',
                 'date',
+            ],
+            'crew' => [
+                'bail',
+                'nullable',
+                'integer',
+                sprintf('exists:%s,id', Crew::class),
             ],
             'inspector' => [
                 'bail',
@@ -38,6 +45,7 @@ class InspectionStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
+            'crew_id' => $this->crew,
             'inspector_id' => $this->inspector,
             'work_order_id' => $this->work_order,
         ]);

@@ -4,6 +4,7 @@
         @include('components.form.filters.between-dates')
         @include('inspections.index.modal-inspection-filters.statuses')
         @include('inspections.index.modal-inspection-filters.inspectors')
+        @include('inspections.index.modal-inspection-filters.crews')
         @include('components.form.filters.sort')
 
     </form>

@@ -107,6 +107,11 @@ class Crew extends Model
 
     // Relationships
 
+    public function inspections()
+    {
+        return $this->hasMany(Inspection::class);
+    }
+
     public function members()
     {
         return $this->belongsToMany(Member::class)->using(CrewMember::class);

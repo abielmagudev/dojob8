@@ -38,6 +38,7 @@ class Inspection extends Model
     public static $inputs_filters = [
         'status_rule' => ['filterByStatus', 'status_group'],
         'inspector' => 'filterByInspector',
+        'crew' => 'filterByCrew',
         'between_dates' => 'filterBetweenScheduledDate',
     ];
 
@@ -45,6 +46,7 @@ class Inspection extends Model
         'scheduled_date',
         'observations',
         'is_approved',
+        'crew_id',
         'inspector_id',
         'work_order_id',
     ];
@@ -86,7 +88,7 @@ class Inspection extends Model
 
 
 
-    // Validations
+    // Validatiors
 
     public function isOnHold()
     {
@@ -108,6 +110,10 @@ class Inspection extends Model
         return ! empty($this->observations);
     }
 
+    public function hasCrew()
+    {
+        return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
+    }
 
 
     // Scopes
@@ -120,6 +126,11 @@ class Inspection extends Model
     public function scopeWhereInspector($query, int $inspector_id)
     {
         return $query->where('inspector_id', $inspector_id);
+    }
+
+    public function scopeWhereCrew($query, int $crew_id)
+    {
+        return $query->where('crew_id', $crew_id);
     }
 
     public function scopeWhereIsApproved($query, int $value)
@@ -165,6 +176,15 @@ class Inspection extends Model
         return $query->whereInspector($inspector_id);
     }
 
+    public function scopeFilterByCrew($query, $crew_id)
+    {
+        if( is_null($crew_id) ) {
+            return $query;
+        }
+
+        return $query->whereCrew($crew_id);
+    }
+
     public function scopeFilterByStatus($query, $status_rule, $status_group = [])
     {
         if( is_null($status_rule) ||! in_array($status_rule, ['only','except']) || empty($status_group) ) {
@@ -198,9 +218,19 @@ class Inspection extends Model
 
     // Relationships
 
+    public function crew()
+    {
+        return $this->belongsTo(Crew::class);
+    }
+
     public function inspector()
     {
         return $this->belongsTo(Inspector::class);
+    }
+
+    public function work_order()
+    {
+        return $this->belongsTo(WorkOrder::class);
     }
 
 

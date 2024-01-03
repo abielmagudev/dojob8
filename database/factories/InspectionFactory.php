@@ -17,6 +17,7 @@ class InspectionFactory extends Factory
             'scheduled_date' => $this->faker->dateTimeBetween('-2 years'),
             'observations' => $this->faker->optional()->sentences(3, true),
             'is_approved' => $this->faker->numberBetween(-1, 1),
+            'crew_id' => $this->faker->numberBetween(1, 10),
             'inspector_id' => $this->faker->numberBetween(1, 3),
             'work_order_id' => $this->faker->numberBetween(1, 500),
         ];

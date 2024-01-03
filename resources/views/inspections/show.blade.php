@@ -37,6 +37,10 @@
             <x-small-label label="Inspector">
                 {{ $inspection->inspector->name }}
             </x-small-label>
+
+            <x-small-label label="Crew">
+                {{ $inspection->hasCrew() ? $inspection->crew->name : '' }}
+            </x-small-label>
         
             <x-small-label label="Observations">
                 {{ $inspection->observations }}

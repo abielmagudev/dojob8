@@ -115,6 +115,11 @@ class Inspection extends Model
         return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
     }
 
+    public function isToday()
+    {
+        return $this->getRawOriginal('scheduled_date') == now()->toDateString();
+    }
+
 
     // Scopes
 

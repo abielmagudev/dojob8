@@ -51,7 +51,7 @@
             <td style="max-width:128px">
                 <x-badge color="{{ $inspection->status_color }}" class="text-uppercase w-100">{{ $inspection->status }}</x-badge>
             </td>
-            <td class="text-nowrap">{{ $inspection->scheduled_date_human }}</td>
+            <td class="text-nowrap">{{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}</td>
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
             <td class="text-nowrap">
                 @if( $inspection->hasCrew() )

@@ -39,6 +39,7 @@ class Inspection extends Model
         'status_rule' => ['filterByStatus', 'status_group'],
         'inspector' => 'filterByInspector',
         'crew' => 'filterByCrew',
+        'scheduled_date' => 'filterScheduledDate',
         'between_dates' => 'filterBetweenScheduledDate',
     ];
 
@@ -153,6 +154,11 @@ class Inspection extends Model
         return $query->whereNotIn('is_approved', $values);
     }
 
+    public function scopeWhereScheduledDate($query, $scheduled_date)
+    {
+        return $query->where('scheduled_date', $scheduled_date);
+    }
+
     public function scopeWhereScheduledDateFrom($query, $scheduled_date_from)
     {
         return $query->where('scheduled_date', '>=', $scheduled_date_from);
@@ -200,6 +206,11 @@ class Inspection extends Model
         }
 
         return $query->whereIsApprovedNotIn($status_group);
+    }
+
+    public function scopeFilterScheduledDate($query, $scheduled_date)
+    {
+        return $query->whereScheduledDate($scheduled_date);
     }
 
     public function scopeFilterBetweenScheduledDate($query, $between_dates)

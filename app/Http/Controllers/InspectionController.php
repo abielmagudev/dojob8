@@ -15,6 +15,12 @@ class InspectionController extends Controller
 {
     public function index(Request $request)
     {
+        if( count($request->all()) == 0 ) {
+            $request->merge([
+                'scheduled_date' => now()->toDateString(),
+            ]);
+        }
+
         $inspections = Inspection::with([
             'crew',
             'inspector', 
@@ -40,6 +46,7 @@ class InspectionController extends Controller
             'crews' => (Crew::active()->get())->filter(fn($crew) => $crew->hasTypeTask('inspections')),
             'statuses_values' => Inspection::getStatusesValues(),
             'scheduled_casted' => $scheduled_casted,
+            'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'pending_inspections' => [
                 'count' => Inspection::pendings()->count(),
                 'url' => Inspection::generatePendingInspectionsUrl(),

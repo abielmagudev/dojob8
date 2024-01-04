@@ -11,33 +11,55 @@
 @section('content')
 <x-card>
 
-    @if( is_array($scheduled_casted) )      
+    
     @slot('title')
+    @if( is_array($scheduled_casted) )  
     <span>{{ $scheduled_casted[0]->format('d M, Y') }}</span>
     <span class="mx-1">to</span>
     <span>{{ $scheduled_casted[1]->format('d M, Y') }}</span>
-    @endslot
+
+    @else
+    <span>{{ now()->format('d M, Y') }}</span>
+
     @endif
 
+    @endslot
+
+
+
     @slot('options')
-    <x-tooltip title="Pending inspections">
-        <a href="{{ $pending_inspections['url'] }}" class="btn btn-warning">
-            <i class="bi bi-alarm"></i>
-            <span>{{ $pending_inspections['count'] }}</span>
-        </a>
-    </x-tooltip>
-    <x-tooltip title="Filters">
-        <x-modal-trigger modal-id="modalInspectionFilters">
-            <i class="bi bi-funnel"></i>
-        </x-modal-trigger>
-    </x-tooltip>
+    <form action="{{ route('inspections.index') }}" class="d-inline-block" method="get">
+        <input type="date" class="form-control" name="scheduled_date" value="{{ $scheduled_date }}" onchange="this.closest('form').submit()">
+    </form>
+    @endslot
+
+    @slot('dropoptions')
+        <li>
+            <a class="dropdown-item" href="{{ $pending_inspections['url'] }}">
+                <span class="">
+                    <i class="bi bi-alarm"></i>
+                </span>
+                <span class=" mx-1">Pending</span>
+                <span class="badge text-bg-warning">{{ $pending_inspections['count'] }}</span>
+            </a>
+        </li>
+        <li>
+            <x-modal-trigger modal-id="modalInspectionFilters" class="dropdown-item" link>
+                <span class="">
+                    <i class="bi bi-funnel"></i>
+                </span>
+                <span class=" mx-1">Filter</span>
+            </x-modal-trigger>
+        </li>
     @endslot
 
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
                 <th>Status</th>
+                {{-- @if(! $request->filled('scheduled_date') ) --}}
                 <th>Scheduled</th>
+                {{-- @endif --}}
                 <th>Inspector</th>
                 <th>Crew</th>
                 <th>Job</th>
@@ -51,7 +73,11 @@
             <td style="max-width:128px">
                 <x-badge color="{{ $inspection->status_color }}" class="text-uppercase w-100">{{ $inspection->status }}</x-badge>
             </td>
+
+            {{-- @if(! $request->filled('scheduled_date') ) --}}
             <td class="text-nowrap">{{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}</td>
+            {{-- @endif --}}
+
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
             <td class="text-nowrap">
                 @if( $inspection->hasCrew() )

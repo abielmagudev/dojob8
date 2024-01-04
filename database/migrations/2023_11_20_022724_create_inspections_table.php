@@ -17,7 +17,7 @@ class CreateInspectionsTable extends Migration
             $table->id();
             $table->date('scheduled_date')->nullable()->index();
             $table->text('observations')->nullable();
-            $table->boolean('is_approved')->default(0)->index();
+            $table->boolean('is_passed')->default(0)->index();
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('inspector_id')->nullable();
             $table->foreignId('work_order_id');

@@ -58,7 +58,7 @@
 
     <select id="statusSelect" class="form-select" name="status">
         @foreach($statuses_values as $status => $value)
-        <option value="{{ $value }}" {{ isSelected( ($value === $inspection->is_approved) ) }}>{{ ucfirst($status) }}</option>
+        <option value="{{ $value }}" {{ isSelected( ($value === $inspection->is_passed) ) }}>{{ ucfirst($status) }}</option>
         @endforeach
     </select>
     <x-error name="status" />

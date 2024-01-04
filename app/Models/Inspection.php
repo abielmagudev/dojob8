@@ -25,7 +25,7 @@ class Inspection extends Model
             'value' => 0, 
             'bscolor' => 'secondary',
         ],
-        'approved' => [
+        'passed' => [
             'value' => 1, 
             'bscolor' => 'success',
         ],
@@ -46,7 +46,7 @@ class Inspection extends Model
     protected $fillable = [
         'scheduled_date',
         'observations',
-        'is_approved',
+        'is_passed',
         'crew_id',
         'inspector_id',
         'work_order_id',
@@ -60,21 +60,21 @@ class Inspection extends Model
 
     // Attributes
 
-    public function getSettingsByIsApprovedAttribute()
+    public function getSettingsByIsPassedAttribute()
     {
         return self::getStatusesSettings()->filter(function ($settings) {
-            return $settings['value'] === $this->is_approved;
+            return $settings['value'] === $this->is_passed;
         });
     }
 
     public function getStatusAttribute()
     {
-        return $this->settings_by_is_approved->keys()[0];
+        return $this->settings_by_is_passed->keys()[0];
     }
 
     public function getStatusColorAttribute()
     {
-        return $this->settings_by_is_approved->first()['bscolor'];
+        return $this->settings_by_is_passed->first()['bscolor'];
     }
 
     public function getScheduledDateInputAttribute()
@@ -93,17 +93,17 @@ class Inspection extends Model
 
     public function isOnHold()
     {
-        return $this->is_approved == 0;
+        return $this->is_passed == 0;
     }
 
-    public function isApproved()
+    public function isPassed()
     {
-        return $this->is_approved == 1;
+        return $this->is_passed == 1;
     }
 
     public function isFailed()
     {
-        return $this->is_approved == -1;
+        return $this->is_passed == -1;
     }
 
     public function hasObservations()
@@ -126,7 +126,7 @@ class Inspection extends Model
 
     public function scopePendings($query)
     {
-        return $query->where('is_approved', 0);
+        return $query->where('is_passed', 0);
     }
 
     public function scopeWhereInspector($query, int $inspector_id)
@@ -139,19 +139,19 @@ class Inspection extends Model
         return $query->where('crew_id', $crew_id);
     }
 
-    public function scopeWhereIsApproved($query, int $value)
+    public function scopeWhereIsPassed($query, int $value)
     {
-        return $query->where('is_approved', $value);
+        return $query->where('is_passed', $value);
     }
 
-    public function scopeWhereIsApprovedIn($query, array $values)
+    public function scopeWhereIsPassedIn($query, array $values)
     {
-        return $query->whereIn('is_approved', $values);
+        return $query->whereIn('is_passed', $values);
     }
 
-    public function scopeWhereIsApprovedNotIn($query, array $values)
+    public function scopeWhereIsPassedNotIn($query, array $values)
     {    
-        return $query->whereNotIn('is_approved', $values);
+        return $query->whereNotIn('is_passed', $values);
     }
 
     public function scopeWhereScheduledDate($query, $scheduled_date)
@@ -202,10 +202,10 @@ class Inspection extends Model
             return $query;
         }
         if( $status_rule == 'only' ) {
-            return $query->whereIsApprovedIn($status_group);
+            return $query->whereIsPassedIn($status_group);
         }
 
-        return $query->whereIsApprovedNotIn($status_group);
+        return $query->whereIsPassedNotIn($status_group);
     }
 
     public function scopeFilterScheduledDate($query, $scheduled_date)

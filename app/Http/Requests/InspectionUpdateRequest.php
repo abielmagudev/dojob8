@@ -51,7 +51,7 @@ class InspectionUpdateRequest extends FormRequest
         return array_merge(parent::validated(), [
             'crew_id' => $this->crew,
             'inspector_id' => $this->inspector,
-            'is_approved' => $this->status,
+            'is_passed' => $this->status,
         ]);
     }
 }

@@ -70,7 +70,7 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error saving inspection, try again please');
         }
 
-        return redirect()->route('work-orders.show', $inspection->work_order_id)->with('success', "You saved inspection <b>{$inspection->id}</b>");
+        return redirect()->route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])->with('success', "You saved inspection <b>{$inspection->id}</b>");
     }
 
     public function show(Inspection $inspection)

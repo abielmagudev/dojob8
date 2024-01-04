@@ -87,10 +87,10 @@
 
 <x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="districtCodeInput" class="form-label">District code</label>
+        <label for="districtCodeInput" class="form-label form-label-optional">District code</label>
     </x-slot>
 
-    <input id="districtCodeInput" type="text" class="form-control {{ bsInputInvalid($errors->has('district_code')) }}" name="district_code" value="{{ old('district_code', $client->district_code) }}" required>
+    <input id="districtCodeInput" type="text" class="form-control {{ bsInputInvalid($errors->has('district_code')) }}" name="district_code" value="{{ old('district_code', $client->district_code) }}">
     <x-error name="district_code" />
 </x-form-control-horizontal>
 

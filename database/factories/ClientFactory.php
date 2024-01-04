@@ -37,7 +37,7 @@ class ClientFactory extends Factory
             'state_code' => $this->faker->randomElement( $country->get('states')->keys() ), // $this->faker->state(),
             'country_code' => $country->get('code'), // $this->faker->country(),
             'zip_code' => $this->faker->postcode(),
-            'district_code' => str_pad($this->faker->numberBetween(1, 16), 2, 0, STR_PAD_LEFT),
+            'district_code' => $this->faker->boolean() ? str_pad($this->faker->numberBetween(1, 16), 2, 0, STR_PAD_LEFT) : null,
             'notes' => $this->faker->optional()->text(),
         ];
     }

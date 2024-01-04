@@ -57,7 +57,7 @@ class Client extends Model
             'country_code' => $this->country_code,
             'country_name' => $this->country_name,
             'zip_code' => $this->zip_code,
-            'district' => $this->district,
+            'district_code' => $this->district_code,
         ]);
     }
 

@@ -59,9 +59,7 @@ class ClientSaveRequest extends FormRequest
                 'min:5',
             ],
             'district_code' => [
-                'required',
-                'numeric',
-                'min:2',
+                'nullable',
             ],
             'notes' => [
                 'nullable',

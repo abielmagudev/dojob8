@@ -26,7 +26,7 @@ class CreateClientsTable extends Migration
             $table->string('state_code');
             $table->string('country_code');
             $table->string('zip_code')->index();
-            $table->string('district_code');
+            $table->string('district_code')->nullable();
             $table->text('notes')->nullable();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();

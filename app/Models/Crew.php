@@ -104,6 +104,21 @@ class Crew extends Model
         return $query->where('is_active', 0);
     }
 
+    public function scopeWhereTasks($query, string $type)
+    {
+        return $query->where('task_types', 'like', "%{$type}%");
+    }
+
+    public function scopeForInspectionTasks($query)
+    {
+        return $query->whereTasks('inspections');
+    }
+
+    public function scopeForWorkOrderTasks($query)
+    {
+        return $query->whereTasks('work orders');
+    }
+
 
     // Relationships
 

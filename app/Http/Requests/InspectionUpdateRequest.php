@@ -9,8 +9,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class InspectionUpdateRequest extends FormRequest
 {
-    public $work_order_rules = [];
-
     public function authorize()
     {
         return true;
@@ -20,14 +18,14 @@ class InspectionUpdateRequest extends FormRequest
     {
         return [
             'scheduled_date' => [
-                'required',
+                'nullable',
                 'date',
             ],
             'crew' => [
                 'bail',
                 'nullable',
                 'integer',
-                sprintf('exists:%s,id', Crew::class),
+                sprintf('in:%s', Crew::forInspectionTasks()->get()->pluck('id')->implode(',')),
             ],
             'inspector' => [
                 'bail',
@@ -40,10 +38,25 @@ class InspectionUpdateRequest extends FormRequest
                 'string',
             ],
             'status' => [
-                'numeric',
-                sprintf('in:%s', implode(',', Inspection::getStatusValues())),
+                sprintf('in:%s', Inspection::getAllStatuses()->implode(',')),
             ],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        if(! Inspection::validateIsPendingStatus( $this->only(['scheduled_date', 'crew']) ) )
+        {
+            $this->merge([
+                'status' => $this->get('status') <> 'pending' ? $this->get('status') : 'on hold',
+            ]);
+        }
+        else
+        {
+            $this->merge([
+                'status' => 'pending',
+            ]);
+        }
     }
 
     public function validated()
@@ -51,7 +64,6 @@ class InspectionUpdateRequest extends FormRequest
         return array_merge(parent::validated(), [
             'crew_id' => $this->crew,
             'inspector_id' => $this->inspector,
-            'is_passed' => $this->status,
         ]);
     }
 }

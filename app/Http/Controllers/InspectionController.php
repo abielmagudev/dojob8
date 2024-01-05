@@ -21,35 +21,27 @@ class InspectionController extends Controller
             ]);
         }
 
-        $inspections = Inspection::with([
-            'crew',
-            'inspector', 
-            'work_order.job', 
-            'work_order.client'
-        ])
+        $inspections = Inspection::withRelationsForIndex()
         ->filtersByRequest($request)
-        ->orderByRaw("scheduled_date IS NULL DESC, scheduled_date {$request->get('sort', 'desc')}, inspector_id ASC")
-        // ->orderBy('inspector_id', 'desc')
-        // ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->orderByRaw("scheduled_date IS NULL DESC, scheduled_date {$request->get('sort', 'DESC')}")
+        ->orderBy('inspector_id', 'ASC')
         ->paginate(25)
         ->appends( $request->all() );
 
-        $scheduled_casted = $request->has('scheduled_date_range') ? [
-            Carbon::parse( $request->input('scheduled_date_range.0') ),
-            Carbon::parse( $request->input('scheduled_date_range.1') ),
-        ] : Carbon::parse( $request->get('scheduled_date') );
-
         return view('inspections.index', [
-            'request' => $request,
+            'all_statuses' => Inspection::getAllStatuses(),
+            'crews' => Crew::forInspectionTasks()->get(),
             'inspections' => $inspections,
             'inspectors' => Inspector::all(),
-            'crews' => (Crew::active()->get())->filter(fn($crew) => $crew->hasTypeTask('inspections')),
-            'statuses_values' => Inspection::getStatusesValues(),
-            'scheduled_casted' => $scheduled_casted,
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
+            'request' => $request,
             'pending_inspections' => [
-                'count' => Inspection::pendings()->count(),
-                'url' => Inspection::generatePendingInspectionsUrl(),
+                'count' => Inspection::whereStatus('pending')->get()->count(),
+                'url' => route('inspections.index', ['status' => 'pending', 'sort' => 'asc']),
+            ],
+            'on_hold_inspections' => [
+                'count' => Inspection::whereStatus('on hold')->get()->count(),
+                'url' => route('inspections.index', ['status' => 'on hold', 'sort' => 'asc']),
             ],
         ]);
     }
@@ -57,7 +49,7 @@ class InspectionController extends Controller
     public function create(WorkOrder $work_order)
     {
         return view('inspections.create', [
-            'crews' => Crew::active()->orderBy('name')->get(),
+            'crews' => Crew::forInspectionTasks()->get(),
             'inspection' => new Inspection,
             'inspectors' => Inspector::all(),
             'work_order' => $work_order,
@@ -90,10 +82,10 @@ class InspectionController extends Controller
     public function edit(Request $request, Inspection $inspection)
     {
         return view('inspections.edit', [
-            'crews' => Crew::active()->orderBy('name')->get(),
+            'crews' => Crew::forInspectionTasks()->get(),
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
-            'statuses_values' => Inspection::getStatusesValues(),
+            'form_statuses' => Inspection::getFormStatuses(),
             'url_back' => $request->filled('tab') ? route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections']) : route('inspections.show', $inspection),
         ]);
     }

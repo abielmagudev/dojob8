@@ -1,58 +1,15 @@
-{{-- Status --}}
-<?php $status_rules = ['only', 'except'] ?>
 <div class="mb-3">
     <label for="filterStatusRuleSelect" class="form-label">Status</label>
+    <ul id="statusGroupList" class="list-group rounded">
+        @foreach($all_statuses as $status)
+        <?php $checkbox_id = 'checkboxStatus' . ucfirst($status) ?>
 
-    <select id="filterStatusRuleSelect" class="form-select text-capitalize mb-1" name="status_rule">
-        <option label="Any status" selected></option>
-
-        @foreach($status_rules as $rule)
-        <option value="{{ $rule }}" {{ isSelected($rule == $request->get('status_rule')) }}>{{ $rule }}...</option>
+        <li class="list-group-item list-group-item-action">
+            <div class="form-check">
+                <input id="{{ $checkbox_id }}" class="form-check-input" type="checkbox" name="status_group[]" value="{{ $status }}" {{ isChecked( in_array($status, $request->get('status_group', []), true) ) }}>
+                <label for="{{ $checkbox_id }}" class="form-check-label text-uppercase w-100">{{ $status }}</label>
+            </div>
+        </li>
         @endforeach
-
-    </select>
-
-    <div id="statusGroupWrapper" class="rounded bg-light p-3 mx-2 {{ in_array($request->get('status_rule'), $status_rules) ? 'd-block' : 'd-none' }}">
-        <div class="overflow-y-scroll border rounded">
-            <ul id="statusGroupList" class="list-group list-group-flush">
-                @foreach($statuses_values as $status => $value)
-                <?php $checkbox_id = 'checkboxStatus' . ($value ?? 'N') ?>
-
-                {{-- En caso ser numerico convertir a string $value para la validacionde isChecked, no conversion del valor Null --}}
-                <?php if(! is_null($value) ) $value = (string) $value; ?> 
-
-                <li class="list-group-item list-group-item-action">
-                    <div class="form-check">
-                        <input id="{{ $checkbox_id }}" class="form-check-input" type="checkbox" name="status_group[]" value="{{ $value }}" {{ isChecked( in_array($value, $request->get('status_group', []), true) ) }}>
-                        <label for="{{ $checkbox_id }}" class="form-check-label text-capitalize">{{ $status }}</label>
-                    </div>
-                </li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
+    </ul>
 </div>
-
-@push('scripts')
-<script>
-
-const filterStatusRuleSelect = {
-    element: document.getElementById('filterStatusRuleSelect'),
-    listen: function () {
-        this.element.addEventListener('change', function (evt) {
-            statusGroupList.toggle( !['only', 'except'].includes(this.value) )
-        })
-    }
-}
-
-const statusGroupList = {
-    element: document.getElementById('statusGroupWrapper'),
-    toggle: function (switcher) {
-        this.element.classList.toggle('d-none', switcher)
-    }
-}
-
-filterStatusRuleSelect.listen()
-
-</script>
-@endpush

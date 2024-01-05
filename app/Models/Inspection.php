@@ -17,36 +17,28 @@ class Inspection extends Model
     use HasBeforeAfterTrait;
     use HasFactory;
     use HasHookUsersTrait;
-    use HasModelHelpersTrait;
     use HasWorkOrdersTrait;
 
-    public static $statuses_settings = [
-        'on hold' => [
-            'value' => 0, 
-            'bscolor' => 'secondary',
-        ],
-        'passed' => [
-            'value' => 1, 
-            'bscolor' => 'success',
-        ],
-        'failed' => [
-            'value' => -1,
-            'bscolor' => 'danger',
-        ],
-    ]; 
+    public static $all_statuses = [
+        'pending',
+        'on hold',
+        'passed',
+        'failed',
+    ];
 
     public static $inputs_filters = [
-        'status_rule' => ['filterByStatus', 'status_group'],
-        'inspector' => 'filterByInspector',
+        'between_scheduled_date' => 'filterBetweenScheduledDate',
         'crew' => 'filterByCrew',
+        'inspector' => 'filterByInspector',
         'scheduled_date' => 'filterScheduledDate',
-        'between_dates' => 'filterBetweenScheduledDate',
+        'status_group' => 'filterByStatusGroup',
+        'status' => 'filterByStatus',
     ];
 
     protected $fillable = [
         'scheduled_date',
         'observations',
-        'is_passed',
+        'status',
         'crew_id',
         'inspector_id',
         'work_order_id',
@@ -59,23 +51,6 @@ class Inspection extends Model
 
 
     // Attributes
-
-    public function getSettingsByIsPassedAttribute()
-    {
-        return self::getStatusesSettings()->filter(function ($settings) {
-            return $settings['value'] === $this->is_passed;
-        });
-    }
-
-    public function getStatusAttribute()
-    {
-        return $this->settings_by_is_passed->keys()[0];
-    }
-
-    public function getStatusColorAttribute()
-    {
-        return $this->settings_by_is_passed->first()['bscolor'];
-    }
 
     public function getScheduledDateInputAttribute()
     {
@@ -91,29 +66,9 @@ class Inspection extends Model
 
     // Validatiors
 
-    public function isOnHold()
+    public function hasScheduledDate()
     {
-        return $this->is_passed == 0;
-    }
-
-    public function isPassed()
-    {
-        return $this->is_passed == 1;
-    }
-
-    public function isFailed()
-    {
-        return $this->is_passed == -1;
-    }
-
-    public function hasObservations()
-    {
-        return ! empty($this->observations);
-    }
-
-    public function hasCrew()
-    {
-        return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
+        return ! empty($this->getRawOriginal('scheduled_date'));
     }
 
     public function isToday()
@@ -121,37 +76,35 @@ class Inspection extends Model
         return $this->getRawOriginal('scheduled_date') == now()->toDateString();
     }
 
+    public function hasCrew()
+    {
+        return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
+    }
+
+    public function isPendingStatus()
+    {
+        return self::validateIsPendingStatus([
+            $this->getRawOriginal('scheduled_date'),
+            $this->crew_id,
+        ]);
+    }
+
+    public function hasStatus(string $status)
+    {
+        return $this->status == $status;
+    }
+
 
     // Scopes
-
-    public function scopePendings($query)
-    {
-        return $query->where('is_passed', 0);
-    }
-
-    public function scopeWhereInspector($query, int $inspector_id)
-    {
-        return $query->where('inspector_id', $inspector_id);
-    }
 
     public function scopeWhereCrew($query, int $crew_id)
     {
         return $query->where('crew_id', $crew_id);
     }
 
-    public function scopeWhereIsPassed($query, int $value)
+    public function scopeWhereInspector($query, int $inspector_id)
     {
-        return $query->where('is_passed', $value);
-    }
-
-    public function scopeWhereIsPassedIn($query, array $values)
-    {
-        return $query->whereIn('is_passed', $values);
-    }
-
-    public function scopeWhereIsPassedNotIn($query, array $values)
-    {    
-        return $query->whereNotIn('is_passed', $values);
+        return $query->where('inspector_id', $inspector_id);
     }
 
     public function scopeWhereScheduledDate($query, $scheduled_date)
@@ -174,60 +127,70 @@ class Inspection extends Model
         return $query->whereBetween('scheduled_date', $between_dates);
     }
 
+    public function scopeWhereStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+
+    public function scopeWhereInStatus($query, $status_group)
+    {
+        return $query->whereIn('status', $status_group);
+    }
+
+    public function scopeWithRelationsForIndex($query)
+    {
+        return $query->with([
+            'crew',
+            'inspector', 
+            'work_order.job', 
+            'work_order.client',
+        ]);
+    }
+
 
 
     // Filters
 
-    public function scopeFilterByInspector($query, $inspector_id)
-    {
-        if( is_null($inspector_id) ) {
-            return $query;
-        }
-
-        return $query->whereInspector($inspector_id);
-    }
-
     public function scopeFilterByCrew($query, $crew_id)
     {
-        if( is_null($crew_id) ) {
-            return $query;
-        }
-
-        return $query->whereCrew($crew_id);
+        return ! is_null($crew_id) ? $query->whereCrew($crew_id) : $query;
     }
 
-    public function scopeFilterByStatus($query, $status_rule, $status_group = [])
+    public function scopeFilterByInspector($query, $inspector_id)
     {
-        if( is_null($status_rule) ||! in_array($status_rule, ['only','except']) || empty($status_group) ) {
-            return $query;
-        }
-        if( $status_rule == 'only' ) {
-            return $query->whereIsPassedIn($status_group);
-        }
-
-        return $query->whereIsPassedNotIn($status_group);
+        return ! is_null($inspector_id) ? $query->whereInspector($inspector_id) : $query;
     }
 
     public function scopeFilterScheduledDate($query, $scheduled_date)
     {
-        return $query->whereScheduledDate($scheduled_date);
+        return ! is_null($scheduled_date) ? $query->whereScheduledDate($scheduled_date) : $query;
     }
 
-    public function scopeFilterBetweenScheduledDate($query, $between_dates)
+    public function scopeFilterBetweenScheduledDates($query, $between_scheduled_date)
     {
-        if(! isset($between_dates['from']) &&! isset($between_dates['to']) ) {
+        if(! isset($between_scheduled_date['from']) &&! isset($between_scheduled_date['to']) ) {
             return $query;
         }
 
-        if( isset($between_dates['from']) &&! isset($between_dates['to']) ) {
-            return $query->whereScheduledDateFrom($between_dates['from']);
+        if( isset($between_scheduled_date['from']) &&! isset($between_scheduled_date['to']) ) {
+            return $query->whereScheduledDateFrom($between_scheduled_date['from']);
         }
         
-        if(! isset($between_dates['from']) && isset($between_dates['to']) ) {
-            return $query->whereScheduledDateTo($between_dates['to']);
+        if(! isset($between_scheduled_date['from']) && isset($between_scheduled_date['to']) ) {
+            return $query->whereScheduledDateTo($between_scheduled_date['to']);
         }
 
-        return $query->whereScheduledDateBetween($between_dates);
+        return $query->whereScheduledDateBetween($between_scheduled_date);
+    }
+
+    public function scopeFilterByStatusGroup($query, $status_group)
+    {
+        return is_array($status_group) &&! empty($status_group) ? $query->whereInStatus($status_group) : $query;
+    }
+
+    public function scopeFilterByStatus($query, $status)
+    {
+        return ! is_null($status) ? $query->whereStatus($status) : $query;
     }
 
 
@@ -253,43 +216,20 @@ class Inspection extends Model
 
     // Statics
 
-    public static function getStatusesSettings()
+    public static function getAllStatuses()
     {
-        return collect(self::$statuses_settings);
+        return collect( self::$all_statuses );
     }
 
-    public static function getStatusesValues()
+    public static function getFormStatuses()
     {
-        foreach(self::getStatusesSettings()->all() as $status => $settings)
-        {   
-            $status_values[$status] = $settings['value'];
-        }
-
-        return $status_values;
+        return self::getAllStatuses()->filter(fn($status) => $status <> 'pending');
     }
 
-    public static function getStatuses()
+    public static function validateIsPendingStatus(array $values)
     {
-        return self::getStatusesSettings()->keys();
-    }
+        $empty_values = array_filter($values, fn($value) => empty($value));
 
-    public static function getStatusValues()
-    {
-        return array_values( self::getStatusesValues() );
-    }
-
-    public static function getSettingsByStatus(string $status)
-    {
-        return self::getStatusesSettings()->get($status);
-    }
-
-    public static function generatePendingInspectionsUrl(array $parameters = [])
-    {
-        return route('inspections.index', array_merge([
-                'status_rule' => 'only',
-                'status_group' => [0],
-                'sort' => 'asc',
-            ], $parameters)
-        );
+        return count($empty_values) > 0;
     }
 }

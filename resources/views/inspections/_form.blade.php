@@ -4,7 +4,7 @@
         <label for="scheduledDateInput" class="form-label">Schedule</label>
     </x-slot>
 
-    <input id="scheduledDateInput" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" type="date" name="scheduled_date" value="{{ old('scheduled_date', $inspection->scheduled_date_input) }}" required>
+    <input id="scheduledDateInput" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" type="date" name="scheduled_date" value="{{ old('scheduled_date', $inspection->scheduled_date_input) }}">
     <x-error name="scheduled_date" />
 </x-form-control-horizontal>
 
@@ -13,7 +13,7 @@
         <label for="inspectorSelect" class="form-label">Inspector</label>
     </x-slot>
 
-    <select id="inspectorSelect" class="form-select" name="inspector">
+    <select id="inspectorSelect" class="form-select" name="inspector" required>
         @foreach($inspectors as $inspector)
         <option value="{{ $inspector->id }}" {{ isSelected($inspector->id == $inspection->inspector_id) }}>{{ $inspector->name }}</option>
         @endforeach
@@ -28,7 +28,7 @@
 
     <div>
         <select id="crewSelect" class="form-select" name="crew">
-            <option disabeld selected></option>
+            <option disabeld selected label="Choose..."></option>
             @foreach($crews as $crew)          
 
             @if( $crew->hasTypeTask('inspections') || $crew->id == $inspection->crew_id )
@@ -57,9 +57,15 @@
     </x-slot>
 
     <select id="statusSelect" class="form-select" name="status">
-        @foreach($statuses_values as $status => $value)
-        <option value="{{ $value }}" {{ isSelected( ($value === $inspection->is_passed) ) }}>{{ ucfirst($status) }}</option>
+        @if( $inspection->isPendingStatus() )
+        <option value="pending">Pending</option>
+
+        @else
+        @foreach($form_statuses as $status)
+        <option value="{{ $status }}" {{ isSelected( ($status === $inspection->status) ) }}>{{ ucfirst($status) }}</option>
         @endforeach
+
+        @endif
     </select>
     <x-error name="status" />
 </x-form-control-horizontal>

@@ -1,31 +1,13 @@
 @extends('application')
 
 @section('header')
-<x-header title="Inspections">
-    @slot('subtitle')
-    <span class="badge text-bg-dark">{{ $inspections->total() }}</span>
-    @endslot
-</x-header>
+<x-header title="Inspections" />
 @endsection
 
 @section('content')
 <x-card>
 
-    
-    @slot('title')
-    @if( is_array($scheduled_casted) )  
-    <span>{{ $scheduled_casted[0]->format('d M, Y') }}</span>
-    <span class="mx-1">to</span>
-    <span>{{ $scheduled_casted[1]->format('d M, Y') }}</span>
-
-    @else
-    <span>{{ now()->format('d M, Y') }}</span>
-
-    @endif
-
-    @endslot
-
-
+    @slot('title', "{$inspections->total()} Inspections")
 
     @slot('options')
     <form action="{{ route('inspections.index') }}" class="d-inline-block" method="get">
@@ -36,19 +18,22 @@
     @slot('dropoptions')
         <li>
             <a class="dropdown-item" href="{{ $pending_inspections['url'] }}">
-                <span class="">
-                    <i class="bi bi-alarm"></i>
-                </span>
+                <i class="bi bi-exclamation-triangle"></i>
                 <span class=" mx-1">Pending</span>
                 <span class="badge text-bg-warning">{{ $pending_inspections['count'] }}</span>
             </a>
         </li>
         <li>
+            <a class="dropdown-item" href="{{ $on_hold_inspections['url'] }}">
+                <i class="bi bi-alarm"></i>
+                <span class=" mx-1">On hold</span>
+                <span class="badge text-bg-warning">{{ $on_hold_inspections['count'] }}</span>
+            </a>
+        </li>
+        <li>
             <x-modal-trigger modal-id="modalInspectionFilters" class="dropdown-item" link>
-                <span class="">
-                    <i class="bi bi-funnel"></i>
-                </span>
-                <span class=" mx-1">Filter</span>
+                <i class="bi bi-funnel"></i>
+                <span class=" mx-1">More filters</span>
             </x-modal-trigger>
         </li>
     @endslot
@@ -57,40 +42,38 @@
         <x-slot name="thead">
             <tr>
                 <th>Status</th>
-                {{-- @if(! $request->filled('scheduled_date') ) --}}
                 <th>Scheduled</th>
-                {{-- @endif --}}
                 <th>Inspector</th>
-                <th>Crew</th>
                 <th>Job</th>
+                <th>Crew</th>
                 <th>Client</th>
+                <th class="text-nowrap">Work order</th>
                 <th></th>
             </tr>
         </x-slot>
     
         @foreach($inspections as $inspection)
         <tr>
-            <td style="max-width:128px">
-                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase w-100">{{ $inspection->status }}</x-badge>
+            <td style="width:1%">
+                @include('inspections.__.status_color', ['status' => $inspection->status])
             </td>
-
-            {{-- @if(! $request->filled('scheduled_date') ) --}}
             <td class="text-nowrap">{{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}</td>
-            {{-- @endif --}}
-
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
+            <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
                 @if( $inspection->hasCrew() )
                 <span class="badge" style="background-color:{{ $inspection->crew->background_color }};color: {{ $inspection->crew->text_color }}">{{ $inspection->crew->name }}</span>
                 @endif
             </td>
-            <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])
             </td>
+            <td>
+                <a href="{{ route('work-orders.show', $inspection->work_order) }}" class="link-primary">#{{ $inspection->work_order->id }}</a>
+            </td>
             <td class="text-end">
-                <a href="{{ route('inspections.show', $inspection) }}" class="btn btn-outline-primary">
-                    <i class="bi bi-eye-fill"></i>
+                <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-outline-warning">
+                    <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>
         </tr>

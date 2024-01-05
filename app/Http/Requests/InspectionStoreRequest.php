@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Crew;
+use App\Models\Inspection;
 use App\Models\Inspector;
 use App\Models\WorkOrder;
 use Illuminate\Foundation\Http\FormRequest;
@@ -25,7 +26,7 @@ class InspectionStoreRequest extends FormRequest
                 'bail',
                 'nullable',
                 'integer',
-                sprintf('exists:%s,id', Crew::class),
+                sprintf('in:%s', Crew::forInspectionTasks()->get()->pluck('id')->implode(',')),
             ],
             'inspector' => [
                 'bail',
@@ -39,7 +40,17 @@ class InspectionStoreRequest extends FormRequest
                 'integer', 
                 sprintf('exists:%s,id', WorkOrder::class),
             ],
+            'status' => [
+                'required',
+            ],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'status' => Inspection::validateIsPendingStatus( $this->only(['scheduled_date', 'crew']) ) ? 'pending' : 'on hold',
+        ]);
     }
 
     public function validated()

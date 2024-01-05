@@ -27,7 +27,7 @@
             @endslot
             
             <p>
-                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase">{{ $inspection->status }}</x-badge>
+                @include('inspections.__.status_color', ['status' => $inspection->status])
             </p>      
         
             <x-small-label label="Scheduled">

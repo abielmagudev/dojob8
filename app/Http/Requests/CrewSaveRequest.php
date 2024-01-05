@@ -28,12 +28,12 @@ class CrewSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'task_types' => [
+            'tasks' => [
                 'required',
                 'array',
             ],
-            'task_types.*' => [
-                sprintf('in:%s', Crew::getTaskTypes()->implode(',')),
+            'tasks.*' => [
+                sprintf('in:%s', Crew::getAllTasks()->implode(',')),
             ],
             'background_color' => [
                 'required',

@@ -22,15 +22,15 @@ class Crew extends Model
     use HasWorkOrdersTrait;
     use SoftDeletes;
 
-    public static $all_task_types = [
-        'work orders',
-        'inspections',
+    public static $all_tasks = [
+        'work order',
+        'inspection',
     ];
 
     protected $fillable = [
         'name',
         'description',
-        'task_types',
+        'tasks',
         'background_color',
         'text_color_mode',
         'is_active',
@@ -67,9 +67,9 @@ class Crew extends Model
         return json_encode( $this->dataset );
     }
 
-    public function getTaskTypesArrayAttribute()
+    public function getTasksArrayAttribute()
     {
-        return ! is_null($this->task_types) ? json_decode( $this->task_types ) : [];
+        return ! is_null($this->tasks) ? json_decode( $this->tasks ) : [];
     }
 
 
@@ -80,9 +80,9 @@ class Crew extends Model
         return (bool) $this->isActive() && $this->members_count || $this->members->count();
     }
 
-    public function hasTypeTask(string $type_task)
+    public function hasTask(string $task)
     {
-        return in_array($type_task, $this->task_types_array);
+        return in_array($task, $this->tasks_array);
     }
 
 
@@ -104,19 +104,19 @@ class Crew extends Model
         return $query->where('is_active', 0);
     }
 
-    public function scopeWhereTasks($query, string $type)
+    public function scopeWhereTasks($query, string $task)
     {
-        return $query->where('task_types', 'like', "%{$type}%");
+        return $query->where('tasks', 'like', "%{$task}%");
     }
 
     public function scopeForInspectionTasks($query)
     {
-        return $query->whereTasks('inspections');
+        return $query->whereTasks('inspection');
     }
 
     public function scopeForWorkOrderTasks($query)
     {
-        return $query->whereTasks('work orders');
+        return $query->whereTasks('work order');
     }
 
 
@@ -135,8 +135,8 @@ class Crew extends Model
 
     // Static
 
-    public static function getTaskTypes()
+    public static function getAllTasks()
     {
-        return collect( self::$all_task_types );
+        return collect( self::$all_tasks );
     }
 }

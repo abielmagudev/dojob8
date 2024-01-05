@@ -59,7 +59,6 @@ class WorkOrderController extends Controller
     public function create(Client $client)
     {
         $this->reflashInputErrors();
-
         return view('work-orders.create', [
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $client,
@@ -120,7 +119,7 @@ class WorkOrderController extends Controller
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $work_order->client,
             'contractors' => Contractor::orderBy('name')->get(),
-            'crews' => Crew::with('members')->get(),
+            'crews' => Crew::active()->orderBy('name', 'asc')->get(),
             'work_order' => $work_order,
         ]);
     }

@@ -19,7 +19,7 @@ class CreateCrewsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->string('task_types')->nullable();
+            $table->string('tasks')->nullable();
             $table->string('background_color', 24);
             $table->enum('text_color_mode', CrewPainter::getTextColorModes());
             $table->boolean('is_active')->default(true);

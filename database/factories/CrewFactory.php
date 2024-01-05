@@ -15,19 +15,19 @@ class CrewFactory extends Factory
      */
     public function definition()
     {
-        $crew_task_types = null;
+        $crew_tasks = null;
 
         if( $this->faker->boolean() )
         {
-            $crew_task_types = $this->faker->boolean() 
-                            ? json_encode( Crew::getTaskTypes()->toArray() ) 
-                            : json_encode([ Crew::getTaskTypes()->random() ]); 
+            $crew_tasks = $this->faker->boolean() 
+                        ? json_encode( Crew::getAllTasks()->toArray() ) 
+                        : json_encode([ Crew::getAllTasks()->random() ]); 
         }
 
         return [
             'name' => strtoupper($this->faker->domainName()),
             'description' => $this->faker->optional()->sentence(),
-            'task_types' => $crew_task_types,
+            'tasks' => $crew_tasks,
             'background_color' => $this->faker->hexColor(),
             'text_color_mode' => $this->faker->randomElement( CrewPainter::getTextColorModes() ),
             'lead_member_id' => $this->faker->optional()->numberBetween(1, 35),

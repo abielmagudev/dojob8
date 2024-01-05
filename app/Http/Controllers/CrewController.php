@@ -24,7 +24,7 @@ class CrewController extends Controller
     public function create()
     {        
         return view('crews.create', [
-            'task_types' => Crew::getTaskTypes(),
+            'all_tasks' => Crew::getAllTasks(),
             'crew' => new Crew,
             'text_color_modes_colors' => CrewPainter::getTextColorModesAndColors(),
         ]);
@@ -57,7 +57,7 @@ class CrewController extends Controller
     public function edit(Crew $crew)
     {
         return view('crews.edit', [
-            'task_types' => Crew::getTaskTypes(),
+            'all_tasks' => Crew::getAllTasks(),
             'crew' => $crew,
             'members' => [],
             'text_color_modes_colors' => CrewPainter::getTextColorModesAndColors(),

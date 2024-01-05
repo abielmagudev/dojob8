@@ -35,7 +35,7 @@ class WorkOrderStoreRequest extends FormRequest
             ],
             'crew' => [
                 'required', 
-                sprintf('exists:%s,id', Crew::class),
+                sprintf('exists:%s,id', Crew::class), // Solamente con work order task
             ],
             'notes' => [
                 'nullable',

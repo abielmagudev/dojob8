@@ -9,18 +9,18 @@
 
 <x-form-control-horizontal>
     <x-slot name="label">
-        <label for="typeTaskOptions" class="form-label">Task types</label>
+        <label for="typeTaskOptions" class="form-label">Tasks</label>
     </x-slot>
 
     <div class="form-control p-0">
         <table class="table table-hover m-0">
-            @foreach($task_types as $type_task)
-            <?php $checkbox_id = "typeTask" . ucwords( str_replace([' ', '-'], '', $type_task) ) ?>
+            @foreach($all_tasks as $task)
+            <?php $checkbox_id = "task" . ucwords( str_replace([' ', '-'], '', $task) ) ?>
             <tr>
                 <td class="{{ $loop->last ? 'border-0' : '' }} bg-transparent">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="task_types[]" value="{{ $type_task }}" id="{{ $checkbox_id }}" {{ isChecked( $crew->hasTypeTask($type_task) ) }}>
-                        <label class="form-check-label text-capitalize" for="{{ $checkbox_id }}">{{ $type_task }}</label>
+                        <input class="form-check-input" type="checkbox" name="tasks[]" value="{{ $task }}" id="{{ $checkbox_id }}" {{ isChecked( $crew->hasTask($task) ) }}>
+                        <label class="form-check-label text-capitalize" for="{{ $checkbox_id }}">{{ $task }}</label>
                     </div>
                 </td>
             </tr>

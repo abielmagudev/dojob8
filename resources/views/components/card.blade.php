@@ -9,15 +9,15 @@
             </div>
             <div>
                 @isset($options)       
-                <div class="{{ $attributes->get('options-class', 'd-inline-block') }}">
+                <div class="{{ $attributes->get('options-class', 'd-inline-block align-middle') }}">
                     {!! $options !!}
                 </div>
                 @endisset
 
                 @isset($dropoptions)              
-                <div class="d-inline-block">
+                <div class="d-inline-block align-middle">
                     <div class="dropdown dropdown-menu-end">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn text-bg-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu border-0 shadow">

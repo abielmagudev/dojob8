@@ -20,6 +20,10 @@ class CreateHistoryTable extends Migration
             $table->string('model_type')->index();
             $table->unsignedInteger('model_id')->index();
             $table->foreignId('user_id')->index();
+            $table->string('ip')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('device')->nullable();
             $table->timestamp('created_at');
         });
     }

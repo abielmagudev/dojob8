@@ -23,10 +23,8 @@ class UserFactory extends Factory
             'profile_type' => $this->faker->randomElement( UserProfiler::getProfiles() ),
             'profile_id' => $this->faker->numberBetween(1, 10),
             'is_active' => (int) $this->faker->boolean(),
-            'last_session_device' => $this->faker->optional()->randomElement(['desktop','mobile','tablet']),
-            'last_session_latitude' => $this->faker->optional()->latitude(),
-            'last_session_longitude' => $this->faker->optional()->longitude(),
             'last_session_ip' => $this->faker->optional()->ipv4(),
+            'last_session_device' => $this->faker->optional()->randomElement(['desktop','mobile','tablet']),
             'last_session_at' => $this->faker->optional()->dateTime(),
             'remember_token' => Str::random(10),
         ];

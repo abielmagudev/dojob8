@@ -61,6 +61,13 @@ class MemberController extends Controller
 
         if( $member->isInactive() ) {
             $member->crews()->detach();
+            if($user = $member->user) {
+                $user->deactivate();
+            }
+        } else {
+            if($user = $member->user) {
+                $user->fill(['is_active' => 1])->save();
+            }
         }
 
         return redirect()->route('members.edit', $member)->with('success', "You updated the member <b>{$member->full_name}</b>");

@@ -61,12 +61,16 @@ class MemberController extends Controller
 
         if( $member->isInactive() ) {
             $member->crews()->detach();
-            if($user = $member->user) {
-                $user->deactivate();
+            if($users = $member->users) {
+                $users->each(function ($user) {
+                    $user->deactivate();
+                });
             }
         } else {
-            if($user = $member->user) {
-                $user->fill(['is_active' => 1])->save();
+            if($users = $member->users) {
+                $users->each(function ($user) {
+                    $user->fill(['is_active' => 1])->save();
+                });
             }
         }
 

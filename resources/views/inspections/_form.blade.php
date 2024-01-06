@@ -30,11 +30,7 @@
         <select id="crewSelect" class="form-select" name="crew">
             <option disabeld selected label="Choose..."></option>
             @foreach($crews as $crew)          
-
-            @if( $crew->hasTypeTask('inspections') || $crew->id == $inspection->crew_id )
             <option value="{{ $crew->id }}" {{ isSelected($crew->id == $inspection->crew_id) }}>{{ $crew->name }}</option>
-            @endif
-
             @endforeach
         </select>
         <x-error name="crew" />

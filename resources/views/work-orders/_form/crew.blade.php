@@ -7,8 +7,8 @@
         <select id="crewSelect" class="form-select" name="crew">
             @foreach($crews as $crew)          
 
-            @if( $crew->hasTask('work order') || $crew->id == $work_order->crew_id )
-            <option value="{{ $crew->id }}" {{ isSelected($crew->id == $work_order->crew_id) }}>{{ $crew->name }}</option>
+            @if( $crew->id == $work_order->crew_id || $crew->hasTask('work orders') )
+            <option value="{{ $crew->id }}" {{ isSelected($crew->id == old('crew', $work_order->crew_id)) }}>{{ $crew->name }}</option>
             @endif
 
             @endforeach

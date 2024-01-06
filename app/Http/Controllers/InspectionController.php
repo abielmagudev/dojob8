@@ -30,7 +30,7 @@ class InspectionController extends Controller
 
         return view('inspections.index', [
             'all_statuses' => Inspection::getAllStatuses(),
-            'crews' => Crew::forInspectionTasks()->get(),
+            'crews' => Crew::forInspections()->active()->get(),
             'inspections' => $inspections,
             'inspectors' => Inspector::all(),
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
@@ -49,7 +49,7 @@ class InspectionController extends Controller
     public function create(WorkOrder $work_order)
     {
         return view('inspections.create', [
-            'crews' => Crew::forInspectionTasks()->get(),
+            'crews' => Crew::forInspections()->active()->get(),
             'inspection' => new Inspection,
             'inspectors' => Inspector::all(),
             'work_order' => $work_order,
@@ -82,7 +82,7 @@ class InspectionController extends Controller
     public function edit(Request $request, Inspection $inspection)
     {
         return view('inspections.edit', [
-            'crews' => Crew::forInspectionTasks()->get(),
+            'crews' => Crew::forInspections()->active()->get(),
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
             'form_statuses' => Inspection::getFormStatuses(),

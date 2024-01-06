@@ -43,7 +43,7 @@ class WorkOrderController extends Controller
 
         return view('work-orders.index', [
             'all_statuses' => WorkOrder::getAllStatuses(),
-            'crews' => Crew::all(),
+            'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'contractors' => Contractor::all(),
             'jobs' => Job::all(),
             'request' => $request,
@@ -63,7 +63,7 @@ class WorkOrderController extends Controller
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $client,
             'contractors' => Contractor::orderBy('name')->get(),
-            'crews' => Crew::active()->orderBy('name', 'asc')->get(),
+            'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'jobs' => Job::with('extensions')->orderBy('name')->get(),
             'work_order' => new WorkOrder,
         ]);
@@ -119,7 +119,7 @@ class WorkOrderController extends Controller
             'all_statuses' => WorkOrder::getAllStatuses(),
             'client' => $work_order->client,
             'contractors' => Contractor::orderBy('name')->get(),
-            'crews' => Crew::active()->orderBy('name', 'asc')->get(),
+            'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'work_order' => $work_order,
         ]);
     }

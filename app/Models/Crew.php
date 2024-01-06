@@ -23,8 +23,8 @@ class Crew extends Model
     use SoftDeletes;
 
     public static $all_tasks = [
-        'work order',
-        'inspection',
+        'work orders',
+        'inspections',
     ];
 
     protected $fillable = [
@@ -73,6 +73,7 @@ class Crew extends Model
     }
 
 
+
     // Validators
 
     public function hasMembers()
@@ -89,35 +90,21 @@ class Crew extends Model
 
     // Scopes
 
-    public function scopeWhereActive($query, $value)
-    {
-        return $query->where('is_active', $value);
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', 1);
-    }
-
-    public function scopeInactive($query)
-    {
-        return $query->where('is_active', 0);
-    }
-
     public function scopeWhereTasks($query, string $task)
     {
         return $query->where('tasks', 'like', "%{$task}%");
     }
 
-    public function scopeForInspectionTasks($query)
+    public function scopeForInspections($query)
     {
-        return $query->whereTasks('inspection');
+        return $query->whereTasks('inspections');
     }
 
-    public function scopeForWorkOrderTasks($query)
+    public function scopeForWorkOrders($query)
     {
-        return $query->whereTasks('work order');
+        return $query->whereTasks('work orders');
     }
+
 
 
     // Relationships
@@ -131,6 +118,7 @@ class Crew extends Model
     {
         return $this->belongsToMany(Member::class)->using(CrewMember::class);
     }
+
 
 
     // Static

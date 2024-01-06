@@ -28,8 +28,8 @@
         </table>
     </div>
 
-    <x-error name="task_types" />
-    <x-error name="task_types.*" />
+    <x-error name="tasks" />
+    <x-error name="tasks.*" />
 </x-form-control-horizontal>
 
 <x-form-control-horizontal>

@@ -23,7 +23,6 @@ class Inspector extends Model
     ];
 
 
-
     
     // Attributes
 
@@ -49,7 +48,6 @@ class Inspector extends Model
             $parameter => $this->id
         ]);
     }
-
 
 
 

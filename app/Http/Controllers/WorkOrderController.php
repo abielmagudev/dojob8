@@ -75,7 +75,7 @@ class WorkOrderController extends Controller
             return back()->with('danger', "Error saving work order, try again please");
         }
         
-        $work_order->workers()->attach( 
+        $work_order->members()->attach( 
             $work_order->crew->members->pluck('id')
         );
 

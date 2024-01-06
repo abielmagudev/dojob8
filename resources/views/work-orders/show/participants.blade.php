@@ -24,6 +24,6 @@
     </x-small-label>
 
     <x-small-label label="Workers">
-        {!! $work_order->workers->map(function($member){ return $member->full_name; })->implode('<br>') !!}
+        {!! $work_order->members->map(function($member){ return $member->full_name; })->implode('<br>') !!}
     </x-small-label>
 </x-card>

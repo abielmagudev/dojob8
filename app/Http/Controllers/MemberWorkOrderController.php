@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\WorkOrderUpdateWorkersRequest;
+use App\Http\Requests\WorkOrderUpdateMembersRequest;
 use App\Models\WorkOrder;
 
-class WorkOrderWorkerController extends Controller
+class MemberWorkOrderController extends Controller
 {
-    public function __invoke(WorkOrderUpdateWorkersRequest $request)
+    public function __invoke(WorkOrderUpdateMembersRequest $request)
     {
         $results = [];
 
@@ -17,13 +17,13 @@ class WorkOrderWorkerController extends Controller
         {
             if( $request->keep_old_workers )
             {
-                $result[$wo->id] = $wo->workers()->syncWithoutDetaching(
-                    $wo->crew->members->except( $wo->workers->pluck('id')->toArray() )
+                $result[$wo->id] = $wo->members()->syncWithoutDetaching(
+                    $wo->crew->members->except( $wo->members->pluck('id')->toArray() )
                 );
             } 
             else
             {
-                $result[$wo->id] = $wo->workers()->sync(
+                $result[$wo->id] = $wo->members()->sync(
                     $wo->crew->members
                 );
             }

@@ -140,9 +140,9 @@ class WorkOrder extends Model
         return (bool) $this->contractor_id && is_a($this->contractor, Contractor::class);
     }
 
-    public function hasOperators()
+    public function hasMembers()
     {
-        return (bool) $this->operators_count || $this->operators->count();
+        return (bool) $this->members_count || $this->members->count();
     }
 
     public function isFinished()
@@ -351,7 +351,7 @@ class WorkOrder extends Model
         return $this->hasMany(Inspection::class);
     }
 
-    public function workers()
+    public function members()
     {
         return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
     }

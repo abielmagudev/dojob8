@@ -75,7 +75,7 @@
 
 <x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="recruitmentInput" class="form-label">Can it be in crews? {{ $member->can_be_in_crews}}</label>
+        <label for="recruitmentInput" class="form-label">Can it be in crews?</label>
     </x-slot>
 
     <div class="form-control">

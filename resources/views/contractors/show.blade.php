@@ -4,14 +4,7 @@
 <x-header title="{{ $contractor->name }} ({{ $contractor->alias }})" :breadcrumbs="[
     'Back to contractors' => route('contractors.index'),
     'Contractor' => null,
-]">
-    <x-slot name="options">
-        <x-paginate
-            :previous="$routes['previous']"
-            :next="$routes['next']"
-        />
-    </x-slot>
-</x-header>
+]" />
 @endsection
 
 @section('content')

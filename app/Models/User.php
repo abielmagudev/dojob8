@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\User\UserProfiler;
@@ -17,7 +16,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasExistenceTrait;
-    use HasBeforeAfterTrait;
     use HasHookUsersTrait;
     use SoftDeletes;
 

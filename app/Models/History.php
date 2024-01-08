@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Kernel\HasActionsByRequestTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class History extends Model
 {
@@ -18,15 +17,15 @@ class History extends Model
 
     public static $topics_classnames = [
         'clients' => Client::class,
+        'contractor' => Contractor::class,
         'crews' => Crew::class,
         'extensions' => Extension::class,
         'inspections' => Inspection::class,
         'inspector' => Inspector::class,
-        'intermediaries' => Intermediary::class,
         'jobs' => Job::class,
-        'work orders' => WorkOrder::class,
         'staff' => Member::class,
         'users' => User::class,
+        'work orders' => WorkOrder::class,
     ];
 
     protected $table = 'history';

@@ -41,16 +41,9 @@ class CrewController extends Controller
 
     public function show(Crew $crew)
     {
-        $previous = $crew->before();
-        $next = $crew->after();
-        
         return view('crews.show', [
             'crew' => $crew,
             'members' => Member::onlyCanBeInCrews()->orderBy('name')->get(),
-            'routes' => [
-                'previous' => $previous ? route('crews.show', $previous) : false,
-                'next' => $next ? route('crews.show', $next) : false,
-            ],
         ]);
     }
 

@@ -4,14 +4,7 @@
 <x-header :title="$member->full_name" :breadcrumbs="[
     'Back to members' => route('members.index'),
     'Member' => null
-]">
-    <x-slot name="options">
-        <x-paginate 
-            :previous="$routes['previous']" 
-            :next="$routes['next']" 
-        />
-    </x-slot>
-</x-header>
+]" />
 @endsection
 
 @section('content')

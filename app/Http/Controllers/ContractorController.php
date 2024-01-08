@@ -33,15 +33,8 @@ class ContractorController extends Controller
 
     public function show(Contractor $contractor)
     {
-        $previous = $contractor->before();
-        $next = $contractor->after();
-
         return view('contractors.show', [
             'contractor' => $contractor,
-            'routes' => [
-                'previous' => $previous ? route('contractors.show', $previous) : false,
-                'next' => $next ? route('contractors.show', $next) : false,
-            ],
         ]);
     }
 

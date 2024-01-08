@@ -3,19 +3,16 @@
 namespace App\Models;
 
 use App\Models\Kernel\HasActionsByRequestTrait;
-use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasModelHelpersTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class WorkOrder extends Model
 {
     use HasActionsByRequestTrait;
-    use HasBeforeAfterTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use HasModelHelpersTrait;

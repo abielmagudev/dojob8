@@ -67,15 +67,8 @@ class InspectionController extends Controller
 
     public function show(Inspection $inspection)
     {
-        $previous = $inspection->before();
-        $next = $inspection->after();
-
         return view('inspections.show', [
             'inspection' => $inspection,
-            'routes' => [
-                'previous' => $previous ? route('inspections.show', $previous) : false,
-                'next' => $next ? route('inspections.show', $next) : false,
-            ],
         ]);
     }
 

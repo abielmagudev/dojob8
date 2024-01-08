@@ -3,18 +3,14 @@
 namespace App\Models;
 
 use App\Models\Kernel\HasActionsByRequestTrait;
-use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Inspection extends Model
 {
     use HasActionsByRequestTrait;
-    use HasBeforeAfterTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use HasWorkOrdersTrait;

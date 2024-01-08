@@ -44,15 +44,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        $previous = $user->before();
-        $next = $user->after();
-
         return view('users.show', [
             'user' => $user,
-            'routes' => [
-                'previous' => $previous ? route('users.show', $previous) : false,
-                'next' => $next ? route('users.show', $next) : false,
-            ]
         ]);
     }
 

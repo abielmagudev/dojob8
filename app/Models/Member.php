@@ -4,8 +4,6 @@ namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedUserMetadataInterface;
 use App\Models\Kernel\HasActionsByRequestTrait;
-use App\Models\Kernel\HasAvailabilityTrait;
-use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasModelHelpersTrait;
@@ -17,7 +15,6 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
 {
     use HasActionsByRequestTrait;
     use HasExistenceTrait;
-    use HasBeforeAfterTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use HasModelHelpersTrait;

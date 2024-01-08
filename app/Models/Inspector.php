@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasModelHelpersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inspector extends Model
 {
-    use HasBeforeAfterTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use HasModelHelpersTrait;
@@ -28,25 +26,7 @@ class Inspector extends Model
 
     public function getInspectionsOnHoldAttribute()
     {
-        return $this->inspections->filter(fn($inspection) => $inspection->isOnHold());
-    }
-
-    public function getUrlPendingInspectionsAttribute()
-    {
-        $parameter = strtolower( class_basename(__CLASS__) );
-
-        return Inspection::generatePendingInspectionsUrl([
-            $parameter => $this->id,
-        ]);
-    }
-
-    public function getUrlOwnInspectionsAttribute()
-    {
-        $parameter = strtolower( class_basename(__CLASS__) );
-
-        return route('inspections.index', [
-            $parameter => $this->id
-        ]);
+        return $this->inspections->filter(fn($inspection) => $inspection->hasStatus('on hold'));
     }
 
 

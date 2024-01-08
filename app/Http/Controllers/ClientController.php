@@ -32,15 +32,8 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
-        $previous = $client->before();
-        $next = $client->after();
-
         return view('clients.show', [
             'client' => $client->load(['work_orders.job']),
-            'routes' => [
-                'previous' => $previous ? route('clients.show', $previous) : false,
-                'next' => $next ? route('clients.show', $next) : false,
-            ],
         ]);
     }
 

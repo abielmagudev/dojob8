@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasBeforeAfterTrait;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasHistoryChangesTrait;
 use App\Models\Kernel\HasHookUsersTrait;
@@ -14,7 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
-    use HasBeforeAfterTrait;
     use HasCountryStateCodesTrait;
     use HasFactory;
     use HasHistoryChangesTrait;

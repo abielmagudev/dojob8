@@ -2,11 +2,22 @@
 
 namespace App\Models\Kernel;
 
-trait HasAvailabilityTrait
+trait HasExistenceTrait
 {
+    public function isReal(string $attribute = 'id')
+    {
+        return ! is_null($this->$attribute);
+    }
+
+    public function isFake(string $attribute = 'id')
+    {
+        return is_null($this->$attribute);
+    }
+
+
     // Available
 
-    public function getAvailableStatusAttribute()
+    public function getAvailableTextAttribute()
     {
         return $this->isAvailable() ? 'available' : 'not available';
     }
@@ -16,7 +27,7 @@ trait HasAvailabilityTrait
         return (bool) $this->is_available;
     }
 
-    public function isNotAvailable()
+    public function isUnavailable()
     {
         return ! $this->isAvailable();
     }
@@ -31,12 +42,17 @@ trait HasAvailabilityTrait
         return $query->where('is_available', 1);
     }
 
-    public function scopeNotAvailable($query)
+    public function scopeUnavailable($query)
     {
         return $query->where('is_available', 0);
     }
 
-    public function indispose()
+    public function available()
+    {
+        return $this->fill(['is_available' => 1])->save();
+    }
+
+    public function unavailable()
     {
         return $this->fill(['is_available' => 0])->save();
     }
@@ -44,7 +60,7 @@ trait HasAvailabilityTrait
 
     // Active
 
-    public function getActiveStatusAttribute()
+    public function getActiveTextAttribute()
     {
         return $this->isActive() ? 'active' : 'inactive';
     }
@@ -72,6 +88,11 @@ trait HasAvailabilityTrait
     public function scopeInactive($query)
     {
         return $query->where('is_active', 0);
+    }
+
+    public function activate()
+    {
+        return $this->fill(['is_active' => 1])->save();
     }
 
     public function deactivate()

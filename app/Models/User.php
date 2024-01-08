@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
+use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\User\UserProfiler;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    use HasAvailabilityTrait;
+    use HasExistenceTrait;
     use HasBeforeAfterTrait;
     use HasHookUsersTrait;
     use SoftDeletes;

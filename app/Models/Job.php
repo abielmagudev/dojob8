@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
+use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Job extends Model
 {
-    use HasAvailabilityTrait;
+    use HasExistenceTrait;
     use HasBeforeAfterTrait;
     use HasFactory;
     use HasHookUsersTrait;

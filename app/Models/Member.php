@@ -6,6 +6,7 @@ use App\Models\Kernel\AuthenticatedUserMetadataInterface;
 use App\Models\Kernel\HasActionsByRequestTrait;
 use App\Models\Kernel\HasAvailabilityTrait;
 use App\Models\Kernel\HasBeforeAfterTrait;
+use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasModelHelpersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Member extends Model implements AuthenticatedUserMetadataInterface
 {
     use HasActionsByRequestTrait;
-    use HasAvailabilityTrait;
+    use HasExistenceTrait;
     use HasBeforeAfterTrait;
     use HasFactory;
     use HasHookUsersTrait;

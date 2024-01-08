@@ -15,11 +15,9 @@
         </a>
     </x-slot>
 
-    @if( $inspector->hasNotes() )      
     <x-small-label label="Notes">
         {{ $inspector->notes }}
     </x-small-label>
-    @endif
 
     <x-custom.small-label-hook-users :model="$inspector" />
 </x-card>

@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasHistoryChangesTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +16,6 @@ class Client extends Model
     use HasFactory;
     use HasHistoryChangesTrait;
     use HasHookUsersTrait;
-    use HasModelHelpersTrait;
     use HasWorkOrdersTrait;
     use SoftDeletes;
 

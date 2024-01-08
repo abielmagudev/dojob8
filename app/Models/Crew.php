@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Crew\CrewPainter;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +15,6 @@ class Crew extends Model
     use HasExistenceTrait;
     use HasFactory;
     use HasHookUsersTrait;
-    use HasModelHelpersTrait;
     use HasWorkOrdersTrait;
     use SoftDeletes;
 

@@ -6,13 +6,6 @@
     <small class="align-middle badge text-bg-dark">{{ $history->total() }}</small>
     <span class="align-middle">Activities</span>
     @endslot
-
-    <x-slot name="options">
-        <x-paginate
-            :previous="$history->previousPageUrl()"
-            :next="$history->nextPageUrl()"
-        />
-    </x-slot>
 </x-header>
 @endsection
 

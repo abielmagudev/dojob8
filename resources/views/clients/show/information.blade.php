@@ -15,11 +15,9 @@
         @include('clients.__.contact')
     </x-small-label>
 
-    @if( $client->hasNotes() )        
     <x-small-label label="Notes">
         <span>{{ $client->notes }}</span>
     </x-small-label>
-    @endif
 
     <x-custom.small-label-hook-users :model="$client" />
 </x-card>

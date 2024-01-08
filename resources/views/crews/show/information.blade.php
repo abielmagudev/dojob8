@@ -13,11 +13,9 @@
         </span>
     </p>
 
-    @if( $crew->hasDescription() )        
     <x-small-label label="Description">
         {{ $crew->description }}
     </x-small-label>
-    @endif
 
     <x-custom.small-label-hook-users :model="$crew" />
 </x-card>

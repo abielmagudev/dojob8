@@ -6,7 +6,6 @@ use App\Models\Kernel\AuthenticatedUserMetadataInterface;
 use App\Models\Kernel\HasCountryStateCodesTrait;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasModelHelpersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +18,6 @@ class Contractor extends Model implements AuthenticatedUserMetadataInterface
     use HasCountryStateCodesTrait;
     use HasFactory;
     use HasHookUsersTrait;
-    use HasModelHelpersTrait;
     use HasWorkOrdersTrait;
     use SoftDeletes;
     

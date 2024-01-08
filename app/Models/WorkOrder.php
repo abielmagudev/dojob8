@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Kernel\HasActionsByRequestTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasModelHelpersTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +14,6 @@ class WorkOrder extends Model
     use HasActionsByRequestTrait;
     use HasFactory;
     use HasHookUsersTrait;
-    use HasModelHelpersTrait;
 
     const STATUS_WHEN_CREATED = 'new';
 

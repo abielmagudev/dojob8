@@ -21,17 +21,9 @@
     </x-small-label>
     @endif
 
-    @if( $member->hasBirthdate() )      
-    <x-small-label label="Birthdate">
-        {{ $member->birthdate_human }}
-    </x-small-label>
-    @endif
-
-    @if( $member->hasNotes() )      
     <x-small-label label="Notes">
         <em>{{ $member->notes }}</em>
     </x-small-label>
-    @endif
 
     <x-custom.small-label-hook-users :model="$member" />
 </x-card>

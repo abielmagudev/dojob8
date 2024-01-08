@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasModelHelpersTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Extension extends Model
 {
-    use HasModelHelpersTrait;
     use SoftDeletes;
 
     protected $fillable = [

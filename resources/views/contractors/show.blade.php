@@ -33,11 +33,9 @@
                 ])
             </x-small-label>
 
-            @if( $contractor->hasNotes() )
             <x-small-label label="Notes">
                 <em>{{ $contractor->notes }}</em>
             </x-small-label>
-            @endif
 
             <x-custom.small-label-hook-users :model="$contractor" />
         </x-card>

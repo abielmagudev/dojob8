@@ -85,6 +85,7 @@ class WorkOrderController extends Controller
                 Inspection::create([
                     'inspector_id' => $inspector_id,
                     'work_order_id' => $work_order->id,
+                    'status' => 'pending',
                 ]);
             }
         }

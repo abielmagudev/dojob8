@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\AuthenticatedInterface;
 use App\Models\Kernel\AuthenticatedUserMetadataInterface;
-use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasAddressTrait;
 use App\Models\Kernel\HasExistenceTrait;
-use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Contractor extends Model implements AuthenticatedUserMetadataInterface
+class Contractor extends Model implements AuthenticatedInterface
 {
     use HasAddressTrait;
     use HasExistenceTrait;
@@ -38,6 +37,14 @@ class Contractor extends Model implements AuthenticatedUserMetadataInterface
         'notes',
         'is_available',
     ];
+
+
+    // Interface
+
+    public function getAuthenticatedNameAttribute(): string
+    {
+        return "{$this->name} ($this->alias)";
+    }
 
 
     // Attributes
@@ -65,12 +72,6 @@ class Contractor extends Model implements AuthenticatedUserMetadataInterface
             'email'  => $this->email,
         ]);
     }
-
-    public function getMetaNameAttribute(): string
-    {
-        return "{$this->name} ($this->alias)";
-    }
-
 
 
     // Relationships

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\AuthenticatedUserMetadataInterface;
+use App\Models\Kernel\AuthenticatedInterface;
 use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasFilteringTrait;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Member extends Model implements AuthenticatedUserMetadataInterface, FilteringInterface
+class Member extends Model implements AuthenticatedInterface, FilteringInterface
 {
     use HasFilteringTrait;
     use HasExistenceTrait;
@@ -49,7 +49,7 @@ class Member extends Model implements AuthenticatedUserMetadataInterface, Filter
         ];
     }
 
-    public function getMetaNameAttribute(): string
+    public function getAuthenticatedNameAttribute(): string
     {
         return $this->full_name;
     }

@@ -35,7 +35,7 @@ class WorkOrderController extends Controller
         ] : Carbon::parse( $request->get('scheduled_date') );
 
         $work_orders = WorkOrder::with(['job', 'client', 'contractor', 'crew'])
-        ->filtersByRequest($request)
+        ->filterByInputs( $request->all() )
         ->orderBy('crew_id', $request->get('sort', 'desc'))
         ->orderBy('scheduled_date', 'desc')
         ->paginate(25)

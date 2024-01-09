@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasActionsByRequestTrait;
+use App\Models\Kernel\FilteringInterface;
+use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Inspection extends Model
+class Inspection extends Model implements FilteringInterface
 {
-    use HasActionsByRequestTrait;
+    use HasFilteringTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use HasWorkOrdersTrait;
@@ -20,15 +21,6 @@ class Inspection extends Model
         'on hold',
         'passed',
         'failed',
-    ];
-
-    public static $inputs_filters = [
-        'between_scheduled_date' => 'filterBetweenScheduledDate',
-        'crew' => 'filterByCrew',
-        'inspector' => 'filterByInspector',
-        'scheduled_date' => 'filterScheduledDate',
-        'status_group' => 'filterByStatusGroup',
-        'status' => 'filterByStatus',
     ];
 
     protected $fillable = [
@@ -45,6 +37,19 @@ class Inspection extends Model
     ];
 
 
+    // Interface
+
+    public function inputsAndFilters(): array
+    {
+        return [
+            'between_scheduled_date' => 'filterBetweenScheduledDate',
+            'crew' => 'filterByCrew',
+            'inspector' => 'filterByInspector',
+            'scheduled_date' => 'filterScheduledDate',
+            'status_group' => 'filterByStatusGroup',
+            'status' => 'filterByStatus', 
+        ];
+    }
 
     // Attributes
 

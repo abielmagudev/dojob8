@@ -3,26 +3,21 @@
 namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedUserMetadataInterface;
-use App\Models\Kernel\HasActionsByRequestTrait;
+use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasExistenceTrait;
+use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Member extends Model implements AuthenticatedUserMetadataInterface
+class Member extends Model implements AuthenticatedUserMetadataInterface, FilteringInterface
 {
-    use HasActionsByRequestTrait;
+    use HasFilteringTrait;
     use HasExistenceTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use SoftDeletes;
-
-    public static $inputs_filters = [
-        'status' => 'filterByStatus',
-        'can_be_in_crews' => 'filterByCanBeInCrews',
-        'sort_prop' => ['filterBySortProp', 'sort_prop_way'],
-    ];
 
     protected $fillable = [
         'name',
@@ -42,6 +37,17 @@ class Member extends Model implements AuthenticatedUserMetadataInterface
         'birthdate' => 'date',
     ];
 
+
+    // Interface
+
+    public function inputsAndFilters(): array
+    {
+        return [
+            'status' => 'filterByStatus',
+            'can_be_in_crews' => 'filterByCanBeInCrews',
+            'sort_prop' => ['filterBySortProp', 'sort_prop_way'],
+        ];
+    }
 
 
     // Attributes

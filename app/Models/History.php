@@ -2,17 +2,28 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasActionsByRequestTrait;
+use App\Models\Kernel\FilteringInterface;
+use App\Models\Kernel\HasFilteringTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class History extends Model
+class History extends Model implements FilteringInterface
 {
-    use HasActionsByRequestTrait;
+    use HasFilteringTrait;
 
-    public static $inputs_filters = [
-        'from_date' => ['filterCreatedBetween', 'to_date'],
-        'topic' => 'filterTopic',
-        'user' => 'filterUser',
+    protected $table = 'history';
+    
+    public $timestamps = false;
+
+    protected $fillable = [
+        'description',
+        'link',
+        'model_type',
+        'model_id',
+        'user_id',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
     ];
 
     public static $topics_classnames = [
@@ -28,22 +39,17 @@ class History extends Model
         'work orders' => WorkOrder::class,
     ];
 
-    protected $table = 'history';
+    
+    // Interface
 
-    protected $fillable = [
-        'description',
-        'link',
-        'model_type',
-        'model_id',
-        'user_id',
-    ];
-
-    public $timestamps = false;
-
-    protected $casts = [
-        'created_at' => 'datetime',
-    ];
-
+    public function inputsAndFilters(): array
+    {
+        return [
+            'from_date' => ['filterCreatedBetween', 'to_date'],
+            'topic' => 'filterTopic',
+            'user' => 'filterUser',
+        ];
+    }
     
 
     // Attributes

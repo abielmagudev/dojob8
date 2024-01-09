@@ -15,7 +15,7 @@ class HistoryController extends Controller
             'topics' => History::getTopics(),
             'users' => User::with('profile')->withTrashed()->get(),
             'history' => History::with('user.profile')
-                                ->filtersByRequest($request)
+                                ->filterByInputs( $request->all() )
                                 ->orderBy('id', $request->get('sort', 'desc'))
                                 ->paginate(25)
                                 ->appends( $request->query() ),

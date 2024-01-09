@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedUserMetadataInterface;
+use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasAddressTrait;
 use App\Models\Kernel\HasExistenceTrait;
+use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,7 +38,6 @@ class Contractor extends Model implements AuthenticatedUserMetadataInterface
         'notes',
         'is_available',
     ];
-
 
 
     // Attributes

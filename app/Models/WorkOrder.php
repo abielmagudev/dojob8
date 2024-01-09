@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasActionsByRequestTrait;
+use App\Models\Kernel\FilteringInterface;
+use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WorkOrder extends Model
+class WorkOrder extends Model implements FilteringInterface
 {
-    use HasActionsByRequestTrait;
     use HasFactory;
+    use HasFilteringTrait;
     use HasHookUsersTrait;
 
     const STATUS_WHEN_CREATED = 'new';
@@ -53,17 +54,6 @@ class WorkOrder extends Model
         'canceled',
     ];
 
-    public static $inputs_filters = [
-        'client' => 'filterByClient',
-        'crew' => 'filterByCrew',
-        'contractor' => 'filterByContractor',
-        'job' => 'filterByJob',
-        'status' => 'filterByStatus',
-        'scheduled_date' => 'filterByScheduledDate',
-        'scheduled_date_range' => 'filterByScheduledDateRange',
-        'status_rule' => ['filterByStatusRule', 'status_group'],
-    ];
-
     protected $fillable = [
         'status',
         'client_id',
@@ -82,6 +72,22 @@ class WorkOrder extends Model
         'scheduled_date' => 'date',
     ];
 
+
+    // Interface
+
+    public function inputsAndFilters(): array
+    {
+        return [
+            'client' => 'filterByClient',
+            'crew' => 'filterByCrew',
+            'contractor' => 'filterByContractor',
+            'job' => 'filterByJob',
+            'status' => 'filterByStatus',
+            'scheduled_date' => 'filterByScheduledDate',
+            'scheduled_date_range' => 'filterByScheduledDateRange',
+            'status_rule' => ['filterByStatusRule', 'status_group'],
+        ];
+    }
 
 
     // Attributes

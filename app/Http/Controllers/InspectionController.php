@@ -22,7 +22,7 @@ class InspectionController extends Controller
         }
 
         $inspections = Inspection::withRelationsForIndex()
-        ->filtersByRequest($request)
+        ->filterByInputs( $request->all() )
         ->orderByRaw("scheduled_date IS NULL DESC, scheduled_date {$request->get('sort', 'DESC')}")
         ->orderBy('inspector_id', 'ASC')
         ->paginate(25)

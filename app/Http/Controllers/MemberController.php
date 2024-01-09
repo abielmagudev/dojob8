@@ -11,7 +11,9 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         return view('members.index', [
-            'members' => Member::filtersByRequest($request)->orderBy('id', $request->get('sort', 'desc'))->paginate(25),
+            'members' => Member::filterByInputs( $request->all() )
+                                ->orderBy('id', $request->get('sort', 'desc'))
+                                ->paginate(25),
             'request' => $request,
         ]);
     }

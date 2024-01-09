@@ -70,7 +70,7 @@ class WorkOrderStoreRequest extends FormRequest
             'contractor_id' => $this->contractor,
             'job_id' => $this->job,
             'crew_id' => $this->crew,
-            'status' => WorkOrder::STATUS_WHEN_CREATED,
+            'status' => WorkOrder::INITIAL_STATUS,
         ]);
     }
 }

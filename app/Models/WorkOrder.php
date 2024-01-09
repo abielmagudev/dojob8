@@ -16,7 +16,7 @@ class WorkOrder extends Model implements FilteringInterface
     use HasFilteringTrait;
     use HasHookUsersTrait;
 
-    const STATUS_WHEN_CREATED = 'new';
+    const INITIAL_STATUS = 'new';
 
     public static $statuses_bscolors = [
         'pending' => 'text-bg-purple',

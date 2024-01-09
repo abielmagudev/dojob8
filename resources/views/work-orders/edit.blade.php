@@ -9,6 +9,12 @@
 @endsection
 
 @section('content')
+<div class="alert alert-dark bg-transparent">
+    @include('clients.__.address', ['client' => $work_order->client])
+    <br>
+    {{ $client->contact_data_collection->filter()->implode(', ') }}
+</div>
+
 <x-card title="Edit work order">
     <form action="{{ route('work-orders.update', $work_order) }}" method="post">
         @include('work-orders._form')

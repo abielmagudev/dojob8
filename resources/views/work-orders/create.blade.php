@@ -9,12 +9,9 @@
 
 @section('content')
 <div class="alert alert-dark bg-transparent">
-    {{ $client->full_name }}
-    <br>
-    {{ $client->address_data_collection->filter()->implode(', ') }}
+    @include('clients.__.address')
     <br>
     {{ $client->contact_data_collection->filter()->implode(', ') }}
-    {{-- @include('clients.__.address', ['client' => $client]) --}}
 </div>
 
 <x-card title="Create work order">

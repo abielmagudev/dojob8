@@ -2,7 +2,9 @@
 
 namespace App\Models\Kernel;
 
-trait HasPreviousNextNeighborTrait
+use Illuminate\Http\Request;
+
+trait HasPreviousNextTrait
 {
     public function previous()
     {

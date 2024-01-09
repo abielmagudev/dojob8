@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedUserMetadataInterface;
-use App\Models\Kernel\HasCountryStateCodesTrait;
+use App\Models\Kernel\HasAddressTrait;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
@@ -14,8 +14,8 @@ use Illuminate\Support\Str;
 
 class Contractor extends Model implements AuthenticatedUserMetadataInterface
 {
+    use HasAddressTrait;
     use HasExistenceTrait;
-    use HasCountryStateCodesTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use HasWorkOrdersTrait;
@@ -29,7 +29,7 @@ class Contractor extends Model implements AuthenticatedUserMetadataInterface
         'mobile_number',
         'email',
         'street',
-        'city',
+        'city_name',
         'state_code',
         'country_code',
         'zip_code',

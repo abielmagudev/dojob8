@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasCountryStateCodesTrait;
-use App\Models\Kernel\HasHistoryChangesTrait;
+use App\Models\Kernel\HasAddressTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,9 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
-    use HasCountryStateCodesTrait;
+    use HasAddressTrait;
     use HasFactory;
-    use HasHistoryChangesTrait;
     use HasHookUsersTrait;
     use HasWorkOrdersTrait;
     use SoftDeletes;
@@ -27,7 +25,7 @@ class Client extends Model
         'mobile_number',
         'email',
         'street',
-        'city',
+        'city_name',
         'state_code',
         'country_code',
         'zip_code',
@@ -35,40 +33,21 @@ class Client extends Model
         'notes',
     ];
 
-    protected $ignore_changes = [
-        'full_name',
-    ];
-
-
 
     // Attributes 
-
-    public function getAddressDataCollectionAttribute()
-    {
-        return collect([
-            'street' => $this->street,
-            'city_name' => $this->city,
-            'state_code' => $this->state_code,
-            'state_name' => $this->state_name,
-            'country_code' => $this->country_code,
-            'country_name' => $this->country_name,
-            'zip_code' => $this->zip_code,
-            'district_code' => $this->district_code,
-        ]);
-    }
 
     public function getContactDataCollectionAttribute()
     {
         return collect([
-            'phone'  => $this->phone_number,
-            'mobile' => $this->mobile_number,
             'email'  => $this->email,
+            'mobile_number' => $this->mobile_number,
+            'phone_number' => $this->phone_number,
         ]);
     }
 
     public function getUrlSearchAddressGoogleMapsAttribute()
     {
-        $query_string = $this->address_data_collection->only([
+        $query_string = $this->address_data->only([
             'street',
             'city_name',
             'state_name',
@@ -77,11 +56,6 @@ class Client extends Model
         ])->implode('+');
 
         return sprintf("https://www.google.com.mx/maps/search/%s", $query_string);
-    }
-
-    public function getAddressAttribute()
-    {
-        return $this->address_data_collection->only(['street', 'state_code', 'country_code', 'zip_code'])->implode(', ');
     }
 
 
@@ -97,7 +71,6 @@ class Client extends Model
                      ->orWhere('zip_code', 'like', "%{$value}%")
                      ->orWhere('city', 'like', "%{$value}%");
     }
-
 
 
     // Relations

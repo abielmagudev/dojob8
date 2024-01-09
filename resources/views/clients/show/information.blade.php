@@ -5,11 +5,15 @@
         </a>
     </x-slot>
     
-    <x-small-label label="Address">
-        @include('clients.__.address', [
-            'except' => ['full_name'],
-        ])
-    </x-small-label>
+    <small class="text-secondary">Address</small>
+    <address>
+        {{ $client->street }}<br>
+        {{ $client->city_name }}<br>
+        {{ $client->state_name }},
+        {{ $client->country_name }}<br>
+        {{ $client->zip_code }}<br>
+        {{ $client->district_code }}<br>
+    </address>
 
     <x-small-label label="Contact">
         @include('clients.__.contact')

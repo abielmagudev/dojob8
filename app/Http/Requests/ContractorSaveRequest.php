@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Suppliers\CountryManager;
 use App\Models\Contractor;
+use App\Suppliers\CountryManager;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class ContractorSaveRequest extends FormRequest
 {
@@ -55,7 +56,7 @@ class ContractorSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'city' => [
+            'city_name' => [
                 'required',
                 'string',
             ],
@@ -110,6 +111,7 @@ class ContractorSaveRequest extends FormRequest
 
         return array_merge(parent::validated(), [
             'is_available' => $this->has('available') ? 1 : 0,
+            'city_name' => Str::title($this->city_name),
         ]);
     }
 }

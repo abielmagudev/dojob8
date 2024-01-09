@@ -33,7 +33,7 @@ class ClientFactory extends Factory
             'mobile_number' => $this->faker->optional()->phoneNumber(),
             'email' => $this->faker->optional()->email(),
             'street' => $this->faker->streetAddress(),
-            'city' => $this->faker->city(),
+            'city_name' => $this->faker->city(),
             'state_code' => $this->faker->randomElement( $country->get('states')->keys() ), // $this->faker->state(),
             'country_code' => $country->get('code'), // $this->faker->country(),
             'zip_code' => $this->faker->postcode(),

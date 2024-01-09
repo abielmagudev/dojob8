@@ -10,35 +10,22 @@
 @section('content')
 <div class="row">
     <div class="col-sm">
-        <x-card title="Information">
-            <x-slot name="options">
-                <a href="{{ route('contractors.edit', $contractor) }}" class="btn btn-warning">
-                    <i class="bi bi-pencil-fill"></i>
-                </a>
-            </x-slot>
-            
-            <p>
-                <x-badge :color="$contractor->isAvailable() ? 'success' : 'secondary'" class="text-uppercase">{{ $contractor->status }}</x-badge> 
-            </p>
+        <x-badge :color="$contractor->isAvailable() ? 'success' : 'secondary'" class="text-uppercase">{{ $contractor->available_text }}</x-badge> 
 
-            <x-small-label label="Address">
-                @include('contractors.__.address', [
-                    'except' => ['name_alias']
-                ])
-            </x-small-label>
+        <address>
+            {{ $contractor->street }}<br>
+            {{ $contractor->city_name }}<br>
+            {{ $contractor->state_name }}, 
+            {{ $contractor->country_name }}<br>
+            {{ $contractor->zip_code }}<br>
+        </address>
 
-            <x-small-label label="Contact">
-                @include('contractors.__.contact', [
-                    'except' => ['name_alias']
-                ])
-            </x-small-label>
+        <x-custom.small-label-hook-users :model="$contractor" />
 
-            <x-small-label label="Notes">
-                <em>{{ $contractor->notes }}</em>
-            </x-small-label>
-
-            <x-custom.small-label-hook-users :model="$contractor" />
-        </x-card>
+        <a href="{{ route('contractors.edit', $contractor) }}" class="btn btn-outline-warning btn-sm">
+            <i class="bi bi-pencil-fill"></i>
+            <span>Edit</span>
+        </a>
     </div>
 
     <div class="col-sm">

@@ -1,1 +1,0 @@
-<input id="cityInput" type="text" class="form-control {{ $attributes->get('class', '') }} {{ bsInputInvalid($errors->has('city')) }}" name="city" value="{{ $attributes->get('old', $city_default) }}" @if( $attributes->has('required') ) required @endif>

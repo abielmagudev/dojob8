@@ -42,7 +42,7 @@ class ClientSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'city' => [
+            'city_name' => [
                 'required',
                 'string',
             ],
@@ -92,7 +92,7 @@ class ClientSaveRequest extends FormRequest
             'last_name' => Str::title($this->last_name),
             'full_name' => sprintf('%s %s', Str::title($this->name), Str::title($this->last_name)),
             'street' => Str::title($this->street),
-            'city' => Str::title($this->city),
+            'city_name' => Str::title($this->city_name),
         ]);
     }
 }

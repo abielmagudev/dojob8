@@ -32,12 +32,12 @@
                 @include('clients.__.contact-table-cell')
             </td>
             <td class="text-nowrap text-end">
+
                 @if( $client->hasUnfinishedWorkOrders() )
                 <x-custom.link-work-orders :parameters="['client' => $client->id]" class="btn btn-warning" unfinished>
                     {{ $client->work_orders_unfinished_count }}
                 </x-custom.link-work-orders>
                 @endif
-
 
                 @if( $client->hasWorkOrders() )
                 <x-custom.link-work-orders :parameters="['client' => $client->id]">

@@ -11,6 +11,6 @@ $state_code_to_select = $country_selected->get('states')->get( $attributes->get(
     @endif
     
     @foreach($country_selected->get('states') as $code => $state)
-    <option value="{{ $code }}" {{ isSelected( ($state_code_to_select == $code) ) }}>{{ $state }} ({{$code}})</option>
+    <option value="{{ $code }}" {{ isSelected( ($state_code_to_select == $code) ) }}>{{ $state }} ({{ $code }})</option>
     @endforeach
 </select>

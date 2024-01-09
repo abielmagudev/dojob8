@@ -22,7 +22,7 @@ class CreateContractorsTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
             $table->string('street');
-            $table->string('city')->index();
+            $table->string('city_name')->index();
             $table->string('state_code')->index();
             $table->string('country_code');
             $table->string('zip_code');

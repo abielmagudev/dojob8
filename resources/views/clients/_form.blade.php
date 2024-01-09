@@ -51,11 +51,11 @@
 
 <x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="cityInput" class="form-label">City</label>
+        <label for="cityNameInput" class="form-label">City</label>
     </x-slot>
 
-    <x-custom.input-city :old="old('city', $client->city)" required />
-    <x-error name="city" />
+    <x-custom.data-city-name-input :old="old('city_name', $client->city_name)" required />
+    <x-error name="city_name" />
 </x-form-control-horizontal>
 
 <x-form-control-horizontal class="align-items-center">
@@ -63,7 +63,7 @@
         <label for="stateCodeSelect" class="form-label">State</label>
     </x-slot>
 
-    <x-custom.select-state-code :country="old('country_code', $client->country_code)" :old="old('state_code', $client->state_code)" required />
+    <x-custom.data-state-code-select :country="old('country_code', $client->country_code)" :old="old('state_code', $client->state_code)" required />
     <x-error name="state_code" />
 </x-form-control-horizontal>
 
@@ -72,7 +72,7 @@
         <label for="countryCodeSelect" class="form-label">Country</label>
     </x-slot>
 
-    <x-custom.select-country-code :old="old('country_code', $client->country_code)" required />
+    <x-custom.data-country-code-select :old="old('country_code', $client->country_code)" required />
     <x-error name="country_code" />
 </x-form-control-horizontal>
 

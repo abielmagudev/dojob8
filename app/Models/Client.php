@@ -69,7 +69,7 @@ class Client extends Model
                      ->orWhere('email', 'like', "%{$value}%")
                      ->orWhere('street', 'like', "%{$value}%")
                      ->orWhere('zip_code', 'like', "%{$value}%")
-                     ->orWhere('city', 'like', "%{$value}%");
+                     ->orWhere('city_name', 'like', "%{$value}%");
     }
 
 

@@ -6,7 +6,7 @@
     </x-slot>
 
     <p>
-        <x-badge :color="$member->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $member->active_status }}</x-badge>
+        <x-badge :color="$member->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $member->active_text }}</x-badge>
     </p>
 
     @if( $member->contact_data_collection->filter()->count() )      

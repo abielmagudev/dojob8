@@ -29,7 +29,7 @@ class MemberFactory extends Factory
             'email' => $this->faker->optional()->email(),
             'position' => $this->faker->optional()->jobTitle(),
             'is_active' => $this->faker->boolean(),
-            'can_be_in_crews' => $this->faker->boolean(),
+            'is_crew_member' => $this->faker->boolean(),
             'notes' => $this->faker->optional()->sentences(3, true),
         ];
     }

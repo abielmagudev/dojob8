@@ -11,11 +11,11 @@
         </div>
 
         <div class="mb-3">
-            <label for="canBeInCrewsSelect" class="form-label">Can be in crews?</label>
-            <select id="canBeInCrewsSelect" name="can_be_in_crews" class="form-select">
+            <label for="isCrewMemberSelect" class="form-label">Crew member</label>
+            <select id="isCrewMemberSelect" name="is_crew_member" class="form-select">
                 <option label="Any option"></option>
-                <option value="1" {{ isSelected( $request->get('can_be_in_crews') === "1" ) }}>Yes, it can be in crews</option>
-                <option value="0" {{ isSelected( $request->get('can_be_in_crews') === "0" ) }}>No, it cannot be in crews</option>
+                <option value="1" {{ isSelected( $request->get('is_crew_member') === "1" ) }}>Yes, it can be in crews</option>
+                <option value="0" {{ isSelected( $request->get('is_crew_member') === "0" ) }}>No, it cannot be in crews</option>
             </select>
         </div>
 

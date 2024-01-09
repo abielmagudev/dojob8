@@ -1,4 +1,4 @@
-@if( $member->canBeInCrews() )
+@if( $member->isCrewMember() )
     <x-card title="Crews">
 
         @if( $member->hasCrews() ) 

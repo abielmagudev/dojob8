@@ -29,7 +29,7 @@ class Member extends Model implements AuthenticatedUserMetadataInterface, Filter
         'email',
         'position',
         'is_active',
-        'can_be_in_crews',
+        'is_crew_member',
         'notes',
     ];
 
@@ -44,9 +44,14 @@ class Member extends Model implements AuthenticatedUserMetadataInterface, Filter
     {
         return [
             'status' => 'filterByStatus',
-            'can_be_in_crews' => 'filterByCanBeInCrews',
+            'is_crew_member' => 'filterByIsCrewMember',
             'sort_prop' => ['filterBySortProp', 'sort_prop_way'],
         ];
+    }
+
+    public function getMetaNameAttribute(): string
+    {
+        return $this->full_name;
     }
 
 
@@ -71,12 +76,6 @@ class Member extends Model implements AuthenticatedUserMetadataInterface, Filter
         ]);
     }
 
-    public function getMetaNameAttribute(): string
-    {
-        return $this->full_name;
-    }
-
-
 
     // Validators 
 
@@ -95,9 +94,9 @@ class Member extends Model implements AuthenticatedUserMetadataInterface, Filter
         return ! empty($this->position);
     }
 
-    public function canBeInCrews()
+    public function isCrewMember()
     {
-        return (bool) $this->can_be_in_crews;
+        return (bool) $this->is_crew_member;
     }
 
     public function hasCrews()
@@ -106,24 +105,22 @@ class Member extends Model implements AuthenticatedUserMetadataInterface, Filter
     }
  
 
-
     // Scopes
 
-    public function scopeWhereCanBeInCrews($query, $value)
+    public function scopeWhereIsCrewMember($query, $value)
     {
-        return $query->where('can_be_in_crews', $value);
+        return $query->where('is_crew_member', $value);
     }
 
-    public function scopeOnlyCanBeInCrews($query)
+    public function scopeOnlyIsCrewMember($query)
     {
-        return $query->where('can_be_in_crews', true);
+        return $query->where('is_crew_member', true);
     }
 
-    public function scopeOnlyCannotBeInCrews($query)
+    public function scopeOnlyIsNotCrewMember($query)
     {
-        return $query->where('can_be_in_crews', false);
+        return $query->where('is_crew_member', false);
     }
-
 
 
     // Filters
@@ -137,13 +134,13 @@ class Member extends Model implements AuthenticatedUserMetadataInterface, Filter
         return $query->whereActive($value);
     }
 
-    public function scopeFilterByCanBeInCrews($query, $value)
+    public function scopeFilterByIsCrewMember($query, $value)
     {
         if( is_null($value) ||! in_array($value, ['0', '1']) ) {
             return $query;
         }
 
-        return $query->whereCanBeInCrews($value);
+        return $query->whereIsCrewMember($value);
     }
 
     public function scopeFilterBySortProp($query, $value, $way = null)
@@ -158,7 +155,6 @@ class Member extends Model implements AuthenticatedUserMetadataInterface, Filter
 
         return $query->orderBy($value, $way);
     }
-
 
 
     // Relationships

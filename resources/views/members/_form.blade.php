@@ -75,23 +75,18 @@
 
 <x-form-control-horizontal class="align-items-center">
     <x-slot name="label">
-        <label for="recruitmentInput" class="form-label">Can it be in crews?</label>
+        <label for="isCrewMemberSelect" class="form-label">Is a crew member?</label>
     </x-slot>
 
-    <div class="form-control">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="radioCannotBeInCrews" name="can_be_in_crews" value="0" {{ isChecked( old('can_be_in_crews', ($member->can_be_in_crews ?? 0)) === 0) }}>
-            <label class="form-check-label" for="radioCannotBeInCrews">No, it cannot be in crews.</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="radioCanBeInCrews" name="can_be_in_crews" value="1" {{ isChecked( old('can_be_in_crews', $member->can_be_in_crews) === 1) }}>
-            <label class="form-check-label" for="radioCanBeInCrews">Yes, it can be in crews.</label>
-        </div>
-    </div>
-    <x-error name="can_be_in_crews" />
+    <select name="is_crew_member" id="isCrewMemberSelect" class="form-select">
+        <option value="0" {{ isSelected( old('is_crew_member', ($member->is_crew_member ?? 0)) === 0) }}>No, it cannot be in crews.</option>
+        <option value="1" {{ isSelected( old('is_crew_member', $member->is_crew_member) === 1) }}>Yes, it can be in crews.</option>
+    </select>
+
+    <x-error name="is_crew_member" />
 </x-form-control-horizontal>
 
-@if( $member->id <> null ) 
+@if( $member->isReal() ) 
 <br>
 <div class="mb-3">
     <div class="form-check form-switch">

@@ -37,3 +37,22 @@ if(! function_exists('wordInitials') )
         return implode($matches[0]);
     }
 }
+
+
+// Models
+
+if(! function_exists('workOrderUrlGenerator') )
+{
+    function workOrderUrlGenerator(string $method, array $parameters = [])
+    {
+        return call_user_func([App\Models\WorkOrder\WorkOrderUrlGenerator::class, $method], $parameters);
+    }
+}
+
+if(! function_exists('inspectionUrlGenerator') )
+{
+    function inspectionUrlGenerator(string $method, array $parameters = [])
+    {
+        return call_user_func([App\Models\Inspection\InspectionUrlGenerator::class, $method], $parameters);
+    }
+}

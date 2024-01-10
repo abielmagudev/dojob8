@@ -13,6 +13,7 @@ use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\Member;
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\WorkOrderUrlGenerator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class WorkOrderController extends Controller
             'request' => $request,
             'scheduled_casted' => $scheduled_casted,
             'unfinished_work_orders' => [
-                'url' => WorkOrder::generateUrlUnfinishedStatus(),
+                'url' => WorkOrderUrlGenerator::unfinished(),
                 'count' => WorkOrder::unfinishedStatus()->count(),
             ],
             'work_orders' => $work_orders,

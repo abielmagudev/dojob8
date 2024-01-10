@@ -44,24 +44,6 @@ trait HasWorkOrdersTrait
         return $this->work_orders->filter(fn($work_order) => $work_order->status == $value);
     }
 
-    public function getUrlUnfinishedWorkOrders(string $attr = 'id', string $suffix = '')
-    {
-        $parameter = strtolower( class_basename( __CLASS__ ) . $suffix );
-
-        return WorkOrder::generateUrlUnfinishedStatus([
-            $parameter => $this->$attr,
-        ]);
-    }
-
-    public function getUrlOwnWorkOrders(string $attr = 'id', string $suffix = '')
-    {
-        $parameter = strtolower( class_basename( __CLASS__ ) . $suffix );
-
-        return route('work-orders.index', [
-            $parameter => $this->$attr,
-        ]);
-    }
-
     
 
     // Validators

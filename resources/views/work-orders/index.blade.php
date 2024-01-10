@@ -148,7 +148,7 @@
 </x-card>
 <br>
 
-<x-pagination-simple-eloquent :collection="$work_orders" />
+<x-pagination-simple-model :collection="$work_orders" />
 
 @include('work-orders.index.modal-work-order-views')
 @include('work-orders.index.modal-work-orders-filter')

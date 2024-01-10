@@ -85,7 +85,7 @@ class WorkOrder extends Model implements FilteringInterface
             'status' => 'filterByStatus',
             'scheduled_date' => 'filterByScheduledDate',
             'scheduled_date_range' => 'filterByScheduledDateRange',
-            'status_rule' => ['filterByStatusRule', 'status_group'],
+            'status_group' => ['filterByStatusGroup'],
         ];
     }
 
@@ -284,16 +284,8 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereStatus($status);
     }
 
-    public function scopeFilterByStatusRule($query, $status_rule, $status_group = [])
+    public function scopeFilterByStatusGroup($query, $status_group = [])
     {
-        if(! in_array($status_rule, ['except', 'only']) ||! is_array($status_group) || empty($status_group) ) {
-            return $query;
-        }
-
-        if( $status_rule == 'except' ) {
-            return $query->whereStatusNotIn($status_group);
-        }
-
         return $query->whereStatusIn($status_group);
     }
 
@@ -384,17 +376,6 @@ class WorkOrder extends Model implements FilteringInterface
     public static function isFinishedStatus(string $status)
     {
         return self::getFinishedStatuses()->contains($status);
-    }
-
-    public static function generateUrlUnfinishedStatus(array $parameters = [])
-    {
-        $arguments = array_merge($parameters, [
-            'status_rule' => 'only',
-            'status_group' => self::getUnfinishedStatuses()->all(),
-            'sort' => 'asc',
-        ]);
-
-        return route('work-orders.index', $arguments);
     }
 
     public static function filterByUnfinishedStatus(Collection $work_orders)

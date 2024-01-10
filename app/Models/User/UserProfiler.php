@@ -10,7 +10,7 @@ class UserProfiler
 {
     public static $aliases_profiles = [
         'contractor' => Contractor::class,
-        'staff' => Member::class,
+        'member' => Member::class,
     ];
 
     public static function getAliasesProfiles()

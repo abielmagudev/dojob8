@@ -25,7 +25,7 @@ class InspectionUrlGenerator
         ]));
     }
 
-    public static function unfinished(array $parameters = [])
+    public static function pendingOrOnHold(array $parameters = [])
     {
         return route('inspections.index', array_merge($parameters, [
             'status_group' => ['pending','on hold']

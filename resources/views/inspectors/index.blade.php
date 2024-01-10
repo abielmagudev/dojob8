@@ -32,13 +32,13 @@
             <td class="text-end">
                 @if( $inspector->hasInspectionsOnHold() )
                 <x-tooltip title="Pending inspections">
-                    <a href="{{ route('inspections.index', ['inspector' => $inspector->id, 'status_group' => ['pending', 'on hold']]) }}" class="btn btn-warning">{{ $inspector->inspections_on_hold->count() }}</a>
+                    <a href="{{ inspectionUrlGenerator('pendingOrOnHold', ['inspector' => $inspector->id]) }}" class="btn btn-warning">{{ $inspector->inspections_on_hold->count() }}</a>
                 </x-tooltip>
                 @endif
                 
                 @if( $inspector->hasInspections() )
                 <x-tooltip title="Inspections">
-                    <a href="{{ route('inspections.index', ['inspector' => $inspector->id]) }}" class="btn btn-primary">{{ $inspector->inspections->count() }}</a>
+                    <a href="{{ inspectionUrlGenerator('all', ['inspector' => $inspector->id]) }}" class="btn btn-primary">{{ $inspector->inspections->count() }}</a>
                 </x-tooltip>                   
                 @endif
                 
@@ -52,5 +52,5 @@
 </x-card>
 <br>
 
-<x-pagination-simple-eloquent :collection="$inspectors" />
+<x-pagination-simple-model :collection="$inspectors" />
 @endsection

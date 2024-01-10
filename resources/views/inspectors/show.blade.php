@@ -15,10 +15,10 @@
         </a>
     </x-slot>
 
-    <x-small-label label="Notes">
+    <p>
         {{ $inspector->notes }}
-    </x-small-label>
+    </p>
 
-    <x-custom.small-label-hook-users :model="$inspector" />
+    <x-custom.content-hook-users :model="$inspector" />
 </x-card>
 @endsection

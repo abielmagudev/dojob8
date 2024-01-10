@@ -32,7 +32,7 @@
             </select>
         </div>
 
-        @include('components.form.filters.sort')
+        @include('components.custom.select-sort')
     </form>
 
     @slot('footer')

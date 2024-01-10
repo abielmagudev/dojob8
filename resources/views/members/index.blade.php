@@ -11,7 +11,10 @@
             <i class="bi bi-funnel"></i>
         </x-modal-trigger>
 
-        <x-custom.link-with-total total="{{ $members->count() }}" route="{{ route('members.create') }}" />
+        <span>{{ $members->count() }}</span>
+        <a href="{{ route('members.create') }}" class="btn btn-primary">
+            <b>+</b>
+        </a>
     </x-slot>
 
     <x-table class="align-middle">
@@ -27,9 +30,9 @@
         @foreach($members as $member)
         <tr>
             <td style="width:1%">
-                <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($member->active_status) }}">
-                    <x-circle-off-on :switcher="$member->isActive()" />
-                </span>
+                <x-tooltip title="{{ ucfirst($member->active_text) }}">
+                    <x-indicator-on-off :toggle="$member->isActive()" />
+                </x-tooltip>
             </td>
             <td>{{ $member->full_name }}</td>
             <td>
@@ -46,7 +49,7 @@
 </x-card>
 <br>
 
-<x-pagination-simple-eloquent :collection="$members" />
+<x-pagination-simple-model :collection="$members" />
 
 @include('members.index.modal-member-filters')
 @endsection

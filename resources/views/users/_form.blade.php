@@ -1,54 +1,49 @@
 @csrf
 
-<x-form-control-horizontal>
-    <x-slot name="label">
-        <label class="form-label mt-1">Profile</label>
-    </x-slot>
-    <div class="form-control">
-        <div>{{ $profile->meta_name }}</div>
-        <small>{{ ucfirst($alias) }}</small>
-    </div>
+<x-form-field-horizontal label="Profile type">
+    <div class="form-control bg-light text-capitalize">{{ $alias }}</div>
     <x-error name="profile_alias" />
     <x-error name="profile_id" />
-</x-form-control-horizontal>
+</x-form-field-horizontal>
 
-<x-form-control-horizontal>
+<x-form-field-horizontal label="Profile name">
+    <div class="form-control bg-light">{{ $profile->authenticated_name }}</div>
+    <x-error name="profile_alias" />
+    <x-error name="profile_id" />
+</x-form-field-horizontal>
+
+<x-form-field-horizontal for="nameInput"> 
     <x-slot name="label">
-        <label for="nameInput" class="form-label mt-1">Name</label>
+        <span>Username</span>
+        <x-tooltip title="
+            <span>Minimum 6 characters.</span><br>
+            <span>Use letters, numbers, underscores and dots.</span>
+        " 
+        html>
+            <span class="link-primary">
+                <i class="bi bi-info-circle"></i>
+            </span>
+        </x-tooltip>
     </x-slot>
-    
+
     <input id="nameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" name="name" value="{{ old('name', $user->name) }}" required>
-    <x-error name="name" important>
-        Minimum 6 characters, only alphanumeric, underscores and dots
-    </x-error>
-</x-form-control-horizontal>
+    <x-error name="name" />
+</x-form-field-horizontal>
 
-<x-form-control-horizontal class="align-items-center">
-    <x-slot name="label">
-        <label for="emailInput" class="form-label">Email</label>
-    </x-slot>
-
+<x-form-field-horizontal for="emailInput" label="Email">
     <input id="emailInput" type="email" class="form-control {{ bsInputInvalid( $errors->has('email') ) }}" name="email" value="{{ old('email', $user->email) }}" required>
     <x-error name="email" />
-</x-form-control-horizontal>
+</x-form-field-horizontal>
 
-<x-form-control-horizontal>
-    <x-slot name="label">
-        <label for="passwordInput" class="mt-1 form-label {{ $user->id ? 'form-label-optional' : '' }}">Password</label>
-    </x-slot>
+<x-form-field-horizontal for="passwordInput" label="Password" label-class="{{ $user->id ? 'form-label-optional' : '' }}">
+    <input id="passwordInput" type="password" class="form-control {{ bsInputInvalid( $errors->has('password') ) }}" name="password" @if( is_null($user->id) ) required @endif placeholder="Minimum 8 characters">
+    <x-error name="password" />
+</x-form-field-horizontal>
 
-    <input id="passwordInput" type="password" class="form-control {{ bsInputInvalid( $errors->has('password') ) }}" name="password" @if( is_null($user->id) ) required @endif>
-    <x-error name="password">Minimum 8 characters</x-error>
-</x-form-control-horizontal>
-
-<x-form-control-horizontal class="align-items-center">
-    <x-slot name="label">
-        <label for="confirmPasswordInput" class="form-label">Confirm password</label>
-    </x-slot>
-
+<x-form-field-horizontal for="confirmPasswordInput" label="Confirm password">
     <input id="confirmPasswordInput" type="password" class="form-control {{ bsInputInvalid( $errors->has('confirm_password') ) }}" name="confirm_password" @if( is_null($user->id) ) required @endif>
     <x-error name="confirm_password" />
-</x-form-control-horizontal>
+</x-form-field-horizontal>
 
 @if( $user->id )
 <br>

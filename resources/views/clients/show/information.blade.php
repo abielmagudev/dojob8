@@ -12,16 +12,16 @@
         {{ $client->state_name }},
         {{ $client->country_name }}<br>
         {{ $client->zip_code }}<br>
-        {{ $client->district_code }}<br>
+        {{ $client->district_code }}
     </address>
 
-    <x-small-label label="Contact">
-        @include('clients.__.contact')
-    </x-small-label>
+    <p>
+        <span>{{ $client->phone_number }}</span><br>
+        <span>{{ $client->mobile_number }}</span><br>
+        <span>{{ $client->email }}</span><br>
+    </p>
 
-    <x-small-label label="Notes">
-        <span>{{ $client->notes }}</span>
-    </x-small-label>
+    <p>{{ $client->notes }}</p>
 
-    <x-custom.small-label-hook-users :model="$client" />
+    <x-custom.content-hook-users :model="$client" />
 </x-card>

@@ -2,9 +2,9 @@
     <div class="container">
         <div class="d-flex align-items-center justify-content-between">
             <div>
-                <x-nav class="nav-pills">
+                <div class="nav nav-pills">
                     @include('application.menus.admin')
-                </x-nav>
+                </div>
             </div>
             <div>
                 <button id="buttonExpand" type="button" class="btn btn-outline-primary">

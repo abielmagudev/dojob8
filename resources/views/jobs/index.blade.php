@@ -29,7 +29,7 @@
         <tr>
             <td style="width:1%">
                 <x-tooltip title="{{ ucfirst($job->available_status) }}">
-                    <x-circle-off-on :switcher="$job->isAvailable()" />
+                    <x-indicator-on-off :toggle="$job->isAvailable()" />
                 </x-tooltip>
             </td>
             <td>{{ $job->name }}</td>
@@ -38,7 +38,7 @@
             <td class="text-nowrap text-end">
                 @if( $job->hasUnfinishedWorkOrders() )
                 <x-tooltip title="Unfinished work orders">
-                    <a href="{{ $job->url_unfinished_work_orders }}" class="btn btn-warning">
+                    <a href="{{ workOrderUrlGenerator('unfinished', ['job' => $job->id]) }}" class="btn btn-warning">
                         {{ $job->work_orders_unfinished->count() }}
                     </a>
                 </x-tooltip>
@@ -46,7 +46,7 @@
 
                 @if( $job->hasWorkOrders() )
                 <x-tooltip title="Work orders">
-                    <a href="{{ $job->url_own_work_orders }}" class="btn btn-primary">
+                    <a href="{{ workOrderUrlGenerator('all', ['job' => $job->id]) }}" class="btn btn-primary">
                         {{ $job->work_orders->count() }}
                     </a>
                 </x-tooltip>
@@ -61,5 +61,5 @@
     </x-table>
 </x-card>
 <br>
-<x-pagination-simple-eloquent :collection="$jobs" />
+<x-pagination-simple-model :collection="$jobs" />
 @endsection

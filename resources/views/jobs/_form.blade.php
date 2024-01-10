@@ -1,27 +1,15 @@
 @csrf
-<x-form-control-horizontal class="align-items-center">
-    <x-slot name="label">
-        <label for="inputName" class="form-label">Name</label>
-    </x-slot>
-    
+<x-form-field-horizontal for="inputName" label="Name">
     <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $job->name) }}" required>
     <x-error name="name" />
-</x-form-control-horizontal>
+</x-form-field-horizontal>
 
-<x-form-control-horizontal class="">
-    <x-slot name="label">
-        <label for="textareaDescription" class="form-label form-label-optional">Description</label>
-    </x-slot>
-    
+<x-form-field-horizontal for="textareaDescription" label="Description" label-class="form-label-optional">
     <textarea id="textareaDescription" rows="3" class="form-control" name="description">{{ old('description', $job->description) }}</textarea>
     <x-error name="description" />
-</x-form-control-horizontal>
+</x-form-field-horizontal>
 
-<x-form-control-horizontal class="">
-    <x-slot name="label">
-        <label for="textareaDescription" class="form-label form-label-optional">Preconfigure required inspections</label>
-    </x-slot>
-    
+<x-form-field-horizontal label="Pre-configured required inspections" label-class="form-label-optional">    
     <div class="form-control p-0">
         <x-table class="m-0">
             @foreach($inspectors as $inspector)
@@ -43,7 +31,7 @@
     </div>
     <x-error name="preconfigured_required_inspections" />
     <x-error name="preconfigured_required_inspections.*" />
-</x-form-control-horizontal>
+</x-form-field-horizontal>
 
 @if( $job->id )
 <div class="mt-4">

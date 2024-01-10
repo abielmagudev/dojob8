@@ -82,7 +82,7 @@
 </x-card>
 <br>
 
-<x-pagination-simple-eloquent :collection="$inspections" />
+<x-pagination-simple-model :collection="$inspections" />
 
 @include('inspections.index.modal-inspection-filters')
 

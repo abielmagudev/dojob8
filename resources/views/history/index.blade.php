@@ -39,7 +39,7 @@
                 @endif   
             </td>
             <td>
-                <span>{{ $activity->user->profile->meta_name }}</span>
+                <span>{{ $activity->user->profile->authenticated_name }}</span>
                 <span>-</span>
                 <em>{{ $activity->user->name }}</em>
             </td>
@@ -54,6 +54,6 @@
 </x-card>
 <br>
 
-<x-pagination-simple-eloquent :collection="$history" />
+<x-pagination-simple-model :collection="$history" />
 @include('history.index.modal-filters')
 @endsection

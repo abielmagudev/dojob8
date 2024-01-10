@@ -23,23 +23,23 @@
                 @include('inspections.__.status_color', ['status' => $inspection->status])
             </p>      
         
-            <x-small-label label="Scheduled">
+            <x-small-title title="Scheduled">
                 {{ $inspection->scheduled_date_human }}
-            </x-small-label>
-        
-            <x-small-label label="Inspector">
+            </x-small-title>
+
+            <x-small-title title="Inspector">
                 {{ $inspection->inspector->name }}
-            </x-small-label>
+            </x-small-title>
 
-            <x-small-label label="Crew">
+            <x-small-title title="Crew">
                 {{ $inspection->hasCrew() ? $inspection->crew->name : '' }}
-            </x-small-label>
+            </x-small-title>
         
-            <x-small-label label="Observations">
+            <x-small-title title="Observations">
                 {{ $inspection->observations }}
-            </x-small-label>
+            </x-small-title>
 
-            <x-custom.small-label-hook-users :model="$inspection" />
+            <x-custom.content-hook-users :model="$inspection" />
         </x-card>
     </div>
 
@@ -52,21 +52,21 @@
                 </a>
             </x-slot>
 
-            <x-small-label label="Scheduled">
+            <x-small-title title="Scheduled">
                 {{ $inspection->work_order->scheduled_date_human }}
-            </x-small-label>
+            </x-small-title>
 
-            <x-small-label label="Job">
+            <x-small-title title="Job">
                 {{ $inspection->work_order->job->name }}
-            </x-small-label>
+            </x-small-title>
             
-            <x-small-label label="Client">
+            <x-small-title title="Client">
                 @include('clients.__.address', ['client' => $inspection->work_order->client])
-            </x-small-label>
+            </x-small-title>
 
-            <x-small-label label="Notes">
+            <x-small-title title="Notes">
                 {{ $inspection->work_order->notes }}
-            </x-small-label>
+            </x-small-title>
         </x-card>
     </div>
 

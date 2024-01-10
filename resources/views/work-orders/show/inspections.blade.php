@@ -42,7 +42,7 @@
                 {{ $inspection->observations }}
             </td>
             <td>
-                <x-badge color="{{ $inspection->status_color }}" class="text-uppercase">{{ $inspection->status }}</x-badge>
+                <span class="{{ $inspection->status_color }} text-uppercase">{{ $inspection->status }}</span>
             </td>
             <td class="text-nowrap text-end">
                 <a href="{{ route('inspections.edit', [$inspection, 'tab' => 'inspections']) }}" class="btn btn-outline-warning">

@@ -21,11 +21,11 @@
         <tr>
             <td style="width:1%">
                 <x-tooltip title="{{ ucfirst($user->status) }}">
-                    <x-circle-off-on :switcher="$user->isActive()" />
+                    <x-indicator-on-off :toggle="$user->isActive()" />
                 </x-tooltip>
             </td>
             <td>{{ $user->name }}</td>
-            <td class="text-capitalize">{{ $user->profile->meta_name  }} - <em class="text-secondary">{{ $user->profile_alias }}</em></td>
+            <td class="text-capitalize">{{ $user->profile->authenticated_name  }} - <em class="text-secondary">{{ $user->profile_alias }}</em></td>
             <td>
                 <span class="me-1">{{ $user->last_session_date_human }}</span>
                 <span>{{ $user->last_session_time_human }}</span>
@@ -40,5 +40,5 @@
     </x-table>
 </x-card>
 <br>
-<x-pagination-simple-eloquent :collection="$users" />
+<x-pagination-simple-model :collection="$users" />
 @endsection

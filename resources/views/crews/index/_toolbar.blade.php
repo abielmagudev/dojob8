@@ -33,7 +33,9 @@
 
     {{-- Create crew --}}
     <div>
-        <x-custom.link-with-total total="{{ $crews->count() }}" route="{{ route('crews.create') }}" />
+        <a href="{{ route('crews.create') }}" class="btn btn-primary">
+            <b>+</b>
+        </a>
     </div>
 </div>
 <br>

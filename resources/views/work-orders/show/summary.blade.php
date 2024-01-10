@@ -1,20 +1,20 @@
 <x-card class="h-100">
     <div class="mb-3">
-        <x-badge class="{{ $work_order->status_color }} text-uppercase">{{ $work_order->status }}</x-badge>
+        <span class="badge {{ $work_order->status_color }} text-uppercase">{{ $work_order->status }}</span>
     </div>
 
-    <x-small-label label="Job">
+    <x-small-title title="Job">
         <span class="d-block">{{ $work_order->job->name }}</span>
         <small>{{ $work_order->job->description }}</small>
-    </x-small-label>
+    </x-small-title>
 
-    <x-small-label label="Require inspections ">
+    <x-small-title title="Require inspections ">
         {{ $work_order->job->requireInspections() ? 'Yes' : 'No' }}
-    </x-small-label>
+    </x-small-title>
 
-    <x-small-label label="Extensions">
+    <x-small-title title="Extensions">
         {{ $work_order->job->hasExtensions() ? 'Yes' : 'No' }}
-    </x-small-label>
+    </x-small-title>
 
     @if( $work_order->job->hasExtensions() )
         @foreach($work_order->job->extensions as $extension)
@@ -22,9 +22,9 @@
         @endforeach
     @endif
     
-    <x-small-label label="Notes">
+    <x-small-title title="Notes">
         {{ $work_order->notes }}
-    </x-small-label>
+    </x-small-title>
 
-    <x-custom.small-label-hook-users :model="$work_order" />
+    <x-custom.content-hook-users :model="$work_order" />
 </x-card>

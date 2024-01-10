@@ -6,16 +6,17 @@
     </x-slot>
 
     <p>
-        <x-badge :color="$job->isAvailable() ? 'success' : 'secondary' " class="text-uppercase">{{ ucfirst($job->available_status) }}</x-badge>
+        <x-indicator-on-off :toggle="$job->isAvailable()" />
+        <span>{{ ucfirst($job->available_text) }}</span>
     </p>
 
-    <x-small-label label="Description">
+    <x-small-title title="Description">
         {{ $job->description }}
-    </x-small-label>
+    </x-small-title>
 
-    <x-small-label label="Inspections required">
+    <x-small-title title="Inspections required">
         {{ $job->requireInspections() ? 'Yes' : 'No' }}
-    </x-small-label>
+    </x-small-title>
     
-    <x-custom.small-label-hook-users :model="$job" />
+    <x-custom.content-hook-users :model="$job" />
 </x-card>

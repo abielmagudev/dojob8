@@ -14,17 +14,8 @@
             <td>{{ $member->full_name }}</td>
             <td>
                 @foreach($member->contact_data_collection->filter() as $key => $value)
-                @if( $key <> 'email' )
-                    <span class="badge text-bg-light">
-                        <x-link-phone href="{{ $value }}">{{ $value }}</x-link-phone>
-                    </span>
-                
-                @else
-                    <span class="badge text-bg-light">
-                        <x-link-email href="{{ $value }}">{{ $value }}</x-link-email>
-                    </span>
-
-                @endif
+                <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>
+                <a href="{{ $prefix }}:{{ $value }}" class="mx-1">{{ $value }}</a>
                 @endforeach
             </td>
             <td class="text-end">

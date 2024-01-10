@@ -6,24 +6,25 @@
     </x-slot>
 
     <p>
-        <x-badge :color="$member->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $member->active_text }}</x-badge>
+        <x-indicator-on-off :toggle="$member->isActive()" />
+        <span class="text-uppercase">{{ $member->active_text }}</span>
     </p>
 
     @if( $member->contact_data_collection->filter()->count() )      
-    <x-small-label label="Contact">
+    <x-small-title title="Contact">
         @include('members.__.contact')
-    </x-small-label>
+    </x-small-title>
     @endif
 
     @if( $member->hasPosition() )      
-    <x-small-label label="Position">
+    <x-small-title title="Position">
         <span class="d-block">{{ $member->position }}</span>
-    </x-small-label>
+    </x-small-title>
     @endif
 
-    <x-small-label label="Notes">
+    <x-small-title title="Notes">
         <em>{{ $member->notes }}</em>
-    </x-small-label>
+    </x-small-title>
 
-    <x-custom.small-label-hook-users :model="$member" />
+    <x-custom.content-hook-users :model="$member" />
 </x-card>

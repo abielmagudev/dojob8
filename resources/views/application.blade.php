@@ -20,26 +20,17 @@
             background: rgb(9,107,255);
             background: linear-gradient(321deg, rgba(9,107,255,1) 0%, rgba(4,50,117,1) 100%);
         }
-        .bg-transparent {
-            background-color: transparent !important;
-        }
-        .dropdown-toggle-without-caret::after {
-            content: none !important;
-        }
         .form-label-optional::after {
             color: black;
             content: "(Optional)";
             opacity: 0.33;
             /* font-size: .75rem; */
             font-style: italic;
-            margin-left: 0.25rem;
+            margin-left: 0.1rem;
         }
         .last-tr-borderless > tbody > tr:last-child > td,
         .last-tr-borderless > tr:last-child > td {
             border: none !important;
-        }
-        .hover-bg-darken:hover {
-            background-color: rgba(0, 0, 0, 0.025) !important;
         }
         .text-bg-purple {
             background-color: #700ec1;
@@ -62,7 +53,8 @@
 
         @yield('subheader')
 
-        @include('application.alert-message')
+        
+        @include('application.message')
 
         @yield('content')
     </div>

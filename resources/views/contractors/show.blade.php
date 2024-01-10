@@ -10,7 +10,8 @@
 @section('content')
 <div class="row">
     <div class="col-sm">
-        <x-badge :color="$contractor->isAvailable() ? 'success' : 'secondary'" class="text-uppercase">{{ $contractor->available_text }}</x-badge> 
+        <x-indicator-on-off :toggle="$contractor->isAvailable()" />
+        <span>{{ $contractor->available_text }}</span>
 
         <address>
             {{ $contractor->street }}<br>
@@ -20,7 +21,7 @@
             {{ $contractor->zip_code }}<br>
         </address>
 
-        <x-custom.small-label-hook-users :model="$contractor" />
+        <x-custom.content-hook-users :model="$contractor" />
 
         <a href="{{ route('contractors.edit', $contractor) }}" class="btn btn-outline-warning btn-sm">
             <i class="bi bi-pencil-fill"></i>

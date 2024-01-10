@@ -16,22 +16,22 @@
     </x-slot>
 
     <p>
-        <x-badge :color="$user->isActive() ? 'success' : 'secondary'" class="text-uppercase">Active</x-badge>
+        <x-indicator-on-off :toggle="$user->isActive()" />
+        <span class="text-uppercase">{{ $user->isActive() ? 'active' : 'inactive' }}</span>
     </p>
 
-    <x-small-label label="Profile">
-        <span class="d-block">{{ $user->profile->meta_name }}</span>
-        <span class="d-block text-capitalize text-secondary">{{ $user->profile_alias }}</span>
-    </x-small-label>
+    <x-small-title title="Profile">
+        <span class="d-block">{{ $user->profile->authenticated_name }}</span>
+    </x-small-title>
 
-    <x-small-label label="Email">
+    <x-small-title title="Email">
         {{ $user->email }}
-    </x-small-label>
+    </x-small-title>
 
-    <x-small-label label="Last session">
+    <x-small-title title="Last session">
         <span class="d-block">{{ $user->last_session_date_human }}</span>
         <span class="d-block">{{ $user->last_session_time_human }}</span>
         <span class="d-block text-capitalize">{{ $user->last_session_device }}</span>
-    </x-small-label>
+    </x-small-title>
 </x-card>
 @endsection

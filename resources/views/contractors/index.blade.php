@@ -28,9 +28,9 @@
         @foreach($contractors as $contractor)
         <tr>
             <td>
-                <span data-bs-toggle="tooltip" data-bs-title="{{ ucfirst($contractor->status) }}">
-                    <x-circle-off-on :switcher="$contractor->isAvailable()" />
-                </span>
+                <x-tooltip title="{{ ucfirst($contractor->status) }}">
+                    <x-indicator-on-off :toggle="$contractor->isAvailable()" />
+                </x-tooltip>
             </td>
             <td>
                 {{ $contractor->name }} ({{ $contractor->alias }})
@@ -41,13 +41,13 @@
             <td class="text-end">
                 @if( $contractor->hasUnfinishedWorkOrders() )                  
                 <x-tooltip title="Unfinished work orders">
-                    <a href="{{ $contractor->url_unfinished_work_orders }}" class="btn btn-warning">{{ $contractor->work_orders_unfinished_count }}</a>
+                    <a href="{{ \App\Models\WorkOrder\WorkOrderUrlGenerator::unfinished(['contractor' => $contractor->id]) }}" class="btn btn-warning">{{ $contractor->work_orders_unfinished_count }}</a>
                 </x-tooltip>
                 @endif
                 
                 @if( $contractor->hasWorkOrders() )
                 <x-tooltip title="Work orders">
-                    <a href="{{ $contractor->url_own_work_orders }}" class="btn btn-primary">{{ $contractor->work_orders->count() }}</a>
+                    <a href="{{ \App\Models\WorkOrder\WorkOrderUrlGenerator::all(['contractor' => $contractor->id]) }}" class="btn btn-primary">{{ $contractor->work_orders->count() }}</a>
                 </x-tooltip>
                 @endif
 
@@ -61,5 +61,5 @@
 </x-card>
 <br>
 
-<x-pagination-simple-eloquent :collection="$contractors" />
+<x-pagination-simple-model :collection="$contractors" />
 @endsection

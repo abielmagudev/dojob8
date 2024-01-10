@@ -6,16 +6,17 @@
     </x-slot>
 
     <p>
-        <x-badge :color="$crew->isActive() ? 'success' : 'secondary'" class="text-uppercase">{{ $crew->active_status }}</x-badge>
+        <x-indicator-on-off :toggle="$crew->isActive()" />
+        <span class="text-uppercase">{{ $crew->active_status }}</span>
 
         <span class="badge text-uppercase " style="background-color:{{ $crew->background_color }}; color: {{ $crew->text_color }}">
             {{ $crew->text_color_mode }}
         </span>
     </p>
 
-    <x-small-label label="Description">
+    <p>
         {{ $crew->description }}
-    </x-small-label>
+    </p>
 
-    <x-custom.small-label-hook-users :model="$crew" />
+    <x-custom.content-hook-users :model="$crew" />
 </x-card>

@@ -7,7 +7,7 @@
     <title>{{ config('app.name') }}</title>
 
     {{-- Load Bootstrap theme --}}
-    @if( config('themes.bootswatch.theme') <> 'default' )
+    @if( config('themes.bootswatch.theme') <> 'bootstrap' )
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/{{ config('themes.bootswatch.theme') }}/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     @else

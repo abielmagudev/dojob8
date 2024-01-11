@@ -5,13 +5,15 @@
 // https://bootswatch.com/{theme}/
 
 return [
-    'theme' => 'default',
+    'theme' => 'bootstrap',
 
     'all' => [
+        // ORIGINAL
+        'bootstrap',
+
+        // LIGHT
         'cerulean', 
         'cosmo', 
-        'cyborg',
-        'darkly',
         'flatly',
         'journal',
         'litera',
@@ -19,19 +21,23 @@ return [
         'lux',
         'materia',
         'minty',
-        // 'morph',
+        'morph',
         'pulse',
-        // 'quartz',
+        'quartz',
         'sandstone',
         'simplex',
         'sketchy',
-        // 'slate',
-        // 'solar',
         'spacelab',
-        // 'superhero',
         'united',
-        // 'vapor',
         'yeti',
         'zephyr',
+        
+        // DARK
+        'cyborg',
+        'darkly',
+        'slate',
+        'solar',
+        'superhero',
+        'vapor',
     ],
 ];

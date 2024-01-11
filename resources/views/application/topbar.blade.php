@@ -33,9 +33,9 @@
           <h6 class="dropdown-header">Username</h6>
         </li>
         <li>
-          <button id="themeModeButton" class="dropdown-item" type="button" data-mode="dark">
-              <i class="bi bi-moon"></i>
-              <span class="ms-2">Dark mode</span>
+          <button id="themeModeButton" class="dropdown-item" type="button" data-mode="light">
+              <i class="bi bi-sun"></i>
+              <span class="ms-2">Light mode</span>
           </button>
         </li>
         <li>
@@ -77,19 +77,19 @@ const themeModeButton = {
     this.element.addEventListener('click', function (evt) {
       let button = evt.target.closest('button')
 
-      if( button.dataset.mode == 'dark' )
+      if( button.dataset.mode == 'light' )
       {
         htmlTag.dataset.bsTheme = 'light'
-        button.querySelector('i').classList.replace('bi-moon', 'bi-sun')
-        button.querySelector('span').textContent = 'Light mode'
-        button.dataset.mode = 'light'
+        button.querySelector('i').classList.replace('bi-sun', 'bi-moon')
+        button.querySelector('span').textContent = 'Dark mode'
+        button.dataset.mode = 'dark'
       }
       else
       {
         htmlTag.dataset.bsTheme = 'dark'
-        button.querySelector('i').classList.replace('bi-sun', 'bi-moon')
-        button.querySelector('span').textContent = 'Dark mode'
-        button.dataset.mode = 'dark'
+        button.querySelector('i').classList.replace('bi-moon', 'bi-sun')
+        button.querySelector('span').textContent = 'Light mode'
+        button.dataset.mode = 'light'
       }
     })
 

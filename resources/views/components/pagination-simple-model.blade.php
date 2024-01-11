@@ -13,7 +13,7 @@
     </ul>
     <ul class="pagination shadow-sm rounded">
         <li class="page-item disabled ">
-            <a class="page-link border-0 text-secondary bg-white" href="#!" aria-label="Current page">
+            <a class="page-link border-0 text-bg-secondary" href="#!" aria-label="Current page">
                 Page {{ request('page', '1') }}
             </a>
         </li>

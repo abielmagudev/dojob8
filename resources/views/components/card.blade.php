@@ -18,7 +18,7 @@
                 @isset($dropoptions)              
                 <div class="d-inline-block align-middle">
                     <div class="dropdown dropdown-menu-end">
-                        <button class="btn text-bg-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu border-0 shadow">

@@ -18,7 +18,9 @@
 
     {{-- Center --}}
     <div class="d-none d-md-inline-block">
-      <input class="form-control rounded-pill bg-transparent text-center" type="search" name="search" id="searchClientInput" placeholder="Search client..." style="width:320px">
+      <form action="{{ route('clients.search') }}" method="get" autocomplete="off">
+        <input class="form-control rounded-pill bg-transparent text-center" type="search" name="query" id="searchClientInput" placeholder="Search client..." style="width:320px">
+      </form>
     </div>
 
     {{-- Right --}}

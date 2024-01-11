@@ -58,4 +58,9 @@ class ClientController extends Controller
 
         return redirect()->route('clients.index')->with('success', "You deleted the client <b>{$client->full_name}</b>");
     }
+
+    public function search(Request $request)
+    {
+        return view('clients.search');
+    }
 }

@@ -42,6 +42,7 @@ Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach']
 Route::resource('jobs', JobController::class);
 
 Route::get('clients/ajax', [ClientAjaxController::class, 'search'])->name('clients.ajax.search');
+Route::get('clients/search', [ClientController::class, 'search'])->name('clients.search');
 Route::resource('clients', ClientController::class);
 
 Route::resource('members', MemberController::class);

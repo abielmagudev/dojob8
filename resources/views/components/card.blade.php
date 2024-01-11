@@ -1,11 +1,12 @@
 <div class="card shadow-sm border-0 {{ $attributes->get('class', '') }}" style="{{ $attributes->get('style', '') }}">
 
     @if( isset($title) || isset($options) || isset($dropoptions) )
-    <div class="card-header border-0 bg-white py-3">
+    <div class="card-header border-bottom-0 py-3">
         <div class="d-flex align-items-center justify-content-between">
             <div>
-                <div class="lead">{{ $title ?? '' }}</div>
-                <div class="text-secondary">{{ $attributes->get('subtitle', '') }}</div>
+                <b>{{ $title ?? '' }}</b>
+                <br>
+                <small>{{ $attributes->get('subtitle', '') }}</small>
             </div>
             <div>
                 @isset($options)       

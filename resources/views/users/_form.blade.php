@@ -1,13 +1,13 @@
 @csrf
 
 <x-form-field-horizontal label="Profile type">
-    <div class="form-control bg-light text-capitalize">{{ $alias }}</div>
+    <input class="form-control text-capitalize" value="{{ $alias }}" disabled>
     <x-error name="profile_alias" />
     <x-error name="profile_id" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal label="Profile name">
-    <div class="form-control bg-light">{{ $profile->authenticated_name }}</div>
+    <input class="form-control" value="{{ $profile->authenticated_name }}" disabled>
     <x-error name="profile_alias" />
     <x-error name="profile_id" />
 </x-form-field-horizontal>

@@ -1,11 +1,12 @@
 @extends('application')
 
 @section('header')
-<x-header title="{{ $extension->name }}" :breadcrumbs="[
-    'Back to extensions' => route('extensions.index'),
+<x-breadcrumb :items="[
+    'Back to Extensions' => route('extensions.index'),
     'Products' => route('extensions.show', [$extension, 'sub' => 'products']),
-    'Create' => null,
+    'Create',
 ]" />
+<x-page-title>{{ $extension->name }}</x-page-title>
 @endsection
 
 @section('content')

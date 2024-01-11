@@ -1,16 +1,11 @@
 @extends('application')
 
 @section('header')
-<x-header title="History">
-    @slot('subtitle')
-    <small class="align-middle badge text-bg-dark">{{ $history->total() }}</small>
-    <span class="align-middle">Activities</span>
-    @endslot
-</x-header>
+<x-page-title>History</x-page-title>
 @endsection
 
 @section('content')
-<x-card>
+<x-card title="Activities">
 
     @slot('options')
     <x-modal-trigger modal-id="historyFilterModal" class="btn btn-primary">

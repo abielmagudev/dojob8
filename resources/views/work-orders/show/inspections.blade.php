@@ -1,11 +1,4 @@
 <x-card>
-
-    <x-slot name="options">
-        <a href="{{ route('inspections.create', $work_order) }}" class="btn btn-primary">
-            <b>+</b>
-        </a>
-    </x-slot>
-
     <div class="mb-3">
         <div class="badge text-bg-dark">Required {{ $work_order->job->inspections_required_count }}</div>
         <div class="badge text-bg-success">Approved {{ $inspections->where('is_approved', 1)->count() }}</div>
@@ -54,4 +47,12 @@
 
     </x-table>
     @endif
+
+    @slot('footer')
+    <div class="py-1 text-end">    
+        <a href="{{ route('inspections.create', $work_order) }}" class="btn btn-primary">
+            <span>Add new inspection</span>
+        </a>
+    </div>
+    @endslot
 </x-card>

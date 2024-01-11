@@ -1,4 +1,4 @@
-<x-header title="{{ $extension->name }}" :breadcrumbs="[
-    'Back to extensions' => route('extensions.index'),
-    'Configuration' => null
+<x-breadcrumb :items="[
+    'Back to Extensions' => route('extensions.index'),
+    'Configuration'
 ]" />

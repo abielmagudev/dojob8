@@ -13,7 +13,7 @@
         
         {{-- Show job for edit work_order --}}
         @else
-        <div class="form-control bg-light">{{ $work_order->job->name }}</div>
+        <input class="form-control" value="{{ $work_order->job->name }}" disabled>
     
         @endif
     </div>

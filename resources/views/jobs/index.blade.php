@@ -1,11 +1,7 @@
 @extends('application')
 
 @section('header')
-<x-header title="Jobs">
-    @slot('subtitle')
-    <small class="align-middle badge text-bg-dark">{{ $jobs->total() }}</small>
-    @endslot
-</x-header>
+<x-page-title>Jobs</x-page-title>
 @endsection
 
 @section('content')
@@ -28,7 +24,7 @@
         @foreach($jobs as $job)               
         <tr>
             <td style="width:1%">
-                <x-tooltip title="{{ ucfirst($job->available_status) }}">
+                <x-tooltip title="{{ ucfirst($job->available_text) }}">
                     <x-indicator-on-off :toggle="$job->isAvailable()" />
                 </x-tooltip>
             </td>

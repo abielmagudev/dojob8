@@ -1,11 +1,15 @@
 @extends('application')
 
 @section('header')
-@include('CpsProductMeasures/views/partials/header')
+<x-breadcrumb :items="[
+    'Back to Extensions' => route('extensions.index'),
+    'Configuration'
+]" />
+<x-page-title>{{ $extension->name }}</x-page-title>
+@include('CpsProductMeasures/views/partials/subnavbar')
 @endsection
 
 @section('content')
-@include('CpsProductMeasures/views/partials/subnavbar')
 <x-card title="Exports">
     <form action="{{ route('extensions.store', [$extension, 'sub' => 'exports']) }}" method="post" autocomplete="off">
         @csrf

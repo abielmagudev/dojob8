@@ -1,11 +1,12 @@
 @extends('application')
 
 @section('header')
-@include('CpsProductMeasures/views/partials/header')
-@endsection
-
-@section('subheader')
-@include('CpsProductMeasures/views/partials/subnavbar') 
+<x-breadcrumb :items="[
+    'Back to Extensions' => route('extensions.index'),
+    'Configuration'
+]" />
+<x-page-title>{{ $extension->name }}</x-page-title>
+@include('CpsProductMeasures/views/partials/subnavbar')
 @endsection
 
 @section('content')

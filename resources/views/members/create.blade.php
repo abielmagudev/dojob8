@@ -1,10 +1,11 @@
 @extends('application')
 
 @section('header')
-<x-header title="Members" :breadcrumbs="[
-    'Back to members' => route('members.index'),
-    'Create' => null,
+<x-breadcrumb :items="[
+    'Back to Staff' => route('members.index'),
+    'Create',
 ]" />
+<x-page-title>Members</x-page-title>
 @endsection
 
 @section('content')

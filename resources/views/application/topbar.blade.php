@@ -41,6 +41,15 @@
           </button>
         </li>
         <li>
+          <button id="buttonCollapseExpand" class="dropdown-item" type="button">
+            <i class="bi bi-arrows-collapse-vertical"></i>
+            <span class="ms-2">Collapse</span>
+          </button>
+        </li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li>
           <a class="dropdown-item" href="#">
               <i class="bi bi-sliders"></i>
               <span class="ms-2">Preferences</span>
@@ -69,9 +78,7 @@
 
 @push('scripts')
 <script>
-
 const htmlTag = document.querySelector('html')
-
 const themeModeButton = {
   element: document.getElementById('themeModeButton'),
   listen: function () {
@@ -98,6 +105,26 @@ const themeModeButton = {
   }
 }
 themeModeButton.listen()
-
 </script>
+
+<script>
+  const mainContainer = document.getElementById('main');
+  
+  document.getElementById('buttonCollapseExpand').addEventListener('click', function (evt) {
+      let button = evt.target.closest('button')
+
+      if( mainContainer.classList.contains('container') )
+      {
+        mainContainer.classList.replace('container', 'container-fluid')
+        button.querySelector('i').classList.replace('bi-arrows-expand-vertical', 'bi-arrows-collapse-vertical')
+        button.querySelector('span').textContent = 'Collapse'
+      } 
+      else
+      {
+        mainContainer.classList.replace('container-fluid', 'container')
+        button.querySelector('i').classList.replace('bi-arrows-collapse-vertical', 'bi-arrows-expand-vertical')
+        button.querySelector('span').textContent = 'Expand'
+      }
+  })
+  </script>
 @endpush

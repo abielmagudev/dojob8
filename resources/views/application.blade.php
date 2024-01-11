@@ -36,7 +36,7 @@
     @include('application.sidebar-canvas')
     @include('application.topbar')
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="main">
         @include('application.message')
 
         <header>

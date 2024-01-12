@@ -41,6 +41,6 @@ trait HasFilteringTrait
             return $query;
         }
 
-        return $query->filtering($inputs, $this->inputsAndFilters());
+        return $query->filtering($inputs, $this->inputFilterSettings());
     }
 }

@@ -34,42 +34,50 @@
         <li class="d-block d-md-none">
           <h6 class="dropdown-header">Username</h6>
         </li>
+
         <li>
           <button id="themeModeButton" class="dropdown-item" type="button" data-mode="light">
               <i class="bi bi-sun"></i>
               <span class="ms-2">Light mode</span>
           </button>
         </li>
-        <li>
+
+        <li class="d-none d-md-block">
           <button id="buttonCollapseExpand" class="dropdown-item" type="button">
             <i class="bi bi-arrows-collapse-vertical"></i>
             <span class="ms-2">Collapse</span>
           </button>
         </li>
+
         <li>
           <hr class="dropdown-divider">
         </li>
+
         <li>
           <a class="dropdown-item" href="#">
               <i class="bi bi-sliders"></i>
               <span class="ms-2">Preferences</span>
           </a>
         </li>
+
         <li>
           <a class="dropdown-item" href="#">
               <i class="bi bi-person"></i>
               <span class="ms-2">My account</span>
           </a>
         </li>
+
         <li>
           <hr class="dropdown-divider">
         </li>
+
         <li>
           <a class="dropdown-item text-danger" href="#">
               <i class="bi bi-box-arrow-right"></i>
               <span class="ms-2">Logout</span>
           </a>
         </li>
+
       </x-dropdown>
     </div>
   </div>

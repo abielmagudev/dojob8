@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedInterface;
 use App\Models\Kernel\FilteringInterface;
+use App\Models\Kernel\HasContactMeans;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
@@ -13,9 +14,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model implements AuthenticatedInterface, FilteringInterface
 {
-    use HasFilteringTrait;
+    use HasContactMeans;
     use HasExistenceTrait;
     use HasFactory;
+    use HasFilteringTrait;
     use HasHookUsersTrait;
     use SoftDeletes;
 
@@ -65,15 +67,6 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
     public function getBirthdateHumanAttribute()
     {
         return $this->hasBirthdate() ? $this->birthdate->format('d M, Y') : null;
-    }
-
-    public function getContactDataCollectionAttribute()
-    {
-        return collect([
-            'phone' => $this->phone_number,
-            'mobile' => $this->mobile_number,
-            'email' => $this->email,
-        ]);
     }
 
 

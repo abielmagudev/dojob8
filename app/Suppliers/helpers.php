@@ -38,6 +38,14 @@ if(! function_exists('wordInitials') )
     }
 }
 
+if(! function_exists('marker') )
+{
+    function marker(string $needle, string $text)
+    {
+        return preg_replace("/({$needle})/i", "<mark>$1</mark>", $text);
+    }
+}
+
 
 // Models
 

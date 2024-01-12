@@ -5,7 +5,7 @@
     <div>
       <div class="d-flex align-items-center">
         <div class="me-3">
-          <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebarMenu" aria-controls="offcanvasSidebarMenu">
+          <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebarMenu" aria-controls="offcanvasSidebarMenu">
             <i class="bi bi-list"></i>
           </button>
         </div>
@@ -18,8 +18,8 @@
 
     {{-- Center --}}
     <div class="d-none d-md-inline-block">
-      <form action="{{ route('clients.search') }}" method="get" autocomplete="off">
-        <input class="form-control rounded-pill bg-transparent text-center" type="search" name="query" id="searchClientInput" placeholder="Search client..." style="width:320px">
+      <form action="{{ route('clients.index') }}" method="get" autocomplete="off">
+        <input class="form-control rounded-pill bg-transparent text-center" type="search" name="search" id="searchClientInput" placeholder="Search client..." style="width:320px">
       </form>
     </div>
 

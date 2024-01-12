@@ -1,7 +1,9 @@
+<?php $city_state_country = $client->address_data->filter()->only(['city_name', 'state_name', 'country_code'])->implode(', ') ?>
+
 <address class="d-inline-block m-0">
-    {{ $client->street }}, 
-    {{ $client->address_data->filter()->only(['city_name', 'state_name', 'country_code'])->implode(', ') }}
-    <b>{{ $client->zip_code }}</b>
+    {!! isset($mark) ? marker($mark, $client->street) : $client->street !!}, 
+    {!! isset($mark) ? marker($mark, $city_state_country) : $city_state_country !!}
+    <b>{!! isset($mark) ? marker($mark, $client->zip_code) : $client->zip_code !!}</b>
 </address>
 
 <x-tooltip title="Google Maps">

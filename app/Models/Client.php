@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasAddressTrait;
+use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Client extends Model
+class Client extends Model implements FilteringInterface
 {
     use HasAddressTrait;
     use HasFactory;
+    use HasFilteringTrait;
     use HasHookUsersTrait;
     use HasWorkOrdersTrait;
     use SoftDeletes;
@@ -34,14 +37,24 @@ class Client extends Model
     ];
 
 
+    // Interface
+
+    public function inputsAndFilters(): array
+    {
+        return [
+            'search' => 'filterBySearch'
+        ];
+    }
+
+
     // Attributes 
 
     public function getContactDataCollectionAttribute()
     {
         return collect([
             'email'  => $this->email,
-            'mobile_number' => $this->mobile_number,
-            'phone_number' => $this->phone_number,
+            'mobile number' => $this->mobile_number,
+            'phone number' => $this->phone_number,
         ]);
     }
 
@@ -70,6 +83,14 @@ class Client extends Model
                      ->orWhere('street', 'like', "%{$value}%")
                      ->orWhere('zip_code', 'like', "%{$value}%")
                      ->orWhere('city_name', 'like', "%{$value}%");
+        }
+
+
+    // Filters
+
+    public function scopeFilterBySearch($query, $value)
+    {
+        return ! empty($value) ? $query->search($value) : $query;
     }
 
 

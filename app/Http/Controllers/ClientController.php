@@ -8,10 +8,17 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $clients = Client::with('work_orders')
+        ->filterByInputs( $request->all() )
+        ->orderByDesc('id')
+        ->paginate(25)
+        ->appends( $request->query() );
+
         return view('clients.index', [
-            'clients' => Client::with('work_orders')->orderByDesc('id')->paginate(25)
+            'request' => $request,
+            'clients' => $clients,
         ]);
     }
 
@@ -57,10 +64,5 @@ class ClientController extends Controller
         }
 
         return redirect()->route('clients.index')->with('success', "You deleted the client <b>{$client->full_name}</b>");
-    }
-
-    public function search(Request $request)
-    {
-        return view('clients.search');
     }
 }

@@ -26,18 +26,18 @@
         @foreach($clients as $client)
         <tr>
             <td class="text-nowrap">
-                {{ $client->full_name }}
+                {!! $request->filled('search') ? marker($request->get('search'), $client->full_name) : $client->full_name !!}
             </td>
             <td class="text-nowrap">
-                @include('clients.__.address-table-cell')
+                @include('clients.__.address-table-cell', ['mark' => $request->get('search')])
             </td>
             <td>
-                @include('clients.__.contact-table-cell')
+                @include('clients.__.contact-table-cell', ['mark' => $request->get('search')])
             </td>
             <td class="text-nowrap text-end">
 
                 @if( $client->hasUnfinishedWorkOrders() )
-                <a href="{{ \App\Models\WorkOrder\WorkOrderUrlGenerator::unfinished(['client' => $client->id]) }}" class="btn btn-warning">
+                <a href="{{ workOrderUrlGenerator('unfinished', ['client' => $client->id]) }}" class="btn btn-warning">
                     {{ $client->work_orders_unfinished_count }}
                 </a>
                 @endif

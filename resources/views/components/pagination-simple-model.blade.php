@@ -1,5 +1,6 @@
-<div class="d-flex justify-content-end align-items-center">
-    <div class="me-3">
+<div class="d-flex justify-content-between align-items-center">
+    <div>Page {{ request('page', '1') }}</div>
+    <div>
         <ul class="pagination shadow-sm rounded m-0">
             <li class="page-item {{ $collection->previousPageUrl() ? '' : 'disabled' }}">
                 <a class="page-link border-0" href="{{ $collection->previousPageUrl() ?? '#!' }}" aria-label="Previous">
@@ -13,5 +14,4 @@
             </li>
         </ul>
     </div>
-    <div>Page {{ request('page', '1') }}</div>
 </div>

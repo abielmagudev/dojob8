@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Contractors' => route('contractors.index'),
+    'Contractors' => route('contractors.index'),
     $contractor->name => route('contractors.show', $contractor),
     'Edit'
 ]" />

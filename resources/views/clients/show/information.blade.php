@@ -11,8 +11,8 @@
         {{ $client->city_name }}<br>
         {{ $client->state_name }},
         {{ $client->country_name }}<br>
-        {{ $client->zip_code }}<br>
-        {{ $client->district_code }}
+        ZIP {{ $client->zip_code }}<br>
+        District {{ $client->district_code }}
     </address>
 
     <p>

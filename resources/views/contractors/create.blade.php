@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Contractors' => route('contractors.index'),
+    'Contractors' => route('contractors.index'),
     'Create'
 ]" />
 <x-page-title>Contractors</x-page-title>

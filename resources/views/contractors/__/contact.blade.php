@@ -1,9 +1,5 @@
-
 <div>
-    <span>{{ $contractor->contact_name }}</span><br>
-    <span>{{ $contractor->name }} ({{ $contractor->alias }})</span><br>
-
-    @foreach($contractor->contact_data_collection->filter() as $key => $value)
+    @foreach($contractor->contact_data->filter() as $key => $value)
     <span class="badge text-bg-light text-start">
         <span class="d-inline-block " style="width:48px">{{ ucfirst($key) }}</span>
         <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>

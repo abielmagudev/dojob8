@@ -3,5 +3,4 @@
     <span>{{ $contractor->street }}</span><br>
     <span>{{ $contractor->address_data->only(['city_name','state_name','country_name'])->implode(', ') }}</span><br>
     <span>{{ $contractor->zip_code }}</span><br>
-    <span>{{ $contractor->country_name }}</span>
 </address>

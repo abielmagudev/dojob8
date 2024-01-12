@@ -17,7 +17,8 @@
             <tr>
                 <th></th>
                 <th class="text-nowrap">Name (Alias)</th>
-                <th class="text-nowrap">Contact</th>
+                <th>Contact</th>
+                <th></th>
                 <th></th>
             </tr>
         </x-slot>
@@ -30,6 +31,9 @@
             </td>
             <td>
                 {{ $contractor->name }} ({{ $contractor->alias }})
+            </td>
+            <td>
+                {{ $contractor->contact_name }}
             </td>
             <td>
                 @include('contractors.__.contact-table-cell')

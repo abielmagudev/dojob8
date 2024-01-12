@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedInterface;
-use App\Models\Kernel\AuthenticatedUserMetadataInterface;
 use App\Models\Kernel\HasAddressTrait;
+use App\Models\Kernel\HasContactMeans;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 class Contractor extends Model implements AuthenticatedInterface
 {
     use HasAddressTrait;
+    use HasContactMeans;
     use HasExistenceTrait;
     use HasFactory;
     use HasHookUsersTrait;
@@ -54,23 +55,9 @@ class Contractor extends Model implements AuthenticatedInterface
         $this->attributes['contact_name'] = Str::title($value);
     }
 
-    public function setEmailAttribute($value)
-    {
-        $this->attributes['email'] = strtolower($value);
-    }
-
     public function getStatusAttribute()
     {
         return $this->isAvailable() ? 'available' : 'not available';
-    }
-
-    public function getContactDataCollectionAttribute()
-    {
-        return collect([
-            'phone'  => $this->phone_number,
-            'mobile' => $this->mobile_number,
-            'email'  => $this->email,
-        ]);
     }
 
 

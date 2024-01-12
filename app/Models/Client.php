@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasAddressTrait;
+use App\Models\Kernel\HasContactMeans;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
@@ -14,10 +15,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Client extends Model implements FilteringInterface
 {
     use HasAddressTrait;
-    use HasFactory;
+    use HasContactMeans;
     use HasFilteringTrait;
     use HasHookUsersTrait;
     use HasWorkOrdersTrait;
+    use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
@@ -49,15 +51,6 @@ class Client extends Model implements FilteringInterface
 
     // Attributes 
 
-    public function getContactDataCollectionAttribute()
-    {
-        return collect([
-            'email'  => $this->email,
-            'mobile number' => $this->mobile_number,
-            'phone number' => $this->phone_number,
-        ]);
-    }
-
     public function getUrlSearchAddressGoogleMapsAttribute()
     {
         $query_string = $this->address_data->only([
@@ -81,8 +74,8 @@ class Client extends Model implements FilteringInterface
                      ->orWhere('mobile_number', 'like', "%{$value}%")
                      ->orWhere('email', 'like', "%{$value}%")
                      ->orWhere('street', 'like', "%{$value}%")
-                     ->orWhere('zip_code', 'like', "%{$value}%")
-                     ->orWhere('city_name', 'like', "%{$value}%");
+                     ->orWhere('city_name', 'like', "%{$value}%")
+                     ->orWhere('zip_code', 'like', "%{$value}%");
         }
 
 

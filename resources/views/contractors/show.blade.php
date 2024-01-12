@@ -18,9 +18,11 @@
             </a>
             @endslot
 
-            <x-indicator-on-off :toggle="$contractor->isAvailable()" />
-            <span>{{ $contractor->available_text }}</span>
-    
+            <p>
+                <x-indicator-on-off :toggle="$contractor->isAvailable()" />
+                <span class="text-capitalize">{{ $contractor->presence_status }}</span>
+            </p>
+
             <address>
                 {{ $contractor->street }}<br>
                 {{ $contractor->city_name }}<br>

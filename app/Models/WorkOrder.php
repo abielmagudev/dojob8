@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\FilteringInterface;
+use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkOrder extends Model implements FilteringInterface
 {
+    use HasExistenceTrait;
     use HasFactory;
     use HasFilteringTrait;
     use HasHookUsersTrait;

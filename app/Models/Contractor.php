@@ -7,6 +7,7 @@ use App\Models\Kernel\HasAddressTrait;
 use App\Models\Kernel\HasContactMeans;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasPresenceStatusTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,7 @@ class Contractor extends Model implements AuthenticatedInterface
     use HasExistenceTrait;
     use HasFactory;
     use HasHookUsersTrait;
+    use HasPresenceStatusTrait;
     use HasWorkOrdersTrait;
     use SoftDeletes;
     
@@ -53,11 +55,6 @@ class Contractor extends Model implements AuthenticatedInterface
     public function setContactNameAttribute($value)
     {
         $this->attributes['contact_name'] = Str::title($value);
-    }
-
-    public function getStatusAttribute()
-    {
-        return $this->isAvailable() ? 'available' : 'not available';
     }
 
 

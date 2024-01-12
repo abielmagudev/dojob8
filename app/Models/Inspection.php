@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\FilteringInterface;
+use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
@@ -11,17 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inspection extends Model implements FilteringInterface
 {
-    use HasFilteringTrait;
+    use HasExistenceTrait;
     use HasFactory;
+    use HasFilteringTrait;
     use HasHookUsersTrait;
     use HasWorkOrdersTrait;
-
-    public static $all_statuses = [
-        'pending',
-        'on hold',
-        'passed',
-        'failed',
-    ];
 
     protected $fillable = [
         'scheduled_date',
@@ -34,6 +29,13 @@ class Inspection extends Model implements FilteringInterface
 
     protected $casts = [
         'scheduled_date' => 'date',
+    ];
+
+    public static $all_statuses = [
+        'pending',
+        'on hold',
+        'passed',
+        'failed',
     ];
 
 
@@ -51,6 +53,7 @@ class Inspection extends Model implements FilteringInterface
         ];
     }
 
+
     // Attributes
 
     public function getScheduledDateInputAttribute()
@@ -62,7 +65,6 @@ class Inspection extends Model implements FilteringInterface
     {
         return $this->scheduled_date ? $this->scheduled_date->format('D d M, Y') : null;
     }
-
 
 
     // Validatiors
@@ -147,7 +149,6 @@ class Inspection extends Model implements FilteringInterface
             'work_order.client',
         ]);
     }
-
 
 
     // Filters

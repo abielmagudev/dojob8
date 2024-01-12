@@ -15,17 +15,9 @@
         @foreach($crews as $crew)
         <tr>
             <td class="text-center" style="width:1%; font-size:1.2rem">
-                @if(! $crew->isActive() )
-                <x-tooltip title="Inactive">
-                    <i class="bi bi-dash-circle"></i>
+                <x-tooltip title="{{ ucfirst($crew->presence_status) }}">
+                    <i class="bi bi-circle-fill" style="color:{{ $crew->isActive() ? $crew->background_color : '#CCCCCC' }}"></i>
                 </x-tooltip>
-                    
-                @else
-                <x-tooltip title="Active">
-                    <i class="bi bi-circle-fill" style="color:{{ $crew->background_color }}"></i>
-                </x-tooltip>
-
-                @endif
             </td>
             <td>{{ $crew->name }}</td>
             <td>

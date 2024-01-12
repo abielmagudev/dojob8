@@ -25,7 +25,7 @@
         @foreach($contractors as $contractor)
         <tr>
             <td>
-                <x-tooltip title="{{ ucfirst($contractor->status) }}">
+                <x-tooltip title="{{ ucfirst($contractor->presence_status) }}">
                     <x-indicator-on-off :toggle="$contractor->isAvailable()" />
                 </x-tooltip>
             </td>

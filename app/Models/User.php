@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasPresenceStatusTrait;
 use App\Models\User\UserProfiler;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use HasExistenceTrait;
     use HasHookUsersTrait;
+    use HasPresenceStatusTrait;
     use SoftDeletes;
 
     const NAME_PATTERN = "/^[a-zA-Z0-9_.]+$/";

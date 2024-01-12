@@ -8,6 +8,7 @@ use App\Models\Kernel\HasContactMeans;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasPresenceStatusTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,6 +20,7 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
     use HasFactory;
     use HasFilteringTrait;
     use HasHookUsersTrait;
+    use HasPresenceStatusTrait;
     use SoftDeletes;
 
     protected $fillable = [

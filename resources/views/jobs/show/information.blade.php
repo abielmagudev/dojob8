@@ -7,7 +7,7 @@
 
     <p>
         <x-indicator-on-off :toggle="$job->isAvailable()" />
-        <span>{{ ucfirst($job->available_text) }}</span>
+        <span>{{ ucfirst($job->presence_status) }}</span>
     </p>
 
     <x-small-title title="Description">

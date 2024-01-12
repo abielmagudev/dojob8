@@ -20,7 +20,7 @@
         @foreach($users as $user)
         <tr>
             <td style="width:1%">
-                <x-tooltip title="{{ ucfirst($user->status) }}">
+                <x-tooltip title="{{ ucfirst($user->presence_status) }}">
                     <x-indicator-on-off :toggle="$user->isActive()" />
                 </x-tooltip>
             </td>

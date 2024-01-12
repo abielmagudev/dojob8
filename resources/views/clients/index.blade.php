@@ -1,19 +1,25 @@
 @extends('application')
 
 @section('header')
-<x-page-title >Clients</x-page-title>
+<x-page-title>Clients</x-page-title>
 @endsection
 
 @section('content')
-<x-card title="">
+<x-card>
     <x-slot name="options">
-        {{ $clients->total() }}
         <a href="{{ route('clients.create') }}" class="btn btn-primary">
             <b>+</b>
         </a>
     </x-slot>
 
-    <x-table class="align-middle">
+    @if( $request->filled('search') )
+    <p>
+        <span class="text-secondary me-1">Search:</span>
+        <em>{{ $request->get('search') }}</em>
+    </p>
+    @endif
+
+    <x-table>
         <x-slot name="thead">
             <tr>
                 <th>Full name</th>
@@ -36,21 +42,19 @@
             </td>
             <td class="text-nowrap text-end">
 
-                @if( $client->hasUnfinishedWorkOrders() )
-                <a href="{{ workOrderUrlGenerator('unfinished', ['client' => $client->id]) }}" class="btn btn-warning">
-                    {{ $client->work_orders_unfinished_count }}
-                </a>
-                @endif
+                @includeWhen($client->hasUnfinishedWorkOrders(), 'work-orders.__.button-unfinished', [
+                    'counter' => $client->work_orders_unfinished_count,
+                    'parameters' => ['client' => $client->id],
+                ])
 
-                @if( $client->hasWorkOrders() )
-                <a href="{{ \App\Models\WorkOrder\WorkOrderUrlGenerator::all(['client' => $client->id]) }}" class="btn btn-primary">
-                    {{ $client->work_orders->count() }}
+                <a href="{{ route('work-orders.create', $client) }}" class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-plus-lg"></i>
                 </a>
-                @endif
 
-                <a href="{{ route('clients.show', $client) }}" class="btn btn-outline-primary">
+                <a href="{{ route('clients.show', $client) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
+                
             </td>
         </tr>
         @endforeach
@@ -58,5 +62,8 @@
 </x-card>
 <br>
 
-<x-pagination-simple-model :collection="$clients" />
+<div class="px-3">
+    <x-pagination-simple-model :collection="$clients" />
+</div>
+<br>
 @endsection

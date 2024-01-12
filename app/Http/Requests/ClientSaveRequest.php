@@ -87,12 +87,15 @@ class ClientSaveRequest extends FormRequest
 
     public function validated()
     {
-        return array_merge(parent::validated(), [
-            'name' => Str::title($this->name),
-            'last_name' => Str::title($this->last_name),
-            'full_name' => sprintf('%s %s', Str::title($this->name), Str::title($this->last_name)),
-            'street' => Str::title($this->street),
-            'city_name' => Str::title($this->city_name),
-        ]);
+        $data = [
+            'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
+            'updated_by' => mt_rand(1, 10),
+        ];
+
+        if( $this->isMethod('POST') ) {
+            $data['created_by'] = mt_rand(1, 10);
+        }
+
+        return array_merge(parent::validated(), $data);
     }
 }

@@ -12,7 +12,7 @@ use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Str;
 class Client extends Model implements FilteringInterface
 {
     use HasAddressTrait;
@@ -48,6 +48,19 @@ class Client extends Model implements FilteringInterface
         return [
             'search' => 'filterBySearch'
         ];
+    }
+
+
+    // Mutators
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = Str::title($value);
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = Str::title($value);
     }
 
 

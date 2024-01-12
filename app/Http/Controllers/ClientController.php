@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientSaveRequest;
 use App\Models\Client;
+use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -17,8 +18,8 @@ class ClientController extends Controller
         ->appends( $request->query() );
 
         return view('clients.index', [
-            'request' => $request,
             'clients' => $clients,
+            'request' => $request,
         ]);
     }
 
@@ -40,7 +41,8 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         return view('clients.show', [
-            'client' => $client->load(['work_orders.job']),
+            'client' => $client,
+            'work_orders' => WorkOrder::with(['job','crew','contractor'])->whereClient($client->id)->get(),
         ]);
     }
 
@@ -59,6 +61,8 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
+        $client->fill(['deleted_by' => mt_rand(1, 10)])->save();
+
         if(! $client->delete() ) {
             return back()->with('danger', 'Error deleting client, try again please');
         }

@@ -5,23 +5,18 @@
         </a>
     </x-slot>
     
-    <small class="text-secondary">Address</small>
-    <address>
-        {{ $client->street }}<br>
-        {{ $client->city_name }}<br>
-        {{ $client->state_name }},
-        {{ $client->country_name }}<br>
-        ZIP {{ $client->zip_code }}<br>
-        District {{ $client->district_code }}
-    </address>
+    <x-small-title title="Address">
+        @include('clients.__.address')
+    </x-small-title>
 
-    <p>
-        <span>{{ $client->phone_number }}</span><br>
-        <span>{{ $client->mobile_number }}</span><br>
-        <span>{{ $client->email }}</span><br>
-    </p>
+    <x-small-title title="Contact">
+        @include('clients.__.contact')
+    </x-small-title>
 
-    <p>{{ $client->notes }}</p>
+    <x-small-title title="Notes">
+        {{ $client->notes }}
+    </x-small-title>
+
 
     <x-custom.content-hook-users :model="$client" />
 </x-card>

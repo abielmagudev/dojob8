@@ -11,16 +11,15 @@
 @section('content')
 <div class="row">
     {{-- Information --}}
-    <div class="col-md">
+    <div class="col-md col-md-6 col-lg-4">
         @include('clients.show.information')
     </div>
 
-    {{-- Summary --}}
-    <div class="col-md">
-        @include('clients.show.summary')
+    {{-- Work orders --}}
+    <div class="col-md col-md-6 col-lg-8">
+        @include('clients.show.work-orders')
     </div>
 </div>
 <br>
 
-@include('clients.show.work-orders')
 @endsection

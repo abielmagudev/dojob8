@@ -35,7 +35,7 @@
         <x-card title="Client" class="h-100">
             @include('clients.__.address')
             <br>
-            {{ $client->contact_data_collection->filter()->implode(', ') }}
+            {{ $client->contact_data->filter()->implode(', ') }}
         </x-card>
     </div>
 </div>

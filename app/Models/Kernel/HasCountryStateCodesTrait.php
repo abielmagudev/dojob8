@@ -3,9 +3,25 @@
 namespace App\Models\Kernel;
 
 use App\Suppliers\CountryManager;
+use Illuminate\Support\Str;
 
 trait HasCountryStateCodesTrait
 {
+    // Mutators
+
+    public function setStateCodeAttribute($value)
+    {
+        $this->attributes['state_code'] = Str::upper($value);
+    }
+
+    public function setCountryCodeAttribute($value)
+    {
+        $this->attributes['country_code'] = Str::upper($value);
+    }
+
+
+    // Attributes
+
     public function getCountryAttribute()
     {
         return ! is_null($this->country_code) ? CountryManager::get($this->country_code) : null;

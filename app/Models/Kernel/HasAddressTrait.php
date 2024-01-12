@@ -2,9 +2,27 @@
 
 namespace App\Models\Kernel;
 
+use Illuminate\Support\Str;
+
 trait HasAddressTrait
 {
     use HasCountryStateCodesTrait;
+
+
+    // Mutators
+
+    public function setStreetAttribute($value)
+    {
+        $this->attributes['street'] = Str::title($value);
+    }
+
+    public function setCityNameAttribute($value)
+    {
+        $this->attributes['city_name'] = Str::title($value);
+    }
+
+
+    // Attributes
 
     public function getAddressDataAttribute()
     {

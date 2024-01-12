@@ -25,7 +25,6 @@ class Job extends Model
     ];
 
 
-
     // Attributes
 
     public function getPreconfiguredRequiredInspectionsArrayAttribute()
@@ -43,7 +42,6 @@ class Job extends Model
     }
 
     
-
     // Validators
     
     public function hasExtensions(): bool
@@ -55,7 +53,6 @@ class Job extends Model
     {
         return (bool) count($this->preconfigured_required_inspections_array);
     }
-
 
 
     // Relationships

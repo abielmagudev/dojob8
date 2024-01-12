@@ -75,7 +75,7 @@ class WorkOrder extends Model implements FilteringInterface
 
     // Interface
 
-    public function inputsAndFilters(): array
+    public function inputFilterSettings(): array
     {
         return [
             'client' => 'filterByClient',
@@ -126,7 +126,6 @@ class WorkOrder extends Model implements FilteringInterface
     {
         return $this->id ? $this->scheduled_date->toDayDateTimeString() : null;
     }
-
 
 
     // Validators
@@ -232,7 +231,6 @@ class WorkOrder extends Model implements FilteringInterface
     }
 
 
-
     // Filters
 
     public function scopeFilterByClient($query, $client_id)
@@ -316,7 +314,6 @@ class WorkOrder extends Model implements FilteringInterface
     }
 
 
-
     // Relations
 
     public function client()
@@ -348,7 +345,6 @@ class WorkOrder extends Model implements FilteringInterface
     {
         return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
     }
-
 
 
     // Statics

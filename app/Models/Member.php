@@ -40,7 +40,7 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
 
     // Interface
 
-    public function inputsAndFilters(): array
+    public function inputFilterSettings(): array
     {
         return [
             'status' => 'filterByStatus',

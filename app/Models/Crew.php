@@ -34,7 +34,6 @@ class Crew extends Model
     ];
 
 
-
     // Attributes
 
     public function getTextColorAttribute()
@@ -69,7 +68,6 @@ class Crew extends Model
     }
 
 
-
     // Validators
 
     public function hasMembers()
@@ -81,7 +79,6 @@ class Crew extends Model
     {
         return in_array($task, $this->tasks_array);
     }
-
 
 
     // Scopes
@@ -102,7 +99,6 @@ class Crew extends Model
     }
 
 
-
     // Relationships
 
     public function inspections()
@@ -114,7 +110,6 @@ class Crew extends Model
     {
         return $this->belongsToMany(Member::class)->using(CrewMember::class);
     }
-
 
 
     // Static

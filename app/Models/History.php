@@ -42,7 +42,7 @@ class History extends Model implements FilteringInterface
     
     // Interface
 
-    public function inputsAndFilters(): array
+    public function inputFilterSettings(): array
     {
         return [
             'from_date' => ['filterCreatedBetween', 'to_date'],
@@ -71,7 +71,6 @@ class History extends Model implements FilteringInterface
     {
         return ! empty($this->link);
     }
-
 
 
     // Scopes
@@ -132,7 +131,6 @@ class History extends Model implements FilteringInterface
     }
 
 
-
     // Filters
 
     public function scopeFilterCreatedBetween($query, string $from_date = null, string $to_date = null)
@@ -176,7 +174,6 @@ class History extends Model implements FilteringInterface
     }
 
 
-
     // Relationships
 
     public function user()
@@ -190,7 +187,6 @@ class History extends Model implements FilteringInterface
     }
 
 
-    
     // Static
 
     public static function getTopicsClassnames()
@@ -212,7 +208,6 @@ class History extends Model implements FilteringInterface
     {
         return self::exitsTopic($topic) ? self::getTopicsClassnames()[$topic] : null;
     }
-
 
 
     // Hooks

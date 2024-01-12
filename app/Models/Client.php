@@ -41,7 +41,7 @@ class Client extends Model implements FilteringInterface
 
     // Interface
 
-    public function inputsAndFilters(): array
+    public function inputFilterSettings(): array
     {
         return [
             'search' => 'filterBySearch'
@@ -76,7 +76,7 @@ class Client extends Model implements FilteringInterface
                      ->orWhere('street', 'like', "%{$value}%")
                      ->orWhere('city_name', 'like', "%{$value}%")
                      ->orWhere('zip_code', 'like', "%{$value}%");
-        }
+    }
 
 
     // Filters

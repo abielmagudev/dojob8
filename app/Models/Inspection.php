@@ -39,7 +39,7 @@ class Inspection extends Model implements FilteringInterface
 
     // Interface
 
-    public function inputsAndFilters(): array
+    public function inputFilterSettings(): array
     {
         return [
             'between_scheduled_date' => 'filterBetweenScheduledDate',

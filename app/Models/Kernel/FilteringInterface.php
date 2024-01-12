@@ -4,5 +4,5 @@ namespace App\Models\Kernel;
 
 interface FilteringInterface
 {
-    public function inputsAndFilters(): array;
+    public function inputFilterSettings(): array;
 }

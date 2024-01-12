@@ -18,7 +18,6 @@ class Inspector extends Model
         'notes',
     ];
 
-
     
     // Attributes
 
@@ -26,7 +25,6 @@ class Inspector extends Model
     {
         return $this->inspections->filter(fn($inspection) => $inspection->hasStatus('on hold'));
     }
-
 
 
     // Validators
@@ -40,7 +38,6 @@ class Inspector extends Model
     {
         return (bool) $this->inspections_on_hold->count();
     }
-
 
 
     // Relationships

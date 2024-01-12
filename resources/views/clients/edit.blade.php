@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Clients' => route('clients.index'),
+    'Clients' => route('clients.index'),
     $client->full_name => route('clients.show', $client),
     'Edit',
 ]" />
@@ -24,6 +24,6 @@
 <br>
 
 <x-custom.modal-confirm-delete route="{{ route('clients.destroy', $client) }}" concept="client">
-    <p>¿Do you want to continue to delete the client <br> <b><?= $client->fullname ?></b>?</p>
+    <p>¿Do you want to continue to delete the client <br> <b><?= $client->full_name ?></b>?</p>
 </x-custom.modal-confirm-delete>
 @endsection

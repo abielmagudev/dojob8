@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Clients' => route('clients.index'),
+    'Clients' => route('clients.index'),
     'Client'
 ]" />
 <x-page-title>{{ $client->full_name  }}</x-page-title>

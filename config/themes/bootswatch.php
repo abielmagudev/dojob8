@@ -5,7 +5,7 @@
 // https://bootswatch.com/{theme}/
 
 return [
-    'theme' => 'zephyr',
+    'theme' => 'bootstrap',
 
     'all' => [
         // ORIGINAL

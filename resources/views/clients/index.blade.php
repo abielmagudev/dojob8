@@ -8,7 +8,7 @@
 <x-card>
     <x-slot name="options">
         <a href="{{ route('clients.create') }}" class="btn btn-primary">
-            <b>+</b>
+            <i class="bi bi-plus-lg"></i>
         </a>
     </x-slot>
 

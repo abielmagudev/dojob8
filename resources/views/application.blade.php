@@ -37,13 +37,13 @@
     @include('application.topbar')
 
     <div class="container-fluid" id="main">
-        @include('application.message')
-
         <header>
             @yield('header')
         </header>
         <br>
-
+        
+        @include('application.message')
+        
         @yield('content')
     </div>
 

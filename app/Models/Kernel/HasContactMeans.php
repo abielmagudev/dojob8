@@ -12,8 +12,8 @@ trait HasContactMeans
     public function getContactDataAttribute()
     {
         return collect([
-            'phone number' => $this->phone_number,
-            'mobile number' => $this->mobile_number,
+            'phone' => $this->phone_number,
+            'mobile' => $this->mobile_number,
             'email' => $this->email,
         ]);
     }

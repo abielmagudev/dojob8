@@ -13,7 +13,7 @@
         <tr>
             <td>{{ $member->full_name }}</td>
             <td>
-                @foreach($member->contact_data_collection->filter() as $key => $value)
+                @foreach($member->contact_data->filter() as $key => $value)
                 <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>
                 <a href="{{ $prefix }}:{{ $value }}" class="mx-1">{{ $value }}</a>
                 @endforeach

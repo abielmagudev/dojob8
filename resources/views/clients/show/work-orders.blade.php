@@ -50,7 +50,10 @@
                 ])
             </td>
             <td>
-                <span class="badge border text-uppercase">{{ $work_order->status }}</span>
+                @include('work-orders.__.status-flag', [
+                    'status' => $work_order->status,
+                    'class' => 'd-block',
+                ])
             </td>
             <td class="text-end">
                 <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">

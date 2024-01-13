@@ -44,7 +44,12 @@
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', ['client' => $work_order->client])
             </td>
-            <td>{{ $work_order->status }}</td>
+            <td>
+                @include('work-orders.__.status-flag', [
+                    'status' => $work_order->status,
+                    'class' => 'd-block',
+                ])
+            </td>
             <td class="text-end">
                 <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>

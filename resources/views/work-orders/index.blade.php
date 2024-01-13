@@ -104,15 +104,11 @@
             </td>
 
             <td class="text-nowrap">
-                @if( $work_order->hasContractor() )
-                <x-tooltip :title="$work_order->contractor->name" class="d-block">
-                    <span class="badge text-bg-light w-100">{{ $work_order->contractor->alias }}</span>
-                </x-tooltip>
-
-                @else
-                <span class="badge bg-light text-secondary w-100">N/A</span>
-                    
-                @endif
+                @includeWhen($work_order->hasContractor(), 'contractors.__.flag', [
+                    'name' => $work_order->contractor->alias ?? '',
+                    'tooltip' => $work_order->contractor->name ?? '',
+                    'class' => 'd-block',
+                ])
             </td>
             
             <td class="text-nowrap">
@@ -126,8 +122,11 @@
                 ])
             </td>
 
-            <td class="text-nowrap text-uppercase">
-                <span class="badge w-100 {{ $work_order->status_color }}">{{ $work_order->status }}</span>
+            <td>
+                @include('work-orders.__.status-flag', [
+                    'status' => $work_order->status,
+                    'class' => 'd-block',
+                ])
             </td>
 
             <td class="text-nowrap text-end">

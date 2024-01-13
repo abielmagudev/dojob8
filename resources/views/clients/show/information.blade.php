@@ -10,13 +10,12 @@
     </x-small-title>
 
     <x-small-title title="Contact">
-        @include('clients.__.contact')
+        <x-custom.information-contact-channels :channels="$client->contact_data->filter()" />
     </x-small-title>
 
     <x-small-title title="Notes">
         {{ $client->notes }}
     </x-small-title>
-
 
     <x-custom.content-hook-users :model="$client" />
 </x-card>

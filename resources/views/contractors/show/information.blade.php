@@ -15,7 +15,7 @@
     </x-small-title>
 
     <x-small-title title="Contact">
-        @include('contractors.__.contact')
+        <x-custom.information-contact-channels :channels="$contractor->contact_data->filter()" />
     </x-small-title>
 
     <x-small-title title="Notes">

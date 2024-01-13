@@ -40,10 +40,9 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
-        return view('clients.show', [
-            'client' => $client,
-            'work_orders' => WorkOrder::with(['job','crew','contractor'])->whereClient($client->id)->get(),
-        ]);
+        $client->work_orders->load(['crew','contractor','job']);
+
+        return view('clients.show')->with('client', $client);
     }
 
     public function edit(Client $client)

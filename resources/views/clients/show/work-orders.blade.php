@@ -7,7 +7,7 @@
         ])
 
         @include('work-orders.__.button-counter-all', [
-            'counter' => $work_orders->count(),
+            'counter' => $client->work_orders->count(),
             'parameters' => ['client' => $client->id],
             'class' => 'btn btn-primary',
         ])
@@ -17,7 +17,7 @@
         </a>
     </x-slot>
 
-    @if( $work_orders->count() )          
+    @if( $client->work_orders->count() )          
     <x-table class="align-middle ">
         @slot('thead')
         <tr>
@@ -30,12 +30,25 @@
         </tr>
         @endslot
 
-        @foreach($work_orders as $work_order)
+        @foreach($client->work_orders->sortByDesc('id') as $work_order)
         <tr>
-            <td>{{ $work_order->scheduled_date_human }}</td>
-            <td>{{ $work_order->job->name }}</td>
-            <td>{{ $work_order->hasContractor() ? $work_order->contractor->name : '' }}</td>
-            <td>{{ $work_order->crew->name }}</td>
+            <td class="text-nowrap">{{ $work_order->scheduled_date_human }}</td>
+            <td class="text-nowrap">{{ $work_order->job->name }}</td>
+            <td class="text-nowrap">
+                @includeWhen($work_order->hasContractor(), 'contractors.__.flag', [
+                    'name' => $work_order->contractor->alias ?? '',
+                    'tooltip' => $work_order->contractor->name ?? '',
+                    'class' => 'd-block',
+                ])
+            </td>
+            <td>
+                @include('crews.__.flag', [
+                    'background_color' => $work_order->crew->background_color,
+                    'text_color' => $work_order->crew->text_color,
+                    'class' => 'd-block',
+                    'name' => $work_order->crew->name,
+                ])
+            </td>
             <td>
                 <span class="badge border text-uppercase">{{ $work_order->status }}</span>
             </td>

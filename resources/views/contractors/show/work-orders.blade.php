@@ -29,7 +29,7 @@
             </tr>
         </x-slot>
 
-        @foreach($contractor->work_orders->take(10) as $work_order)
+        @foreach($contractor->work_orders->sortByDesc('id')->take(10) as $work_order)
         <tr>
             <td class="text-nowrap">{{ $work_order->scheduled_date_human }}</td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>

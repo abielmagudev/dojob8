@@ -30,22 +30,16 @@
                     <x-indicator-on-off :toggle="$contractor->isAvailable()" />
                 </x-tooltip>
             </td>
-            <td>
-                {{ $contractor->name }} - {{ $contractor->alias }}
-            </td>
-            <td>
-                {{ $contractor->contact_name }}
-            </td>
+            <td>{{ $contractor->name }} ({{ $contractor->alias }})</td>
+            <td>{{ $contractor->contact_name }}</td>
             <td>
                 @include('contractors.__.contact-table-cell')
             </td>
             <td class="text-end">
-                @if( $contractor->hasUnfinishedWorkOrders() )                  
-                @include('work-orders.__.button-counter-unfinished', [
+                @includeWhen($contractor->hasUnfinishedWorkOrders(), 'work-orders.__.button-counter-unfinished', [
                     'counter' => $contractor->work_orders_unfinished_count,
                     'parameters' => ['contractor' => $contractor->id],
                 ])
-                @endif
 
                 <a href="{{ route('contractors.show', $contractor) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>

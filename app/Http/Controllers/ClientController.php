@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientSaveRequest;
 use App\Models\Client;
-use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller

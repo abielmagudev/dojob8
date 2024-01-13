@@ -22,9 +22,9 @@
         @slot('thead')
         <tr>
             <th>Scheduled</th>
+            <th>Crew</th>
             <th>Job</th>
             <th>Contractor</th>
-            <th>Crew</th>
             <th>Status</th>
             <th></th>
         </tr>
@@ -32,21 +32,21 @@
 
         @foreach($client->work_orders->sortByDesc('id') as $work_order)
         <tr>
-            <td class="text-nowrap">{{ $work_order->scheduled_date_human }}</td>
-            <td class="text-nowrap">{{ $work_order->job->name }}</td>
-            <td class="text-nowrap">
-                @includeWhen($work_order->hasContractor(), 'contractors.__.flag', [
-                    'name' => $work_order->contractor->alias ?? '',
-                    'tooltip' => $work_order->contractor->name ?? '',
-                    'class' => 'd-block',
-                ])
-            </td>
+            <td class="text-nowrap" style="width:1%">{{ $work_order->scheduled_date_human }}</td>
             <td>
                 @include('crews.__.flag', [
                     'background_color' => $work_order->crew->background_color,
                     'text_color' => $work_order->crew->text_color,
                     'class' => 'd-block',
                     'name' => $work_order->crew->name,
+                ])
+            </td>
+            <td class="text-nowrap">{{ $work_order->job->name }}</td>
+            <td class="text-nowrap">
+                @includeWhen($work_order->hasContractor(), 'contractors.__.flag', [
+                    'name' => $work_order->contractor->alias ?? '',
+                    'tooltip' => $work_order->contractor->name ?? '',
+                    'class' => 'd-block',
                 ])
             </td>
             <td>

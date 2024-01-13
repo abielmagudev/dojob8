@@ -1,4 +1,4 @@
-<?php $config = include( resource_path('views/application/config-menu.blade.php') ) ?>
+<?php $config = include( resource_path('views/application/menu.blade.php') ) ?>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebarMenu" aria-labelledby="offcanvasSidebarMenuLabel">
     <div class="offcanvas-header">

@@ -66,17 +66,17 @@ return [
             'permission' => true,
             'route' => route('clients.index'),
         ],
-        'Inspectors' => [
-            'active' => request()->routeIs('inspectors.*'),
-            'icon' => '<i class="bi bi-eyeglasses"></i>',
-            'permission' => true,
-            'route' => route('inspectors.index'),
-        ],
         'Contractors' => [
             'active' => request()->routeIs('contractors.*'),
             'icon' => '<i class="bi bi-c-circle"></i>',
             'permission' => true,
             'route' => route('contractors.index'),
+        ],
+        'Inspectors' => [
+            'active' => request()->routeIs('inspectors.*'),
+            'icon' => '<i class="bi bi-eyeglasses"></i>',
+            'permission' => true,
+            'route' => route('inspectors.index'),
         ],
     ],
     'Application' => [

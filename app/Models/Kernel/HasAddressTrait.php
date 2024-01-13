@@ -28,7 +28,7 @@ trait HasAddressTrait
     {
         return collect([
             'street' => $this->street,
-            'city_name' => $this->city,
+            'city_name' => $this->city_name,
             'zip_code' => $this->zip_code,
             'district_code' => $this->district_code,   
         ])

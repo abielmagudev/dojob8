@@ -9,9 +9,12 @@
         <button type="button" class="btn-close xbtn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+
         @foreach($config as $header => $menu)
         <div class="mb-3">
-            <small class="text-uppercase text-secondary">{{ $header }}</small>
+
+            <small class="text-uppercase text-secondary fw-light">{{ $header }}</small>
+
             <div class="list-group list-group-flush">
                 @foreach($menu as $title => $item)               
                 <a href="{{ $item['route'] }}" class="list-group-item list-group-item-action rounded border-0 {{ $item['active'] ? 'active' : '' }}">
@@ -20,7 +23,9 @@
                 </a>
                 @endforeach
             </div>
+
         </div>
         @endforeach
+
     </div>
 </div>

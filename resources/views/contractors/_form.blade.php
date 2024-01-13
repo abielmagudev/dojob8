@@ -1,4 +1,5 @@
 @csrf
+
 <x-form-field-horizontal for="nameInput" label="Name">
     <input id="nameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" name="name" value="{{ old('name', $contractor->name) }}" required>
     <x-error name="name" />
@@ -58,16 +59,3 @@
     <textarea id="notesTextarea" class="form-control {{ bsInputInvalid( $errors->has('notes') ) }}" rows="3" name="notes">{{ old('notes', $contractor->notes) }}</textarea>
     <x-error name="notes" />
 </x-form-field-horizontal>
-
-@if( $contractor->id )
-<br>
-<div class="mb-3">
-    <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="availableSwitch" name="available" value="1" {{ isChecked( $contractor->isAvailable() ) }}>
-        <label class="form-check-label" for="availableSwitch">
-            <b>Available.</b>
-            <span>If you deactivate this option, you will not be able to use this intermediary for new orders and all of his user accounts will also be deactivated.</span>
-        </label>
-    </div>
-</div>
-@endif

@@ -8,11 +8,11 @@
 <x-card>
     <x-slot name="options">
         <a href="{{ route('contractors.create') }}" class="btn btn-primary">
-            <b>+</b>
+            <i class="bi bi-plus-lg"></i>
         </a>
     </x-slot>
 
-    <x-table class="align-middle">
+    <x-table>
         <x-slot name="thead">
             <tr>
                 <th></th>
@@ -22,15 +22,16 @@
                 <th></th>
             </tr>
         </x-slot>
+        
         @foreach($contractors as $contractor)
         <tr>
-            <td>
+            <td class="text-center">
                 <x-tooltip title="{{ ucfirst($contractor->presence_status) }}">
                     <x-indicator-on-off :toggle="$contractor->isAvailable()" />
                 </x-tooltip>
             </td>
             <td>
-                {{ $contractor->name }} ({{ $contractor->alias }})
+                {{ $contractor->name }} - {{ $contractor->alias }}
             </td>
             <td>
                 {{ $contractor->contact_name }}
@@ -40,18 +41,13 @@
             </td>
             <td class="text-end">
                 @if( $contractor->hasUnfinishedWorkOrders() )                  
-                <x-tooltip title="Unfinished work orders">
-                    <a href="{{ \App\Models\WorkOrder\WorkOrderUrlGenerator::unfinished(['contractor' => $contractor->id]) }}" class="btn btn-warning">{{ $contractor->work_orders_unfinished_count }}</a>
-                </x-tooltip>
-                @endif
-                
-                @if( $contractor->hasWorkOrders() )
-                <x-tooltip title="Work orders">
-                    <a href="{{ \App\Models\WorkOrder\WorkOrderUrlGenerator::all(['contractor' => $contractor->id]) }}" class="btn btn-primary">{{ $contractor->work_orders->count() }}</a>
-                </x-tooltip>
+                @include('work-orders.__.button-unfinished', [
+                    'counter' => $contractor->work_orders_unfinished_count,
+                    'parameters' => ['contractor' => $contractor->id],
+                ])
                 @endif
 
-                <a href="{{ route('contractors.show', $contractor) }}" class="btn btn-outline-primary">
+                <a href="{{ route('contractors.show', $contractor) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>
@@ -61,5 +57,7 @@
 </x-card>
 <br>
 
-<x-pagination-simple-model :collection="$contractors" />
+<div class="px-3">
+    <x-pagination-simple-model :collection="$contractors" />
+</div>
 @endsection

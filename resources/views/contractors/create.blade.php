@@ -14,7 +14,7 @@
         @include('contractors._form')
         <br>
         <div class="text-end">
-            <button type="submit" class="btn btn-success">Save contractor</button>
+            <button type="submit" class="btn btn-success">Create contractor</button>
             <a href="{{ route('contractors.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>

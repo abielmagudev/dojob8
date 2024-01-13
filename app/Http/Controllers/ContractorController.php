@@ -17,9 +17,7 @@ class ContractorController extends Controller
 
     public function create()
     {
-        return view('contractors.create', [
-            'contractor' => new Contractor,
-        ]);
+        return view('contractors.create')->with('contractor', new Contractor);
     }
 
     public function store(ContractorSaveRequest $request)
@@ -33,16 +31,14 @@ class ContractorController extends Controller
 
     public function show(Contractor $contractor)
     {
-        return view('contractors.show', [
-            'contractor' => $contractor,
-        ]);
+        $contractor->work_orders->load(['job','crew','client']);
+
+        return view('contractors.show')->with('contractor', $contractor);
     }
 
     public function edit(Contractor $contractor)
     {
-        return view('contractors.edit', [
-            'contractor' => $contractor,
-        ]);
+        return view('contractors.edit')->with('contractor', $contractor);
     }
 
     public function update(ContractorSaveRequest $request, Contractor $contractor)

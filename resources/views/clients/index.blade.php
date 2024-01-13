@@ -42,7 +42,7 @@
             </td>
             <td class="text-nowrap text-end">
 
-                @includeWhen($client->hasUnfinishedWorkOrders(), 'work-orders.__.button-unfinished', [
+                @includeWhen($client->hasUnfinishedWorkOrders(), 'work-orders.__.button-counter-unfinished', [
                     'counter' => $client->work_orders_unfinished_count,
                     'parameters' => ['client' => $client->id],
                 ])

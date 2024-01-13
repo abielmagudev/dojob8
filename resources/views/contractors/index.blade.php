@@ -41,7 +41,7 @@
             </td>
             <td class="text-end">
                 @if( $contractor->hasUnfinishedWorkOrders() )                  
-                @include('work-orders.__.button-unfinished', [
+                @include('work-orders.__.button-counter-unfinished', [
                     'counter' => $contractor->work_orders_unfinished_count,
                     'parameters' => ['contractor' => $contractor->id],
                 ])

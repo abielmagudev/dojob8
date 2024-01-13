@@ -3,14 +3,14 @@
 
     <x-slot name="options">
         @if( $contractor->hasUnfinishedWorkOrders() )                  
-        @include('work-orders.__.button-unfinished', [
+        @include('work-orders.__.button-counter-unfinished', [
             'class' => 'btn btn-warning',
             'counter' => $contractor->work_orders_unfinished_count,
             'parameters' => ['contractor' => $contractor->id],
         ])
         @endif
 
-        @include('work-orders.__.button-all', [
+        @include('work-orders.__.button-counter-all', [
             'class' => 'btn btn-primary',
             'counter' => $contractor->work_orders->count(),
             'parameters' => ['contractor' => $contractor->id],

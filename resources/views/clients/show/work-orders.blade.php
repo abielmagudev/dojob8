@@ -1,15 +1,15 @@
 <x-card title="Work orders" class="h-100">
     <x-slot name="options">
-        @includeWhen($client->hasUnfinishedWorkOrders(), 'work-orders.__.button-all', [
+        @includeWhen($client->hasUnfinishedWorkOrders(), 'work-orders.__.button-counter-unfinished', [
             'counter' => $client->work_orders_unfinished_count,
             'parameters' => ['client' => $client->id],
-            'class' => 'btn btn-outline-warning',
+            'class' => 'btn btn-warning',
         ])
 
-        @include('work-orders.__.button-all', [
+        @include('work-orders.__.button-counter-all', [
             'counter' => $work_orders->count(),
             'parameters' => ['client' => $client->id],
-            'class' => 'btn btn-outline-primary',
+            'class' => 'btn btn-primary',
         ])
 
         <a href="{{ route('work-orders.create', $client) }}" class="btn btn-primary">

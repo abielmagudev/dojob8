@@ -37,7 +37,7 @@
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', ['mark' => $request->get('search')])
             </td>
-            <td>
+            <td class="text-nowrap">
                 @include('clients.__.contact-table-cell', ['mark' => $request->get('search')])
             </td>
             <td class="text-nowrap text-end">

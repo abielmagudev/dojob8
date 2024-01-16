@@ -30,12 +30,12 @@
                     <x-indicator-on-off :toggle="$contractor->isAvailable()" />
                 </x-tooltip>
             </td>
-            <td>{{ $contractor->name }} ({{ $contractor->alias }})</td>
-            <td>{{ $contractor->contact_name }}</td>
-            <td>
+            <td class="text-nowrap">{{ $contractor->name }} ({{ $contractor->alias }})</td>
+            <td class="text-nowrap">{{ $contractor->contact_name }}</td>
+            <td class="text-nowrap">
                 @include('contractors.__.contact-table-cell')
             </td>
-            <td class="text-end">
+            <td class="text-nowrap text-end">
                 @includeWhen($contractor->hasUnfinishedWorkOrders(), 'work-orders.__.button-counter-unfinished', [
                     'counter' => $contractor->work_orders_unfinished_count,
                     'parameters' => ['contractor' => $contractor->id],

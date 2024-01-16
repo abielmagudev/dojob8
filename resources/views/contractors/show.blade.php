@@ -9,16 +9,15 @@
 @endsection
 
 @section('content')
-<div class="row">
-    <div class="col-sm">
+<div class="row" class="mb-3">
+    <div class="col-sm mb-3">
         @include('contractors.show.information')
     </div>
 
-    <div class="col-sm">
+    <div class="col-sm mb-3">
         @include('contractors.show.user-accounts')
     </div>
 </div>
-<br>
 
 @include('contractors.show.work-orders')
 @endsection

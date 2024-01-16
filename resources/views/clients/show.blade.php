@@ -11,12 +11,12 @@
 @section('content')
 <div class="row">
     {{-- Information --}}
-    <div class="col-md col-md-6 col-lg-4">
+    <div class="col-md col-md-6 col-lg-4 mb-3">
         @include('clients.show.information')
     </div>
 
     {{-- Work orders --}}
-    <div class="col-md col-md-6 col-lg-8">
+    <div class="col-md col-md-6 col-lg-8 mb-3">
         @include('clients.show.work-orders')
     </div>
 </div>

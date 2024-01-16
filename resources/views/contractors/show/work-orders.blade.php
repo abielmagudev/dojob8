@@ -1,4 +1,4 @@
-<x-card title="Work orders" subtitle="Last 10">
+<x-card title="Work orders" subtitle="Last 10" class="mb-3">
     @if( $contractor->work_orders->count() )
 
     <x-slot name="options">

@@ -1,4 +1,4 @@
-<x-card title="Information">
+<x-card title="Information" class="h-100">
     @slot('options')
     <a href="{{ route('contractors.edit', $contractor) }}" class="btn btn-warning">
         <i class="bi bi-pencil-fill"></i>

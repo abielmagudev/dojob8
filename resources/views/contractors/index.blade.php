@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card>
+<x-card title="{{ $contractors->total() }} contractors">
     <x-slot name="options">
         <a href="{{ route('contractors.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i>

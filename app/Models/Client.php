@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasAddressTrait;
-use App\Models\Kernel\HasContactMeans;
+use App\Models\Kernel\HasContactChannelsTrait;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 class Client extends Model implements FilteringInterface
 {
     use HasAddressTrait;
-    use HasContactMeans;
+    use HasContactChannelsTrait;
     use HasExistenceTrait;
     use HasFactory;
     use HasFilteringTrait;

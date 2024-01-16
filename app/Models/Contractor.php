@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedInterface;
 use App\Models\Kernel\HasAddressTrait;
-use App\Models\Kernel\HasContactMeans;
+use App\Models\Kernel\HasContactChannelsTrait;
 use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasPresenceStatusTrait;
@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 class Contractor extends Model implements AuthenticatedInterface
 {
     use HasAddressTrait;
-    use HasContactMeans;
+    use HasContactChannelsTrait;
     use HasExistenceTrait;
     use HasFactory;
     use HasHookUsersTrait;

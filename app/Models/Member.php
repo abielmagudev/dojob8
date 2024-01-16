@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\AuthenticatedInterface;
 use App\Models\Kernel\FilteringInterface;
-use App\Models\Kernel\HasContactMeans;
+use App\Models\Kernel\HasContactChannelsTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasPresenceStatusTrait;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model implements AuthenticatedInterface, FilteringInterface
 {
-    use HasContactMeans;
+    use HasContactChannelsTrait;
     use HasFactory;
     use HasFilteringTrait;
     use HasHookUsersTrait;

@@ -2,7 +2,7 @@
 
 namespace App\Models\Kernel;
 
-trait HasContactMeans
+trait HasContactChannelsTrait
 {
     public function setEmailAttribute($value)
     {

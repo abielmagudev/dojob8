@@ -10,18 +10,16 @@ class InspectorController extends Controller
 {
     public function index()
     {
-        return view('inspectors.index', [
-            'inspectors' => Inspector::with('inspections')
-                                     ->orderBy('name')
-                                     ->paginate(25),
-        ]);
+        $inspectors = Inspector::with('inspections')
+        ->orderBy('name')
+        ->paginate(25);
+
+        return view('inspectors.index')->with('inspectors', $inspectors);
     }
 
     public function create()
     {
-        return view('inspectors.create', [
-            'inspector' => new Inspector,
-        ]);
+        return view('inspectors.create')->with('inspector', new Inspector);
     }
 
     public function store(InspectorSaveRequest $request)
@@ -35,16 +33,14 @@ class InspectorController extends Controller
 
     public function show(Inspector $inspector)
     {
-        return view('inspectors.show', [
-            'inspector' => $inspector,
-        ]);
+        $inspector->load(['inspections.crew', 'inspections.work_order.client', 'inspections.work_order.job']);
+
+        return view('inspectors.show')->with('inspector', $inspector);
     }
 
     public function edit(Inspector $inspector)
     {
-        return view('inspectors.edit', [
-            'inspector' => $inspector,
-        ]);
+        return view('inspectors.edit')->with('inspector', $inspector);
     }
 
     public function update(InspectorSaveRequest $request, Inspector $inspector)

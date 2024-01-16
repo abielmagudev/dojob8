@@ -8,7 +8,7 @@
 <x-card>
     <x-slot name="options">
     <a href="{{ route('inspectors.create') }}" class="btn btn-primary">
-        <b>+</b>
+        <i class="bi bi-plus-lg"></i>
     </a>
     </x-slot>
 
@@ -26,19 +26,15 @@
             <td>{{ $inspector->name }}</td>
             <td>{{ $inspector->notes }}</td>
             <td class="text-end">
-                @if( $inspector->hasInspectionsOnHold() )
-                <x-tooltip title="Pending inspections">
-                    <a href="{{ inspectionUrlGenerator('pendingOrOnHold', ['inspector' => $inspector->id]) }}" class="btn btn-warning">{{ $inspector->inspections_on_hold->count() }}</a>
+                @if( $inspector->hasPendingOrOnHoldInspections() )
+                <x-tooltip title="Pending & on hold inspections">
+                    <a href="{{ inspectionUrlGenerator('pendingOrOnHold', ['inspector' => $inspector->id]) }}" class="btn btn-warning btn-sm">
+                        {{ $inspector->pending_and_on_hold_inspections->count() }}
+                    </a>
                 </x-tooltip>
                 @endif
                 
-                @if( $inspector->hasInspections() )
-                <x-tooltip title="Inspections">
-                    <a href="{{ inspectionUrlGenerator('all', ['inspector' => $inspector->id]) }}" class="btn btn-primary">{{ $inspector->inspections->count() }}</a>
-                </x-tooltip>                   
-                @endif
-                
-                <a href="{{ route('inspectors.show', $inspector) }}" class="btn btn-outline-primary">
+                <a href="{{ route('inspectors.show', $inspector) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>

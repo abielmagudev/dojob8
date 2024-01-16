@@ -18,14 +18,27 @@ class Inspector extends Model
     protected $fillable = [
         'name',
         'notes',
+        'is_active',
     ];
 
     
     // Attributes
 
-    public function getInspectionsOnHoldAttribute()
+    public function getPendingInspectionsAttribute()
+    {
+        return $this->inspections->filter(fn($inspection) => $inspection->hasStatus('pending'));
+    }
+
+    public function getOnHoldInspectionsAttribute()
     {
         return $this->inspections->filter(fn($inspection) => $inspection->hasStatus('on hold'));
+    }
+
+    public function getPendingAndOnHoldInspectionsAttribute()
+    {
+        return $this->pending_inspections->merge(
+            $this->on_hold_inspections
+        );
     }
 
 
@@ -36,9 +49,19 @@ class Inspector extends Model
         return (bool) $this->inspections && $this->inspections->count();
     }
 
-    public function hasInspectionsOnHold()
+    public function hasPendingInspections()
     {
-        return (bool) $this->inspections_on_hold->count();
+        return (bool) $this->pending_inspections->count();
+    }
+
+    public function hasOnHoldInspections()
+    {
+        return (bool) $this->on_hold_inspections->count();
+    }
+
+    public function hasPendingOrOnHoldInspections()
+    {
+        return $this->hasPendingInspections() || $this->hasOnHoldInspections();
     }
 
 

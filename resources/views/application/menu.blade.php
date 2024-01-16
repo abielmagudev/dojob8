@@ -52,14 +52,8 @@ return [
             'permission' => true,
             'route' => route('extensions.index')
         ],
-        'Users' => [
-            'active' => request()->routeIs('users.*'),
-            'icon' => '<i class="bi bi-person"></i>',
-            'permission' => true,
-            'route' => route('users.index'),
-        ],
     ],
-    'Collaborators' => [
+    'Third parties' => [
         'Clients' => [
             'active' => request()->routeIs('clients.*'),
             'icon' => '<i class="bi bi-book"></i>',
@@ -80,6 +74,12 @@ return [
         ],
     ],
     'Application' => [
+        'Users' => [
+            'active' => request()->routeIs('users.*'),
+            'icon' => '<i class="bi bi-person"></i>',
+            'permission' => true,
+            'route' => route('users.index'),
+        ],
         'History' => [
             'active' => request()->routeIs('history.*'),
             'icon' => '<i class="bi bi-clock-history"></i>',

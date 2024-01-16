@@ -16,8 +16,9 @@
     @endslot
 
     @if( $inspector->hasInspections() )
-    <p>
-        <em>The last 10 inspections</em>
+    <p class="text-secondary">
+        <i class="bi bi-info-circle"></i>
+        <em>Last 10 inspections</em>
     </p>
 
     <x-table>

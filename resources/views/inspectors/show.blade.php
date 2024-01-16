@@ -14,7 +14,7 @@
         @include('inspectors.show.information')
     </div>
     <div class="col-sm col-sm-8 mb-3">
-        @include('inspectors.show.work-orders')
+        @include('inspectors.show.inspections')
     </div>
 </div>
 @endsection

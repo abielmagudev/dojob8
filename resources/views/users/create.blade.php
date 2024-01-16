@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Users' => route('users.index'),
+    'Users' => route('users.index'),
     'Create'
 ]" />
 <x-page-title>{{ $user->name }}</x-page-title>
@@ -13,8 +13,9 @@
     <form action="{{ route('users.store', $request->query()) }}" method="post" autocomplete="off">
         @include('users._form')
         <br>
+        
         <div class="text-end">
-            <button class="btn btn-success" type="submit">Save user</button>
+            <button class="btn btn-success" type="submit">Create user</button>
             <a href="{{ route('users.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>

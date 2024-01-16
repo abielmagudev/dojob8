@@ -2,14 +2,14 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Users' => route('users.index'),
+    'Users' => route('users.index'),
     'User'
 ]" />
 <x-page-title>{{ $user->name }}</x-page-title>
 @endsection
 
 @section('content')
-<x-card title="Information" class="h-100">
+<x-card title="Information">
     <x-slot name="options">
         <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">
             <i class="bi bi-pencil-fill"></i>
@@ -18,15 +18,16 @@
 
     <p>
         <x-indicator-on-off :toggle="$user->isActive()" />
-        <span class="text-uppercase">{{ $user->isActive() ? 'active' : 'inactive' }}</span>
+        <span class="text-capitalize">{{ $user->presence_status }}</span>
     </p>
 
     <x-small-title title="Profile">
         <span class="d-block">{{ $user->profile->authenticated_name }}</span>
+        <span class="text-capitalize text-secondary">{{ $user->profile_alias }}</span>
     </x-small-title>
 
     <x-small-title title="Email">
-        {{ $user->email }}
+        <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
     </x-small-title>
 
     <x-small-title title="Last session">

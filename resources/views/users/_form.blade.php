@@ -1,13 +1,13 @@
 @csrf
 
 <x-form-field-horizontal label="Profile type">
-    <input class="form-control text-capitalize" value="{{ $alias }}" disabled>
+    <input class="form-control text-capitalize" value="{{ $user->profile_alias }}" disabled>
     <x-error name="profile_alias" />
     <x-error name="profile_id" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal label="Profile name">
-    <input class="form-control" value="{{ $profile->authenticated_name }}" disabled>
+    <input class="form-control" value="{{ $user->profile->authenticated_name }}" disabled>
     <x-error name="profile_alias" />
     <x-error name="profile_id" />
 </x-form-field-horizontal>
@@ -44,16 +44,3 @@
     <input id="confirmPasswordInput" type="password" class="form-control {{ bsInputInvalid( $errors->has('confirm_password') ) }}" name="confirm_password" @if( is_null($user->id) ) required @endif>
     <x-error name="confirm_password" />
 </x-form-field-horizontal>
-
-@if( $user->id )
-<br>
-<div class="mb-3">
-    <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="isActiveSwitch" name="is_active" value="1" {{ isChecked( $user->isActive() ) }}>
-        <label class="form-check-label" for="isActiveSwitch">
-            <b>Active.</b>
-            <span>If you deactivate this option, this user will not be able to access our application.</span>
-        </label>
-    </div>
-</div>
-@endif

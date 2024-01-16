@@ -32,7 +32,7 @@ class UserProfiler
     {
         foreach(self::getAliasesProfiles() as $alias => $profile)
         {
-            if( $profile == $profile_parameter) {
+            if( $profile == $profile_parameter ) {
                 return $alias;
             }
         }

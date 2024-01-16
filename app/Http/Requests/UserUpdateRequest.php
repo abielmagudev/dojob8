@@ -52,11 +52,8 @@ class UserUpdateRequest extends FormRequest
 
     public function validated()
     {
-        if( is_null($this->password) )
-        {
-            $validated = collect( parent::validated() );
-
-            return $validated->except('password')->toArray();
+        if( is_null($this->password) ) {
+            return collect( parent::validated() )->except('password')->toArray();
         }
 
         return parent::validated();

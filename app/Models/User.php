@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasExistenceTrait;
+use App\Models\Kernel\FilteringInterface;
+use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasPresenceStatusTrait;
 use App\Models\User\UserProfiler;
@@ -13,12 +14,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilteringInterface
 {
     use HasApiTokens, HasFactory, Notifiable;
-    use HasExistenceTrait;
     use HasHookUsersTrait;
     use HasPresenceStatusTrait;
+    use HasFilteringTrait;
     use SoftDeletes;
 
     const NAME_PATTERN = "/^[a-zA-Z0-9_.]+$/";
@@ -43,16 +44,22 @@ class User extends Authenticatable
     ];
 
 
+    // Interface
+
+    public function inputFilterSettings(): array
+    {
+        return [
+            'status' => 'filterByStatus',
+            'profile' => 'filterByProfile',
+        ];
+    }
+
+
     // Attributes
 
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
-    }
-
-    public function getStatusAttribute()
-    {
-        return $this->isActive() ? 'active' : 'inactive';
     }
 
     public function getProfileAliasAttribute()
@@ -76,6 +83,31 @@ class User extends Authenticatable
     public function isProfileAlias(string $profile_alias)
     {
         return $this->profile_alias == $profile_alias;
+    }
+
+
+    // Scopes
+
+    public function scopeWhereProfileType($query, string $value)
+    {
+        return $query->where('profile_type', $value);
+    }
+
+
+    // Filters
+
+    public function scopeFilterByStatus($query, $value)
+    {
+        return in_array($value, ['0','1']) ? $query->whereActive($value) : $query;
+    }
+
+    public function scopeFilterByProfile($query, $value)
+    {
+        if( empty($value) ||! $profile = UserProfiler::getProfileByAlias($value) ) {
+            return $query;
+        }
+
+        return $query->whereProfileType($profile);
     }
 
 

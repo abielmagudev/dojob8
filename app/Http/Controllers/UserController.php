@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Models\Intermediary;
 use App\Models\Member;
 use App\Models\User;
 use App\Models\User\UserProfiler;
@@ -12,10 +11,17 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $users = User::with('profile')
+        ->filterByInputs( $request->all() )
+        ->orderBy('id', $request->get('sort', 'desc'))
+        ->paginate(25)
+        ->appends( $request->query() );
+
         return view('users.index', [
-            'users' => User::with('profile')->orderBy('id', 'desc')->paginate(25),
+            'users' => $users,
+            'request' => $request,
         ]);
     }
 
@@ -39,23 +45,17 @@ class UserController extends Controller
             return back()->with('danger', 'Error saving user, try again please');
         }
 
-        return redirect()->route('users.index')->with('success', "You saved the user <b>{$user->name}</b>");
+        return redirect()->route('users.index')->with('success', "You created the user <b>{$user->name}</b>");
     }
 
     public function show(User $user)
     {
-        return view('users.show', [
-            'user' => $user,
-        ]);
+        return view('users.show')->with('user', $user);
     }
 
     public function edit(User $user)
     {
-        return view('users.edit', [
-            'user' => $user,
-            'profile' => $user->profile,
-            'alias' => $user->profile_alias,
-        ]);
+        return view('users.edit')->with('user', $user);
     }
 
     public function update(UserUpdateRequest $request, User $user)

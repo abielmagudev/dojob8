@@ -56,5 +56,5 @@
     <x-pagination-simple-model :collection="$members" />
 </div>
 
-@include('members.index.modal-member-filters')
+@include('members.index.modal-filtering')
 @endsection

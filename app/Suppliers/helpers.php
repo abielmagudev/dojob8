@@ -42,7 +42,7 @@ if(! function_exists('marker') )
 {
     function marker(string $needle, string $text)
     {
-        return preg_replace("/({$needle})/i", "<mark>$1</mark>", $text);
+        return preg_replace("/({$needle})/i", "<mark class='px-0'>$1</mark>", $text);
     }
 }
 

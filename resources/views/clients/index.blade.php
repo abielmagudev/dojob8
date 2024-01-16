@@ -14,11 +14,13 @@
 
     @if( $request->filled('search') )
     <p>
-        <span class="text-secondary me-1">Search:</span>
+        <b>{{ $clients->total() }}</b>
+        <span class="text-secondary me-1">found searching for</span>
         <em>{{ $request->get('search') }}</em>
     </p>
     @endif
 
+    @if( $clients->count() )
     <x-table>
         <x-slot name="thead">
             <tr>
@@ -59,6 +61,7 @@
         </tr>
         @endforeach
     </x-table>
+    @endif
 </x-card>
 <br>
 

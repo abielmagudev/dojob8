@@ -34,7 +34,7 @@ class History extends Model implements FilteringInterface
         'inspections' => Inspection::class,
         'inspector' => Inspector::class,
         'jobs' => Job::class,
-        'staff' => Member::class,
+        'members' => Member::class,
         'users' => User::class,
         'work orders' => WorkOrder::class,
     ];

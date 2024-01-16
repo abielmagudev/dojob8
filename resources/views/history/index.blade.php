@@ -13,6 +13,7 @@
     </x-modal-trigger>
     @endslot
 
+    @if( $history->count() )
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
@@ -46,9 +47,13 @@
         </tr>
         @endforeach
     </x-table>
+    @endif
 </x-card>
 <br>
 
-<x-pagination-simple-model :collection="$history" />
-@include('history.index.modal-filters')
+<div class="px-3">
+    <x-pagination-simple-model :collection="$history" />
+</div>
+
+@include('history.index.modal-filtering')
 @endsection

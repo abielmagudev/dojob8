@@ -7,12 +7,12 @@
 
     <p>
         <x-indicator-on-off :toggle="$member->isActive()" />
-        <span class="text-uppercase">{{ $member->active_text }}</span>
+        <span class="text-capitalize">{{ $member->presence_status }}</span>
     </p>
 
-    @if( $member->contact_data_collection->filter()->count() )      
+    @if( $member->contact_data->filter()->count() )      
     <x-small-title title="Contact">
-        @include('members.__.contact')
+        <x-custom.information-contact-channels :channels="$member->contact_data->filter()" />
     </x-small-title>
     @endif
 
@@ -24,6 +24,16 @@
 
     <x-small-title title="Notes">
         <em>{{ $member->notes }}</em>
+    </x-small-title>
+
+    <x-small-title title="Crews">
+        @if( $member->isCrewMember() )
+        @each('crews.__.flag', $member->crews, 'crew')
+
+        @else
+        <p>No, it cannot be in crews</p>
+
+        @endif
     </x-small-title>
 
     <x-custom.information-hook-users :model="$member" />

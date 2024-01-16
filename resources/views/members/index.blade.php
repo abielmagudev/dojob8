@@ -1,32 +1,33 @@
 @extends('application')
 
 @section('header')
-<x-page-title>Staff</x-page-title>
+<x-page-title>Members</x-page-title>
 @endsection
 
 @section('content')
-<x-card>
-    <x-slot name="options">     
+<x-card title="{{ $members->total() }} members {{ count($request->all()) > 0 ? 'filtered' : '' }}">
+    @slot('options')
         <x-modal-trigger modal-id="modalMembersFilters">
             <i class="bi bi-funnel"></i>
         </x-modal-trigger>
 
-        <span>{{ $members->count() }}</span>
         <a href="{{ route('members.create') }}" class="btn btn-primary">
-            <b>+</b>
+            <i class="bi bi-plus-lg"></i>
         </a>
-    </x-slot>
+    @endslot
 
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
                 <th></th>
                 <th>Full name</th>
+                <th>Position</th>
                 <th>Contact</th>
                 <th></th>
             </tr>
         </x-slot>
 
+        @if( $members->count() )
         @foreach($members as $member)
         <tr>
             <td style="width:1%">
@@ -34,22 +35,26 @@
                     <x-indicator-on-off :toggle="$member->isActive()" />
                 </x-tooltip>
             </td>
-            <td>{{ $member->full_name }}</td>
-            <td>
-                @include('members.__.contact-table-cell')
+            <td class="text-nowrap">{{ $member->full_name }}</td>
+            <td class="text-nowrap">{{ $member->position }}</td>
+            <td class="text-nowrap">
+                <x-custom.tooltip-contact-channels :channels="$member->contact_data->filter()" />
             </td>
             <td class="text-end">
-                <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">
+                <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>
         </tr>
         @endforeach
+        @endif
     </x-table>
 </x-card>
 <br>
 
-<x-pagination-simple-model :collection="$members" />
+<div class="px-3">
+    <x-pagination-simple-model :collection="$members" />
+</div>
 
 @include('members.index.modal-member-filters')
 @endsection

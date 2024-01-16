@@ -1,4 +1,5 @@
 @csrf
+
 <x-form-field-horizontal for="nameInput" label="Name">
     <div class="row">
         <div class="col-md mb-3 mb-md-0">
@@ -50,14 +51,3 @@
 
     <x-error name="is_crew_member" />
 </x-form-field-horizontal>
-
-@if( $member->isReal() ) 
-<br>
-<div class="mb-3">
-    <div class="form-check form-switch">
-        <input class="form-check-input" id="isActiveSwitch" type="checkbox" role="switch" name="is_active" value="1" {{ isChecked( old('is_active', $member->is_active) == 1 ) }}>
-        <label class="form-check-label" for="isActiveSwitch"><b>Active.</b> If deactivated, it will not be able to be used in new orders, it will be removed from your crew and your user account will be deactivated.</label>
-    </div>
-    <x-error name="is_active" />
-</div>
-@endif

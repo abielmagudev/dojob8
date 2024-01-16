@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Kernel\AuthenticatedInterface;
 use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasContactMeans;
-use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasPresenceStatusTrait;
@@ -16,7 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Member extends Model implements AuthenticatedInterface, FilteringInterface
 {
     use HasContactMeans;
-    use HasExistenceTrait;
     use HasFactory;
     use HasFilteringTrait;
     use HasHookUsersTrait;
@@ -32,6 +30,7 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
         'mobile_number',
         'email',
         'position',
+        'category',
         'is_active',
         'is_crew_member',
         'notes',
@@ -102,17 +101,17 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
 
     // Scopes
 
-    public function scopeWhereIsCrewMember($query, $value)
+    public function scopeWhereCrewMember($query, $value)
     {
         return $query->where('is_crew_member', $value);
     }
 
-    public function scopeOnlyIsCrewMember($query)
+    public function scopeWhereIsCrewMember($query)
     {
         return $query->where('is_crew_member', true);
     }
 
-    public function scopeOnlyIsNotCrewMember($query)
+    public function scopeWhereIsNotCrewMember($query)
     {
         return $query->where('is_crew_member', false);
     }
@@ -135,7 +134,7 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
             return $query;
         }
 
-        return $query->whereIsCrewMember($value);
+        return $query->whereCrewMember($value);
     }
 
     public function scopeFilterBySortProp($query, $value, $way = null)

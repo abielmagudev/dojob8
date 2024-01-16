@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Staff' => route('members.index'),
+    'Members' => route('members.index'),
     'Create',
 ]" />
 <x-page-title>Members</x-page-title>
@@ -14,7 +14,7 @@
         @include('members._form')
         <br>
         <div class="text-end">
-            <button class="btn btn-success" type="submit">Save member</button>
+            <button class="btn btn-success" type="submit">Create member</button>
             <a href="{{ route('members.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>

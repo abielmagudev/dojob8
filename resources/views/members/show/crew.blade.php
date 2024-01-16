@@ -16,7 +16,7 @@
                 <td>{{ $crew->name }}</td>
                 <td>
                     @foreach($crew->members->except($member->id) as $member_crew)            
-                    <span class="badge text-bg-light">
+                    <span class="badge border">
                         <a href="{{ route('members.show', $member_crew) }}" class="text-decoration-none">{{ $member_crew->full_name }}</a>
                     </span>
                     @endforeach

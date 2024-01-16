@@ -10,19 +10,19 @@ class MemberController extends Controller
 {
     public function index(Request $request)
     {
+        $members = Member::filterByInputs( $request->all() )
+        ->orderBy('id', $request->get('sort', 'desc'))
+        ->paginate(25);
+
         return view('members.index', [
-            'members' => Member::filterByInputs( $request->all() )
-                                ->orderBy('id', $request->get('sort', 'desc'))
-                                ->paginate(25),
+            'members' => $members,
             'request' => $request,
         ]);
     }
 
     public function create()
     {
-        return view('members.create', [
-            'member' => new Member,
-        ]);
+        return view('members.create')->with('member', new Member);
     }
 
     public function store(MemberSaveRequest $request)
@@ -31,21 +31,17 @@ class MemberController extends Controller
             return back()->with('danger', 'Error saving member, try again please');
         }
 
-        return redirect()->route('members.index')->with('success', "You saved the member <b>{$member->full_name}</b>");
+        return redirect()->route('members.index')->with('success', "You created the member <b>{$member->full_name}</b>");
     }
 
     public function show(Member $member)
     {
-        return view('members.show', [
-            'member' => $member->load('crews.members'),
-        ]);
+        return view('members.show')->with('member', $member->load('crews.members'));
     }
 
     public function edit(Member $member)
     {
-        return view('members.edit', [
-            'member' => $member,
-        ]);
+        return view('members.edit')->with('member', $member);
     }
 
     public function update(MemberSaveRequest $request, Member $member)
@@ -54,17 +50,21 @@ class MemberController extends Controller
             return back()->with('danger', 'Error updating member, try again please');
         }
 
-        if( $member->isInactive() ) {
+        if( $member->isInactive() )
+        {
             $member->crews()->detach();
+
             if($users = $member->users) {
                 $users->each(function ($user) {
                     $user->deactivate();
                 });
             }
-        } else {
+        } 
+        else
+        {
             if($users = $member->users) {
                 $users->each(function ($user) {
-                    $user->fill(['is_active' => 1])->save();
+                    $user->activate();
                 });
             }
         }

@@ -9,5 +9,12 @@
 @endsection
 
 @section('content')
-    @include('members.show.information')
+<div class="row">
+    <div class="col-lg col-lg-4 mb-3">
+        @include('members.show.information')
+    </div>
+    <div class="col-lg col-lg-8 mb-3">
+        @include('members.show.crews')
+    </div>
+</div>
 @endsection

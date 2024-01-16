@@ -26,15 +26,5 @@
         <em>{{ $member->notes }}</em>
     </x-small-title>
 
-    <x-small-title title="Crews">
-        @if( $member->isCrewMember() )
-        @each('crews.__.flag', $member->crews, 'crew')
-
-        @else
-        <p>No, it cannot be in crews</p>
-
-        @endif
-    </x-small-title>
-
     <x-custom.information-hook-users :model="$member" />
 </x-card>

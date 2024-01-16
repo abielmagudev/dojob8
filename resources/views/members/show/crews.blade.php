@@ -13,16 +13,18 @@
 
             @foreach($member->crews as $crew)
             <tr>
-                <td>{{ $crew->name }}</td>
                 <td>
-                    @foreach($crew->members->except($member->id) as $member_crew)            
-                    <span class="badge border">
+                    @include('crews.__.flag', ['crew' => $crew])
+                </td>
+                <td>
+                    @foreach($crew->members->except($member->id) as $member_crew)   
+                    <div class="badge border">
                         <a href="{{ route('members.show', $member_crew) }}" class="text-decoration-none">{{ $member_crew->full_name }}</a>
-                    </span>
+                    </div>         
                     @endforeach
                 </td>
                 <td class="text-end">
-                    <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary">
+                    <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary btn-sm">
                         <i class="bi bi-eye-fill"></i>
                     </a>
                 </td>

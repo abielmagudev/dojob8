@@ -42,7 +42,10 @@
             <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td>
                 @if( $inspection->hasCrew() )
-                {{ $inspection->crew->name }}
+                    @include('crews.__.flag', [
+                        'crew' => $inspection->crew,
+                        'class' => 'w-100',
+                    ])
                 @endif
             </td>
             <td class="text-nowrap">

@@ -35,19 +35,19 @@
             <td class="text-nowrap" style="width:1%">{{ $work_order->scheduled_date_human }}</td>
             <td>
                 @include('crews.__.flag', [
-                    'background_color' => $work_order->crew->background_color,
-                    'text_color' => $work_order->crew->text_color,
-                    'class' => 'd-block',
-                    'name' => $work_order->crew->name,
+                    'crew' => $work_order->crew,
+                    'class' => 'w-100'
                 ])
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
             <td class="text-nowrap">
-                @includeWhen($work_order->hasContractor(), 'contractors.__.flag', [
-                    'name' => $work_order->contractor->alias ?? '',
-                    'tooltip' => $work_order->contractor->name ?? '',
+                @if( $work_order->hasContractor() )              
+                @include('contractors.__.flag', [
+                    'name' => $work_order->contractor->alias,
+                    'tooltip' => $work_order->contractor->name,
                     'class' => 'd-block',
                 ])
+                @endif
             </td>
             <td>
                 @include('work-orders.__.status-flag', [

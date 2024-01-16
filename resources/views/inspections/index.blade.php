@@ -62,7 +62,10 @@
             <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
                 @if( $inspection->hasCrew() )
-                <span class="badge" style="background-color:{{ $inspection->crew->background_color }};color: {{ $inspection->crew->text_color }}">{{ $inspection->crew->name }}</span>
+                    @include('crews.__.flag', [
+                        'crew' => $inspection->crew,
+                        'class' => 'w-100',
+                    ])
                 @endif
             </td>
             <td class="text-nowrap">

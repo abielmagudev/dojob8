@@ -1,7 +1,7 @@
-<x-card title="Work orders" subtitle="Last 10" class="mb-3">
+<x-card title="Work orders" class="mb-3">
     @if( $contractor->work_orders->count() )
 
-    <x-slot name="options">
+    @slot('options')
         @if( $contractor->hasUnfinishedWorkOrders() )                  
         @include('work-orders.__.button-counter-unfinished', [
             'class' => 'btn btn-warning',
@@ -15,8 +15,13 @@
             'counter' => $contractor->work_orders->count(),
             'parameters' => ['contractor' => $contractor->id],
         ])
-    </x-slot>
+    @endslot
 
+    @if( $contractor->hasWorkOrders() )
+    <p class="text-secondary">
+        <i class="bi bi-info-circle"></i>
+        <em>Last 10 work orders</em>
+    </p>
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
@@ -34,10 +39,8 @@
             <td class="text-nowrap" style="width:1%">{{ $work_order->scheduled_date_human }}</td>
             <td>
                 @include('crews.__.flag', [
-                    'name' => $work_order->crew->name,
-                    'background_color' => $work_order->crew->background_color,
-                    'text_color' => $work_order->crew->text_color,
-                    'class' => 'd-block',
+                    'crew' => $work_order->crew,
+                    'class' => 'w-100',
                 ])
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
@@ -58,6 +61,7 @@
         </tr>
         @endforeach
     </x-table>
+    @endif
 
     @endif
 </x-card>

@@ -95,12 +95,10 @@
             </td>
 
             <td class="text-nowrap">
-                <span 
-                    class="badge w-100" 
-                    style="background-color:{{ $work_order->crew->background_color }};color:{{ $work_order->crew->text_color }}"
-                >
-                    {{ $work_order->crew->name }}
-                </span>
+                @include('crews.__.flag', [
+                    'crew' => $work_order->crew,
+                    'class' => 'w-100',
+                ])
             </td>
 
             <td class="text-nowrap">

@@ -26,5 +26,5 @@
         <em>{{ $member->notes }}</em>
     </x-small-title>
 
-    <x-custom.content-hook-users :model="$member" />
+    <x-custom.information-hook-users :model="$member" />
 </x-card>

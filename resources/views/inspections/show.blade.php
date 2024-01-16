@@ -40,7 +40,7 @@
                 {{ $inspection->observations }}
             </x-small-title>
 
-            <x-custom.content-hook-users :model="$inspection" />
+            <x-custom.information-hook-users :model="$inspection" />
         </x-card>
     </div>
 

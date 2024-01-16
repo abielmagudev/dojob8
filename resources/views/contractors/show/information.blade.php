@@ -22,5 +22,5 @@
         {{ $contractor->notes }}
     </x-small-title>
 
-    <x-custom.content-hook-users :model="$contractor" />
+    <x-custom.information-hook-users :model="$contractor" />
 </x-card>

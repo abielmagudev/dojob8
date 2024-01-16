@@ -26,5 +26,5 @@
         {{ $work_order->notes }}
     </x-small-title>
 
-    <x-custom.content-hook-users :model="$work_order" />
+    <x-custom.information-hook-users :model="$work_order" />
 </x-card>

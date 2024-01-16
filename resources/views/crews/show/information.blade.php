@@ -18,5 +18,5 @@
         {{ $crew->description }}
     </p>
 
-    <x-custom.content-hook-users :model="$crew" />
+    <x-custom.information-hook-users :model="$crew" />
 </x-card>

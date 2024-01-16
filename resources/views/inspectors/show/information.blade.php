@@ -9,5 +9,5 @@
         {{ $inspector->notes }}
     </x-small-title>
 
-    <x-custom.content-hook-users :model="$inspector" />
+    <x-custom.information-hook-users :model="$inspector" />
 </x-card>

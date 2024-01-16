@@ -18,5 +18,5 @@
         {{ $job->requireInspections() ? 'Yes' : 'No' }}
     </x-small-title>
     
-    <x-custom.content-hook-users :model="$job" />
+    <x-custom.information-hook-users :model="$job" />
 </x-card>

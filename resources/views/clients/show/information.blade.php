@@ -17,5 +17,5 @@
         {{ $client->notes }}
     </x-small-title>
 
-    <x-custom.content-hook-users :model="$client" />
+    <x-custom.information-hook-users :model="$client" />
 </x-card>

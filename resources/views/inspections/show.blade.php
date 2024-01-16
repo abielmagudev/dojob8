@@ -21,7 +21,9 @@
             @endslot
             
             <p>
-                @include('inspections.__.status_color', ['status' => $inspection->status])
+                @include('inspections.__.status-flag', [
+                    'status' => $inspection->status,
+                ])
             </p>      
         
             <x-small-title title="Scheduled">

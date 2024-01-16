@@ -37,7 +37,10 @@
         @foreach($inspector->inspections->take(10) as $inspection)
         <tr>
             <td style="width:1%">
-                @include('inspections.__.status_color', ['status' => $inspection->status])
+                @include('inspections.__.status-flag', [
+                    'status' => $inspection->status,
+                    'class' => 'w-100',
+                ])
             </td>
             <td class="text-nowrap">{{ $inspection->scheduled_date_human }}</td>
             <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
@@ -53,7 +56,7 @@
                 @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])
             </td>
             <td>
-                <a href="{{ route('work-orders.show', $inspection->work_order_id) }}">{{ $inspection->work_order_id }}</a>
+                <a href="{{ route('work-orders.show', $inspection->work_order_id) }}">#{{ $inspection->work_order_id }}</a>
             </td>
             <td class="text-end">
                 <a href="{{ route('inspections.show', $inspection) }}" class="btn btn-outline-primary btn-sm">

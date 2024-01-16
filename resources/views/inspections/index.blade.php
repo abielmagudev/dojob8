@@ -55,7 +55,10 @@
         @foreach($inspections as $inspection)
         <tr>
             <td style="width:1%">
-                @include('inspections.__.status_color', ['status' => $inspection->status])
+                @include('inspections.__.status-flag', [
+                    'status' => $inspection->status,
+                    'class' => 'w-100',
+                ])
             </td>
             <td class="text-nowrap">{{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}</td>
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>

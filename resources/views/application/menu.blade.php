@@ -53,7 +53,7 @@ return [
             'route' => route('extensions.index')
         ],
     ],
-    'Third parties' => [
+    'Participants' => [
         'Clients' => [
             'active' => request()->routeIs('clients.*'),
             'icon' => '<i class="bi bi-book"></i>',

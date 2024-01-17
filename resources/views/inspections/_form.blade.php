@@ -1,6 +1,6 @@
 @csrf
 
-<x-form-field-horizontal for="scheduledDateInput" label="Schedule" label-class="form-label-optional">
+<x-form-field-horizontal for="scheduledDateInput" label="Schedule">
     <input id="scheduledDateInput" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" type="date" name="scheduled_date" value="{{ old('scheduled_date', $inspection->scheduled_date_input) }}">
     <x-error name="scheduled_date" />
 </x-form-field-horizontal>
@@ -19,7 +19,7 @@
     <x-error name="observations" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal for="crewSelect" label="Crew" label-class="form-label-optional">
+<x-form-field-horizontal for="crewSelect" label="Crew">
     <div>
         <select id="crewSelect" class="form-select {{ bsInputInvalid( $errors->has('crew') ) }}" name="crew">
             <option disabeld selected label="None"></option>

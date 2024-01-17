@@ -22,10 +22,12 @@ class InspectionFactory extends Factory
         return [
             'scheduled_date' => $attributes['scheduled_date'],
             'observations' => $this->faker->optional()->sentences(3, true),
-            'status' => Inspection::validateIsPendingStatus($attributes) ? 'pending' : $this->faker->randomElement( Inspection::getFormStatuses()->toArray() ),
             'work_order_id' => $this->faker->numberBetween(1, 500),
             'inspector_id' => $this->faker->numberBetween(1, 3),
             'crew_id' => $attributes['crew_id'],
+            'status' => ! Inspection::validateIsPendingStatus($attributes) 
+                        ? $this->faker->randomElement( Inspection::getAllStatusForm()->toArray() )
+                        : 'pending',
         ];
     }
 }

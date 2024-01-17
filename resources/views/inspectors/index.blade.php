@@ -44,5 +44,7 @@
 </x-card>
 <br>
 
-<x-pagination-simple-model :collection="$inspectors" />
+<div class="px-3">
+    <x-pagination-simple-model :collection="$inspectors" />
+</div>
 @endsection

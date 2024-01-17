@@ -49,5 +49,7 @@
     </x-table>
 </x-card>
 <br>
-<x-pagination-simple-model :collection="$jobs" />
+<div class="px-3">
+    <x-pagination-simple-model :collection="$jobs" />
+</div>
 @endsection

@@ -18,9 +18,9 @@
 
     {{-- Center --}}
     <div class="d-none d-md-inline-block">
-      <form action="{{ route('clients.index') }}" method="get" autocomplete="off">
-        <input class="form-control rounded-pill bg-transparent text-center" type="search" name="search" id="searchClientInput" placeholder="Search client..." style="width:320px">
-      </form>
+      @include('clients.__.form-search', [
+        'style' => 'width:320px',
+      ])
     </div>
 
     {{-- Right --}}

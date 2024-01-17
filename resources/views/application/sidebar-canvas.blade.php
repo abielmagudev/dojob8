@@ -9,7 +9,10 @@
         <button type="button" class="btn-close xbtn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-
+        <div class="d-block d-md-none mb-3">
+            @include('clients.__.form-search')
+        </div>
+        
         @foreach($config as $header => $menu)
         <div class="mb-3">
 

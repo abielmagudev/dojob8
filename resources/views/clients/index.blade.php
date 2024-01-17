@@ -14,9 +14,8 @@
 
     @if( $request->filled('search') )
     <p>
-        <b>{{ $clients->total() }}</b>
-        <span class="text-secondary me-1">found searching for</span>
-        <em>{{ $request->get('search') }}</em>
+        <span class="text-secondary">Searching with...</span>
+        <em class="ms-1">{{ $request->get('search') }}</em>
     </p>
     @endif
 

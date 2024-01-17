@@ -22,6 +22,8 @@ class CreateWorkOrdersTable extends Migration
             $table->foreignId('contractor_id')->nullable();
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('job_id');
+            $table->foreignId('rework_id')->nullable();
+            $table->foreignId('warranty_id')->nullable();
             $table->dateTime('working_at')->nullable();
             $table->dateTime('done_at')->nullable();
             $table->dateTime('completed_at')->nullable();

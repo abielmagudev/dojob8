@@ -28,6 +28,7 @@ class WorkOrder extends Model implements FilteringInterface
         'contractor_id',
         'crew_id',
         'job_id',
+        'rework_id',
         'working_at',
         'done_at',
         'completed_at',
@@ -215,6 +216,16 @@ class WorkOrder extends Model implements FilteringInterface
     public function members()
     {
         return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
+    }
+
+    public function reworks()
+    {
+        return $this->hasMany(self::class, 'rework_id');
+    }
+
+    public function warranties()
+    {
+        return $this->hasMany(self::class, 'warranty_id');
     }
 
 

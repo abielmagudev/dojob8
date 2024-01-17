@@ -89,6 +89,10 @@
             
             <td class="text-nowrap">
                 {{ $work_order->job->name }}
+
+                @if( mt_rand(0,1) )
+                <em>({{ mt_rand(0, 1) ? 'Rework' : 'Warranty' }})</em>
+                @endif
             </td>
 
             <td class="text-nowrap">

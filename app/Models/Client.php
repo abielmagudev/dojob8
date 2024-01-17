@@ -78,6 +78,14 @@ class Client extends Model implements FilteringInterface
     }
 
 
+    // Validators
+
+    public function hasDistrictCode()
+    {
+        return ! is_null($this->district_code);
+    }
+
+    
     // Scopes
 
     public function scopeSearch($query, $value)

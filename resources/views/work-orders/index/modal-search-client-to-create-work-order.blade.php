@@ -2,8 +2,7 @@
     
     {{-- Input --}}
     <form action="#!" autocomplete="off">
-        <label for="inputSearchClient" class="form-label">Search client</label>
-        <input id="inputSearchClient" class="form-control rounded-pill px-3" type="search" name="client" placeholder="By full name, address, phone..." required>
+        <input id="inputSearchClient" class="form-control rounded-pill px-3" type="search" name="client" placeholder="By full name, address, phone..." minlength="3" required>
     </form>
 
     {{-- List wrapper --}}
@@ -26,8 +25,8 @@
     </div>
 
     {{-- New client --}}
-    <div class="mt-2 text-end">
-        <span class="text-secondary">...or</span>
+    <div class="mt-2 text-center">
+        <span class="text-secondary">Search client or</span> 
         <a href="{{ route('clients.create') }}">create new client</a>
     </div>
 </x-modal>

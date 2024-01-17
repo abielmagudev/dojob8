@@ -1,4 +1,4 @@
-<x-modal id="historyFilterModal" title="History filters" footer-close>
+<x-modal id="historyFilterModal" title="History filters" header-close footer-close>
 
     <form action="{{ route('history.index') }}" method="get" autocomplete="off" id="formFilterHistory">
         @include('components.custom.input-between-dates')

@@ -7,6 +7,6 @@
     </form>
 
     @slot('footer')
-    <button class="btn btn-success" type="submit" form="formMemberFilters">Set filters on members</button>
+    <button class="btn btn-success" type="submit" form="formMemberFilters" name="fltr" value="on">Set filters on Members</button>
     @endslot
 </x-modal>

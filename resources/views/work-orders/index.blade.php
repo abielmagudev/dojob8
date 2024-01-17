@@ -92,10 +92,7 @@
             </td>
 
             <td class="text-nowrap">
-                @include('clients.__.address-table-cell', [
-                    'client' => $work_order->client,
-                ])
-                @include('clients.__.contact-table-cell', [
+                @include('clients.__.information-table-cell', [
                     'client' => $work_order->client,
                 ])
             </td>

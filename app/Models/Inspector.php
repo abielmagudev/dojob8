@@ -24,12 +24,12 @@ class Inspector extends Model
 
     public function getPendingInspectionsAttribute()
     {
-        return $this->inspections->filter(fn($inspection) => $inspection->hasStatus('pending'));
+        return $this->inspections->filter(fn($inspection) => $inspection->isStatus('pending'));
     }
 
     public function getOnHoldInspectionsAttribute()
     {
-        return $this->inspections->filter(fn($inspection) => $inspection->hasStatus('on hold'));
+        return $this->inspections->filter(fn($inspection) => $inspection->isStatus('on hold'));
     }
 
     public function getPendingAndOnHoldInspectionsAttribute()

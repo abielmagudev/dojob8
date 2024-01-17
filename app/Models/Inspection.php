@@ -7,7 +7,7 @@ use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasScheduledDateTrait;
 use App\Models\Kernel\HasStatusTrait;
-use App\Models\WorkOrder\HasWorkOrdersTrait;
+use App\Models\WorkOrder\BelongWorkOrderTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +18,7 @@ class Inspection extends Model implements FilteringInterface
     use HasHookUsersTrait;
     use HasScheduledDateTrait;
     use HasStatusTrait;
-    use HasWorkOrdersTrait;
+    use BelongWorkOrderTrait;
 
     protected $fillable = [
         'scheduled_date',
@@ -33,11 +33,18 @@ class Inspection extends Model implements FilteringInterface
         'scheduled_date' => 'date',
     ];
 
-    public static $all_status = [
+    public static $all_statuses = [
         'pending',
         'on hold',
         'passed',
         'failed',
+    ];
+
+    public static $attributes_for_pending_statuses = [
+        'crew',
+        'crew_id',
+        'scheduled',
+        'scheduled_date',
     ];
 
     
@@ -123,21 +130,21 @@ class Inspection extends Model implements FilteringInterface
 
     // Statics
 
-    public static function getAllStatus()
+    public static function getAllStatuses()
     {
-        return collect( self::$all_status );
+        return collect( self::$all_statuses );
     }
 
-    public static function getAllStatusForm()
+    public static function getAllStatusesForm()
     {
-        return self::getAllStatus()->reject(fn($status) => $status == 'pending');
+        return self::getAllStatuses()->reject(fn($status) => $status == 'pending');
     }
 
     public static function validateIsPendingStatus(array $values)
     {
         return ! empty( 
             array_filter($values, function ($value, $key) {
-                return in_array($key, ['crew', 'crew_id', 'scheduled_date']) && empty($value);
+                return in_array($key, self::$attributes_for_pending_statuses) && empty($value);
             }, ARRAY_FILTER_USE_BOTH)
         );
     }

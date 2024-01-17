@@ -42,7 +42,7 @@ class InspectionStoreRequest extends FormRequest
             ],
             'status' => [
                 'required',
-                sprintf('in:%s', Inspection::getAllStatus()->implode(',')),
+                sprintf('in:%s', Inspection::getAllStatuses()->implode(',')),
             ],
         ];
     }

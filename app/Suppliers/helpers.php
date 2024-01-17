@@ -57,10 +57,10 @@ if(! function_exists('urlGeneratorWorkOrders') )
     }
 }
 
-if(! function_exists('inspectionUrlGenerator') )
+if(! function_exists('urlGeneratorInspection') )
 {
-    function inspectionUrlGenerator(string $method, array $parameters = [])
+    function urlGeneratorInspection(string $method, array $parameters = [])
     {
-        return call_user_func([App\Models\Inspection\InspectionUrlGenerator::class, $method], $parameters);
+        return call_user_func([App\Models\Inspection\UrlGeneratorInspection::class, $method], $parameters);
     }
 }

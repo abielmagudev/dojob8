@@ -37,7 +37,7 @@
         <option value="pending" selected>Pending</option>
         @endif
 
-        @foreach($all_status_form as $status)
+        @foreach($all_statuses_form as $status)
         <option value="{{ $status }}" {{ isSelected( ($status === $inspection->status) ) }}>{{ ucfirst($status) }}</option>
         @endforeach
     </select>

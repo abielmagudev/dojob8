@@ -1,18 +1,18 @@
 <x-card title="Inspections">
     @slot('options')
         @if( $inspector->hasPendingOrOnHoldInspections() )
-        <x-tooltip title="Pending & on hold inspections">
-            <a href="{{ inspectionUrlGenerator('pendingOrOnHold', ['inspector' => $inspector->id]) }}" class="btn btn-warning">
-                {{ $inspector->pending_and_on_hold_inspections->count() }}
-            </a>
-        </x-tooltip>
+        @include('inspections.__.button-counter-pending-on-hold', [
+            'class' => 'btn btn-warning',
+            'counter' => $inspector->pending_and_on_hold_inspections->count(),
+            'parameters' => ['inspector' => $inspector->id],
+        ])
         @endif
 
-        <x-tooltip title="All inspections">
-            <a href="{{ inspectionUrlGenerator('all', ['inspector' => $inspector->id]) }}" class="btn btn-primary">
-                {{ $inspector->inspections->count() }}
-            </a>
-        </x-tooltip>
+        @include('inspections.__.button-counter-all', [
+            'class' => 'btn btn-primary',
+            'counter' => $inspector->inspections->count(),
+            'parameters' => ['inspector' => $inspector->id],          
+        ])
     @endslot
 
     @if( $inspector->hasInspections() )

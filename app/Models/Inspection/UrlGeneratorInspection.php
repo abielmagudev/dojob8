@@ -2,7 +2,7 @@
 
 namespace App\Models\Inspection;
 
-class InspectionUrlGenerator
+class UrlGeneratorInspection
 {
     public static function all(array $parameters = [])
     {
@@ -25,10 +25,10 @@ class InspectionUrlGenerator
         ]));
     }
 
-    public static function pendingOrOnHold(array $parameters = [])
+    public static function pendingAndOnHold(array $parameters = [])
     {
         return route('inspections.index', array_merge($parameters, [
-            'status_group' => ['pending','on hold']
+            'status_group' => ['pending', 'on hold']
         ]));
     }
 }

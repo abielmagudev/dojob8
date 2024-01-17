@@ -25,7 +25,7 @@
             <a class="dropdown-item" href="{{ $on_hold_inspections['url'] }}">
                 <i class="bi bi-alarm"></i>
                 <span class=" mx-1">On hold</span>
-                <span class="badge text-bg-warning">{{ $on_hold_inspections['count'] }}</span>
+                <span class="badge text-bg-primary">{{ $on_hold_inspections['count'] }}</span>
             </a>
         </li>
         <li>

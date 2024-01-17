@@ -6,6 +6,7 @@ use App\Http\Requests\InspectionStoreRequest;
 use App\Http\Requests\InspectionUpdateRequest;
 use App\Models\Crew;
 use App\Models\Inspection;
+use App\Models\Inspection\UrlGeneratorInspection;
 use App\Models\Inspector;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
@@ -33,11 +34,11 @@ class InspectionController extends Controller
             'request' => $request,
             'pending_inspections' => [
                 'count' => Inspection::whereStatus('pending')->get()->count(),
-                'url' => route('inspections.index', ['status' => 'pending', 'sort' => 'asc']),
+                'url' => UrlGeneratorInspection::pending(),
             ],
             'on_hold_inspections' => [
                 'count' => Inspection::whereStatus('on hold')->get()->count(),
-                'url' => route('inspections.index', ['status' => 'on hold', 'sort' => 'asc']),
+                'url' => UrlGeneratorInspection::onHold(),
             ],
         ]);
     }
@@ -45,7 +46,7 @@ class InspectionController extends Controller
     public function create(WorkOrder $work_order)
     {
         return view('inspections.create', [
-            'all_status_form' => Inspection::getAllStatusForm(),
+            'all_statuses_form' => Inspection::getAllStatusesForm(),
             'crews' => Crew::forInspections()->active()->get(),
             'inspection' => new Inspection,
             'inspectors' => Inspector::all(),
@@ -56,7 +57,7 @@ class InspectionController extends Controller
     public function store(InspectionStoreRequest $request)
     {
         if(! $inspection = Inspection::create( $request->validated() ) ) {
-            return back()->with('danger', 'Error saving inspection, try again please');
+            return back()->with('danger', 'Error creating inspection, try again please');
         }
 
         return redirect()->route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])->with('success', "You created inspection <b>{$inspection->id}</b>");
@@ -72,7 +73,7 @@ class InspectionController extends Controller
     public function edit(Request $request, Inspection $inspection)
     {
         return view('inspections.edit', [
-            'all_status_form' => Inspection::getAllStatusForm(),
+            'all_statuses_form' => Inspection::getAllStatusesForm(),
             'crews' => Crew::forInspections()->active()->get(),
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),

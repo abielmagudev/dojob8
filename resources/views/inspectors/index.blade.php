@@ -27,11 +27,10 @@
             <td>{{ $inspector->notes }}</td>
             <td class="text-end">
                 @if( $inspector->hasPendingOrOnHoldInspections() )
-                <x-tooltip title="Pending & on hold inspections">
-                    <a href="{{ inspectionUrlGenerator('pendingOrOnHold', ['inspector' => $inspector->id]) }}" class="btn btn-warning btn-sm">
-                        {{ $inspector->pending_and_on_hold_inspections->count() }}
-                    </a>
-                </x-tooltip>
+                @include('inspections.__.button-counter-pending-on-hold', [
+                    'counter' => $inspector->pending_and_on_hold_inspections->count(),
+                    'parameters' => ['inspector' => $inspector->id],
+                ])
                 @endif
                 
                 <a href="{{ route('inspectors.show', $inspector) }}" class="btn btn-outline-primary btn-sm">

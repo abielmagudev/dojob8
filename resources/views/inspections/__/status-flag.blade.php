@@ -3,14 +3,14 @@
         'class' => 'text-bg-danger',
     ],
     'on hold' => [
-        'class' => 'text-bg-secondary',
+        'class' => 'text-bg-primary',
     ],
     'passed' => [
         'class' => 'text-bg-success',
     ],
     'pending' => [
-        'class' => 'text-white animate__animated animate__tada animate__infinite',
-        'style' => 'background-color:#f15025', // Orange: f15025, Purple: 712f79
+        'class' => 'text-bg-warning animate__animated animate__tada animate__infinite',
+        // 'style' => 'background-color:#f15025', // Orange: f15025, Purple: 712f79
     ],
 ] ?>
 <span 

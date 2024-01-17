@@ -38,6 +38,7 @@ class InspectionUpdateRequest extends FormRequest
                 'string',
             ],
             'status' => [
+                'required',
                 sprintf('in:%s', Inspection::getAllStatuses()->implode(',')),
             ],
         ];
@@ -45,16 +46,19 @@ class InspectionUpdateRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if(! Inspection::validateIsPendingStatus( $this->only(['scheduled_date', 'crew']) ) )
-        {
-            $this->merge([
-                'status' => $this->get('status') <> 'pending' ? $this->get('status') : 'on hold',
-            ]);
-        }
-        else
+        if( Inspection::validateIsPendingStatus( $this->only(['scheduled_date', 'crew']) ) )
         {
             $this->merge([
                 'status' => 'pending',
+            ]);
+
+            return; // Stop "prepareForValidation()"
+        }
+
+        if( $this->get('status') == 'pending' )
+        {
+            $this->merge([
+                'status' => 'on hold',
             ]);
         }
     }

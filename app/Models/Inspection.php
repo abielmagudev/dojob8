@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Kernel\FilteringInterface;
-use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inspection extends Model implements FilteringInterface
 {
-    use HasExistenceTrait;
     use HasFactory;
     use HasFilteringTrait;
     use HasHookUsersTrait;
@@ -22,9 +20,9 @@ class Inspection extends Model implements FilteringInterface
         'scheduled_date',
         'observations',
         'status',
-        'crew_id',
-        'inspector_id',
         'work_order_id',
+        'inspector_id',
+        'crew_id',
     ];
 
     protected $casts = [
@@ -87,8 +85,8 @@ class Inspection extends Model implements FilteringInterface
     public function isPendingStatus()
     {
         return self::validateIsPendingStatus([
-            $this->getRawOriginal('scheduled_date'),
-            $this->crew_id,
+            'scheduled_date' => $this->getRawOriginal('scheduled_date'),
+            'crew_id' => $this->crew_id,
         ]);
     }
 
@@ -196,7 +194,6 @@ class Inspection extends Model implements FilteringInterface
     }
 
 
-
     // Relationships
 
     public function crew()
@@ -208,12 +205,6 @@ class Inspection extends Model implements FilteringInterface
     {
         return $this->belongsTo(Inspector::class);
     }
-
-    public function work_order()
-    {
-        return $this->belongsTo(WorkOrder::class);
-    }
-
 
 
     // Statics
@@ -230,8 +221,10 @@ class Inspection extends Model implements FilteringInterface
 
     public static function validateIsPendingStatus(array $values)
     {
-        $empty_values = array_filter($values, fn($value) => empty($value));
-
-        return count($empty_values) > 0;
+        return ! empty( 
+            array_filter($values, function ($value, $key) {
+                return in_array($key, ['crew', 'crew_id', 'scheduled_date']) && empty($value);
+            }, ARRAY_FILTER_USE_BOTH)
+        );
     }
 }

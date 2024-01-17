@@ -1,9 +1,21 @@
 <?php $settings = [
-    'failed' => 'text-bg-danger',
-    'on hold' => 'text-bg-primary',
-    'passed' => 'text-bg-success',
-    'pending' => 'bg-warning text-danger animate__animated animate__tada animate__infinite',
+    'failed' => [
+        'class' => 'text-bg-danger',
+    ],
+    'on hold' => [
+        'class' => 'text-bg-secondary',
+    ],
+    'passed' => [
+        'class' => 'text-bg-success',
+    ],
+    'pending' => [
+        'class' => 'text-white animate__animated animate__tada animate__infinite',
+        'style' => 'background-color:#f15025', // Orange: f15025, Purple: 712f79
+    ],
 ] ?>
-<span class="badge text-uppercase {{ isset($settings[$status]) ? $settings[$status] : '' }} {{ $class ?? '' }}">
+<span 
+    class="badge text-uppercase {{ isset($settings[$status]['class']) ? $settings[$status]['class'] : '' }} {{ $class ?? '' }}"
+    style="{{ isset($settings[$status]['style']) ? $settings[$status]['style'] : '' }}"
+>
     {{ $status }}
 </span>

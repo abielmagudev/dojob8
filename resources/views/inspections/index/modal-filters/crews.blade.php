@@ -3,7 +3,7 @@
     <select id="crewSelect" class="form-select" name="crew">
         <option label="Any crew" selected></option>
         
-        @foreach($crews as $crew)
+        @foreach(\App\Models\Crew::forInspections()->active()->get() as $crew)
         <option value="{{ $crew->id }}" {{ isSelected($crew->id == $request->get('crew')) }}>{{ $crew->name }}</option>
         @endforeach
     </select>

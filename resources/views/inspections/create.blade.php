@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Inspections' => route('inspections.index'),
+    'Inspections' => route('inspections.index'),
     'Create',
 ]" />
 <x-page-title>Inspections</x-page-title>
@@ -14,8 +14,9 @@
         @include('inspections._form')
         <input type="hidden" name="work_order" value="{{ $work_order->id }}">
         <br>
+
         <div class="text-end">
-            <button class="btn btn-success" type="submit">Save inspection</button>
+            <button class="btn btn-success" type="submit">Create inspection</button>
             <a href="{{ route('work-orders.show', [$work_order, 'tab' => 'inspections']) }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>

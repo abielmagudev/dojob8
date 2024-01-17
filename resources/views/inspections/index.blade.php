@@ -5,9 +5,7 @@
 @endsection
 
 @section('content')
-<x-card>
-
-    @slot('title', "{$inspections->total()} Inspections")
+<x-card title="{{ $inspections->total() }} inspections {{ $request->has('sort') > 0 ? 'filtered' : '' }}">
 
     @slot('options')
     <form action="{{ route('inspections.index') }}" class="d-inline-block" method="get">
@@ -33,21 +31,21 @@
         <li>
             <x-modal-trigger modal-id="modalInspectionFilters" class="dropdown-item" link>
                 <i class="bi bi-funnel"></i>
-                <span class=" mx-1">More filters</span>
+                <span class=" mx-1">Filters</span>
             </x-modal-trigger>
         </li>
     @endslot
 
+    @if( $inspections->count() )  
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
                 <th>Status</th>
                 <th>Scheduled</th>
                 <th>Inspector</th>
-                <th>Job</th>
                 <th>Crew</th>
+                <th>Job</th>
                 <th>Client</th>
-                <th class="text-nowrap">Work order</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -62,7 +60,6 @@
             </td>
             <td class="text-nowrap">{{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}</td>
             <td class="text-nowrap">{{ $inspection->inspector->name }}</td>
-            <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
                 @if( $inspection->hasCrew() )
                     @include('crews.__.flag', [
@@ -71,25 +68,26 @@
                     ])
                 @endif
             </td>
+            <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
                 @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])
             </td>
-            <td>
-                <a href="{{ route('work-orders.show', $inspection->work_order) }}" class="link-primary">#{{ $inspection->work_order->id }}</a>
-            </td>
             <td class="text-end">
-                <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-outline-warning">
+                <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>
         </tr>
         @endforeach
     </x-table>
+    @endif
 </x-card>
 <br>
 
-<x-pagination-simple-model :collection="$inspections" />
+<div class="px-3">
+    <x-pagination-simple-model :collection="$inspections" />
+</div>
 
-@include('inspections.index.modal-inspection-filters')
+@include('inspections.index.modal-filtering')
 
 @endsection

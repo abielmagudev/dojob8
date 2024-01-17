@@ -19,20 +19,8 @@ class InspectionStoreRequest extends FormRequest
     {
         return [
             'scheduled_date' => [
-                'required',
-                'date',
-            ],
-            'crew' => [
-                'bail',
                 'nullable',
-                'integer',
-                sprintf('in:%s', Crew::forInspections()->get()->pluck('id')->implode(',')),
-            ],
-            'inspector' => [
-                'bail',
-                'required',
-                'integer',
-                sprintf('exists:%s,id', Inspector::class),
+                'date',
             ],
             'work_order' => [
                 'bail', 
@@ -40,25 +28,40 @@ class InspectionStoreRequest extends FormRequest
                 'integer', 
                 sprintf('exists:%s,id', WorkOrder::class),
             ],
+            'inspector' => [
+                'bail',
+                'required',
+                'integer',
+                sprintf('exists:%s,id', Inspector::class),
+            ],
+            'crew' => [
+                'bail',
+                'nullable',
+                'integer',
+                sprintf('in:%s', Crew::forInspections()->get()->pluck('id')->implode(',')),
+            ],
             'status' => [
                 'required',
+                sprintf('in:%s', Inspection::getAllStatuses()->implode(',')),
             ],
         ];
     }
 
     public function prepareForValidation()
     {
-        $this->merge([
-            'status' => Inspection::validateIsPendingStatus( $this->only(['scheduled_date', 'crew']) ) ? 'pending' : 'on hold',
-        ]);
+        if( Inspection::validateIsPendingStatus( $this->only(['scheduled_date', 'crew']) ) ) {
+            $this->merge([
+                'status' => 'pending',
+            ]);
+        }
     }
 
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'crew_id' => $this->crew,
-            'inspector_id' => $this->inspector,
             'work_order_id' => $this->work_order,
+            'inspector_id' => $this->inspector,
+            'crew_id' => $this->crew,
         ]);
     }
 }

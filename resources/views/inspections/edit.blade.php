@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Inspections' => route('inspections.index'),
+    'Inspections' => route('inspections.index'),
     sprintf('#%s', $inspection->id) => route('inspections.show', $inspection),
     'Edit'
 ]" />
@@ -15,6 +15,7 @@
         @include('inspections._form')
         @method('put')
         <br>
+
         <div class="text-end">
             <button class="btn btn-warning" type="submit">Update inspection</button>
             <a href="{{ $url_back }}" class="btn btn-primary">Back</a>

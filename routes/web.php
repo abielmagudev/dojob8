@@ -52,8 +52,8 @@ Route::resource('crews', CrewController::class);
 Route::resource('contractors', ContractorController::class);
 Route::resource('inspectors', InspectorController::class);
 
-Route::resource('inspections', InspectionController::class)->except('create');
 Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
+Route::resource('inspections', InspectionController::class)->except('create');
 
 Route::resource('users', UserController::class);
 

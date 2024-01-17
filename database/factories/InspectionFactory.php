@@ -13,18 +13,19 @@ class InspectionFactory extends Factory
      * @return array
      */
     public function definition()
-    {
-        $scheduled_date = $this->faker->optional()->dateTimeBetween('-1 years');
+    {        
+        $attributes = [
+            'scheduled_date' => $this->faker->optional()->dateTimeBetween('-1 years'),
+            'crew_id' => $this->faker->optional()->numberBetween(1, 10),
+        ];
 
-        $crew_id = $this->faker->optional()->numberBetween(1, 10);
-        
         return [
-            'scheduled_date' => $scheduled_date,
+            'scheduled_date' => $attributes['scheduled_date'],
             'observations' => $this->faker->optional()->sentences(3, true),
-            'status' => Inspection::validateIsPendingStatus([$scheduled_date, $crew_id]) ? 'pending' : $this->faker->randomElement( Inspection::getFormStatuses()->toArray() ),
-            'crew_id' => $crew_id,
-            'inspector_id' => $this->faker->numberBetween(1, 3),
+            'status' => Inspection::validateIsPendingStatus($attributes) ? 'pending' : $this->faker->randomElement( Inspection::getFormStatuses()->toArray() ),
             'work_order_id' => $this->faker->numberBetween(1, 500),
+            'inspector_id' => $this->faker->numberBetween(1, 3),
+            'crew_id' => $attributes['crew_id'],
         ];
     }
 }

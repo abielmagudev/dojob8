@@ -8,7 +8,6 @@ use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Inspector;
 use App\Models\WorkOrder;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InspectionController extends Controller
@@ -29,10 +28,7 @@ class InspectionController extends Controller
         ->appends( $request->all() );
 
         return view('inspections.index', [
-            'all_statuses' => Inspection::getAllStatuses(),
-            'crews' => Crew::forInspections()->active()->get(),
             'inspections' => $inspections,
-            'inspectors' => Inspector::all(),
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'request' => $request,
             'pending_inspections' => [
@@ -50,6 +46,7 @@ class InspectionController extends Controller
     {
         return view('inspections.create', [
             'crews' => Crew::forInspections()->active()->get(),
+            'form_statuses' => Inspection::getFormStatuses(),
             'inspection' => new Inspection,
             'inspectors' => Inspector::all(),
             'work_order' => $work_order,
@@ -62,7 +59,7 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error saving inspection, try again please');
         }
 
-        return redirect()->route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])->with('success', "You saved inspection <b>{$inspection->id}</b>");
+        return redirect()->route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])->with('success', "You created inspection <b>{$inspection->id}</b>");
     }
 
     public function show(Inspection $inspection)
@@ -76,10 +73,12 @@ class InspectionController extends Controller
     {
         return view('inspections.edit', [
             'crews' => Crew::forInspections()->active()->get(),
+            'form_statuses' => Inspection::getFormStatuses(),
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
-            'form_statuses' => Inspection::getFormStatuses(),
-            'url_back' => $request->filled('tab') ? route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections']) : route('inspections.show', $inspection),
+            'url_back' => $request->filled('tab') 
+                            ? route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections']) 
+                            : route('inspections.show', $inspection),
         ]);
     }
 

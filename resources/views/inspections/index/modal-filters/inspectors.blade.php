@@ -3,7 +3,7 @@
     <select id="inspectorSelect" class="form-select" name="inspector">
         <option label="Any inspector" selected></option>
         
-        @foreach($inspectors as $inspector)
+        @foreach(\App\Models\Inspector::all() as $inspector)
         <option value="{{ $inspector->id }}" {{ isSelected($inspector->id == $request->get('inspector')) }}>{{ $inspector->name }}</option>
         @endforeach
     </select>

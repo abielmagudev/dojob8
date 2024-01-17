@@ -1,7 +1,7 @@
 <div class="mb-3">
     <label for="filterStatusRuleSelect" class="form-label">Status</label>
     <ul id="statusGroupList" class="list-group rounded">
-        @foreach($all_statuses as $status)
+        @foreach(\App\Models\Inspection::getAllStatuses() as $status)
         <?php $checkbox_id = 'checkboxStatus' . ucfirst($status) ?>
 
         <li class="list-group-item list-group-item-action">

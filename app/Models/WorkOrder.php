@@ -6,7 +6,7 @@ use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasScheduledDateTrait;
-use Carbon\Carbon;
+use App\Models\Kernel\HasStatusTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +17,7 @@ class WorkOrder extends Model implements FilteringInterface
     use HasFilteringTrait;
     use HasHookUsersTrait;
     use HasScheduledDateTrait;
+    use HasStatusTrait;
 
     const INITIAL_STATUS = 'new';
 
@@ -167,21 +168,6 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->where('job_id', $job_id);
     }
 
-    public function scopeWhereStatus($query, $status)
-    {
-        return $query->where('status', $status);
-    }
-
-    public function scopeWhereStatusIn($query, array $status_array)
-    {
-        return $query->whereIn('status', $status_array);
-    }
-
-    public function scopeWhereStatusNotIn($query, array $status_array)
-    {
-        return $query->whereNotIn('status', $status_array);
-    }
-
 
     // Filters
 
@@ -223,20 +209,6 @@ class WorkOrder extends Model implements FilteringInterface
         }
 
         return $query->whereJob($job_id);
-    }
-
-    public function scopeFilterByStatus($query, $status)
-    {
-        if( is_null($status) ) {
-            return $query;
-        }
-
-        return $query->whereStatus($status);
-    }
-
-    public function scopeFilterByStatusGroup($query, $status_group = [])
-    {
-        return $query->whereStatusIn($status_group);
     }
 
 

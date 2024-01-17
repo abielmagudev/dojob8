@@ -8,6 +8,15 @@ trait HasStatusTrait
 {
     // Validators
 
+    public function hasStatus(bool $strict = false)
+    {
+        if( $strict ) { 
+            return ! empty($this->status);
+        }
+
+        return isset($this->status) && $this->status !== '';
+    }
+
     public function isStatus(string $status)
     {
         return $this->status == $status;
@@ -21,9 +30,14 @@ trait HasStatusTrait
         return $query->where('status', $value);
     }
 
-    public function scopeWhereInStatus($query, array $values)
+    public function scopeWhereStatusIn($query, array $values)
     {
         return $query->whereIn('status', $values);
+    }
+
+    public function scopeWhereStatusNotIn($query, array $values)
+    {
+        return $query->whereNotIn('status', $values);
     }
 
 
@@ -36,6 +50,6 @@ trait HasStatusTrait
 
     public function scopeFilterByStatusGroup($query, $status_group)
     {
-        return is_array($status_group) &&! empty($status_group) ? $query->whereInStatus($status_group) : $query;
+        return is_array($status_group) &&! empty($status_group) ? $query->whereStatusIn($status_group) : $query;
     }
 }

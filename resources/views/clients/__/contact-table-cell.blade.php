@@ -1,10 +1,10 @@
 <div>
-    @foreach($client->contact_data->filter() as $key => $value)
-    <x-tooltip title="{{ ucfirst($key) }}">
-        <span class="badge border">
-            <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?> 
-            <a href="{{ $prefix }}:{{ $value }}" class="text-decoration-none">{!! isset($mark) ? marker($mark, $value) : $value !!}</a>
-        </span>
-    </x-tooltip>
-    @endforeach
+    <div class="d-flex">
+        <div>
+            <small>{{ $client->full_name }}</small>
+        </div>
+        <div>
+            <x-custom.tooltip-contact-channels :channels="$client->contact_data->filter()" />
+        </div>
+    </div>
 </div>

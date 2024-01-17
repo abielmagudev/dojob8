@@ -2,10 +2,10 @@
     @if( $contractor->work_orders->count() )
 
     @slot('options')
-        @if( $contractor->hasUnfinishedWorkOrders() )                  
-        @include('work-orders.__.button-counter-unfinished', [
+        @if( $contractor->hasIncompleteWorkOrders() )                  
+        @include('work-orders.__.button-counter-incomplete', [
             'class' => 'btn btn-warning',
-            'counter' => $contractor->work_orders_unfinished_count,
+            'counter' => $contractor->incomplete_work_orders_count,
             'parameters' => ['contractor' => $contractor->id],
         ])
         @endif

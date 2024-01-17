@@ -17,11 +17,11 @@ class CreateWorkOrdersTable extends Migration
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
             $table->string('status')->index();
+            $table->date('scheduled_date')->index();
             $table->foreignId('client_id')->index();
             $table->foreignId('contractor_id')->nullable();
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('job_id');
-            $table->date('scheduled_date')->index();
             $table->dateTime('working_at')->nullable();
             $table->dateTime('done_at')->nullable();
             $table->dateTime('completed_at')->nullable();

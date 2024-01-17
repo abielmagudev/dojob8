@@ -32,21 +32,13 @@
             <td>{{ $job->description }}</td>
             <td>{{ $job->extensions_count }}</td>
             <td class="text-nowrap text-end">
-                @if( $job->hasUnfinishedWorkOrders() )
-                <x-tooltip title="Unfinished work orders">
-                    <a href="{{ workOrderUrlGenerator('unfinished', ['job' => $job->id]) }}" class="btn btn-warning">
-                        {{ $job->work_orders_unfinished->count() }}
-                    </a>
-                </x-tooltip>
-                @endif
-
-                @if( $job->hasWorkOrders() )
-                <x-tooltip title="Work orders">
-                    <a href="{{ workOrderUrlGenerator('all', ['job' => $job->id]) }}" class="btn btn-primary">
-                        {{ $job->work_orders->count() }}
-                    </a>
-                </x-tooltip>
-                @endif
+                @includeWhen(
+                    $job->hasIncompleteWorkOrders(), 
+                    'work-orders.__.button-counter-incomplete', [
+                        'counter' => $job->incomplete_work_orders_count,
+                        'parameters' => ['job' => $job->id]
+                    ]
+                )
 
                 <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary">
                     <i class="bi bi-eye-fill"></i>

@@ -35,8 +35,8 @@
     </div>
     <div class="col-sm mb-3 mb-md-0">
         <x-card class="text-center">
-            <span class="d-block text-uppercase small">Unfinished until today</span>
-            <span class="fs-3">{{ $unfinished_work_orders->count() }}</span>
+            <span class="d-block text-uppercase small">Incomplete until today</span>
+            <span class="fs-3">{{ $incomplete_work_orders->count() }}</span>
         </x-card>
     </div>
 </div>

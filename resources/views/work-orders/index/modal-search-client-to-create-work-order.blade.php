@@ -1,15 +1,16 @@
-<x-modal id="modalSearchClient" title="Search client">
+<x-modal id="modalSearchClientToCreateWorkOrder" title="Create work order" header-close>
     
     {{-- Input --}}
     <form action="#!" autocomplete="off">
-        <input id="inputSearchClient" class="form-control rounded-pill px-3" type="search" name="client" placeholder="By name, last name, address, phone..." required>
+        <label for="inputSearchClient" class="form-label">Search client</label>
+        <input id="inputSearchClient" class="form-control rounded-pill px-3" type="search" name="client" placeholder="By full name, address, phone..." required>
     </form>
 
     {{-- List wrapper --}}
     <div class="position-relative mt-1">
 
         {{-- List float --}}
-        <div class="position-absolute shadow rounded bg-white p-1 w-100 d-none">
+        <div class="position-absolute shadow rounded text-bg-white overflow-hidden w-100 d-none">
             <div class="list-group list-group-flush overflow-y-scroll is-hidden" id="clientsList" style="max-height:272px;"></div>
 
             {{-- Template list item --}}
@@ -23,16 +24,18 @@
             </template>
         </div>
     </div>
+
+    {{-- New client --}}
     <div class="mt-2 text-end">
         <span class="text-secondary">...or</span>
-        <a href="{{ route('clients.create', ['redirect' => 'work-orders.create']) }}">create new client</a>
+        <a href="{{ route('clients.create') }}">create new client</a>
     </div>
 </x-modal>
 
 @push('scripts')
 <script>
-const modalSearchClient = {
-    element: document.getElementById('modalSearchClient'),
+const modalSearchClientToCreateWorkOrder = {
+    element: document.getElementById('modalSearchClientToCreateWorkOrder'),
     listen: function () {
         this.element.addEventListener('hidden.bs.modal', () => {
             inputSearchClient.clear()
@@ -40,10 +43,10 @@ const modalSearchClient = {
         })
     }
 }
-modalSearchClient.listen();
+modalSearchClientToCreateWorkOrder.listen();
 
 const inputSearchClient = {
-    element: modalSearchClient.element.querySelector('#inputSearchClient'),
+    element: modalSearchClientToCreateWorkOrder.element.querySelector('#inputSearchClient'),
     api: "<?= route('clients.ajax.search') ?>?search=",
     clear: function () {
         this.element.value = ''
@@ -76,8 +79,8 @@ const inputSearchClient = {
 inputSearchClient.listen()
 
 const clientsList = {
-    element: modalSearchClient.element.querySelector('#clientsList'),
-    templateElement: modalSearchClient.element.querySelector('#templateClientItem'),
+    element: modalSearchClientToCreateWorkOrder.element.querySelector('#clientsList'),
+    templateElement: modalSearchClientToCreateWorkOrder.element.querySelector('#templateClientItem'),
     template: function () {
         return this.templateElement.content.cloneNode(true);
     },
@@ -100,8 +103,9 @@ const clientsList = {
             link.setAttribute('href', link.href.replace('?', $client.id))
             link.children[0].innerText = $client.full_name;
             link.children[1].innerText = $client.street;
-            link.children[2].innerText = [$client.city, $client.state_code, $client.country_code, $client.zip_code].filter(x => !!x).join(', ');
-            link.children[3].innerText = [$client.phone_number, $client.mobile_number, $client.email].filter(x => !!x).join(', ');
+            link.children[2].innerText = [$client.city_name, $client.state_code, $client.country_code, $client.zip_code].filter(x => !!x).join(', ');
+            // link.children[3].innerText = [$client.phone_number, $client.mobile_number, $client.email].filter(x => !!x).join(', ');
+            link.children[3].innerText = [$client.phone_number].filter(x => !!x).join(', ');
         
             self.element.appendChild(link)
         })

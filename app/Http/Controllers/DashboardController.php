@@ -22,11 +22,11 @@ class DashboardController extends Controller
             'all_statuses_work_order' => WorkOrder::getAllStatuses(),
             'clients' => Client::all(),
             'contractors' => Contractor::all(),
+            'incomplete_work_orders' => WorkOrder::filterByIncompleteStatuses($work_orders),
+            'inspections' => Inspection::with('inspector')->get(),
             'jobs' => Job::withTrashed()->get(),
-            'unfinished_work_orders' => WorkOrder::filterByUnfinishedStatus($work_orders),
             'user' => User::all(),
             'work_orders' => $work_orders,
-            'inspections' => Inspection::with('inspector')->get(),
         ]);
     }
 }

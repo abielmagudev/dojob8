@@ -8,27 +8,27 @@ trait HasWorkOrdersTrait
 {
     // Attributes
 
-    public function getWorkOrdersUnfinishedAttribute()
+    public function getIncompleteWorkOrdersAttribute()
     {
         return $this->work_orders->filter(function ($work_order) {
-            return in_array($work_order->status, WorkOrder::getUnfinishedStatuses()->all());
+            return WorkOrder::inIncompleteStatuses($work_order->status);
         });
     }
 
-    public function getWorkOrdersUnfinishedCountAttribute()
+    public function getIncompleteWorkOrdersCountAttribute()
     {
-        return $this->work_orders_unfinished ? $this->work_orders_unfinished->count() : 0;
+        return $this->incomplete_work_orders ? $this->incomplete_work_orders->count() : 0;
     }
 
-    public function getUrlUnfinishedWorkOrdersAttribute()
-    {
-        return $this->getUrlUnfinishedWorkOrders();
-    }
+    // public function getIncompleteWorkOrdersUrlAttribute()
+    // {
+    //     return $this->getUrlUnfinishedWorkOrders();
+    // }
 
-    public function getUrlOwnWorkOrdersAttribute()
-    {
-        return $this->getUrlOwnWorkOrders();
-    }
+    // public function getUrlOwnWorkOrdersAttribute()
+    // {
+    //     return $this->getUrlOwnWorkOrders();
+    // }
 
 
 
@@ -53,11 +53,10 @@ trait HasWorkOrdersTrait
         return (bool) $this->work_orders->count();
     }
 
-    public function hasUnfinishedWorkOrders()
+    public function hasIncompleteWorkOrders()
     {
-        return (bool) $this->work_orders_unfinished_count;
+        return (bool) $this->incomplete_work_orders_count;
     }
-
 
 
     // Relationships
@@ -65,10 +64,5 @@ trait HasWorkOrdersTrait
     public function work_orders()
     {
         return $this->hasMany(WorkOrder::class);
-    }
-
-    public function work_order()
-    {
-        return $this->belongsTo(WorkOrder::class);
     }
 }

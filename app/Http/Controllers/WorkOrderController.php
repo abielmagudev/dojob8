@@ -11,9 +11,8 @@ use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Job;
-use App\Models\Member;
 use App\Models\WorkOrder;
-use App\Models\WorkOrder\WorkOrderUrlGenerator;
+use App\Models\WorkOrder\UrlGeneratorWorkOrders;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -30,16 +29,13 @@ class WorkOrderController extends Controller
             ]);
         }
 
-        $scheduled_casted = $request->has('scheduled_date_range') ? [
-            Carbon::parse( $request->input('scheduled_date_range.0') ),
-            Carbon::parse( $request->input('scheduled_date_range.1') ),
-        ] : Carbon::parse( $request->get('scheduled_date') );
-
-        $work_orders = WorkOrder::with(['job', 'client', 'contractor', 'crew'])
+        $work_orders = WorkOrder::withRelationships()
         ->filterByInputs( $request->all() )
-        ->orderBy('crew_id', $request->get('sort', 'desc'))
-        ->orderBy('scheduled_date', 'desc')
-        ->paginate(25)
+        ->orderBy( 
+            $request->has('fltr') ? 'scheduled_date' : 'crew_id', 
+            $request->get('sort', 'desc')
+        )
+        ->paginate( $request->has('fltr') ? 25 : 250 )
         ->appends( $request->query() );
 
         return view('work-orders.index', [
@@ -48,10 +44,9 @@ class WorkOrderController extends Controller
             'contractors' => Contractor::all(),
             'jobs' => Job::all(),
             'request' => $request,
-            'scheduled_casted' => $scheduled_casted,
-            'unfinished_work_orders' => [
-                'url' => WorkOrderUrlGenerator::unfinished(),
-                'count' => WorkOrder::unfinishedStatus()->count(),
+            'incomplete_work_orders' => [
+                'url' => UrlGeneratorWorkOrders::incomplete(),
+                'count' => WorkOrder::incompleteStatus()->count(),
             ],
             'work_orders' => $work_orders,
         ]);
@@ -60,9 +55,10 @@ class WorkOrderController extends Controller
     public function create(Client $client)
     {
         $this->reflashInputErrors();
+
         return view('work-orders.create', [
             'all_statuses' => WorkOrder::getAllStatuses(),
-            'client' => $client,
+            'client' => $client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'jobs' => Job::with('extensions')->orderBy('name')->get(),

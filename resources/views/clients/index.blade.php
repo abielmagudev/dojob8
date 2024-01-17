@@ -43,8 +43,8 @@
             </td>
             <td class="text-nowrap text-end">
 
-                @includeWhen($client->hasUnfinishedWorkOrders(), 'work-orders.__.button-counter-unfinished', [
-                    'counter' => $client->work_orders_unfinished_count,
+                @includeWhen($client->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
+                    'counter' => $client->incomplete_work_orders_count,
                     'parameters' => ['client' => $client->id],
                 ])
 

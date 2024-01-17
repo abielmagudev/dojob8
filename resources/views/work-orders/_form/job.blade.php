@@ -4,7 +4,7 @@
         {{-- Select Job for create work order --}}
         @if( is_null($work_order->id) )
         <select id='selectJob' class="form-select {{ bsInputInvalid( $errors->has('job') ) }}" name="job" required>
-            <option disabled selected label="Choose a job"></option>
+            <option disabled selected label="Choose..."></option>
             @foreach($jobs as $job)
             <option value="{{ $job->id }}" data-has-extensions="{{ (int) $job->hasExtensions() }}" {{ isSelected( old('job') == $job->id ) }}>{{ $job->name }}</option>
             @endforeach

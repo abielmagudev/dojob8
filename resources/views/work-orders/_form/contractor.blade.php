@@ -1,6 +1,7 @@
-<x-form-field-horizontal for="contractorSelect" label="Contractor">
+<x-form-field-horizontal for="contractorSelect" label="Contractor" label-class="form-label-optional">
     <select id="contractorSelect" class="form-select" name="contractor">
-        <option selected label="- No contractor -"></option>
+        <option selected label="None"></option>
+
         @foreach($contractors as $contractor)
         <option value="{{ $contractor->id }}" {{ isSelected($contractor->id == $work_order->contractor_id) }}>{{ $contractor->name }} ({{ $contractor->alias }})</option>
         @endforeach

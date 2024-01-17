@@ -49,11 +49,11 @@ if(! function_exists('marker') )
 
 // Models
 
-if(! function_exists('workOrderUrlGenerator') )
+if(! function_exists('urlGeneratorWorkOrders') )
 {
-    function workOrderUrlGenerator(string $method, array $parameters = [])
+    function urlGeneratorWorkOrders(string $method, array $parameters = [])
     {
-        return call_user_func([App\Models\WorkOrder\WorkOrderUrlGenerator::class, $method], $parameters);
+        return call_user_func([App\Models\WorkOrder\UrlGeneratorWorkOrders::class, $method], $parameters);
     }
 }
 

@@ -4,7 +4,7 @@ namespace App\Models\WorkOrder;
 
 use App\Models\WorkOrder;
 
-class WorkOrderUrlGenerator
+class UrlGeneratorWorkOrders
 {
     public static function all(array $parameters = [])
     {
@@ -13,19 +13,21 @@ class WorkOrderUrlGenerator
         ]));
     }
 
-    public static function finished(array $parameters = [])
+    public static function completed(array $parameters = [])
     {
         return route('work-orders.index', array_merge($parameters, [
-            'status_group' => WorkOrder::getFinishedStatuses()->all(),
+            'status_group' => WorkOrder::getCompletedStatuses()->all(),
             'sort' => 'asc',
+            'fltr' => 'on',
         ]));
     }
 
-    public static function unfinished(array $parameters = [])
+    public static function incomplete(array $parameters = [])
     {
         return route('work-orders.index', array_merge($parameters, [
-            'status_group' => WorkOrder::getUnfinishedStatuses()->all(),
+            'status_group' => WorkOrder::getIncompleteStatuses()->all(),
             'sort' => 'asc',
+            'fltr' => 'on',
         ]));
     }
 }

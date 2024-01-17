@@ -2,44 +2,49 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Work orders' => route('work-orders.index'),
+    'Work orders' => route('work-orders.index'),
     'Create',
 ]" />
-<x-page-title>Work orders</x-page-title>
+<x-page-title>
+    {{ $client->full_name }}
+
+    @slot('subtitle')
+    <div>
+        <span>{{ $client->address_data->only(['street', 'city_name', 'state_name', 'country_code'])->filter()->implode(', ') }}</span>,
+        <span>ZIP {{ $client->zip_code }}</span>
+        @if($client->hasDistrictCode())                
+        <span>- DC {{ $client->district_code }}</span>
+        @endif
+    </div>
+    <div>
+        <x-custom.tooltip-contact-channels :channels="$client->contact_data->filter()" class="badge border" />
+    </div>
+    @endslot
+</x-page-title>
 @endsection
 
 @section('content')
-<div class="row">
-    <div class="col-sm">
-        <x-card title="New work order">
-            <form action="{{ route('work-orders.store') }}" method="post">
-                @include('work-orders._form')
-                <br>
-                <div class="row justify-content-between">
-                    <div class="col-md">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="afterSavingCheckbox" name="after_saving" value="1" checked>
-                            <label class="form-check-label" for="afterSavingCheckbox">After saving, create a new work order for this client again.</label>
-                        </div>
-                    </div>
-                    <div class="col-md text-end">
-                        <button class="btn btn-success" type="submit">Save work order</button>
-                        <a href="{{ route('work-orders.index') }}" class="btn btn-primary">Cancel</a>
-                    </div>
+<x-card title="New work order">
+    <form action="{{ route('work-orders.store') }}" method="post">
+        @include('work-orders._form')
+        <input type="hidden" name="client" value="{{ $client->id }}">  
+        <x-form-field-horizontal>
+            <div class="alert alert-warning">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="afterSavingCheckbox" name="after_saving" value="1" checked>
+                    <label class="form-check-label" for="afterSavingCheckbox">Create a new work order again for this client, after it is created.</label>
                 </div>
-            </form>
-        </x-card>
-    </div>
+            </div>
+        </x-form-field-horizontal>
+        <br>
 
-    <div class="col-sm col-sm-3">
-        <x-card title="Client" class="h-100">
-            @include('clients.__.address')
-            <br>
-            {{ $client->contact_data->filter()->implode(', ') }}
-        </x-card>
-    </div>
-</div>
-
+        <div class="text-end">
+            <button class="btn btn-success" type="submit">Create work order</button>
+            <a href="{{ route('work-orders.index') }}" class="btn btn-primary">Cancel</a>
+        </div>
+    </form>
+</x-card>
+@endsection
 
 @push('scripts') 
 @include('work-orders.scripts.extensionsLoader')
@@ -56,4 +61,3 @@ extensionsLoader.get("<?= route('work-orders.ajax.create', old('job')) ?>")
 @endif
 
 @endpush
-@endsection

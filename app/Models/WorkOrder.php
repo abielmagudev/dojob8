@@ -21,58 +21,41 @@ class WorkOrder extends Model implements FilteringInterface
 
     const INITIAL_STATUS = 'new';
 
-    public static $statuses_bscolors = [
-        'pending' => 'text-bg-purple',
-        'new' => 'text-bg-primary',
-        'working' => 'text-bg-warning',
-        'done' => 'text-bg-success animate__animated animate__pulse animate__infinite',
-        'completed' => 'text-bg-success animate__animated animate__tada animate__infinite',
-        'inspected' => 'text-bg-success',
-        'closed' => 'text-bg-dark',
-        'canceled' => 'text-bg-danger',
-    ];
-
-    public static $statuses = [
-        'pending', // Pending of what?
-        'new',
-        'working', // started
-        'done', // finished
-        'completed', // Ready, reviewed, checked
-        'inspected', // completed
-        'closed',
-        'canceled',
-    ];
-
-    public static $unfinished_statuses = [ // Not ready, unready, incomplete
-        'pending',
-        'new',
-        'working',
-        'done',
-    ];
-
-    public static $finished_statuses = [
-        'completed',
-        'inspected',
-        'closed',
-        'canceled',
-    ];
-
     protected $fillable = [
         'status',
+        'scheduled_date',
         'client_id',
         'contractor_id',
         'crew_id',
         'job_id',
-        'notes',
-        'scheduled_date',
         'working_at',
         'done_at',
         'completed_at',
         'closed_at',
+        'notes',
     ];
 
     protected $casts = [
         'scheduled_date' => 'date',
+    ];
+
+    public static $all_statuses = [
+        'pending',
+        'new',
+        'working',
+        'done',
+        'completed',
+        'inspected',
+        'closed',
+        'canceled',
+        'denialed',
+    ];
+
+    public static $incomplete_statuses = [ 
+        'pending',
+        'new',
+        'working',
+        'done',
     ];
 
 
@@ -87,17 +70,9 @@ class WorkOrder extends Model implements FilteringInterface
             'job' => 'filterByJob',
             'dates' => 'filterByScheduledDateBetween',
             'scheduled_date' => 'filterByScheduledDate',
-            'status_group' => ['filterByStatusGroup'],
+            'status_group' => 'filterByStatusGroup',
             'status' => 'filterByStatus',
         ];
-    }
-
-
-    // Attributes
-
-    public function getStatusColorAttribute()
-    {
-        return self::getBsColorByStatus( $this->status );
     }
 
 
@@ -118,29 +93,22 @@ class WorkOrder extends Model implements FilteringInterface
         return (bool) $this->members_count || $this->members->count();
     }
 
-    public function isFinished()
+    public function isIncomplete()
     {
-        return self::getFinishedStatuses()->contains($this->status);
+        return self::inIncompleteStatuses($this->status);
     }
 
-    public function isUnfinished()
+    public function isCompleted()
     {
-        return self::getUnfinishedStatuses()->contains($this->status);
+        return ! self::inIncompleteStatuses($this->status);
     }
 
     
     // Scopes
 
-    public function scopeUnfinishedStatus($query)
+    public function scopeIncompleteStatus($query)
     {
-        return $query->whereIn('status', self::getUnfinishedStatuses()->all());
-    }
-
-    public function scopeWhereJobsAvailable($query)
-    {
-        $jobs_id = Job::all('id')->pluck('id')->toArray();
-        
-        return $query->whereIn('job_id', $jobs_id);
+        return $query->whereIn('status', self::getIncompleteStatuses()->all());
     }
 
     public function scopeWhereClient($query, $client_id)
@@ -158,7 +126,7 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->where('contractor_id', $contractor_id);
     }
 
-    public function scopeWhereContractorNull($query)
+    public function scopeWhereNotContractor($query)
     {
         return $query->whereIsNull('contractor_id');
     }
@@ -168,25 +136,29 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->where('job_id', $job_id);
     }
 
+    public function scopeWhereJobsAvailable($query)
+    {
+        $jobs_id = Job::all('id')->pluck('id')->toArray();
+        
+        return $query->whereIn('job_id', $jobs_id);
+    }
+
 
     // Filters
 
     public function scopeFilterByClient($query, $client_id)
     {
-        if( is_null($client_id) ) {
-            return $query;
-        }
-
-        return $query->whereClient($client_id);
+        return ! is_null($client_id) ? $query->whereClient($client_id) : $query;
     }
 
     public function scopeFilterByCrew($query, $crew_id)
     {
-        if( is_null($crew_id) ) {
-            return $query;
-        }
+        return ! is_null($crew_id) ? $query->whereCrew($crew_id) : $query;
+    }
 
-        return $query->whereCrew($crew_id);
+    public function scopeFilterByJob($query, $job_id)
+    {
+        return ! is_null($job_id) ? $query->whereJob($job_id) : $query;
     }
 
     public function scopeFilterByContractor($query, $contractor_id)
@@ -196,19 +168,20 @@ class WorkOrder extends Model implements FilteringInterface
         }
 
         if( $contractor_id == 0 ) {
-            return $query->whereContractorNull();
+            return $query->whereNotContractor();
         }
 
         return $query->whereContractor($contractor_id);
     }
 
-    public function scopeFilterByJob($query, $job_id)
+    public function scopeWithRelationships($query)
     {
-        if( is_null($job_id) ) {
-            return $query;
-        }
-
-        return $query->whereJob($job_id);
+        return $query->with([
+            'client',
+            'contractor',
+            'crew',
+            'job',
+        ]);
     }
 
 
@@ -249,43 +222,30 @@ class WorkOrder extends Model implements FilteringInterface
 
     public static function getAllStatuses()
     {
-        return collect(self::$statuses);
+        return collect(self::$all_statuses);
     }
 
-    public static function getUnfinishedStatuses()
+    public static function getIncompleteStatuses()
     {
-        return collect(self::$unfinished_statuses);
+        return collect(self::$incomplete_statuses);
     }
 
-    public static function getFinishedStatuses()
+    public static function getCompletedStatuses()
     {
-        return collect(self::$finished_statuses);
+        return self::getAllStatuses()->diff(
+            self::getIncompleteStatuses()->toArray()
+        );
     }
 
-    public static function isUnfinishedStatus(string $status)
+    public static function inIncompleteStatuses(string $status)
     {
-        return self::getUnfinishedStatuses()->contains($status);
+        return self::getIncompleteStatuses()->contains($status);
     }
 
-    public static function isFinishedStatus(string $status)
-    {
-        return self::getFinishedStatuses()->contains($status);
-    }
-
-    public static function filterByUnfinishedStatus(Collection $work_orders)
+    public static function filterByIncompleteStatuses(Collection $work_orders)
     {
         return $work_orders->filter(function ($wo) {
-            return in_array($wo->status, self::getUnfinishedStatuses()->all());
+            return self::inIncompleteStatuses($wo->status);
         });
-    }
-
-    public static function getStatusesBsColors()
-    {
-        return collect( self::$statuses_bscolors );
-    }
-
-    public static function getBsColorByStatus(string $status)
-    {
-        return self::getStatusesBsColors()->get($status);
     }
 }

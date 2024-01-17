@@ -2,28 +2,23 @@
 
 $settings = [
     'pending' => [
-        'class' => 'bg-warning text-danger animate__animated animate__tada animate__infinite',
-        // 'style' => 'background-color:#FF6229',
+        'class' => 'text-bg-warning animate__animated animate__tada animate__infinite',
     ],
     'new' => [
         'class' => 'text-bg-primary',
     ],
     'working' => [
-        'class' => 'text-bg-warning animate__animated animate__pulse animate__infinite',
-    ],
-    'reworking' => [
-        'class' => 'text-bg-warning animate__animated animate__pulse animate__infinite',
+        'class' => 'fst-italic text-white animate__animated animate__pulse animate__infinite',
+        'style' => 'background-color:#FF5B2E', // Orange: FF5B2E, Purple: 712f79
     ],
     'done' => [
-        'class' => 'text-bg-success animate__animated animate__pulse animate__infinite',
+        'class' => 'fst-italic text-bg-success animate__animated animate__pulse animate__infinite',
     ],
     'completed' => [
-        'class' => 'text-bg-success fst-italic',
-        // 'style' => 'background-color:#72F387; color:#333333'
+        'class' => 'text-bg-success',
     ],
     'inspected' => [
-        'class' => 'text-bg-info',
-        // 'style' => 'background-color:#75005D; color:#DDDDDD',
+        'class' => 'bg-light text-success',
     ],
     'closed' => [
         'class' => 'text-bg-dark',

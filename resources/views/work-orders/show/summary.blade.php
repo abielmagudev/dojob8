@@ -1,6 +1,8 @@
-<x-card class="h-100">
+<x-card>
+    @slot('options')
+    @include('work-orders.__.status-flag', ['status' => $work_order->status])
+    @endslot
     <div class="mb-3">
-        <span class="badge {{ $work_order->status_color }} text-uppercase">{{ $work_order->status }}</span>
     </div>
 
     <x-small-title title="Job">

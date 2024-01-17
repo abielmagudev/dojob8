@@ -2,7 +2,7 @@
     
     <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off" id="formWorkOrderFilters">
         @include('components.custom.input-between-dates')
-        @include('work-orders.index.modal-filters.statuses-rule')
+        @include('work-orders.index.modal-filters.status')
         @include('work-orders.index.modal-filters.job')
         @include('work-orders.index.modal-filters.crew')
         @include('work-orders.index.modal-filters.contractor')

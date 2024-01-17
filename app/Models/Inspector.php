@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasExistenceTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inspector extends Model
 {
-    use HasExistenceTrait;
     use HasFactory;
     use HasHookUsersTrait;
     use SoftDeletes;

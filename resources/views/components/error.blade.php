@@ -1,19 +1,17 @@
-<div class="small ms-1 {{ $attributes->get('class', '') }}">
+<div>
+    {{-- Has error --}}
     @error( $attributes->get('name') )
-    <span class="text-danger">{{ $message }}</span>
-    
-    @else
-        @if( $slot->isNotEmpty() )
+    <small class="text-danger">{{ $message }}</small>
+    @enderror
 
+    {{-- Has helper input --}}
+    @if( $slot->isNotEmpty() &&! $errors->has($attributes->get('name')) )
+    <small class="text-secondary">
         @if( $attributes->has('important') )   
         <b class="text-danger">*</b>
         @endif
 
-        <span class="text-secondary">
-            {!! $slot !!}
-        </span>
-
-        @endif
-    
-    @enderror
+        {!! $slot !!}
+    </small>
+    @endif
 </div>

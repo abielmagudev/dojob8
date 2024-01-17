@@ -147,8 +147,8 @@
 
 <x-pagination-simple-model :collection="$work_orders" />
 
-@include('work-orders.index.modal-work-order-views')
-@include('work-orders.index.modal-work-orders-filter')
+{{-- @include('work-orders.index.modal-work-order-views') --}}
+@include('work-orders.index.modal-filtering')
 @include('clients.__.modal-search')
 
 @endsection

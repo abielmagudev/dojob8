@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasScheduledDateTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ class WorkOrder extends Model implements FilteringInterface
     use HasFactory;
     use HasFilteringTrait;
     use HasHookUsersTrait;
+    use HasScheduledDateTrait;
 
     const INITIAL_STATUS = 'new';
 
@@ -79,13 +81,13 @@ class WorkOrder extends Model implements FilteringInterface
     {
         return [
             'client' => 'filterByClient',
-            'crew' => 'filterByCrew',
             'contractor' => 'filterByContractor',
+            'crew' => 'filterByCrew',
             'job' => 'filterByJob',
-            'status' => 'filterByStatus',
+            'dates' => 'filterByScheduledDateBetween',
             'scheduled_date' => 'filterByScheduledDate',
-            'scheduled_date_range' => 'filterByScheduledDateRange',
             'status_group' => ['filterByStatusGroup'],
+            'status' => 'filterByStatus',
         ];
     }
 
@@ -95,36 +97,6 @@ class WorkOrder extends Model implements FilteringInterface
     public function getStatusColorAttribute()
     {
         return self::getBsColorByStatus( $this->status );
-    }
-
-    public function getScheduledDateInputAttribute()
-    {
-        return $this->id ? $this->scheduled_date->format('Y-m-d') : null;
-    }
-
-    public function getScheduledTimeInputAttribute()
-    {
-        return $this->getRawOriginal('scheduled_time') ? Carbon::parse($this->scheduled_time)->format('H:i') : null;
-    }
-
-    public function getScheduledDatetimeAttribute()
-    {
-        return $this->id ? "{$this->scheduled_date} {$this->scheduled_time}" : null;
-    }
-
-    public function getScheduledDateHumanAttribute()
-    {
-        return $this->id ? $this->scheduled_date->format('D M d, Y') : null;
-    }
-
-    public function getScheduledTimeHumanAttribute()
-    {
-        return $this->getRawOriginal('scheduled_time') ? Carbon::parse($this->scheduled_time)->format('h:i A') : null;
-    }
-
-    public function getScheduledDatetimeHumanAttribute()
-    {
-        return $this->id ? $this->scheduled_date->toDayDateTimeString() : null;
     }
 
 
@@ -210,26 +182,6 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereNotIn('status', $status_array);
     }
 
-    public function scopeWhereScheduledDate($query, $value)
-    {
-        return $query->where('scheduled_date', $value);
-    }
-
-    public function scopeWhereScheduledDateFrom($query, $scheduled_date_from)
-    {
-        return $query->where('scheduled_date', '>=', $scheduled_date_from);
-    }
-
-    public function scopeWhereScheduledDateTo($query, $scheduled_date_to)
-    {
-        return $query->where('scheduled_date', '<=', $scheduled_date_to);
-    }
-
-    public function scopeWhereScheduledDateBetween($query, $scheduled_date_ranges)
-    {
-        return $query->whereBetween('scheduled_date', $scheduled_date_ranges);
-    }
-
 
     // Filters
 
@@ -285,32 +237,6 @@ class WorkOrder extends Model implements FilteringInterface
     public function scopeFilterByStatusGroup($query, $status_group = [])
     {
         return $query->whereStatusIn($status_group);
-    }
-
-    public function scopeFilterByScheduledDate($query, $scheduled_date)
-    {
-        if( is_null($scheduled_date) ) {
-            return $query;
-        }
-
-        return $query->whereScheduledDate($scheduled_date);
-    }
-
-    public function scopeFilterByScheduledDateRange($query, $scheduled_date_range)
-    {
-        if(! isset($scheduled_date_range[0]) &&! isset($scheduled_date_range[1]) ) {
-            return $query;
-        }
-
-        if( isset($scheduled_date_range[0]) &&! isset($scheduled_date_range[1]) ) {
-            return $query->whereScheduledDateFrom($scheduled_date_range[0]);
-        }
-        
-        if(! isset($scheduled_date_range[0]) && isset($scheduled_date_range[1]) ) {
-            return $query->whereScheduledDateTo($scheduled_date_range[1]);
-        }
-
-        return $query->whereScheduledDateBetween($scheduled_date_range);
     }
 
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\HasScheduledDateTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,7 @@ class Inspection extends Model implements FilteringInterface
     use HasFactory;
     use HasFilteringTrait;
     use HasHookUsersTrait;
+    use HasScheduledDateTrait;
     use HasWorkOrdersTrait;
 
     protected $fillable = [
@@ -25,10 +27,6 @@ class Inspection extends Model implements FilteringInterface
         'crew_id',
     ];
 
-    protected $casts = [
-        'scheduled_date' => 'date',
-    ];
-
     public static $all_statuses = [
         'pending',
         'on hold',
@@ -36,50 +34,36 @@ class Inspection extends Model implements FilteringInterface
         'failed',
     ];
 
+    protected $casts = [
+        'scheduled_date' => 'date',
+    ];
 
+    
     // Interface
 
     public function inputFilterSettings(): array
     {
         return [
-            'between_scheduled_date' => 'filterBetweenScheduledDate',
             'crew' => 'filterByCrew',
             'inspector' => 'filterByInspector',
-            'scheduled_date' => 'filterScheduledDate',
+            'dates' => 'filterByScheduledDateBetween',
+            'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
             'status' => 'filterByStatus', 
         ];
     }
 
 
-    // Attributes
-
-    public function getScheduledDateInputAttribute()
-    {
-        return $this->scheduled_date ? $this->scheduled_date->format('Y-m-d') : null;
-    }
-
-    public function getScheduledDateHumanAttribute()
-    {
-        return $this->scheduled_date ? $this->scheduled_date->format('D d M, Y') : null;
-    }
-
-
-    // Validatiors
-
-    public function hasScheduledDate()
-    {
-        return ! empty($this->getRawOriginal('scheduled_date'));
-    }
-
-    public function isToday()
-    {
-        return $this->getRawOriginal('scheduled_date') == now()->toDateString();
-    }
+    // Validators
 
     public function hasCrew()
     {
         return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
+    }
+
+    public function hasStatus(string $status)
+    {
+        return $this->status == $status;
     }
 
     public function isPendingStatus()
@@ -88,11 +72,6 @@ class Inspection extends Model implements FilteringInterface
             'scheduled_date' => $this->getRawOriginal('scheduled_date'),
             'crew_id' => $this->crew_id,
         ]);
-    }
-
-    public function hasStatus(string $status)
-    {
-        return $this->status == $status;
     }
 
 
@@ -106,26 +85,6 @@ class Inspection extends Model implements FilteringInterface
     public function scopeWhereInspector($query, int $inspector_id)
     {
         return $query->where('inspector_id', $inspector_id);
-    }
-
-    public function scopeWhereScheduledDate($query, $scheduled_date)
-    {
-        return $query->where('scheduled_date', $scheduled_date);
-    }
-
-    public function scopeWhereScheduledDateFrom($query, $scheduled_date_from)
-    {
-        return $query->where('scheduled_date', '>=', $scheduled_date_from);
-    }
-
-    public function scopeWhereScheduledDateTo($query, $scheduled_date_to)
-    {
-        return $query->where('scheduled_date', '<=', $scheduled_date_to);
-    }
-
-    public function scopeWhereScheduledDateBetween($query, $between_dates)
-    {
-        return $query->whereBetween('scheduled_date', $between_dates);
     }
 
     public function scopeWhereStatus($query, $status)
@@ -159,28 +118,6 @@ class Inspection extends Model implements FilteringInterface
     public function scopeFilterByInspector($query, $inspector_id)
     {
         return ! is_null($inspector_id) ? $query->whereInspector($inspector_id) : $query;
-    }
-
-    public function scopeFilterScheduledDate($query, $scheduled_date)
-    {
-        return ! is_null($scheduled_date) ? $query->whereScheduledDate($scheduled_date) : $query;
-    }
-
-    public function scopeFilterBetweenScheduledDates($query, $between_scheduled_date)
-    {
-        if(! isset($between_scheduled_date['from']) &&! isset($between_scheduled_date['to']) ) {
-            return $query;
-        }
-
-        if( isset($between_scheduled_date['from']) &&! isset($between_scheduled_date['to']) ) {
-            return $query->whereScheduledDateFrom($between_scheduled_date['from']);
-        }
-        
-        if(! isset($between_scheduled_date['from']) && isset($between_scheduled_date['to']) ) {
-            return $query->whereScheduledDateTo($between_scheduled_date['to']);
-        }
-
-        return $query->whereScheduledDateBetween($between_scheduled_date);
     }
 
     public function scopeFilterByStatusGroup($query, $status_group)

@@ -20,7 +20,7 @@ class InspectionController extends Controller
             ]);
         }
 
-        $inspections = Inspection::withRelationsForIndex()
+        $inspections = Inspection::withNestedRelationships()
         ->filterByInputs( $request->all() )
         ->orderByRaw("scheduled_date IS NULL DESC, scheduled_date {$request->get('sort', 'DESC')}")
         ->orderBy('inspector_id', 'ASC')
@@ -45,8 +45,8 @@ class InspectionController extends Controller
     public function create(WorkOrder $work_order)
     {
         return view('inspections.create', [
+            'all_status_form' => Inspection::getAllStatusForm(),
             'crews' => Crew::forInspections()->active()->get(),
-            'form_statuses' => Inspection::getFormStatuses(),
             'inspection' => new Inspection,
             'inspectors' => Inspector::all(),
             'work_order' => $work_order,
@@ -72,8 +72,8 @@ class InspectionController extends Controller
     public function edit(Request $request, Inspection $inspection)
     {
         return view('inspections.edit', [
+            'all_status_form' => Inspection::getAllStatusForm(),
             'crews' => Crew::forInspections()->active()->get(),
-            'form_statuses' => Inspection::getFormStatuses(),
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
             'url_back' => $request->filled('tab') 

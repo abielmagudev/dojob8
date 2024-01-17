@@ -27,7 +27,7 @@ class Inspection extends Model implements FilteringInterface
         'crew_id',
     ];
 
-    public static $all_statuses = [
+    public static $all_status = [
         'pending',
         'on hold',
         'passed',
@@ -97,7 +97,7 @@ class Inspection extends Model implements FilteringInterface
         return $query->whereIn('status', $status_group);
     }
 
-    public function scopeWithRelationsForIndex($query)
+    public function scopeWithNestedRelationships($query)
     {
         return $query->with([
             'crew',
@@ -146,14 +146,14 @@ class Inspection extends Model implements FilteringInterface
 
     // Statics
 
-    public static function getAllStatuses()
+    public static function getAllStatus()
     {
-        return collect( self::$all_statuses );
+        return collect( self::$all_status );
     }
 
-    public static function getFormStatuses()
+    public static function getAllStatusForm()
     {
-        return self::getAllStatuses()->filter(fn($status) => $status <> 'pending');
+        return self::getAllStatus()->reject(fn($status) => $status == 'pending');
     }
 
     public static function validateIsPendingStatus(array $values)

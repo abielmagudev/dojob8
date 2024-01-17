@@ -6,6 +6,7 @@ use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasScheduledDateTrait;
+use App\Models\Kernel\HasStatusTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Inspection extends Model implements FilteringInterface
     use HasFilteringTrait;
     use HasHookUsersTrait;
     use HasScheduledDateTrait;
+    use HasStatusTrait;
     use HasWorkOrdersTrait;
 
     protected $fillable = [
@@ -27,15 +29,15 @@ class Inspection extends Model implements FilteringInterface
         'crew_id',
     ];
 
+    protected $casts = [
+        'scheduled_date' => 'date',
+    ];
+
     public static $all_status = [
         'pending',
         'on hold',
         'passed',
         'failed',
-    ];
-
-    protected $casts = [
-        'scheduled_date' => 'date',
     ];
 
     
@@ -61,11 +63,6 @@ class Inspection extends Model implements FilteringInterface
         return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
     }
 
-    public function hasStatus(string $status)
-    {
-        return $this->status == $status;
-    }
-
     public function isPendingStatus()
     {
         return self::validateIsPendingStatus([
@@ -85,16 +82,6 @@ class Inspection extends Model implements FilteringInterface
     public function scopeWhereInspector($query, int $inspector_id)
     {
         return $query->where('inspector_id', $inspector_id);
-    }
-
-    public function scopeWhereStatus($query, $status)
-    {
-        return $query->where('status', $status);
-    }
-
-    public function scopeWhereInStatus($query, $status_group)
-    {
-        return $query->whereIn('status', $status_group);
     }
 
     public function scopeWithNestedRelationships($query)
@@ -118,16 +105,6 @@ class Inspection extends Model implements FilteringInterface
     public function scopeFilterByInspector($query, $inspector_id)
     {
         return ! is_null($inspector_id) ? $query->whereInspector($inspector_id) : $query;
-    }
-
-    public function scopeFilterByStatusGroup($query, $status_group)
-    {
-        return is_array($status_group) &&! empty($status_group) ? $query->whereInStatus($status_group) : $query;
-    }
-
-    public function scopeFilterByStatus($query, $status)
-    {
-        return ! is_null($status) ? $query->whereStatus($status) : $query;
     }
 
 

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="Activities">
+<x-card title="{{ $history->total() }} activities">
 
     @slot('options')
     <x-modal-trigger modal-id="historyFilterModal" class="btn btn-primary">

@@ -17,10 +17,10 @@ class HistoryController extends Controller
         ->appends( $request->query() );
         
         return view('history.index', [
+            'history' => $history,
             'request' => $request,
             'topics' => History::getTopics(),
             'users' => User::with('profile')->withTrashed()->get(),
-            'history' => $history,
         ]);
     }
 }

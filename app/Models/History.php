@@ -45,9 +45,9 @@ class History extends Model implements FilteringInterface
     public function inputFilterSettings(): array
     {
         return [
-            'from_date' => ['filterCreatedBetween', 'to_date'],
-            'topic' => 'filterTopic',
-            'user' => 'filterUser',
+            'dates' => 'filterByCreatedBetween',
+            'topic' => 'filterByTopic',
+            'user' => 'filterByUser',
         ];
     }
     
@@ -115,45 +115,45 @@ class History extends Model implements FilteringInterface
         return $query->whereNull('link');
     }
 
-    public function scopeWhereCreatedFrom($query, string $date)
+    public function scopeWhereCreatedFrom($query, string $value)
     {
-        return $query->whereDate('created_at', '>=', $date);
+        return $query->whereDate('created_at', '>=', $value);
     }
 
-    public function scopeWhereCreatedTo($query, string $date)
+    public function scopeWhereCreatedTo($query, string $value)
     {
-        return $query->whereDate('created_at', '<=', $date);
+        return $query->whereDate('created_at', '<=', $value);
     }
 
-    public function scopeWhereCreatedBetween($query, array $from_to_dates)
+    public function scopeWhereCreatedBetween($query, array $values)
     {
-        return $query->whereBetween('created_at', $from_to_dates);
+        return $query->whereBetween('created_at', $values);
     }
 
 
     // Filters
 
-    public function scopeFilterCreatedBetween($query, string $from_date = null, string $to_date = null)
+    public function scopeFilterByCreatedBetween($query, array $dates)
     {
         // Both From and To
-        if( isset($from_date) && isset($to_date) ) {
-            return $query->whereCreatedBetween([$from_date, $to_date]);
+        if( isset($dates['from'], $dates['to']) ) {
+            return $query->whereCreatedBetween([$dates['from'], $dates['to']]);
         }
         
         // Only From
-        if( isset($from_date) &&! isset($to_date) ) {
-            return $query->whereCreatedFrom($from_date);
+        if( isset($dates['from']) &&! isset($dates['to']) ) {
+            return $query->whereCreatedFrom($dates['from']);
         }
 
         // Only To
-        if(! isset($from_date) && isset($to_date) ) {
-            return $query->whereCreatedTo($to_date);
+        if(! isset($dates['from']) && isset($dates['to']) ) {
+            return $query->whereCreatedTo($dates['to']);
         }
 
         return $query;
     }
 
-    public function scopeFilterTopic($query, $topic)
+    public function scopeFilterByTopic($query, $topic)
     {
         if( is_null($topic) ) {
             return $query;
@@ -164,13 +164,9 @@ class History extends Model implements FilteringInterface
         return $query->whereModelType($classname);
     }
 
-    public function scopeFilterUser($query, $user_id)
+    public function scopeFilterByUser($query, $user_id)
     {
-        if( is_null($user_id) ) {
-            return $query;
-        }
-
-        return $query->whereUser($user_id);
+        return ! is_null($user_id) ? $query->whereUser($user_id) : $query;
     }
 
 
@@ -199,14 +195,14 @@ class History extends Model implements FilteringInterface
         return array_keys( self::getTopicsClassnames() );
     }
 
-    public static function exitsTopic(string $topic)
+    public static function existsTopic(string $topic)
     {
         return array_key_exists($topic, self::getTopicsClassnames());
     }
 
     public static function getClassnameByTopic($topic)
     {
-        return self::exitsTopic($topic) ? self::getTopicsClassnames()[$topic] : null;
+        return self::existsTopic($topic) ? self::getTopicsClassnames()[$topic] : null;
     }
 
 

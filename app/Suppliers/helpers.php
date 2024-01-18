@@ -40,8 +40,12 @@ if(! function_exists('wordInitials') )
 
 if(! function_exists('marker') )
 {
-    function marker(string $needle, string $text)
+    function marker($needle, string $text)
     {
+        if( is_null($needle) || trim($needle) == '' ) {
+            return $text;
+        }
+
         return preg_replace("/({$needle})/i", "<mark class='px-0'>$1</mark>", $text);
     }
 }

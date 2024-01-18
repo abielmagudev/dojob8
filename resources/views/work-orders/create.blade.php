@@ -6,19 +6,12 @@
     'Create',
 ]" />
 <x-page-title>
-    {{ $client->full_name }}
-
+    Work orders
     @slot('subtitle')
-    <div>
-        <span>{{ $client->address_data->only(['street', 'city_name', 'state_name', 'country_code'])->filter()->implode(', ') }}</span>,
-        <span>ZIP {{ $client->zip_code }}</span>
-        @if($client->hasDistrictCode())                
-        <span>- DC {{ $client->district_code }}</span>
-        @endif
-    </div>
-    <div>
-        <x-custom.tooltip-contact-channels :channels="$client->contact_data->filter()" class="badge border" />
-    </div>
+    @include('clients.__.inline-summary-information')
+    <small>
+        <a href="{{ route('clients.show', $client) }}" class="text-decoration-none">See client</a>
+    </small>
     @endslot
 </x-page-title>
 @endsection

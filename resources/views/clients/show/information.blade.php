@@ -10,7 +10,9 @@
     </x-small-title>
 
     <x-small-title title="Contact">
-        <x-custom.information-contact-channels :channels="$client->contact_data->filter()" />
+        <x-custom.information-contact-channels
+            :channels="$client->contact_data->filter()"
+        />
     </x-small-title>
 
     <x-small-title title="Notes">

@@ -96,7 +96,7 @@
             </td>
 
             <td class="text-nowrap">
-                @include('clients.__.information-table-cell', [
+                @include('clients.__.inline-summary-information', [
                     'client' => $work_order->client,
                 ])
             </td>

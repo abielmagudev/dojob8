@@ -70,7 +70,7 @@
             </td>
             <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
             <td class="text-nowrap">
-                @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])
+                @include('clients.__.inline-summary-information', ['client' => $inspection->work_order->client])
             </td>
             <td class="text-end">
                 <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-outline-warning btn-sm">

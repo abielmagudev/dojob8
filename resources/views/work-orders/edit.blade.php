@@ -8,19 +8,8 @@
 ]" />
 <x-page-title>
     Work order #{{ $work_order->id }}
-
     @slot('subtitle')
-    <div>
-        <span>{{ $client->full_name }}</span>,
-        <span>{{ $client->address_data->only(['street', 'city_name', 'state_name', 'country_code'])->filter()->implode(', ') }}</span>,
-        <span>ZIP {{ $client->zip_code }}</span>
-        @if($client->hasDistrictCode())                
-        <span>- DC {{ $client->district_code }}</span>
-        @endif
-    </div>
-    <div>
-        <x-custom.tooltip-contact-channels :channels="$client->contact_data->filter()" class="badge border" />
-    </div>
+    @include('clients.__.inline-summary-information', ['client' => $work_order->client])
     @endslot
 </x-page-title>
 @endsection

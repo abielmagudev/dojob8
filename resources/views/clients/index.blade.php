@@ -14,8 +14,8 @@
 
     @if( $request->filled('search') )
     <p>
-        <span class="text-secondary">Searching with...</span>
-        <em class="ms-1">{{ $request->get('search') }}</em>
+        <span class="text-secondary">Searching:</span>
+        <em class="ms-1">"{{ $request->get('search') }}"</em>
     </p>
     @endif
 
@@ -23,8 +23,10 @@
     <x-table>
         <x-slot name="thead">
             <tr>
-                <th>Full name</th>
+                <th class="text-nowrap">Full name</th>
                 <th>Address</th>
+                <th class="text-nowrap">Zip code</th>
+                {{-- <th class="text-nowrap">District code</th> --}}
                 <th>Contact</th>
                 <th></th>
             </tr>
@@ -33,13 +35,34 @@
         @foreach($clients as $client)
         <tr>
             <td class="text-nowrap">
-                {!! $request->filled('search') ? marker($request->get('search'), $client->full_name) : $client->full_name !!}
+                {!! marker($request->get('search', ''), $client->full_name) !!}
             </td>
             <td class="text-nowrap">
-                @include('clients.__.address-table-cell', ['mark' => $request->get('search')])
+                {!! marker($request->get('search', ''), $client->street) !!},
+                {!! marker($request->get('search', ''), $client->city_name) !!},
+                {!! marker($request->get('search', ''), $client->state_name) !!}
+                {{-- {!! marker($request->get('search', ''), $client->country_name) !!} --}}
+                @include('clients.__.link-google-maps')
             </td>
+            <td class="text-nowrap text-center">
+                {!! marker($request->get('search', ''), $client->zip_code) !!}
+            </td>
+            {{-- 
+            <td class="text-nowrap text-center">
+                {!! marker($request->get('search', ''), $client->district_code ?? '') !!}
+            </td>  
+            --}}
             <td class="text-nowrap">
-                @include('clients.__.contact-table-cell', ['mark' => $request->get('search')])
+                @foreach($client->contact_data->filter() as $key => $value)
+                <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>
+                <x-tooltip title="{{ ucfirst($key) }}">
+                    <span class="badge border">
+                        <a href="{{ $prefix }}:{{ $value }}" class="text-decoration-none">
+                            {!! marker($request->get('search', ''), $value) !!}
+                        </a>
+                    </span>
+                </x-tooltip>
+                @endforeach
             </td>
             <td class="text-nowrap text-end">
 

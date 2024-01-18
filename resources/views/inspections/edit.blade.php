@@ -3,10 +3,20 @@
 @section('header')
 <x-breadcrumb :items="[
     'Inspections' => route('inspections.index'),
-    sprintf('#%s', $inspection->id) => route('inspections.show', $inspection),
+    $inspection->id,
     'Edit'
-]" />
-<x-page-title>Inspection #{{ $inspection->id }}</x-page-title>
+    ]" />
+{{-- sprintf('#%s', $inspection->id) => route('inspections.show', $inspection), --}}
+<x-page-title>
+    Inspection #{{ $inspection->id }}
+    @slot('subtitle')
+    <div>
+        <a href="{{ route('work-orders.show', [$inspection->work_order, 'tab' => 'inspections']) }}" class="text-decoration-none">
+            Work order #{{ $inspection->work_order->id }} - {{ $inspection->work_order->job->name }}
+        </a>
+    </div>
+    @endslot
+</x-page-title>
 @endsection
 
 @section('content')

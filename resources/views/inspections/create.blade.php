@@ -5,7 +5,16 @@
     'Inspections' => route('inspections.index'),
     'Create',
 ]" />
-<x-page-title>Inspections</x-page-title>
+<x-page-title>
+    Inspections
+    @slot('subtitle')
+    <div>
+        <a href="{{ route('work-orders.show', [$work_order, 'tab' => 'inspections']) }}" class="text-decoration-none">
+            Work order #{{ $work_order->id }} - {{ $work_order->job->name }}
+        </a>
+    </div>
+    @endslot
+</x-page-title>
 @endsection
 
 @section('content')

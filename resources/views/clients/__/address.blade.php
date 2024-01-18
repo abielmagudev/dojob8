@@ -1,9 +1,20 @@
 <div>
     <address>
-        <span>{{ $client->full_name }}</span><br>
-        <span>{{ $client->street }}</span><br>
-        <span>{{ $client->city_name }}, {{ $client->state_code }}, {{ $client->country_name }}</span><br>
-        <span>Zip {{ $client->zip_code }}</span><br>
-        <span>District {{ $client->district_code }}</span><br>
+        {{ $client->street }} 
+        @include('clients.__.link-google-maps')
+        <br>
+    
+        {{ $client->city_name }},
+        {{ $client->state_name }},
+        {{ $client->country_code }}
+        <br>
+    
+        @if( $client->hasDistrictCode() )
+        {{ $client->district_code }}
+        <em class="small">(District code)</em>
+        <br>
+        @endif
+
+        <b>{{ $client->zip_code }}</b>
     </address>
 </div>

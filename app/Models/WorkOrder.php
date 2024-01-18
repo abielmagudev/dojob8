@@ -72,13 +72,11 @@ class WorkOrder extends Model implements FilteringInterface
         'denialed',
     ];
 
-    public static $statuses_for_rework = [
-        'done',
+    public static $rework_statuses = [
         'completed'
     ];
 
-    public static $statuses_for_warranty = [
-        'inspected',
+    public static $warranty_statuses = [
         'closed',
     ];
 
@@ -400,17 +398,17 @@ class WorkOrder extends Model implements FilteringInterface
 
     public static function inIncompleteStatuses(string $status)
     {
-        return self::getIncompleteStatuses()->contains($status);
+        return in_array($status, self::$incomplete_statuses);
     }
 
     public static function inReworkStatuses(string $status)
     {
-        return in_array($status, self::$statuses_for_rework);
+        return in_array($status, self::$rework_statuses);
     }
 
     public static function inWarrantyStatuses(string $status)
     {
-        return in_array($status, self::$statuses_for_warranty);
+        return in_array($status, self::$warranty_statuses);
     }
 
     public static function inArchivedStatuses(string $status)

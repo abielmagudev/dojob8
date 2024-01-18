@@ -11,10 +11,15 @@
             <i class="bi bi-pencil-fill"></i>
         </a>
     </div>
+
     {{ $inspector->name }}
-    @slot('subtitle')
-    {{ $inspector->notes }}
-    @endslot
+
+    @if( $inspector->hasNotes() )     
+        @slot('subtitle')
+            <b>Notes:</b>
+            {{ $inspector->notes }}
+        @endslot
+    @endif
 </x-page-title>
 @endsection
 

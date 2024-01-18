@@ -62,7 +62,12 @@ class Inspector extends Model
         return $this->hasPendingInspections() || $this->hasOnHoldInspections();
     }
 
+    public function hasNotes()
+    {
+        return ! is_null($this->notes);
+    }
 
+    
     // Relationships
 
     public function inspections()

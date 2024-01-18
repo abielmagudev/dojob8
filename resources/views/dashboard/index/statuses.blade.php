@@ -3,7 +3,7 @@
         <x-slot name="thead">
             <tr>
                 @foreach($all_statuses_work_order as $status)
-                <th class="fw-normal text-uppercase small text-nowrap">{{ $status }}</th>
+                <th class="fw-normal text-uppercase text-nowrap small border-0">{{ $status }}</th>
                 @endforeach
             </tr>
         </x-slot>

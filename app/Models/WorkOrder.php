@@ -33,7 +33,7 @@ class WorkOrder extends Model implements FilteringInterface
         'working_at',
         'done_at',
         'completed_at',
-        'closed_at',
+        'archived_at',
         'notes',
     ];
 
@@ -64,6 +64,12 @@ class WorkOrder extends Model implements FilteringInterface
         'new',
         'working',
         'done',
+    ];
+
+    public static $archived_statuses = [ 
+        'closed',
+        'canceled',
+        'denialed',
     ];
 
     public static $statuses_for_rework = [
@@ -368,16 +374,6 @@ class WorkOrder extends Model implements FilteringInterface
         return self::getAllTypes()->filter(fn($value) => $value <> 'default');
     }
 
-    public static function inReworkStatuses(string $status)
-    {
-        return in_array($status, self::$statuses_for_rework);
-    }
-
-    public static function inWarrantyStatuses(string $status)
-    {
-        return in_array($status, self::$statuses_for_warranty);
-    }
-
     public static function getAllStatuses()
     {
         return collect(self::$all_statuses);
@@ -395,15 +391,30 @@ class WorkOrder extends Model implements FilteringInterface
         );
     }
 
-    public static function inIncompleteStatuses(string $status)
-    {
-        return self::getIncompleteStatuses()->contains($status);
-    }
-
     public static function filterByIncompleteStatuses(Collection $work_orders)
     {
         return $work_orders->filter(function ($wo) {
             return self::inIncompleteStatuses($wo->status);
         });
+    }
+
+    public static function inIncompleteStatuses(string $status)
+    {
+        return self::getIncompleteStatuses()->contains($status);
+    }
+
+    public static function inReworkStatuses(string $status)
+    {
+        return in_array($status, self::$statuses_for_rework);
+    }
+
+    public static function inWarrantyStatuses(string $status)
+    {
+        return in_array($status, self::$statuses_for_warranty);
+    }
+
+    public static function inArchivedStatuses(string $status)
+    {
+        return in_array($status, self::$archived_statuses);
     }
 }

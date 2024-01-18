@@ -7,5 +7,5 @@
         @endforeach
     </select>
 
-    <x-error name="contractor"></x-error>
+    <x-form-feedback error="contractor"></x-error>
 </x-form-field-horizontal>

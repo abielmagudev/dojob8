@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md">
             <input id="backgroundColorInput" type="color" class="form-control form-control-color w-100" name="background_color" value="{{ old('background_color', ($crew->background_color ?? '#333333')) }}">
-            <x-error name="background_color">Background color</x-error>
+            <x-form-feedback error="background_color">Background color</x-error>
         </div>
         <div class="col-md">
             <div class="form-control form-control-color w-100">
@@ -26,7 +26,7 @@
                     </label>
                 </div>
             </div>
-            <x-error name="text_color_mode">Text color mode</x-error>
+            <x-form-feedback error="text_color_mode">Text color mode</x-error>
         </div>
     </div>
 </x-form-control-horizontal>

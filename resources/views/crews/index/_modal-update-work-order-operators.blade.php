@@ -5,7 +5,7 @@
         <div class="mb-3">
             <label for="scheduledDateInput" class="form-label">Schedule date</label>
             <input id='scheduledDateInput' class="form-control" type="date" name="scheduled_date" value="" required>
-            <x-error name="scheduled_date" />
+            <x-form-feedback error="scheduled_date" />
         </div>
 
         <div class="form-check">

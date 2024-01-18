@@ -6,7 +6,7 @@
         @endforeach
         
     </select>
-    <x-error name="type" />
+    <x-form-feedback error="type" />
 
     @include('work-orders._form.rework')
     @include('work-orders._form.warranty')

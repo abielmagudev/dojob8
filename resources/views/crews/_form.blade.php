@@ -1,7 +1,7 @@
 @csrf
 <x-form-field-horizontal for="nameInput" label="Name">
     <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name', $crew->name) }}" required>
-    <x-error name="name" />
+    <x-form-feedback error="name" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="backgroundColorInput" label="Color">
@@ -15,8 +15,8 @@
         <label class="form-check-label small" for="textColorModeSwitch">Dark or light text color</label>
     </div>
 
-    <x-error name="background_color" />
-    <x-error name="text_color_mode" />
+    <x-form-feedback error="background_color" />
+    <x-form-feedback error="text_color_mode" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="taskOptions" label="Tasks">
@@ -36,13 +36,13 @@
         </table>
     </div>
 
-    <x-error name="tasks" />
-    <x-error name="tasks.*" />
+    <x-form-feedback error="tasks" />
+    <x-form-feedback error="tasks.*" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="descriptionTextarea" label="Description" label-class="form-label-optional">
     <textarea id="descriptionTextarea" rows="3" class="form-control" name="description">{{ old('description', $crew->description) }}</textarea>
-    <x-error name="description" />
+    <x-form-feedback error="description" />
 </x-form-field-horizontal>
 <br>
 
@@ -51,5 +51,5 @@
     <input class="form-check-input" id="isActiveSwitch" type="checkbox" role="switch" name="is_active" value="1" {{ isChecked( old('is_active', $crew->is_active) == 1 ) }}>
     <label class="form-check-label" for="isActiveSwitch"><b>Active.</b> If it is deactivated, it cannot be used in new orders and the members of this crew will be removed.</label>
 </div>
-<x-error name="is_active" />
+<x-form-feedback error="is_active" />
 @endif

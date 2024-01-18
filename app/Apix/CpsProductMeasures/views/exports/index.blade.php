@@ -25,17 +25,17 @@
                 </optgroup>
                 @endforeach
             </select>
-            <x-error name="product" />
+            <x-form-feedback error="product" />
         </div>
         <div class="mb-3">
             <label for="fromDate" class="form-label">From</label>
             <input type="date" name="from" id="fromDate" class="form-control {{ bsInputInvalid( $errors->has('from') ) }}">
-            <x-error name="from" />
+            <x-form-feedback error="from" />
         </div>
         <div class="mb-3">
             <label for="toDate" class="form-label">To</label>
             <input type="date" name="to" id="toDate" class="form-control {{ bsInputInvalid( $errors->has('to') ) }}">
-            <x-error name="to" />
+            <x-form-feedback error="to" />
         </div>
         <br>
         <div class="text-end">

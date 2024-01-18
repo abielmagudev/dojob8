@@ -2,7 +2,7 @@
 
 <x-form-field-horizontal for="scheduledDateInput" label="Schedule">
     <input id="scheduledDateInput" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" type="date" name="scheduled_date" value="{{ old('scheduled_date', $inspection->scheduled_date_input) }}">
-    <x-error name="scheduled_date" />
+    <x-form-feedback error="scheduled_date" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="inspectorSelect" label="Inspector">
@@ -11,7 +11,7 @@
         <option value="{{ $inspector->id }}" {{ isSelected($inspector->id == $inspection->inspector_id) }}>{{ $inspector->name }}</option>
         @endforeach
     </select>
-    <x-error name="inspector" />
+    <x-form-feedback error="inspector" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="crewSelect" label="Crew">
@@ -22,13 +22,13 @@
             <option value="{{ $crew->id }}" {{ isSelected($crew->id == $inspection->crew_id) }}>{{ $crew->name }}</option>
             @endforeach
         </select>
-        <x-error name="crew" />
+        <x-form-feedback error="crew" />
     </div>
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="observationsTextarea" label="Observations" label-class="form-label-optional {{ bsInputInvalid( $errors->has('observations') ) }}">
     <textarea id="observationsTextarea" class="form-control" name="observations" rows="3">{{ old('observations', $inspection->observations) }}</textarea>
-    <x-error name="observations" />
+    <x-form-feedback error="observations" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="statusSelect" label="Status">
@@ -41,5 +41,5 @@
         <option value="{{ $status }}" {{ isSelected( ($status === $inspection->status) ) }}>{{ ucfirst($status) }}</option>
         @endforeach
     </select>
-    <x-error name="status" important>If there is missing schedule information... it will automatically be <b>pending status</b>.</x-error>
+    <x-form-feedback error="status" important>If there is missing schedule information... it will automatically be <b>pending status</b>.</x-error>
 </x-form-field-horizontal>

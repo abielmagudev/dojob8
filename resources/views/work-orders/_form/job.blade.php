@@ -9,7 +9,7 @@
             <option value="{{ $job->id }}" data-has-extensions="{{ (int) $job->hasExtensions() }}" {{ isSelected( old('job') == $job->id ) }}>{{ $job->name }}</option>
             @endforeach
         </select>
-        <x-error name="job"></x-error>
+        <x-form-feedback error="job"></x-error>
         
         {{-- Show job for edit work_order --}}
         @else

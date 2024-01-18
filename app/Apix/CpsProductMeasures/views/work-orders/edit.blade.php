@@ -40,9 +40,9 @@
     @endfor 
 </div>
 
-<x-error name="products" />
-<x-error name="products.*" />
-<x-error name="quantities" />
-<x-error name="quantities.*" />
+<x-form-feedback error="products" />
+<x-form-feedback error="products.*" />
+<x-form-feedback error="quantities" />
+<x-form-feedback error="quantities.*" />
 
 <script src="{{ asset('x-js/cpspm.js') }}" fake></script>

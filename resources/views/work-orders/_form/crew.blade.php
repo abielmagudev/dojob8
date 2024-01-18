@@ -9,5 +9,5 @@
 
         @endforeach
     </select>
-    <x-error name="crew" />
+    <x-form-feedback error="crew" />
 </x-form-field-horizontal>

@@ -24,7 +24,7 @@
                     </label>
                 </div>
             </div>
-            <x-error name="is_active" />
+            <x-form-feedback error="is_active" />
         </x-form-field-horizontal>
         <br>
         

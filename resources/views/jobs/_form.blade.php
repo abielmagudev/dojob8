@@ -1,12 +1,12 @@
 @csrf
 <x-form-field-horizontal for="inputName" label="Name">
     <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $job->name) }}" required>
-    <x-error name="name" />
+    <x-form-feedback error="name" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="textareaDescription" label="Description" label-class="form-label-optional">
     <textarea id="textareaDescription" rows="3" class="form-control" name="description">{{ old('description', $job->description) }}</textarea>
-    <x-error name="description" />
+    <x-form-feedback error="description" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal label="Pre-configured required inspections" label-class="form-label-optional">    
@@ -29,8 +29,8 @@
             @endforeach
         </x-table>
     </div>
-    <x-error name="preconfigured_required_inspections" />
-    <x-error name="preconfigured_required_inspections.*" />
+    <x-form-feedback error="preconfigured_required_inspections" />
+    <x-form-feedback error="preconfigured_required_inspections.*" />
 </x-form-field-horizontal>
 
 @if( $job->id )

@@ -24,7 +24,7 @@ class WorkOrderFactory extends Factory
             'job_id' => $this->faker->numberBetween(1, 10),
             'notes' => $this->faker->optional()->sentence(),
             'scheduled_date' => $this->faker->dateTimeBetween('-2 years'),
-            'working_at' => in_array($status, ['working', 'done']) ? $this->faker->dateTimeBetween('-2 years') : null,
+            'working_at' => WorkOrder::inCrewStatuses($status) ? $this->faker->dateTimeBetween('-2 years') : null,
             'done_at' => WorkOrder::inIncompleteStatuses($status) ? $this->faker->dateTimeBetween('-2 years') : null,
             'completed_at' => ! WorkOrder::inIncompleteStatuses($status) ? $this->faker->dateTimeBetween('-2 years') : null,
             'archived_at' => WorkOrder::inArchivedStatuses($status) ? $this->faker->dateTimeBetween('-2 years') : null,

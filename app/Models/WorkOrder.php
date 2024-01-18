@@ -80,6 +80,11 @@ class WorkOrder extends Model implements FilteringInterface
         'closed',
     ];
 
+    public static $crew_statuses = [
+        'working',
+        'done',
+    ];
+
 
     // Interface
 
@@ -414,5 +419,10 @@ class WorkOrder extends Model implements FilteringInterface
     public static function inArchivedStatuses(string $status)
     {
         return in_array($status, self::$archived_statuses);
+    }
+
+    public static function inCrewStatuses(string $status)
+    {
+        return in_array($status, self::$crew_statuses);
     }
 }

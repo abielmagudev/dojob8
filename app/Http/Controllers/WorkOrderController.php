@@ -29,7 +29,7 @@ class WorkOrderController extends Controller
             ]);
         }
 
-        $work_orders = WorkOrder::withRelationships()
+        $work_orders = WorkOrder::withBasicRelationships()
         ->filterByInputs( $request->all() )
         ->orderBy( 
             $request->has('fltr') ? 'scheduled_date' : 'crew_id', 

@@ -24,11 +24,12 @@ class WorkOrder extends Model implements FilteringInterface
     protected $fillable = [
         'status',
         'scheduled_date',
+        'rework_id',
+        'warranty_id',
         'client_id',
         'contractor_id',
         'crew_id',
         'job_id',
-        'rework_id',
         'working_at',
         'done_at',
         'completed_at',
@@ -38,6 +39,12 @@ class WorkOrder extends Model implements FilteringInterface
 
     protected $casts = [
         'scheduled_date' => 'date',
+    ];
+
+    public static $all_types = [
+        'default',
+        'rework',
+        'warranty',
     ];
 
     public static $all_statuses = [
@@ -59,6 +66,16 @@ class WorkOrder extends Model implements FilteringInterface
         'done',
     ];
 
+    public static $statuses_for_rework = [
+        'done',
+        'completed'
+    ];
+
+    public static $statuses_for_warranty = [
+        'inspected',
+        'closed',
+    ];
+
 
     // Interface
 
@@ -77,12 +94,23 @@ class WorkOrder extends Model implements FilteringInterface
     }
 
 
-    // Validators
+    // Attributes
 
-    public function hasCrew()
+    public function getTypeAttribute()
     {
-        return (bool) $this->crew_id && $this->crew;
+        if( $this->isRework() ) {
+            return 'rework';
+        }
+
+        if( $this->isWarranty() ) {
+            return 'warranty';
+        }
+
+        return 'default';
     }
+
+
+    // Validators
 
     public function hasContractor()
     {
@@ -92,6 +120,16 @@ class WorkOrder extends Model implements FilteringInterface
     public function hasMembers()
     {
         return (bool) $this->members_count || $this->members->count();
+    }
+
+    public function hasReworks()
+    {
+        return (bool) $this->reworks_count || $this->reworks->count();
+    }
+
+    public function hasWarranties()
+    {
+        return (bool) $this->warranties_count || $this->members->count();
     }
 
     public function isIncomplete()
@@ -104,7 +142,32 @@ class WorkOrder extends Model implements FilteringInterface
         return ! self::inIncompleteStatuses($this->status);
     }
 
+    public function isRework()
+    {
+        return ! is_null($this->rework_id) && is_a($this->rework, self::class);
+    }
+
+    public function isWarranty()
+    {
+        return ! is_null($this->warranty_id) && is_a($this->warranty, self::class);
+    }
+
+    public function isDefault()
+    {
+        return ! $this->isRework() &&! $this->isWarranty();
+    }
+
+    public function qualifiesForRework()
+    {
+        return $this->isDefault() && self::inReworkStatuses($this->status);
+    }
+
+    public function qualifiesForWarranty()
+    {
+        return $this->isDefault() && self::inWarrantyStatuses($this->status);
+    }
     
+
     // Scopes
 
     public function scopeIncompleteStatus($query)
@@ -144,6 +207,46 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereIn('job_id', $jobs_id);
     }
 
+    public function scopeWhereInRework($query, array $values)
+    {
+        return $query->whereIn('rework_id', $values);
+    }
+
+    public function scopeWhereInWarranty($query, array $values)
+    {
+        return $query->whereIn('warranty_id', $values);
+    }
+
+    public function scopeWhereRework($query, $value)
+    {
+        return $query->where('rework_id', $value);
+    }
+
+    public function scopeWhereWarranty($query, $value)
+    {
+        return $query->where('warranty_id', $value);
+    }
+
+    public function scopeWhereNullRework($query)
+    {
+        return $query->whereNull('rework_id');
+    }
+
+    public function scopeWhereNullWarranty($query)
+    {
+        return $query->whereNull('warranty_id');
+    }
+
+    public function scopeWhereNotNullRework($query)
+    {
+        return $query->whereNotNull('rework_id');
+    }
+
+    public function scopeWhereNotNullWarranty($query)
+    {
+        return $query->whereNotNull('warranty_id');
+    }
+
 
     // Filters
 
@@ -175,13 +278,27 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereContractor($contractor_id);
     }
 
-    public function scopeWithRelationships($query)
+    public function scopeWithBasicRelationships($query)
     {
         return $query->with([
             'client',
             'contractor',
             'crew',
             'job',
+        ]);
+    }
+
+    public function scopeWithAllRelationships($query)
+    {
+        return $query->with([
+            'client',
+            'contractor',
+            'crew',
+            'job',
+            'rework',
+            'warranty',
+            'reworks',
+            'warranties',
         ]);
     }
 
@@ -208,14 +325,24 @@ class WorkOrder extends Model implements FilteringInterface
         return $this->belongsTo(Contractor::class);
     }
 
-    public function inspections()
+    public function rework()
     {
-        return $this->hasMany(Inspection::class);
+        return $this->belongsTo(self::class, 'id', 'rework_id');
+    }
+
+    public function warranty()
+    {
+        return $this->belongsTo(self::class, 'id', 'warranty_id');
     }
 
     public function members()
     {
         return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
+    }
+
+    public function inspections()
+    {
+        return $this->hasMany(Inspection::class);
     }
 
     public function reworks()
@@ -230,6 +357,26 @@ class WorkOrder extends Model implements FilteringInterface
 
 
     // Statics
+
+    public static function getAllTypes()
+    {
+        return collect( self::$all_types );
+    }
+
+    public static function getTypesNonDefault()
+    {
+        return self::getAllTypes()->filter(fn($value) => $value <> 'default');
+    }
+
+    public static function inReworkStatuses(string $status)
+    {
+        return in_array($status, self::$statuses_for_rework);
+    }
+
+    public static function inWarrantyStatuses(string $status)
+    {
+        return in_array($status, self::$statuses_for_warranty);
+    }
 
     public static function getAllStatuses()
     {

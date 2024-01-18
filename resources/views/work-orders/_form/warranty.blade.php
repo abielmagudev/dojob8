@@ -1,20 +1,12 @@
-<x-form-field-horizontal for="warrantyTypeSelect" label="Warranty" label-class="form-label-optional">
-
-    <div class="mb-3">
-        <select id="warrantyTypeSelect" class="form-select" name="warranty_type">
-            <option value="no" selected>No, it's not a warranty</option>
-            <option value="maintenance">Maintenance warranty</option>
-            <option value="warranty">Repair warranty</option>
-        </select>
-    </div>
-
-    <div>
-        <select id="warrantyWorkOrderSelect" class="form-select" name="warranty_work_order" required>
-            @foreach($client->work_orders as $work_order_stored)
-            <option value="{{ $work_order_stored->id }}">#{{ $work_order_stored->id }} - {{ $work_order_stored->job->name }}</option>
-            @endforeach
-        </select>
-    </div>
-
-</x-form-field-horizontal>
-
+<div class="d-none mt-3">
+    <select id="warrantySelect" class="form-select" name="warranty" disabled required>
+        @foreach($client->work_orders as $wo)
+        
+            @if( $wo->qualifiesForWarranty() )
+            <option value="{{ $wo->id }}">#{{ $wo->id }} - {{ $wo->job->name }}</option>
+            @endif
+        
+        @endforeach
+    </select>
+    <x-form-helper important>Work orders with <b>close status</b></x-form-helper>
+</div>

@@ -18,6 +18,10 @@
 <x-card title="Edit work order">
     <form action="{{ route('work-orders.update', $work_order) }}" method="post">
         @method('patch')
+        @include('work-orders._form.schedule')
+        <x-form-field-horizontal label="Type">
+            <input class="form-control" value="{{ title($work_order->type) }}" disabled />
+        </x-form-field-horizontal>
         @include('work-orders._form')
         @include('work-orders._form.status')
         <br>

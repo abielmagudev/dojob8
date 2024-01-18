@@ -1,4 +1,4 @@
-<x-form-field-horizontal for="contractorSelect" label="Contractor" label-class="form-label-optional">
+<x-form-field-horizontal for="contractorSelect" label="Contractor">
     <select id="contractorSelect" class="form-select" name="contractor">
         <option selected label="None"></option>
 

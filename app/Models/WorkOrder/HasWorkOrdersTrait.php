@@ -20,17 +20,6 @@ trait HasWorkOrdersTrait
         return $this->incomplete_work_orders ? $this->incomplete_work_orders->count() : 0;
     }
 
-    // public function getIncompleteWorkOrdersUrlAttribute()
-    // {
-    //     return $this->getUrlUnfinishedWorkOrders();
-    // }
-
-    // public function getUrlOwnWorkOrdersAttribute()
-    // {
-    //     return $this->getUrlOwnWorkOrders();
-    // }
-
-
 
     // Actions
 
@@ -45,7 +34,6 @@ trait HasWorkOrdersTrait
     }
 
     
-
     // Validators
 
     public function hasWorkOrders()

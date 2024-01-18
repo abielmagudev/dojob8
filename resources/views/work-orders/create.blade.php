@@ -19,13 +19,15 @@
 @section('content')
 <x-card title="New work order">
     <form action="{{ route('work-orders.store') }}" method="post">
+        @include('work-orders._form.schedule')
+        @include('work-orders._form.type')
         @include('work-orders._form')
         <input type="hidden" name="client" value="{{ $client->id }}">  
         <x-form-field-horizontal>
             <div class="alert alert-warning">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="afterSavingCheckbox" name="after_saving" value="1" checked>
-                    <label class="form-check-label" for="afterSavingCheckbox">Create a new work order again for this client, after it is created.</label>
+                    <label class="form-check-label" for="afterSavingCheckbox">Create a new work order again for this client, after saving.</label>
                 </div>
             </div>
         </x-form-field-horizontal>

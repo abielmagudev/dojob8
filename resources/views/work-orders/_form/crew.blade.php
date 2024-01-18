@@ -1,5 +1,6 @@
 <x-form-field-horizontal for="crewSelect" label="Crew">
-    <select id="crewSelect" class="form-select" name="crew">
+    <select id="crewSelect" class="form-select" name="crew" required>
+        <option disabled selected label="Choose..."></option>
         @foreach($crews as $crew)          
 
         @if( $crew->id == $work_order->crew_id || $crew->hasTask('work orders') )

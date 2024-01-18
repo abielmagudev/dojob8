@@ -45,7 +45,7 @@
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
             <td class="text-nowrap">
-                @include('clients.__.address-table-cell', ['client' => $work_order->client])
+                @include('clients.__.inline-summary-information', ['client' => $work_order->client])
             </td>
             <td>
                 @include('work-orders.__.status-flag', [

@@ -1,10 +1,18 @@
 <x-card title="Inspections">
     @slot('options')
-        @if( $inspector->hasPendingOrOnHoldInspections() )
-        @include('inspections.__.button-counter-pending-on-hold', [
-            'class' => 'btn btn-warning',
-            'counter' => $inspector->pending_and_on_hold_inspections->count(),
+        @if( $inspector->hasPendingInspections() )
+        @include('inspections.__.button-counter-pending', [
+            'counter' => $inspector->pending_inspections->count(),
             'parameters' => ['inspector' => $inspector->id],
+            'class' => 'btn btn-warning'
+        ])
+        @endif
+
+        @if( $inspector->hasOnHoldInspections() )
+        @include('inspections.__.button-counter-on-hold', [
+            'counter' => $inspector->on_hold_inspections->count(),
+            'parameters' => ['inspector' => $inspector->id],
+            'class' => 'btn btn-primary'
         ])
         @endif
 
@@ -53,7 +61,7 @@
                 @endif
             </td>
             <td class="text-nowrap">
-                @include('clients.__.address-table-cell', ['client' => $inspection->work_order->client])
+                @include('clients.__.inline-summary-information', ['client' => $inspection->work_order->client])
             </td>
             <td>
                 <a href="{{ route('work-orders.show', $inspection->work_order_id) }}">#{{ $inspection->work_order_id }}</a>

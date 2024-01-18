@@ -26,9 +26,16 @@
             <td>{{ $inspector->name }}</td>
             <td>{{ $inspector->notes }}</td>
             <td class="text-end">
-                @if( $inspector->hasPendingOrOnHoldInspections() )
-                @include('inspections.__.button-counter-pending-on-hold', [
-                    'counter' => $inspector->pending_and_on_hold_inspections->count(),
+                @if( $inspector->hasPendingInspections() )
+                @include('inspections.__.button-counter-pending', [
+                    'counter' => $inspector->pending_inspections->count(),
+                    'parameters' => ['inspector' => $inspector->id],
+                ])
+                @endif
+
+                @if( $inspector->hasOnHoldInspections() )
+                @include('inspections.__.button-counter-on-hold', [
+                    'counter' => $inspector->on_hold_inspections->count(),
                     'parameters' => ['inspector' => $inspector->id],
                 ])
                 @endif

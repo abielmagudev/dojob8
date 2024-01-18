@@ -41,8 +41,6 @@ class Inspection extends Model implements FilteringInterface
     ];
 
     public static $attributes_for_pending_statuses = [
-        'crew',
-        'crew_id',
         'scheduled',
         'scheduled_date',
     ];
@@ -74,7 +72,6 @@ class Inspection extends Model implements FilteringInterface
     {
         return self::validateIsPendingStatus([
             'scheduled_date' => $this->getRawOriginal('scheduled_date'),
-            'crew_id' => $this->crew_id,
         ]);
     }
 

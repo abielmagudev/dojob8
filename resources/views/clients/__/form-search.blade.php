@@ -6,7 +6,8 @@
             id="searchClientInput" 
             type="search" 
             name="search" 
-            placeholder="Search client..."
+            placeholder="Search client"
+            required
         >
         <button class="btn border border-start-0 rounded-end-pill px-3">
             <i class="bi bi-search"></i>

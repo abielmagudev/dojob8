@@ -50,6 +50,14 @@ if(! function_exists('marker') )
     }
 }
 
+if(! function_exists('title') )
+{
+    function title(string $text)
+    {
+        return \Illuminate\Support\Str::title( trim($text) );
+    }
+}
+
 
 // Models
 

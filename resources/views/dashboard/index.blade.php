@@ -9,7 +9,8 @@
 <br>
 @include('dashboard.index.statuses')
 <br>
+@include('dashboard.index.inspections')
+<br>
 @include('dashboard.index.jobs')
 <br>
-@include('dashboard.index.inspections')
 @endsection

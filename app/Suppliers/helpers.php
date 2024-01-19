@@ -16,11 +16,19 @@ if(! function_exists('isChecked') )
     }
 }
 
-if(! function_exists('bsInputInvalid') )
+if(! function_exists('isDisabled') )
 {
-    function bsInputInvalid(bool $is_invalid)
+    function isDisabled(bool $verified, $default = '')
     {
-        return $is_invalid ? 'is-invalid' : '';
+        return $verified ? 'disabled' : $default;
+    }
+}
+
+if(! function_exists('isAutofocused') )
+{
+    function isAutofocused(bool $verified, $default = '')
+    {
+        return $verified ? 'autofocus' : $default;
     }
 }
 
@@ -58,6 +66,13 @@ if(! function_exists('title') )
     }
 }
 
+if(! function_exists('bsInputInvalid') )
+{
+    function bsInputInvalid(bool $is_invalid)
+    {
+        return $is_invalid ? 'is-invalid' : '';
+    }
+}
 
 // Models
 

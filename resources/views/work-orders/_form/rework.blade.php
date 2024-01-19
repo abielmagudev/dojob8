@@ -1,5 +1,5 @@
-<div class="d-none mt-3">
-    <select id="reworkSelect" class="form-select" name="rework" disabled required>
+<div class="mt-3 {{ old('type') <> 'rework' ? 'd-none' : '' }}">
+    <select id="reworkSelect" class="form-select {{ bsInputInvalid( $errors->has('rework') ) }}" name="rework" {{ isDisabled( old('type') <> 'rework' ) }}>
         @foreach($client->work_orders as $wo)
         
             @if( $wo->qualifiesForRework() )
@@ -8,5 +8,7 @@
             
         @endforeach
     </select>
-    <x-form-helper important>Work orders with <b>completed status</b></x-form-helper>
+    <x-form-feedback error="rework" important>
+        Only client work orders with <b>{{ \App\Models\WorkOrder::getReworkStatuses()->implode(', ') }} status</b>
+    </x-form-feedback>
 </div>

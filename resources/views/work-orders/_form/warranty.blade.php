@@ -1,5 +1,5 @@
-<div class="d-none mt-3">
-    <select id="warrantySelect" class="form-select" name="warranty" disabled required>
+<div class="mt-3 {{ old('type') <> 'warranty' ? 'd-none' : '' }}">
+    <select id="warrantySelect" class="form-select {{ bsInputInvalid( $errors->has('warranty') ) }}" name="warranty" {{ isDisabled( old('type') <> 'warranty' ) }}>
         @foreach($client->work_orders as $wo)
         
             @if( $wo->qualifiesForWarranty() )
@@ -8,5 +8,7 @@
         
         @endforeach
     </select>
-    <x-form-helper important>Work orders with <b>close status</b></x-form-helper>
+    <x-form-feedback error="warranty" important>
+        Only client work orders with <b>{{ \App\Models\WorkOrder::getWarrantyStatuses()->implode(', ') }} status</b>
+    </x-form-feedback>
 </div>

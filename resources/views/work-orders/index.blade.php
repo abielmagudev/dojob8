@@ -90,8 +90,8 @@
             <td class="text-nowrap">
                 {{ $work_order->job->name }}
 
-                @if( mt_rand(0,1) )
-                <em>({{ mt_rand(0, 1) ? 'Rework' : 'Warranty' }})</em>
+                @if(! $work_order->isDefault() )
+                <em class="text-capitalize text-secondary">: {{ $work_order->type }}</em>
                 @endif
             </td>
 

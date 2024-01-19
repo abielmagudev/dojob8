@@ -2,7 +2,7 @@
     <select id="typeSelect" class="form-select" name="type" required>
 
         @foreach(\App\Models\WorkOrder::getAllTypes() as $type)
-        <option value="{{ $type }}">{{ title($type) }}</option>
+        <option value="{{ $type }}" {{ isSelected( $type == old('type') ) }}>{{ title($type) }}</option>
         @endforeach
         
     </select>

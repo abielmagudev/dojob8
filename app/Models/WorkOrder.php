@@ -336,12 +336,12 @@ class WorkOrder extends Model implements FilteringInterface
 
     public function rework()
     {
-        return $this->belongsTo(self::class, 'id', 'rework_id');
+        return $this->belongsTo(self::class, 'rework_id');
     }
 
     public function warranty()
     {
-        return $this->belongsTo(self::class, 'id', 'warranty_id');
+        return $this->belongsTo(self::class, 'warranty_id');
     }
 
     public function members()
@@ -392,6 +392,16 @@ class WorkOrder extends Model implements FilteringInterface
         return self::getAllStatuses()->diff(
             self::getIncompleteStatuses()->toArray()
         );
+    }
+
+    public static function getReworkStatuses()
+    {
+        return collect( self::$rework_statuses );
+    }
+
+    public static function getWarrantyStatuses()
+    {
+        return collect( self::$warranty_statuses );
     }
 
     public static function filterByIncompleteStatuses(Collection $work_orders)

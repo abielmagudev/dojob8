@@ -30,22 +30,52 @@ class WorkOrderStoreRequest extends FormRequest
                 'required',
                 'date',
             ],
+            'type' => [
+                'required',
+                sprintf('in:%s', WorkOrder::getAllTypes()->implode(',')),
+            ],
+            'rework' => [
+                'required_if:type,rework',
+            ],
+            'warranty' => [
+                'required_if:type,warranty',
+            ],
             'job' => [
                 'required',
                 sprintf('exists:%s,id', Job::class),
-            ],
-            'contractor' => [
-                'nullable',
-                sprintf('exists:%s,id', Contractor::class),
             ],
             'crew' => [
                 'required', 
                 sprintf('in:%s', Crew::forWorkOrders()->get()->pluck('id')->implode(',')),
             ],
+            'contractor' => [
+                'nullable',
+                sprintf('exists:%s,id', Contractor::class),
+            ],
             'notes' => [
                 'nullable',
             ],
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'rework.required_if' => __('Choose some work order for rework'),
+            'warranty.required_if' => __('Choose some work order for warranty'),
+        ];
+    }
+
+    public function prepareForValidation()
+    {
+        if( 
+            WorkOrder::getTypesNonDefault()->contains( $this->get('type') ) &&
+            $client = Client::find( $this->get('client') ) 
+        ) {
+            return;
+        }
+
+
     }
 
     public function passedValidation()
@@ -66,6 +96,8 @@ class WorkOrderStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
+            'rework_id' => $this->filled('rework') ? $this->get('rework') : null,
+            'warranty_id' => $this->filled('warranty') ? $this->get('warranty') : null,
             'client_id' => $this->client,
             'contractor_id' => $this->contractor,
             'job_id' => $this->job,

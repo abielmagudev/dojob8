@@ -10,6 +10,9 @@
     Work order #{{ $work_order->id }}
     @slot('subtitle')
     @include('clients.__.inline-summary-information', ['client' => $work_order->client])
+    <small>
+        <a href="{{ route('clients.show', $client) }}" class="text-decoration-none">See client</a>
+    </small>
     @endslot
 </x-page-title>
 @endsection

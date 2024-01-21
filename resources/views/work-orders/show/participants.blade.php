@@ -10,17 +10,12 @@
         @include('contractors.__.address', [
             'contractor' => $work_order->contractor,
         ])
-        @include('contractors.__.contact', [
-            'contractor' => $work_order->contractor,
-            'except' => ['name_alias'],
-        ])
+        <x-custom.information-contact-channels :channels="$work_order->contractor->contact_data->filter()"/>
         @endif
     </x-small-title>
     
     <x-small-title title="Crew">
-        @if( $work_order->hasCrew() )
         <div>{{ $work_order->crew->name }}</div>
-        @endif
     </x-small-title>
 
     <x-small-title title="Workers">

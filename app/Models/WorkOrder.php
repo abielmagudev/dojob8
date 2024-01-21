@@ -73,7 +73,8 @@ class WorkOrder extends Model implements FilteringInterface
     ];
 
     public static $rework_statuses = [
-        'completed'
+        'completed',
+        'inspected',
     ];
 
     public static $warranty_statuses = [
@@ -99,6 +100,7 @@ class WorkOrder extends Model implements FilteringInterface
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
             'status' => 'filterByStatus',
+            'type_group' => 'filterByTypeGroup',
         ];
     }
 
@@ -118,17 +120,67 @@ class WorkOrder extends Model implements FilteringInterface
         return 'default';
     }
 
+    public function getBoundIdAttribute()
+    {
+        return $this->rework_id ?? $this->warranty_id;
+    }
+
+    public function getBoundAttribute()
+    {
+        return $this->isRework() ? $this->rework : $this->warranty;
+    }
+
 
     // Validators
 
-    public function hasContractor()
+    public function isRework()
     {
-        return (bool) $this->contractor_id && is_a($this->contractor, Contractor::class);
+        return ! is_null($this->rework_id) && is_a($this->rework, self::class);
     }
 
-    public function hasMembers()
+    public function isWarranty()
     {
-        return (bool) $this->members_count || $this->members->count();
+        return ! is_null($this->warranty_id) && is_a($this->warranty, self::class);
+    }
+
+    public function isBound()
+    {
+        return $this->isRework() || $this->isWarranty();
+    }
+
+    public function isDefault()
+    {
+        return ! $this->isRework() &&! $this->isWarranty();
+    }
+
+    public function isType(string $type)
+    {
+        return $this->type == $type;
+    }
+
+    public function qualifiesForRework()
+    {
+        return $this->isDefault() && self::inReworkStatuses($this->status);
+    }
+
+    public function qualifiesForWarranty()
+    {
+        return $this->isDefault() && self::inWarrantyStatuses($this->status);
+    }
+
+    public function qualifiesToBind()
+    {
+        return $this->qualifiesForRework() || $this->qualifiesForWarranty();
+    }
+    
+    public function isIncomplete()
+    {
+        return self::inIncompleteStatuses($this->status);
+    }
+
+    public function isCompleted()
+    {
+        return ! self::inIncompleteStatuses($this->status);
     }
 
     public function hasReworks()
@@ -141,43 +193,58 @@ class WorkOrder extends Model implements FilteringInterface
         return (bool) $this->warranties_count || $this->members->count();
     }
 
-    public function isIncomplete()
+    public function hasMembers()
     {
-        return self::inIncompleteStatuses($this->status);
-    }
-
-    public function isCompleted()
-    {
-        return ! self::inIncompleteStatuses($this->status);
-    }
-
-    public function isRework()
-    {
-        return ! is_null($this->rework_id) && is_a($this->rework, self::class);
-    }
-
-    public function isWarranty()
-    {
-        return ! is_null($this->warranty_id) && is_a($this->warranty, self::class);
-    }
-
-    public function isDefault()
-    {
-        return ! $this->isRework() &&! $this->isWarranty();
-    }
-
-    public function qualifiesForRework()
-    {
-        return $this->isDefault() && self::inReworkStatuses($this->status);
-    }
-
-    public function qualifiesForWarranty()
-    {
-        return $this->isDefault() && self::inWarrantyStatuses($this->status);
+        return (bool) $this->members_count || $this->members->count();
     }
     
+    public function hasContractor()
+    {
+        return (bool) $this->contractor_id && is_a($this->contractor, Contractor::class);
+    }
+
 
     // Scopes
+
+    public function scopeWhereRework($query, $value)
+    {
+        return $query->where('rework_id', $value);
+    }
+
+    public function scopeWhereReworkNull($query, bool $strict = true)
+    {
+        return $strict ? $query->whereNull('rework_id') : $query->orWhereNull('rework_id');
+    }
+
+    public function scopeWhereReworkNotNull($query, bool $strict = true)
+    {
+        return $strict ? $query->whereNotNull('rework_id') : $query->orWhereNotNull('rework_id');
+    }
+
+    public function scopeWhereInRework($query, array $values)
+    {
+        return $query->whereIn('rework_id', $values);
+    }
+
+    public function scopeWhereWarranty($query, $value)
+    {
+        return $query->where('warranty_id', $value);
+    }
+
+    public function scopeWhereWarrantyNull($query, bool $strict = true)
+    {
+        return $strict ? $query->whereNull('warranty_id') : $query->orWhereNotNull('warranty_id');
+    }
+
+    public function scopeWhereWarrantyNotNull($query, bool $strict = true)
+    {
+        return $strict ? $query->whereNotNull('warranty_id'): $query->orWhereNotNull('warranty_id');
+    }
+
+    public function scopeWhereInWarranty($query, array $values)
+    {
+        return $query->whereIn('warranty_id', $values);
+    }
 
     public function scopeIncompleteStatus($query)
     {
@@ -216,46 +283,6 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereIn('job_id', $jobs_id);
     }
 
-    public function scopeWhereInRework($query, array $values)
-    {
-        return $query->whereIn('rework_id', $values);
-    }
-
-    public function scopeWhereInWarranty($query, array $values)
-    {
-        return $query->whereIn('warranty_id', $values);
-    }
-
-    public function scopeWhereRework($query, $value)
-    {
-        return $query->where('rework_id', $value);
-    }
-
-    public function scopeWhereWarranty($query, $value)
-    {
-        return $query->where('warranty_id', $value);
-    }
-
-    public function scopeWhereNullRework($query)
-    {
-        return $query->whereNull('rework_id');
-    }
-
-    public function scopeWhereNullWarranty($query)
-    {
-        return $query->whereNull('warranty_id');
-    }
-
-    public function scopeWhereNotNullRework($query)
-    {
-        return $query->whereNotNull('rework_id');
-    }
-
-    public function scopeWhereNotNullWarranty($query)
-    {
-        return $query->whereNotNull('warranty_id');
-    }
-
 
     // Filters
 
@@ -287,6 +314,35 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereContractor($contractor_id);
     }
 
+    public function scopeFilterByTypeGroup($query, $type_group)
+    {
+        if( empty($type_group) || count($type_group) == 3 ) {
+            return $query;
+        }
+
+        if( count($type_group) == 2 && in_array('rework', $type_group) && in_array('warranty', $type_group) ) {
+            return $query->whereReworkNotNull(false)->whereWarrantyNotNull(false);
+        }
+
+        if( count($type_group) == 2 && in_array('rework', $type_group) &&! in_array('warranty', $type_group) ) {
+            return $query->whereWarrantyNull();
+        }
+
+        if( count($type_group) == 2 && in_array('warranty', $type_group) &&! in_array('rework', $type_group) ) {
+            return $query->whereReworkNull();
+        }
+
+        if( count($type_group) == 1 && in_array('rework', $type_group) ) {
+            return $query->whereReworkNotNull();
+        }
+
+        if( count($type_group) == 1 && in_array('warranty', $type_group) ) {
+            return $query->whereWarrantyNotNull();
+        }
+
+        return $query->whereReworkNull()->whereWarrantyNull();
+    }
+
     public function scopeWithBasicRelationships($query)
     {
         return $query->with([
@@ -314,6 +370,27 @@ class WorkOrder extends Model implements FilteringInterface
 
     // Relations
 
+
+    public function rework()
+    {
+        return $this->belongsTo(self::class, 'rework_id');
+    }
+
+    public function warranty()
+    {
+        return $this->belongsTo(self::class, 'warranty_id');
+    }
+
+    public function reworks()
+    {
+        return $this->hasMany(self::class, 'rework_id');
+    }
+
+    public function warranties()
+    {
+        return $this->hasMany(self::class, 'warranty_id');
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);
@@ -334,16 +411,6 @@ class WorkOrder extends Model implements FilteringInterface
         return $this->belongsTo(Contractor::class);
     }
 
-    public function rework()
-    {
-        return $this->belongsTo(self::class, 'rework_id');
-    }
-
-    public function warranty()
-    {
-        return $this->belongsTo(self::class, 'warranty_id');
-    }
-
     public function members()
     {
         return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
@@ -354,16 +421,6 @@ class WorkOrder extends Model implements FilteringInterface
         return $this->hasMany(Inspection::class);
     }
 
-    public function reworks()
-    {
-        return $this->hasMany(self::class, 'rework_id');
-    }
-
-    public function warranties()
-    {
-        return $this->hasMany(self::class, 'warranty_id');
-    }
-
 
     // Statics
 
@@ -372,14 +429,39 @@ class WorkOrder extends Model implements FilteringInterface
         return collect( self::$all_types );
     }
 
-    public static function getTypesNonDefault()
+    public static function getAllStatuses()
+    {
+        return collect(self::$all_statuses);
+    }
+
+    public static function getNonDefaultTypes()
     {
         return self::getAllTypes()->filter(fn($value) => $value <> 'default');
     }
 
-    public static function getAllStatuses()
+    public static function getReworkStatuses()
     {
-        return collect(self::$all_statuses);
+        return collect( self::$rework_statuses );
+    }
+
+    public static function getWarrantyStatuses()
+    {
+        return collect( self::$warranty_statuses );
+    }
+    
+    public static function inNonDefaultTypes(string $status)
+    {
+        return self::getNonDefaultTypes()->contains($status);
+    }
+
+    public static function inReworkStatuses(string $status)
+    {
+        return in_array($status, self::$rework_statuses);
+    }
+
+    public static function inWarrantyStatuses(string $status)
+    {
+        return in_array($status, self::$warranty_statuses);
     }
 
     public static function getIncompleteStatuses()
@@ -394,21 +476,14 @@ class WorkOrder extends Model implements FilteringInterface
         );
     }
 
-    public static function getReworkStatuses()
+    public static function inCrewStatuses(string $status)
     {
-        return collect( self::$rework_statuses );
+        return in_array($status, self::$crew_statuses);
     }
-
-    public static function getWarrantyStatuses()
+    
+    public static function inArchivedStatuses(string $status)
     {
-        return collect( self::$warranty_statuses );
-    }
-
-    public static function filterByIncompleteStatuses(Collection $work_orders)
-    {
-        return $work_orders->filter(function ($wo) {
-            return self::inIncompleteStatuses($wo->status);
-        });
+        return in_array($status, self::$archived_statuses);
     }
 
     public static function inIncompleteStatuses(string $status)
@@ -416,23 +491,10 @@ class WorkOrder extends Model implements FilteringInterface
         return in_array($status, self::$incomplete_statuses);
     }
 
-    public static function inReworkStatuses(string $status)
+    public static function filterCollectionByIncompleteStatuses(Collection $work_orders)
     {
-        return in_array($status, self::$rework_statuses);
-    }
-
-    public static function inWarrantyStatuses(string $status)
-    {
-        return in_array($status, self::$warranty_statuses);
-    }
-
-    public static function inArchivedStatuses(string $status)
-    {
-        return in_array($status, self::$archived_statuses);
-    }
-
-    public static function inCrewStatuses(string $status)
-    {
-        return in_array($status, self::$crew_statuses);
+        return $work_orders->filter(function ($wo) {
+            return self::inIncompleteStatuses($wo->status);
+        });
     }
 }

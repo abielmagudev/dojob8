@@ -19,7 +19,7 @@ class CreateWorkOrdersTable extends Migration
             $table->string('status')->index();
             $table->foreignId('client_id')->index();
             $table->foreignId('contractor_id')->nullable();
-            $table->foreignId('crew_id')->nullable();
+            $table->foreignId('crew_id');
             $table->foreignId('job_id');
             $table->foreignId('rework_id')->nullable();
             $table->foreignId('warranty_id')->nullable();

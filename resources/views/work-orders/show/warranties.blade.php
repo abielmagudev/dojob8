@@ -5,7 +5,7 @@
         <i class="bi bi-plus-lg"></i>
     </a>
     @endslot
-    @endslot
+    @endif
 
     @if( $work_order->warranties->count() )
     <?php $work_order->warranties->load(['crew','contractor','job']) ?>

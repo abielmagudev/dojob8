@@ -35,7 +35,7 @@
                 {{ $inspection->observations }}
             </td>
             <td>
-                <span class="{{ $inspection->status_color }} text-uppercase">{{ $inspection->status }}</span>
+                @include('inspections.__.status-flag', ['status' => $inspection->status])
             </td>
             <td class="text-nowrap text-end">
                 <a href="{{ route('inspections.edit', [$inspection, 'tab' => 'inspections']) }}" class="btn btn-outline-warning">

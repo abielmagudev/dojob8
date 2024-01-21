@@ -8,19 +8,16 @@
 <x-page-title>
     Work orders
     @slot('subtitle')
-    @include('clients.__.inline-summary-information')
-    <small>
-        <a href="{{ route('clients.show', $client) }}" class="text-decoration-none">See client</a>
-    </small>
+        @include('clients.__.inline-summary-information')
+        <a href="{{ route('clients.show', $client) }}" class="text-decoration-none small">See client</a>
     @endslot
 </x-page-title>
 @endsection
 
 @section('content')
 <x-card title="New work order">
+
     <form action="{{ route('work-orders.store') }}" method="post">
-        @include('work-orders._form.schedule')
-        @include('work-orders._form.type')
         @include('work-orders._form')
         <input type="hidden" name="client" value="{{ $client->id }}">  
         <x-form-field-horizontal>
@@ -38,6 +35,7 @@
             <a href="{{ route('work-orders.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
+
 </x-card>
 @endsection
 

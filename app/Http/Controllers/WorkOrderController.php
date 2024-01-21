@@ -40,6 +40,7 @@ class WorkOrderController extends Controller
 
         return view('work-orders.index', [
             'all_statuses' => WorkOrder::getAllStatuses(),
+            'all_types' => WorkOrder::getAllTypes(),
             'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'contractors' => Contractor::all(),
             'jobs' => Job::all(),
@@ -52,16 +53,20 @@ class WorkOrderController extends Controller
         ]);
     }
 
-    public function create(Client $client)
+    public function create(Request $request, Client $client)
     {
         $this->reflashInputErrors();
 
         return view('work-orders.create', [
             'all_statuses' => WorkOrder::getAllStatuses(),
+            'all_types' => WorkOrder::getAllTypes(),
             'client' => $client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'jobs' => Job::with('extensions')->orderBy('name')->get(),
+            'non_default_types' => WorkOrder::getNonDefaultTypes(),
+            'non_default_types' => WorkOrder::getNonDefaultTypes(),
+            'request' => $request,
             'work_order' => new WorkOrder,
         ]);
     }
@@ -109,15 +114,19 @@ class WorkOrderController extends Controller
         ]));
     }
 
-    public function edit(WorkOrder $work_order)
+    public function edit(Request $request, WorkOrder $work_order)
     {
         $this->reflashInputErrors();
 
         return view('work-orders.edit', [
             'all_statuses' => WorkOrder::getAllStatuses(),
-            'client' => $work_order->client,
+            'all_types' => WorkOrder::getAllTypes(),
+            'client' => $work_order->client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
+            'non_default_types' => WorkOrder::getNonDefaultTypes(),
+            'non_default_types' => WorkOrder::getNonDefaultTypes(),
+            'request' => $request,
             'work_order' => $work_order,
         ]);
     }

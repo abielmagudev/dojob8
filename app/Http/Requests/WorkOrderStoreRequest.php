@@ -14,6 +14,11 @@ class WorkOrderStoreRequest extends FormRequest
 {
     use ResolveExtensionRequestsTrait;
 
+    public $work_order_ids_to_bind = [
+        'rework' => '',
+        'warranty' => '',
+    ];
+
     public function authorize()
     {
         return true;
@@ -36,9 +41,11 @@ class WorkOrderStoreRequest extends FormRequest
             ],
             'rework' => [
                 'required_if:type,rework',
+                sprintf('in:%s', $this->work_order_ids_to_bind['rework']),
             ],
             'warranty' => [
                 'required_if:type,warranty',
+                sprintf('in:%s', $this->work_order_ids_to_bind['warranty']),
             ],
             'job' => [
                 'required',
@@ -54,6 +61,7 @@ class WorkOrderStoreRequest extends FormRequest
             ],
             'notes' => [
                 'nullable',
+                'string',
             ],
         ];
     }
@@ -61,21 +69,26 @@ class WorkOrderStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'rework.required_if' => __('Choose some work order for rework'),
-            'warranty.required_if' => __('Choose some work order for warranty'),
+            'rework.required_if' => __('Choose a work order for rework'),
+            'rework.in' => __('Choose a work order valid for rework'),
+            'warranty.required_if' => __('Choose a work order for warranty'),
+            'warranty.in' => __('Choose a work order valid for warranty'),
         ];
     }
 
     public function prepareForValidation()
     {
-        if( 
-            WorkOrder::getTypesNonDefault()->contains( $this->get('type') ) &&
-            $client = Client::find( $this->get('client') ) 
-        ) {
+        if(! WorkOrder::getNonDefaultTypes()->contains( $this->get('type') ) ) {
             return;
         }
 
+        if(! $client = Client::find( $this->get('client') ) ) {
+            return;
+        }
 
+        $this->work_order_ids_to_bind[ $this->get('type') ] = $this->get('type') == 'rework' 
+            ? $client->work_orders_for_rework->pluck('id')->implode(',')
+            : $client->work_orders_for_warranty->pluck('id')->implode(',');
     }
 
     public function passedValidation()
@@ -96,8 +109,8 @@ class WorkOrderStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'rework_id' => $this->filled('rework') ? $this->get('rework') : null,
-            'warranty_id' => $this->filled('warranty') ? $this->get('warranty') : null,
+            'rework_id' => $this->get('type') == 'rework' ? $this->get('rework') : null,
+            'warranty_id' => $this->get('type') == 'warranty' ? $this->get('warranty') : null,
             'client_id' => $this->client,
             'contractor_id' => $this->contractor,
             'job_id' => $this->job,

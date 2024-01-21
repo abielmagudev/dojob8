@@ -1,6 +1,5 @@
 <x-card>
     @slot('options')
-    @include('work-orders.__.status-flag', ['status' => $work_order->status])
     <a href="{{ route('work-orders.edit', $work_order) }}" class="btn btn-warning ms-3">
         <i class="bi bi-pencil-fill"></i>
     </a>

@@ -9,10 +9,8 @@
 <x-page-title>
     Work order #{{ $work_order->id }}
     @slot('subtitle')
-    @include('clients.__.inline-summary-information', ['client' => $work_order->client])
-    <small>
-        <a href="{{ route('clients.show', $client) }}" class="text-decoration-none">See client</a>
-    </small>
+        @include('clients.__.inline-summary-information', ['client' => $work_order->client])
+        <a href="{{ route('clients.show', $client) }}" class="text-decoration-none small">See client</a>
     @endslot
 </x-page-title>
 @endsection
@@ -21,8 +19,6 @@
 <x-card title="Edit work order">
     <form action="{{ route('work-orders.update', $work_order) }}" method="post">
         @method('patch')
-        @include('work-orders._form.schedule')
-        @include('work-orders._form.type-readonly')
         @include('work-orders._form')
         @include('work-orders._form.status')
         <br>

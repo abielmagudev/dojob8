@@ -39,7 +39,13 @@
                     'class' => 'w-100'
                 ])
             </td>
-            <td class="text-nowrap">{{ $work_order->job->name }}</td>
+            <td class="text-nowrap">
+                {{ $work_order->job->name }} 
+
+                @if(! $work_order->isDefault() )
+                <em class="text-capitalize text-secondary">( {{ $work_order->type }} )</em>
+                @endif
+            </td>
             <td class="text-nowrap">
                 @if( $work_order->hasContractor() )              
                 @include('contractors.__.flag', [

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $work_orders->total() }} {{ $work_orders->count() > 1 ? ' work orders' : 'work order' }} {{ $request->has('fltr') ? 'filtered' : '' }}">
+<x-card title="{{ $work_orders->total() }} work orders">
     @slot('options')
     <div class="d-inline-block align-middle ">
         <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off">

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $inspections->total() }} inspections {{ $request->has('sort') > 0 ? 'filtered' : '' }}">
+<x-card title="{{ $inspections->total() }} inspections">
 
     @slot('options')
     <form action="{{ route('inspections.index') }}" class="d-inline-block" method="get">

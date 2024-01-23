@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $members->total() }} members {{ count($request->all()) > 0 ? 'filtered' : '' }}">
+<x-card title="{{ $members->total() }} members">
     @slot('options')
         <x-modal-trigger modal-id="modalMembersFilters">
             <i class="bi bi-funnel"></i>

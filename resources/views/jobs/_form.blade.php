@@ -32,15 +32,3 @@
     <x-form-feedback error="preconfigured_required_inspections" />
     <x-form-feedback error="preconfigured_required_inspections.*" />
 </x-form-field-horizontal>
-
-@if( $job->id )
-<div class="mt-4">
-    <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="availableSwitch" name="available" value="1" {{ isChecked( $job->isAvailable() ) }}>
-        <label class="form-check-label" for="availableSwitch">
-            <b>Available.</b>
-            <small>If you deactivate this option, you will not be able to use this job in new orders.</small>
-        </label>
-    </div> 
-</div>
-@endif

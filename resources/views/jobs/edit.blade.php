@@ -2,7 +2,7 @@
 
 @section('header')
 <x-breadcrumb :items="[
-    'Back to Jobs' => route('jobs.index'),
+    'Jobs' => route('jobs.index'),
     $job->name => route('jobs.show', $job),
     'Edit'
 ]" />
@@ -14,7 +14,19 @@
     <form action="{{ route('jobs.update', $job) }}" method="post" autocomplete="off">
         @method('put')
         @include('jobs._form')
+        <x-form-field-horizontal for="availableSwitch">
+            <div class="alert alert-warning">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="availableSwitch" name="available" value="1" {{ isChecked( $job->isAvailable() ) }}>
+                    <label class="form-check-label" for="availableSwitch">
+                        <b>Available.</b>
+                        <small>If you deactivate this option, you will not be able to use this job in new orders.</small>
+                    </label>
+                </div> 
+            </div>
+        </x-form-field-horizontal>
         <br>
+
         <div class="text-end">
             <button type="submit" class="btn btn-warning">Update job</button>
             <a href="{{ route('jobs.show', $job) }}" class="btn btn-primary">Back</a>

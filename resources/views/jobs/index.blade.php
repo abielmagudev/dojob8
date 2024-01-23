@@ -5,12 +5,13 @@
 @endsection
 
 @section('content')
-<x-card>
+<x-card title="{{ $jobs->total() }} jobs">
     <x-slot name="options">
         <a href="{{ route('jobs.create') }}" class="btn btn-primary">
-            <b>+</b>
+            <i class="bi bi-plus-lg"></i>
         </a>
     </x-slot>
+
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
@@ -32,15 +33,12 @@
             <td>{{ $job->description }}</td>
             <td>{{ $job->extensions_count }}</td>
             <td class="text-nowrap text-end">
-                @includeWhen(
-                    $job->hasIncompleteWorkOrders(), 
-                    'work-orders.__.button-counter-incomplete', [
+                @includeWhen($job->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
                         'counter' => $job->incomplete_work_orders_count,
                         'parameters' => ['job' => $job->id]
-                    ]
-                )
+                ])
 
-                <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary">
+                <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>

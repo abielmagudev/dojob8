@@ -2,7 +2,7 @@
     <x-slot name="options">
         @if( $extensions->count() )
         <x-modal-trigger class="btn btn-primary" modal-id="modalAddExtension">
-            <b>+</b>
+            <i class="bi bi-plus-lg"></i>
         </x-modal-trigger>
         @endif
     </x-slot>

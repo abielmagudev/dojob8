@@ -109,10 +109,10 @@
             </td>
 
             <td class="text-nowrap text-end">
-                <a href="{{ route('work-orders.edit', $work_order) }}" class="btn btn-outline-warning btn-sm">
+                <a href="{{ route('work-orders.edit', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
-                <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
+                <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>

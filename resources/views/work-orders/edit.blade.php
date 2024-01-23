@@ -17,7 +17,7 @@
 
 @section('content')
 <x-card title="Edit work order">
-    <form action="{{ route('work-orders.update', $work_order) }}" method="post">
+    <form action="{{ route('work-orders.update', [$work_order, $request->get('url_back')]) }}" method="post">
         @method('patch')
         @include('work-orders._form')
         @include('work-orders._form.status')
@@ -25,7 +25,7 @@
 
         <div class="text-end">
             <button class="btn btn-warning" type="submit">Update work order</button>
-            <a href="{{ route('work-orders.index') }}" class="btn btn-primary">Back</a>
+            <a href="{{ $request->get('url_back', route('work-orders.show', $work_order)) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

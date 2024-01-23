@@ -68,6 +68,7 @@ class WorkOrderController extends Controller
             'non_default_types' => WorkOrder::getNonDefaultTypes(),
             'request' => $request,
             'work_order' => new WorkOrder,
+            'url_back' => '',
         ]);
     }
 
@@ -114,7 +115,7 @@ class WorkOrderController extends Controller
         ]));
     }
 
-    public function edit(Request $request, WorkOrder $work_order)
+    public function edit(WorkOrder $work_order, Request $request)
     {
         $this->reflashInputErrors();
 
@@ -124,7 +125,6 @@ class WorkOrderController extends Controller
             'client' => $work_order->client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
-            'non_default_types' => WorkOrder::getNonDefaultTypes(),
             'non_default_types' => WorkOrder::getNonDefaultTypes(),
             'request' => $request,
             'work_order' => $work_order,
@@ -144,7 +144,11 @@ class WorkOrderController extends Controller
             'update'
         );
 
-        return redirect()->route('work-orders.edit', $work_order)->with('success', "You updated the work order <b>#{$work_order->id}</b>");
+        $parameters = $request->filled('url_back') 
+                    ? [$work_order, 'url_back' => $request->get('url_back')]
+                    : $work_order;
+
+        return redirect()->route('work-orders.edit', $parameters)->with('success', "You updated the work order <b>#{$work_order->id}</b>");
     }
 
     public function destroy(Request $request, WorkOrder $work_order)

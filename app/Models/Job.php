@@ -37,7 +37,14 @@ class Job extends Model
         return json_decode($this->preconfigured_required_inspections); // (json_last_error() == JSON_ERROR_NONE)
     }
 
+    public function getInspectorsPreconfiguredRequiredInspectionsAttribute()
+    {
+        return $this->hasPreconfiguredRequiredInspections() 
+            ? Inspector::whereIn('id', $this->preconfigured_required_inspections_array)->get()
+            : collect([]);
+    }
     
+
     // Validators
     
     public function hasExtensions(): bool
@@ -45,14 +52,14 @@ class Job extends Model
         return (bool) ($this->extensions_count ?? $this->extensions->count());
     }
 
-    public function hasSuccessfulRequiredInspections(): bool
-    {
-        return (bool) $this->successful_required_inspections;
-    }
-
     public function hasPreconfiguredRequiredInspections(): bool
     {
         return (bool) count($this->preconfigured_required_inspections_array);
+    }
+
+    public function requiresSuccessfulInspections()
+    {
+        return (bool) $this->successful_required_inspections;
     }
 
 

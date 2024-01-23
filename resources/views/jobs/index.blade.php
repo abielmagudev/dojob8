@@ -18,6 +18,7 @@
                 <th></th>
                 <th>Name</th>
                 <th>Description</th>
+                <th class="text-nowrap">Successful inspections required</th>
                 <th>Extensions</th>
                 <th></th>
             </tr>
@@ -31,7 +32,8 @@
             </td>
             <td>{{ $job->name }}</td>
             <td>{{ $job->description }}</td>
-            <td>{{ $job->extensions_count }}</td>
+            <td class="text-center">{{ $job->successful_inspections_required }}</td>
+            <td class="text-center">{{ $job->extensions_count }}</td>
             <td class="text-nowrap text-end">
                 @includeWhen($job->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
                         'counter' => $job->incomplete_work_orders_count,

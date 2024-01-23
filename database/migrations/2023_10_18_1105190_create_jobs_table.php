@@ -17,6 +17,7 @@ class CreateJobsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->tinyInteger('successful_inspections_required', false, true)->default(0);
             $table->text('preconfigured_required_inspections')->nullable();
             $table->boolean('is_available')->default(true);
             $table->foreignId('created_by')->nullable();

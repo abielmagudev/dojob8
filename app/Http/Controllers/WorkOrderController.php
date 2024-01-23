@@ -109,7 +109,7 @@ class WorkOrderController extends Controller
     {
         $handler = new ShowAction( $request->get('tab', ShowAction::DEFAULT_RESPONSE) );
 
-        return view('work-orders.show', $handler->factory($work_order)->data([
+        return view('work-orders.show', $handler->build($work_order)->data([
             'request' => $request,
             'work_order' => $work_order,
         ]));

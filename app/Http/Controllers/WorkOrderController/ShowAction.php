@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\WorkOrderController;
 
-use App\Http\Controllers\WorkOrderController\ShowResponses\Kernel\ShowResponseBase;
+use App\Http\Controllers\WorkOrderController\Kernel\ResponseConstructor;
 use App\Models\WorkOrder;
 
 class ShowAction
 {
-    const DEFAULT_RESPONSE = 'summary';
+    const DEFAULT_RESPONSE = 'information';
 
     public $classname;
 
@@ -22,15 +22,15 @@ class ShowAction
 
     public function generate(string $response)
     {
-        return __NAMESPACE__ . '\\ShowResponses\\' . ucfirst( strtolower($response) );
+        return __NAMESPACE__ . '\\Show\\' . ucfirst( strtolower($response) );
     }
 
     public function exists()
     {
-        return class_exists( $this->classname ) && is_subclass_of($this->classname, ShowResponseBase::class);
+        return class_exists( $this->classname ) && is_subclass_of($this->classname, ResponseConstructor::class);
     }
 
-    public function factory(WorkOrder $work_order)
+    public function build(WorkOrder $work_order)
     {
         $classname = $this->classname;
         return new $classname($work_order);

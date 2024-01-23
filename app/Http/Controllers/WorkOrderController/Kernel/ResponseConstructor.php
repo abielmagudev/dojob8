@@ -1,10 +1,10 @@
 <?php 
 
-namespace App\Http\Controllers\WorkOrderController\ShowResponses\Kernel;
+namespace App\Http\Controllers\WorkOrderController\Kernel;
 
 use App\Models\WorkOrder;
 
-abstract class ShowResponseBase
+abstract class ResponseConstructor 
 {
     protected $work_order;
 

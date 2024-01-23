@@ -1,7 +1,7 @@
 <?php $tabs = [
-    'summary' => [
+    'information' => [
         'disabled' => false,
-        'title' => 'Summary',
+        'title' => 'Information',
     ],
     'inspections' => [
         'disabled' => false,

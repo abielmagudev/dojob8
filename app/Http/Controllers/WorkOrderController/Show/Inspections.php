@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\WorkOrderController\ShowResponses;
+namespace App\Http\Controllers\WorkOrderController\Show;
 
-use App\Http\Controllers\WorkOrderController\ShowResponses\Kernel\ShowResponseBase;
+use App\Http\Controllers\WorkOrderController\Kernel\ResponseConstructor;
 use App\Models\Inspection;
 
-class Inspections extends ShowResponseBase
+class Inspections extends ResponseConstructor
 {
     public function forData(): array
     {

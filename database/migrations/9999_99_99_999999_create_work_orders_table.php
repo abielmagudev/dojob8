@@ -28,6 +28,7 @@ class CreateWorkOrdersTable extends Migration
             $table->dateTime('done_at')->nullable();
             $table->dateTime('completed_at')->nullable();
             $table->dateTime('archived_at')->nullable();
+            $table->string('permit_code')->nullable();
             $table->text('notes')->nullable();
             $table->foreignId('created_by')->nullable()->index();
             $table->foreignId('updated_by')->nullable()->index();

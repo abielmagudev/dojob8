@@ -4,6 +4,7 @@
 @include('work-orders._form.job')
 @include('work-orders._form.crew')
 @include('work-orders._form.contractor')
+@include('work-orders._form.permit-code')
 @include('work-orders._form.notes')
 
 @if( $request->filled('url_back') )

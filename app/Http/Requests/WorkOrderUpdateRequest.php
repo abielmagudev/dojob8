@@ -18,6 +18,8 @@ class WorkOrderUpdateRequest extends FormRequest
         'warranty' => '',
     ];
 
+    public $crew_ids = '';
+
     public function authorize()
     {
         return true;
@@ -44,11 +46,15 @@ class WorkOrderUpdateRequest extends FormRequest
             ],
             'crew' => [
                 'required', 
-                sprintf('in:%s', Crew::forWorkOrders()->get()->pluck('id')->implode(',')),
+                sprintf('in:%s', $this->crew_ids),
             ],
             'contractor' => [
                 'nullable',
                 sprintf('exists:%s,id', Contractor::class),
+            ],
+            'permit_code' => [
+                'nullable',
+                'string',
             ],
             'notes' => [
                 'nullable',
@@ -73,15 +79,17 @@ class WorkOrderUpdateRequest extends FormRequest
 
     public function prepareForValidation()
     {
+        $work_order = $this->route('work_order');
+
+        $this->crew_ids = Crew::forWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
+
         if(! WorkOrder::getNonDefaultTypes()->contains( $this->get('type') ) ) {
             return;
         }
 
-        $work_order = $this->route('work_order');
-
         $work_orders_to_bind = $this->get('type') == 'rework' 
-            ? $work_order->client->work_orders_for_rework
-            : $work_order->client->work_orders_for_warranty;
+                            ? $work_order->client->work_orders_for_rework
+                            : $work_order->client->work_orders_for_warranty;
 
         if( $work_order->isType( $this->get('type') ) &&! $work_orders_to_bind->contains($work_order->bound_id) ) {
             $work_orders_to_bind->push($work_order->bound);

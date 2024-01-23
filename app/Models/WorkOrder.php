@@ -34,6 +34,7 @@ class WorkOrder extends Model implements FilteringInterface
         'done_at',
         'completed_at',
         'archived_at',
+        'permit_code',
         'notes',
     ];
 
@@ -203,6 +204,11 @@ class WorkOrder extends Model implements FilteringInterface
         return (bool) $this->contractor_id && is_a($this->contractor, Contractor::class);
     }
 
+    public function hasPermitCode()
+    {
+        return $this->permit_code <> null && $this->permit_code <> '';
+    }
+
 
     // Scopes
 
@@ -281,6 +287,16 @@ class WorkOrder extends Model implements FilteringInterface
         $jobs_id = Job::all('id')->pluck('id')->toArray();
         
         return $query->whereIn('job_id', $jobs_id);
+    }
+
+    public function scopeWherePermitCode($query, $value)
+    {
+        return $query->where('permit_code', $value);
+    }
+
+    public function scopeWherePermitCodeLike($query, $value)
+    {
+        return $query->where('permit_code', 'like', $value);
     }
 
 

@@ -1,5 +1,5 @@
 <x-form-field-horizontal for="contractorSelect" label="Contractor">
-    <select id="contractorSelect" class="form-select" name="contractor">
+    <select id="contractorSelect" class="form-select {{ bsInputInvalid( $errors->has('contractor') ) }}" name="contractor">
         <option selected label="None"></option>
 
         @foreach($contractors as $contractor)

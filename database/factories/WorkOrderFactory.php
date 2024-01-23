@@ -22,6 +22,7 @@ class WorkOrderFactory extends Factory
             'contractor_id' => $this->faker->optional()->numberBetween(1, 10),
             'crew_id' => $this->faker->numberBetween(1, 10),
             'job_id' => $this->faker->numberBetween(1, 10),
+            'permit_code' => $this->faker->optional()->ean13(),
             'notes' => $this->faker->optional()->sentence(),
             'scheduled_date' => $this->faker->dateTimeBetween('-2 years'),
             'working_at' => WorkOrder::inCrewStatuses($status) ? $this->faker->dateTimeBetween('-2 years') : null,

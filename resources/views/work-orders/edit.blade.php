@@ -17,7 +17,7 @@
 
 @section('content')
 <x-card title="Edit work order">
-    <form action="{{ route('work-orders.update', [$work_order, $request->get('url_back')]) }}" method="post">
+    <form action="{{ route('work-orders.update', [$work_order, $request->get('url_back')]) }}" method="post" autocomplete="off">
         @method('patch')
         @include('work-orders._form')
         @include('work-orders._form.status')

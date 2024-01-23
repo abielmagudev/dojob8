@@ -20,7 +20,7 @@
     @endif
 
     @if( $clients->count() )
-    <x-table>
+    <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
                 <th class="text-nowrap">Full name</th>
@@ -56,7 +56,7 @@
                 @foreach($client->contact_data->filter() as $key => $value)
                 <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>
                 <x-tooltip title="{{ ucfirst($key) }}">
-                    <span class="badge border">
+                    <span class="d-inline-block small mx-2">
                         <a href="{{ $prefix }}:{{ $value }}" class="text-decoration-none">
                             {!! marker($request->get('search', ''), $value) !!}
                         </a>

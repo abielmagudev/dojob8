@@ -38,7 +38,7 @@
             <td class="text-nowrap">{{ $member->full_name }}</td>
             <td class="text-nowrap">{{ $member->position }}</td>
             <td class="text-nowrap">
-                <x-custom.information-contact-channels :channels="$member->contact_data->filter()" type="tooltip" item-class="d-inline-block small mx-1" />
+                <x-custom.information-contact-channels :channels="$member->contact_data->filter()" type="tooltip" item-class="d-inline-block small mx-2" />
             </td>
             <td class="text-end">
                 <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary btn-sm">

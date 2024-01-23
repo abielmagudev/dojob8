@@ -12,7 +12,7 @@
         </a>
     </x-slot>
 
-    <x-table>
+    <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
                 <th></th>
@@ -33,7 +33,7 @@
             <td class="text-nowrap">{{ $contractor->name }} ({{ $contractor->alias }})</td>
             <td class="text-nowrap">{{ $contractor->contact_name }}</td>
             <td class="text-nowrap">
-                @include('contractors.__.contact-table-cell')
+                <x-custom.information-contact-channels :channels="$contractor->contact_data->filter()" type="tooltip" item-class="d-inline-block small mx-2" />
             </td>
             <td class="text-nowrap text-end">
                 @includeWhen($contractor->HasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [

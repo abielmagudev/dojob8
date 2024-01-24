@@ -14,7 +14,7 @@ trait ResourcesTrait
     public function path(string $resource, string $filename)
     {
         return app_path(
-            sprintf('Apix/%s/resources/%s/%s', $this->dir(), $resource, $filename)
+            sprintf('Apix/Stock/%s/resources/%s/%s', $this->dir(), $resource, $filename)
         );
     }
 

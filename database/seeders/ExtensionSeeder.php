@@ -26,7 +26,7 @@ class ExtensionSeeder extends Seeder
 
     public function run()
     {
-        $this->console->writeln("<question>INSTALLING API-EXTENSIONS (APIX)...</question>");
+        $this->console->writeln("<question>INSTALLING APIX (Api-eXtensions)...</question>");
 
         foreach(Register::apiExtensions() as $installer)
         {

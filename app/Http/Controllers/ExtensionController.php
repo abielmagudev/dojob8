@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Apix\Register;
 use App\Http\Controllers\Kernel\ControllerFormRequestResolver;
 use App\Models\Extension;
 use Illuminate\Http\Request;

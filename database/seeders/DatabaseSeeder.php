@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
             ContractorSeeder::class,
             CrewSeeder::class,
             CrewMemberSeeder::class,
-            ExtensionSeeder::class,
             InspectionSeeder::class,
             InspectorSeeder::class,
             JobSeeder::class,
@@ -37,6 +36,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             WorkOrderSeeder::class,
             MemberWorkOrderSeeder::class,
+            ExtensionSeeder::class,
         ]);
     }
 }

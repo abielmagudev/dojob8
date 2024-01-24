@@ -20,7 +20,7 @@ class Extension extends Model
 
     public function getNamespaceAttribute()
     {
-        return sprintf('App\Apix\%s', $this->classname);
+        return sprintf('App\Apix\Stock\%s', $this->classname);
     }
     
     public function getControllerAttribute()

@@ -8,15 +8,15 @@ class Register
 {
     public static function scan()
     {
-        return array_filter(scandir(__DIR__), function ($node) {
-            return is_file( app_path("Apix/{$node}/Install.php") );
+        return array_filter(scandir(__DIR__ . '/Stock'), function ($node) {
+            return is_file( app_path("Apix/Stock/{$node}/Install.php") );
         });
     }
 
     public static function paths()
     {
         return array_map(function ($node) {
-            return app_path("Apix/{$node}/Install.php");
+            return app_path("Apix/Stock/{$node}/Install.php");
         }, self::scan());
     }
 

@@ -5,6 +5,5 @@
 
 @else
     <p class="lead text-center">{{ $extension->name }} not has configuration</p>
-
 @endif
 @endsection

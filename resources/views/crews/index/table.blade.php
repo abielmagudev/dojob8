@@ -19,7 +19,9 @@
                     <i class="bi bi-circle-fill" style="color:{{ $crew->isActive() ? $crew->background_color : '#CCCCCC' }}"></i>
                 </x-tooltip>
             </td>
-            <td>{{ $crew->name }}</td>
+            <td>
+                @include('crews.__.flag')    
+            </td>
             <td>
                 @if( $crew->members->count() )
                 @foreach($crew->members as $member)
@@ -43,12 +45,12 @@
                 ] ?>
 
                 @if( $crew->isActive() )   
-                <x-modal-trigger modal-id="modalSetCrewMembers" class="btn btn-outline-primary" data-crew="{{ json_encode($modal_data) }}" link>
+                <x-modal-trigger modal-id="modalSetCrewMembers" class="btn btn-outline-primary btn-sm" data-crew="{{ json_encode($modal_data) }}" link>
                     <i class="bi bi-arrow-repeat"></i>
                 </x-modal-trigger>
                 @endif
 
-                <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary">
+                <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>

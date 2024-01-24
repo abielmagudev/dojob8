@@ -34,7 +34,7 @@
     {{-- Create crew --}}
     <div>
         <a href="{{ route('crews.create') }}" class="btn btn-primary">
-            <b>+</b>
+            <i class="bi bi-plus-lg"></i>
         </a>
     </div>
 </div>

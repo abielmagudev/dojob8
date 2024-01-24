@@ -13,13 +13,10 @@
         <tr>
             <td>{{ $member->full_name }}</td>
             <td>
-                @foreach($member->contact_data->filter() as $key => $value)
-                <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>
-                <a href="{{ $prefix }}:{{ $value }}" class="mx-1">{{ $value }}</a>
-                @endforeach
+                <x-custom.information-contact-channels :channels="$member->contact_data->filter()" type="tooltip" item-class="badge" />
             </td>
             <td class="text-end">
-                <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">
+                <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>

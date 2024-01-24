@@ -16,7 +16,7 @@ class ConfigurationController extends Controller
 {
     public function index()
     {
-        return view('configuration.index');
+        return view('configuration.index')->with('configuration', Configuration::first());
     }
 
     // public function create()
@@ -36,7 +36,7 @@ class ConfigurationController extends Controller
 
     public function edit(Configuration $configuration)
     {
-        return view('configuration.edit');
+        return view('configuration.edit')->with('configuration', $configuration);
     }
 
     public function update(ConfigurationSaveRequest $request, Configuration $configuration)

@@ -26,7 +26,9 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('configuration', Configuration::first());
+        View::composer('application.sidebar-canvas', function($view) {
+            $view->with('configuration', Configuration::first());
+        });
 
         View::composer([
             'components.custom.select-country-code-data',

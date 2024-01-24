@@ -8,7 +8,7 @@
         </option>
         @endforeach
 
-        @if(! $crews->contains($work_order->crew_id) )
+        @if( $work_order->hasCrew() &&! $crews->contains($work_order->crew_id) )
         <option value="{{ $work_order->crew->id }}" selected>
             {{ $work_order->crew->name }} - It is inactive or it is not for work order tasks
         </option>

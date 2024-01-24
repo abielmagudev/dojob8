@@ -198,6 +198,11 @@ class WorkOrder extends Model implements FilteringInterface
     {
         return (bool) $this->members_count || $this->members->count();
     }
+
+    public function hasCrew()
+    {
+        return ! is_null($this->crew_id) && is_a(Crew::class, $this->crew);
+    }
     
     public function hasContractor()
     {

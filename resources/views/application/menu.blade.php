@@ -90,7 +90,7 @@ return [
             'active' => request()->routeIs('configuration.*'),
             'icon' => '<i class="bi bi-gear"></i>',
             'permission' => true,
-            'route' => '#!',
+            'route' => route('configuration.index'),
         ],
     ],
 ];

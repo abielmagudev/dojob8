@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\DashboardController;
@@ -65,3 +66,5 @@ Route::resource('work-orders', WorkOrderController::class)->except('create');
 
 Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
 Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
+
+Route::resource('configuration', ConfigurationController::class)->only(['index','edit','update']);

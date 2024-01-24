@@ -25,18 +25,22 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            // 
             ClientSeeder::class,
+            ConfigurationSeeder::class,
             ContractorSeeder::class,
             CrewSeeder::class,
-            CrewMemberSeeder::class,
             InspectionSeeder::class,
             InspectorSeeder::class,
             JobSeeder::class,
             MemberSeeder::class,
             UserSeeder::class,
             WorkOrderSeeder::class,
-            MemberWorkOrderSeeder::class,
             ExtensionSeeder::class,
+
+            //
+            CrewMemberSeeder::class,
+            MemberWorkOrderSeeder::class,
         ]);
     }
 }

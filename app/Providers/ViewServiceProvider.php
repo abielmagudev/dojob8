@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Configuration;
 use App\Suppliers\CountryManager;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,8 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::share('configuration', Configuration::first());
+
         View::composer([
             'components.custom.select-country-code-data',
             'components.custom.select-state-code-data',

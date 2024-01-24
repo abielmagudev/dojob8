@@ -34,7 +34,7 @@
         <li class="d-block d-md-none">
           <h6 class="dropdown-header">Username</h6>
         </li>
-
+        
         <li>
           <button id="themeModeButton" class="dropdown-item" type="button" data-mode="light">
               <i class="bi bi-sun"></i>

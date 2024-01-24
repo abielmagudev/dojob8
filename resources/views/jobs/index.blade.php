@@ -27,7 +27,7 @@
         <tr>
             <td style="width:1%">
                 <x-tooltip title="{{ ucfirst($job->presence_status) }}">
-                    <x-indicator-on-off :toggle="$job->isAvailable()" />
+                    <x-indicator-on-off :toggle="$job->isActive()" />
                 </x-tooltip>
             </td>
             <td>{{ $job->name }}</td>

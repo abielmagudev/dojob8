@@ -26,7 +26,7 @@ class JobSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'successful_required_inspections' => [
+            'successful_inspections_required' => [
                 'required',
                 'integer',
                 'min:0',
@@ -63,8 +63,8 @@ class JobSaveRequest extends FormRequest
             $validated['preconfigured_required_inspections'] = json_encode( $this->get('preconfigured_required_inspections') );
         }
 
-        if( in_array($this->method(), ['PATCH', 'PUT']) ) {
-            $validated['is_available'] = $this->has('available') ? 1 : 0;
+        if( in_array($this->method(), ['PATCH','PUT']) ) {
+            $validated['is_active'] = $this->has('active') ? 1 : 0;
         }
 
         return $validated;

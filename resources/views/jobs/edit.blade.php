@@ -14,16 +14,17 @@
     <form action="{{ route('jobs.update', $job) }}" method="post" autocomplete="off">
         @method('put')
         @include('jobs._form')
-        <x-form-field-horizontal for="availableSwitch">
+        <x-form-field-horizontal for="activeSwitch">
             <div class="alert alert-warning">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="availableSwitch" name="available" value="1" {{ isChecked( $job->isAvailable() ) }}>
-                    <label class="form-check-label" for="availableSwitch">
-                        <b>Available.</b>
+                    <input class="form-check-input" type="checkbox" role="switch" id="activeSwitch" name="active" value="1" {{ isChecked( $job->isActive() ) }}>
+                    <label class="form-check-label" for="activeSwitch">
+                        <b>Active.</b>
                         <small>If you deactivate this option, you will not be able to use this job in new orders.</small>
                     </label>
                 </div> 
             </div>
+            <x-form-feedback error="active" />
         </x-form-field-horizontal>
         <br>
 

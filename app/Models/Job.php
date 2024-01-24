@@ -20,9 +20,9 @@ class Job extends Model
     protected $fillable = [
         'name',
         'description',
-        'successful_required_inspections',
+        'successful_inspections_required',
         'preconfigured_required_inspections',
-        'is_available',
+        'is_active',
     ];
 
 
@@ -37,7 +37,7 @@ class Job extends Model
         return json_decode($this->preconfigured_required_inspections); // (json_last_error() == JSON_ERROR_NONE)
     }
 
-    public function getInspectorsPreconfiguredRequiredInspectionsAttribute()
+    public function getInspectorsPreconfiguredAttribute()
     {
         return $this->hasPreconfiguredRequiredInspections() 
             ? Inspector::whereIn('id', $this->preconfigured_required_inspections_array)->get()

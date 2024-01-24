@@ -6,7 +6,7 @@
     </x-slot>
 
     <p>
-        <x-indicator-on-off :toggle="$job->isAvailable()" />
+        <x-indicator-on-off :toggle="$job->isActive()" />
         <span>{{ ucfirst($job->presence_status) }}</span>
     </p>
 
@@ -20,9 +20,9 @@
 
     <x-small-title title="Preconfigured inspections required">
     @if( $job->hasPreconfiguredRequiredInspections() )           
-        @foreach($job->inspectors_preconfigured_required_inspections as $inspector)
+        @foreach($job->inspectors_preconfigured as $inspector)
         <span class="badge border">
-            <a href="{{ route('inspectors.show', $inspector) }}">{{ $inspector->name }}</a>
+            <a href="{{ route('inspectors.show', $inspector) }}" class="text-decoration-none">{{ $inspector->name }}</a>
         </span>
         @endforeach
 

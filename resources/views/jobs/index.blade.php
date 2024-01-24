@@ -18,7 +18,7 @@
                 <th></th>
                 <th>Name</th>
                 <th>Description</th>
-                <th class="text-nowrap">Successful inspections required</th>
+                <th class="text-nowrap">Inspections required</th>
                 <th>Extensions</th>
                 <th></th>
             </tr>

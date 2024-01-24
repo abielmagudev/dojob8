@@ -32,7 +32,7 @@
         <tr>
             <td style="width:1%">
                 <x-tooltip title="{{ ucfirst($member->presence_status) }}">
-                    <x-indicator-on-off :toggle="$member->isActive()" />
+                    <x-indicator-on-off :toggle="$member->isAvailable()" />
                 </x-tooltip>
             </td>
             <td class="text-nowrap">{{ $member->full_name }}</td>

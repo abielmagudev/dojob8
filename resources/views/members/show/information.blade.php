@@ -6,7 +6,7 @@
     </x-slot>
 
     <p>
-        <x-indicator-on-off :toggle="$member->isActive()" />
+        <x-indicator-on-off :toggle="$member->isAvailable()" />
         <span class="text-capitalize">{{ $member->presence_status }}</span>
     </p>
 

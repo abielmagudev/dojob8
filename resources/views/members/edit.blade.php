@@ -17,14 +17,14 @@
         <x-form-field-horizontal for="isCrewMemberSelect">
             <div class="alert alert-warning">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" id="isActiveSwitch" type="checkbox" role="switch" name="is_active" value="1" {{ isChecked( old('is_active', $member->is_active) == 1 ) }}>
-                    <label class="form-check-label" for="isActiveSwitch">
-                        <b class="d-block">Active</b>
+                    <input class="form-check-input" id="isAvailableSwitch" type="checkbox" role="switch" name="is_available" value="1" {{ isChecked( old('is_available', $member->is_available) == 1 ) }}>
+                    <label class="form-check-label" for="isAvailableSwitch">
+                        <b class="d-block">Available</b>
                         <small>If deactivated, it will not be able to be used in new orders, it will be removed from your crew and your user account will be deactivated.</small>
                     </label>
                 </div>
             </div>
-            <x-form-feedback error="is_active" />
+            <x-form-feedback error="is_available" />
         </x-form-field-horizontal>
         <br>
         

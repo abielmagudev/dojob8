@@ -31,7 +31,7 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
         'email',
         'position',
         'category',
-        'is_active',
+        'is_available',
         'is_crew_member',
         'notes',
     ];

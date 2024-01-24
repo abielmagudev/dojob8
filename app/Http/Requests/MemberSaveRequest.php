@@ -52,7 +52,7 @@ class MemberSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'is_active' => [
+            'is_available' => [
                 'nullable',
                 'boolean',
             ],
@@ -81,7 +81,7 @@ class MemberSaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'is_active' => $this->isMethod('POST') || $this->has('is_active') ? 1 : 0,
+            'is_available' => $this->isMethod('POST') || $this->has('is_available') ? 1 : 0,
             'is_crew_member' => (int) $this->is_crew_member,
         ]);
     }

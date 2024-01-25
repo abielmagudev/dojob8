@@ -35,10 +35,6 @@
 </x-card>
 <br>
 
-@push('scripts')
-@include('crews._form.script-text-color-mode')
-@endpush
-
 <x-custom.modal-confirm-delete :route="route('crews.destroy', $crew)" concept="crew">
     <p>¿Do you want to continue to delete the crew <br> <b><?= $crew->name ?></b>?</p>
 </x-custom.modal-confirm-delete>

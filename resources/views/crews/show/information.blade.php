@@ -7,16 +7,16 @@
 
     <p>
         <x-indicator-on-off :toggle="$crew->isActive()" />
-        <span class="text-uppercase">{{ $crew->active_status }}</span>
-
-        <span class="badge text-uppercase " style="background-color:{{ $crew->background_color }}; color: {{ $crew->text_color }}">
-            {{ $crew->text_color_mode }}
-        </span>
+        <span class="text-capitalize">{{ $crew->presence_status }}</span>
     </p>
 
     <p>
-        {{ $crew->description }}
+        <span class="badge" style="background-color:{{ $crew->background_color }};color:{{ $crew->text_color }}">Background & text color</span>
     </p>
+
+    <x-small-title title="Description">
+        {{ $crew->description }}
+    </x-small-title>
 
     <x-custom.information-hook-users :model="$crew" />
 </x-card>

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Crew\CrewPainter;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasPresenceStatusTrait;
 use App\Models\WorkOrder\HasWorkOrdersTrait;
@@ -18,6 +17,12 @@ class Crew extends Model
     use HasWorkOrdersTrait;
     use SoftDeletes;
 
+    const COLOR_HEX_PATTERN = '/^#[0-9A-Fa-f]{6}$/';
+
+    const BACKGROUND_COLOR_DEFAULT = '#333333';
+
+    const TEXT_COLOR_DEFAULT = '#DDDDDD';
+
     public static $all_tasks = [
         'work orders',
         'inspections',
@@ -27,8 +32,8 @@ class Crew extends Model
         'name',
         'description',
         'tasks',
-        'background_color',
-        'text_color_mode',
+        'background_color_hex',
+        'text_color_hex',
         'is_active',
         'lead_member_id',
     ];
@@ -36,11 +41,14 @@ class Crew extends Model
 
     // Attributes
 
+    public function getBackgroundColorAttribute()
+    {
+        return $this->background_color_hex ?? self::BACKGROUND_COLOR_DEFAULT;
+    }
+
     public function getTextColorAttribute()
     {
-        return CrewPainter::getTextColorByMode( 
-            $this->text_color_mode ?? CrewPainter::TEXT_COLOR_MODE_DEFAULT
-        );
+        return $this->text_color_hex ?? self::TEXT_COLOR_DEFAULT;
     }
 
     public function getDatasetAttribute()

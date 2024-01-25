@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\Crew;
-use App\Models\Crew\CrewPainter;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CrewSaveRequest extends FormRequest
@@ -38,11 +37,12 @@ class CrewSaveRequest extends FormRequest
             'background_color' => [
                 'required',
                 'string',
-                sprintf('regex:%s', CrewPainter::COLOR_HEX_PATTERN),
+                sprintf('regex:%s', Crew::COLOR_HEX_PATTERN),
             ],
-            'text_color_mode' => [
+            'text_color' => [
                 'required',
                 'string',
+                sprintf('regex:%s', Crew::COLOR_HEX_PATTERN),
             ],
             'is_active' => [
                 'nullable',
@@ -63,22 +63,15 @@ class CrewSaveRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->crew_id = $this->route('crew')->id ?? 0;
-
-        $this->merge([
-            'text_color_mode' => $this->has('text_color_mode') ? 'light' : CrewPainter::TEXT_COLOR_MODE_DEFAULT,
-        ]);
     }
 
     public function validated()
     {
-        $validated = parent::validated();
-
-        $validated['task_types'] = json_encode($this->get('task_types', []));
-        
-        if(! $this->isMethod('POST') ) {
-            $validated['is_active'] = (int) $this->has('is_active');
-        }
-
-        return $validated;
+        return array_merge(parent::validated(), [
+            'is_active' => $this->isMethod('PATCH') || $this->isMethod('PUT') ? (int) $this->has('is_active') : 1,
+            'task_types' => json_encode($this->get('task_types', [])),
+            'background_color_hex' => $this->get('background_color'),
+            'text_color_hex' => $this->get('text_color'),
+        ]);
     }
 }

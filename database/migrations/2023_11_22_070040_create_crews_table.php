@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Crew;
-use App\Models\Crew\CrewPainter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,9 +17,9 @@ class CreateCrewsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->string('tasks')->nullable();
-            $table->string('background_color', 24);
-            $table->enum('text_color_mode', CrewPainter::getTextColorModes());
+            $table->string('tasks')->index()->nullable();
+            $table->string('background_color_hex', 24);
+            $table->string('text_color_hex', 24);
             $table->boolean('is_active')->default(true);
             $table->foreignId('lead_member_id')->nullable();
             $table->foreignId('created_by')->nullable();

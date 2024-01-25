@@ -18,9 +18,7 @@
 
     {{-- Center --}}
     <div class="d-none d-md-inline-block">
-      @include('clients.__.form-search', [
-        'style' => 'width:320px',
-      ])
+      @include('application.search')
     </div>
 
     {{-- Right --}}

@@ -11,7 +11,7 @@
     <div class="offcanvas-body">
 
         <div class="d-block d-md-none mb-3">
-            @include('clients.__.form-search')
+            @include('application.search')
         </div>
         
         <div class="text-center text-uppercase mb-3">

@@ -17,6 +17,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\WorkOrderJobExtensionsAjaxController;
 use App\Http\Controllers\MemberWorkOrderController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,3 +69,4 @@ Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxControlle
 Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
 
 Route::resource('configuration', ConfigurationController::class)->only(['index','edit','update']);
+Route::get('search', SearchController::class)->name('app.search');

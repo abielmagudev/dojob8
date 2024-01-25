@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CrewSaveRequest;
 use App\Http\Requests\CrewMemberUpdateRequest;
 use App\Models\Crew;
-use App\Models\Crew\CrewPainter;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
@@ -26,7 +25,6 @@ class CrewController extends Controller
         return view('crews.create', [
             'all_tasks' => Crew::getAllTasks(),
             'crew' => new Crew,
-            'text_color_modes_colors' => CrewPainter::getTextColorModesAndColors(),
         ]);
     }
 
@@ -53,7 +51,6 @@ class CrewController extends Controller
             'all_tasks' => Crew::getAllTasks(),
             'crew' => $crew,
             'members' => [],
-            'text_color_modes_colors' => CrewPainter::getTextColorModesAndColors(),
         ]);
     }
 

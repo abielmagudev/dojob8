@@ -201,7 +201,7 @@ class WorkOrder extends Model implements FilteringInterface
 
     public function hasCrew()
     {
-        return ! is_null($this->crew_id) && is_a(Crew::class, $this->crew);
+        return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
     }
     
     public function hasContractor()

@@ -23,7 +23,7 @@ return [
         'Payments' => [
             'active' => request()->routeIs('payments.*'),
             'icon' => '<i class="bi bi-cash"></i>',
-            'route' => '#!',
+            'route' => route('payments.index'),
             'permission' => true,
         ],
     ],

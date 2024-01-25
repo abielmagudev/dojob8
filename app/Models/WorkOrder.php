@@ -36,6 +36,7 @@ class WorkOrder extends Model implements FilteringInterface
         'archived_at',
         'permit_code',
         'notes',
+        'payment',
     ];
 
     protected $casts = [
@@ -98,6 +99,7 @@ class WorkOrder extends Model implements FilteringInterface
             'crew' => 'filterByCrew',
             'job' => 'filterByJob',
             'dates' => 'filterByScheduledDateBetween',
+            'payment_group' => 'filterByPaymentGroup',
             'search' => 'filterBySearch',
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
@@ -130,6 +132,19 @@ class WorkOrder extends Model implements FilteringInterface
     public function getBoundAttribute()
     {
         return $this->isRework() ? $this->rework : $this->warranty;
+    }
+
+    public function getPaymentStatusAttribute()
+    {
+        if( $this->isUnpaid() ) {
+            return 'unpaid';
+        } 
+
+        if( $this->isPaid() ) {
+            return 'paid';
+        }
+
+        return 'free';
     }
 
 
@@ -216,6 +231,22 @@ class WorkOrder extends Model implements FilteringInterface
     }
 
 
+    public function isUnpaid()
+    {
+        return $this->paymeny == 0;
+    }
+
+    public function isPaid()
+    {
+        return $this->payment == 1;
+    }
+
+    public function isFreePayment()
+    {
+        return $this->payment == -1;
+    }
+
+
     // Actions
 
     public function changesToInspectedStatus()
@@ -233,6 +264,30 @@ class WorkOrder extends Model implements FilteringInterface
 
 
     // Scopes
+
+    public function scopeWithBasicRelationships($query)
+    {
+        return $query->with([
+            'client',
+            'contractor',
+            'crew',
+            'job',
+        ]);
+    }
+
+    public function scopeWithAllRelationships($query)
+    {
+        return $query->with([
+            'client',
+            'contractor',
+            'crew',
+            'job',
+            'rework',
+            'warranty',
+            'reworks',
+            'warranties',
+        ]);
+    }
 
     public function scopeWhereId($query, $value)
     {
@@ -331,6 +386,31 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->where('permit_code', 'like', $value);
     }
 
+    public function scopeWherePayment($query, $value)
+    {
+        return $query->where('payment', $value);
+    }
+
+    public function scopeWherePaymentIn($query, array $values)
+    {
+        return $query->whereIn('payment', $values);
+    }
+
+    public function scopeUnpaid($query)
+    {
+        return $query->where('payment', 0);
+    }
+
+    public function scopePaid($query)
+    {
+        return $query->where('payment', 1);
+    }
+
+    public function scopeFreePayment($query)
+    {
+        return $query->where('payment', -1);
+    }
+
 
     // Filters
 
@@ -396,28 +476,13 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereReworkNull()->whereWarrantyNull();
     }
 
-    public function scopeWithBasicRelationships($query)
+    public function scopeFilterByPaymentGroup($query, $values)
     {
-        return $query->with([
-            'client',
-            'contractor',
-            'crew',
-            'job',
-        ]);
-    }
+        if( empty($values) ||! is_array($values) ) {
+            return $query;
+        }
 
-    public function scopeWithAllRelationships($query)
-    {
-        return $query->with([
-            'client',
-            'contractor',
-            'crew',
-            'job',
-            'rework',
-            'warranty',
-            'reworks',
-            'warranties',
-        ]);
+        return $query->wherePaymentIn($values);
     }
 
 

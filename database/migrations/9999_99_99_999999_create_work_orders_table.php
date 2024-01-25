@@ -30,6 +30,7 @@ class CreateWorkOrdersTable extends Migration
             $table->dateTime('archived_at')->nullable();
             $table->string('permit_code')->nullable();
             $table->text('notes')->nullable();
+            $table->tinyInteger('payment')->default(0);
             $table->foreignId('created_by')->nullable()->index();
             $table->foreignId('updated_by')->nullable()->index();
             $table->timestamps();

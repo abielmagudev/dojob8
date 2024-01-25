@@ -29,6 +29,7 @@ class WorkOrderFactory extends Factory
             'done_at' => WorkOrder::inIncompleteStatuses($status) ? $this->faker->dateTimeBetween('-2 years') : null,
             'completed_at' => ! WorkOrder::inIncompleteStatuses($status) ? $this->faker->dateTimeBetween('-2 years') : null,
             'archived_at' => WorkOrder::inArchivedStatuses($status) ? $this->faker->dateTimeBetween('-2 years') : null,
+            'payment' => $this->faker->randomElement([-1,0,1]),
             'created_by' => $this->faker->optional()->numberBetween(1, 10),
             'updated_by' => $this->faker->optional()->numberBetween(1, 10),
         ];

@@ -1,8 +1,17 @@
 <x-card>
-    <div class="mb-3">
-        <div class="badge text-bg-dark">Required {{ $work_order->job->inspections_required_count }}</div>
-        <div class="badge text-bg-success">Approved {{ $inspections->where('is_approved', 1)->count() }}</div>
-        <div class="badge text-bg-primary">Total {{ $inspections->count() }}</div>
+    @slot('options')
+    <a href="{{ route('inspections.create', ['work_order' => $work_order->id]) }}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i>
+    </a>
+    @endslot
+
+    <div>
+        <div class="badge text-bg-success text-uppercase">Requires {{ $work_order->job->successful_inspections_required }} Passed</div>
+        <div class="badge text-bg-warning d-none">{{ $inspections->filter(fn($i) => $i->isPending())->count() }} Pending</div>
+        <div class="badge text-bg-primary d-none">{{ $inspections->filter(fn($i) => $i->isOnHold())->count() }} On hold</div>
+        <div class="badge text-bg-success d-none">{{ $inspections->filter(fn($i) => $i->isPassed())->count() }} Passed</div>
+        <div class="badge text-bg-danger d-none">{{ $inspections->filter(fn($i) => $i->isFailed())->count() }} Failed</div>
+        <div class="badge text-bg-secondary d-none">{{ $inspections->count() }} Total</div>
     </div>
 
     @if( $inspections->count() )
@@ -10,18 +19,21 @@
         <x-slot name="thead">
             <tr>
                 <th>Schedule</th>
+                <th>Status</th>
                 <th>Inspector</th>
                 <th>Crew</th>
                 <th>Observations</th>
-                <th>Status</th>
                 <th></th>
             </tr>
         </x-slot>
 
         @foreach($inspections->sortByDesc('scheduled_date') as $inspection)
         <tr @class(['align-middle' => strlen($inspection->observations) < 100])>
-            <td class="text-nowrap pe-5" style="width:1%">
+            <td class="text-nowrap" style="width:1%">
                 {{ $inspection->scheduled_date_human }}
+            </td>
+            <td style="width:1%">
+                @include('inspections.__.status-flag', ['status' => $inspection->status])
             </td>
             <td class="text-nowrap">
                 {{ $inspection->inspector->name }}
@@ -34,11 +46,8 @@
             <td style="min-width:240px; max-width:480px">
                 {{ $inspection->observations }}
             </td>
-            <td>
-                @include('inspections.__.status-flag', ['status' => $inspection->status])
-            </td>
-            <td class="text-nowrap text-end">
-                <a href="{{ route('inspections.edit', [$inspection, 'tab' => 'inspections']) }}" class="btn btn-outline-warning">
+            <td class="text-nowrap text-end" style="width:1%">
+                <a href="{{ route('inspections.edit', [$inspection, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>
@@ -47,12 +56,4 @@
 
     </x-table>
     @endif
-
-    @slot('footer')
-    <div class="py-1 text-end">    
-        <a href="{{ route('inspections.create', $work_order) }}" class="btn btn-primary">
-            <span>Add new inspection</span>
-        </a>
-    </div>
-    @endslot
 </x-card>

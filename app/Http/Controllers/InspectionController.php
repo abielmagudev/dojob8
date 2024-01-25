@@ -77,9 +77,7 @@ class InspectionController extends Controller
             'crews' => Crew::forInspections()->active()->get(),
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
-            'url_back' => $request->filled('tab') 
-                            ? route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections']) 
-                            : route('inspections.show', $inspection),
+            'url_back' => $request->get('url_back', route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])),
         ]);
     }
 
@@ -87,6 +85,10 @@ class InspectionController extends Controller
     {
         if(! $inspection->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating inspection, try again please');
+        }
+
+        if( $inspection->isPassed() ) {
+            $inspection->work_order->changesToInspectedStatus();
         }
 
         return redirect()->route('inspections.edit', $inspection)->with('success', "You updated inspection <b>{$inspection->id}</b>");

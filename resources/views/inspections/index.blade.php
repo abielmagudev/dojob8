@@ -73,7 +73,7 @@
                 @include('clients.__.inline-summary-information', ['client' => $inspection->work_order->client])
             </td>
             <td class="text-end">
-                <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-outline-warning btn-sm">
+                <a href="{{ route('inspections.edit', [$inspection, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>

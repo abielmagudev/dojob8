@@ -31,7 +31,7 @@ class Crew extends Model
     protected $fillable = [
         'name',
         'description',
-        'tasks',
+        'tasks_json',
         'background_color_hex',
         'text_color_hex',
         'is_active',
@@ -72,7 +72,7 @@ class Crew extends Model
 
     public function getTasksArrayAttribute()
     {
-        return ! is_null($this->tasks) ? json_decode( $this->tasks ) : [];
+        return ! empty($this->tasks_json) ? json_decode($this->tasks_json) : [];
     }
 
 
@@ -93,7 +93,7 @@ class Crew extends Model
 
     public function scopeWhereTasks($query, string $task)
     {
-        return $query->where('tasks', 'like', "%{$task}%");
+        return $query->where('tasks_json', 'like', "%{$task}%");
     }
 
     public function scopeForInspections($query)

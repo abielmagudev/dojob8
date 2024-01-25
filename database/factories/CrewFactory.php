@@ -21,7 +21,7 @@ class CrewFactory extends Factory
         return [
             'name' => strtoupper($this->faker->domainName()),
             'description' => $this->faker->optional()->sentence(),
-            'tasks' => $crew_tasks,
+            'tasks_json' => $crew_tasks,
             'background_color_hex' => $this->faker->hexColor(),
             'text_color_hex' => $this->faker->hexColor(),
             'lead_member_id' => $this->faker->optional()->numberBetween(1, 35),

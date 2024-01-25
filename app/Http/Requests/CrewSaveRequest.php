@@ -28,10 +28,11 @@ class CrewSaveRequest extends FormRequest
                 'string',
             ],
             'tasks' => [
-                'required',
+                'nullable',
                 'array',
             ],
             'tasks.*' => [
+                'required_with:tasks',
                 sprintf('in:%s', Crew::getAllTasks()->implode(',')),
             ],
             'background_color' => [
@@ -54,9 +55,9 @@ class CrewSaveRequest extends FormRequest
     public function messages()
     {
         return [
-            'task_types.required' => __('Choose at least one type of task from the list'),
-            'task_types.array' => __('Choose some type of task from the list'),
-            'task_types.*.in' => __('Choose some valid type of task'),
+            'tasks.array' => __('Choose one or more tasks'),
+            'tasks.*.in' => __('Choose one or more valid tasks'),
+            'tasks.*.required_with' => __('Choose at least one task from the list'),
         ];
     }
 
@@ -69,7 +70,7 @@ class CrewSaveRequest extends FormRequest
     {
         return array_merge(parent::validated(), [
             'is_active' => $this->isMethod('PATCH') || $this->isMethod('PUT') ? (int) $this->has('is_active') : 1,
-            'task_types' => json_encode($this->get('task_types', [])),
+            'tasks_json' => json_encode( $this->get('tasks', []) ),
             'background_color_hex' => $this->get('background_color'),
             'text_color_hex' => $this->get('text_color'),
         ]);

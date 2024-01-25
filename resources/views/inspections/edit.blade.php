@@ -3,7 +3,6 @@
 @section('header')
 <x-breadcrumb :items="[
     'Inspections' => route('inspections.index'),
-    $inspection->id,
     'Edit'
     ]" />
 {{-- sprintf('#%s', $inspection->id) => route('inspections.show', $inspection), --}}

@@ -98,6 +98,7 @@ class WorkOrder extends Model implements FilteringInterface
             'crew' => 'filterByCrew',
             'job' => 'filterByJob',
             'dates' => 'filterByScheduledDateBetween',
+            'search' => 'filterBySearch',
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
             'status' => 'filterByStatus',
@@ -217,6 +218,16 @@ class WorkOrder extends Model implements FilteringInterface
 
     // Scopes
 
+    public function scopeWhereId($query, $value)
+    {
+        return $query->where('id', $value);
+    }
+
+    public function scopeWhereSearch($query, $value, string $column = 'id')
+    {
+        return $query->where($column, 'like', "%{$value}%");
+    }
+
     public function scopeWhereRework($query, $value)
     {
         return $query->where('rework_id', $value);
@@ -306,6 +317,11 @@ class WorkOrder extends Model implements FilteringInterface
 
 
     // Filters
+
+    public function scopeFilterBySearch($query, $value)
+    {
+        return ! is_null($value) ? $query->whereId($value) : $query;
+    }
 
     public function scopeFilterByClient($query, $client_id)
     {

@@ -23,10 +23,6 @@
         'disabled' => false,
         'title' => 'Photos & files',
     ],
-    'participants' => [
-        'disabled' => false,
-        'title' => 'Participants',
-    ],
     'comments' => [
         'disabled' => false,
         'title' => 'Comments',
@@ -37,7 +33,7 @@
     ],
 ]; ?>
 
-<div class="overflow-x-scroll pb-2">
+<div class="overflow-x-scroll pb-2 mb-3">
     <ul class="nav nav-pills nav-fill" style="min-width:1024px">
         @foreach($tabs as $tab => $settings)      
         <li class="nav-item border-0">
@@ -49,4 +45,3 @@
         @endforeach
     </ul>
 </div>
-<br>

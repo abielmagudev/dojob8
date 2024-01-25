@@ -28,5 +28,26 @@
         {{ $work_order->notes }}
     </x-small-title>
 
+    <x-small-title title="Contractor">
+        @if( $work_order->hasContractor() )
+        @include('contractors.__.address', [
+            'contractor' => $work_order->contractor,
+        ])
+        <x-custom.information-contact-channels :channels="$work_order->contractor->contact_data->filter()"/>
+        
+        @else
+        <span>None</span>
+
+        @endif
+    </x-small-title>
+    
+    <x-small-title title="Crew">
+        @include('crews.__.flag', ['crew' => $work_order->crew])
+    </x-small-title>
+
+    <x-small-title title="Workers">
+        {!! $work_order->members->map(function($member){ return $member->full_name; })->implode('<br>') !!}
+    </x-small-title>
+
     <x-custom.information-hook-users :model="$work_order" />
 </x-card>

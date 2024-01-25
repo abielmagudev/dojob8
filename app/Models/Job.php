@@ -59,7 +59,7 @@ class Job extends Model
 
     public function requiresSuccessfulInspections()
     {
-        return (bool) $this->successful_required_inspections;
+        return (bool) $this->successful_inspections_required;
     }
 
 

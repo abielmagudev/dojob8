@@ -216,6 +216,22 @@ class WorkOrder extends Model implements FilteringInterface
     }
 
 
+    // Actions
+
+    public function changesToInspectedStatus()
+    {
+        if(! $this->job->requiresSuccessfulInspections() ) {
+            return;
+        }
+
+        if( $this->inspections->filter(fn($i) => $i->isPassed())->count() < $this->job->successful_inspections_required ) {
+            return;
+        }
+
+        return $this->fill(['status' => 'inspected'])->save();
+    }
+
+
     // Scopes
 
     public function scopeWhereId($query, $value)
@@ -406,7 +422,6 @@ class WorkOrder extends Model implements FilteringInterface
 
 
     // Relations
-
 
     public function rework()
     {

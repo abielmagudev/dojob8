@@ -75,6 +75,26 @@ class Inspection extends Model implements FilteringInterface
         ]);
     }
 
+    public function isPending()
+    {
+        return $this->status == 'pending';
+    }
+
+    public function isOnHold()
+    {
+        return $this->status == 'on hold';
+    }
+
+    public function isPassed()
+    {
+        return $this->status == 'passed';
+    }
+
+    public function isFailed()
+    {
+        return $this->status == 'failed';
+    }
+
 
     // Scopes
 

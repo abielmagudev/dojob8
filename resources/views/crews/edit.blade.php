@@ -14,7 +14,7 @@
     <form action="{{ route('crews.update', $crew) }}" method="post" autocomplete="off">
         @include('crews._form')
         @method('put')
-        <x-form-field-horizontal>
+        <div>
             <div class="alert alert-warning">
                 <div class="form-check form-switch">
                     <input class="form-check-input" id="isActiveSwitch" type="checkbox" role="switch" name="is_active" value="1" {{ isChecked( old('is_active', $crew->is_active) == 1 ) }}>
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <x-form-feedback error="is_active" />
-        </x-form-field-horizontal>
+        </div>
         <br>
         <div class="text-end">
             <button class="btn btn-warning" type="submit">Update crew</button>

@@ -1,10 +1,12 @@
 @csrf
-<x-form-field-horizontal for="nameInput" label="Name">
+<div class="mb-3">
+    <label for="nameInput" class="form-label">Name</label>
     <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name', $crew->name) }}" required>
     <x-form-feedback error="name" />
-</x-form-field-horizontal>
+</div>
 
-<x-form-field-horizontal label="Color">
+<div class="mb-3">
+    <label for="backgroundColorInput" class="form-label">Color</label>
     <div class="row g-3">
         {{-- Background color --}}
         <div class="col-sm">
@@ -35,10 +37,11 @@
             </div>
         </div>
     </div>
-</x-form-field-horizontal>
+</div>
 
-<x-form-field-horizontal for="taskOptions" label="Tasks">
-    <div class="form-control p-0">
+<div class="mb-3">
+    <label class="form-label">Tasks</label>
+    <div class="form-control">
         <table class="table table-hover m-0">
             @foreach($all_tasks as $task)
             <?php $checkbox_id = "task" . ucwords( str_replace([' ', '-'], '', $task) ) ?>
@@ -53,15 +56,15 @@
             @endforeach
         </table>
     </div>
-
     <x-form-feedback error="tasks" />
     <x-form-feedback error="tasks.*" />
-</x-form-field-horizontal>
+</div>
 
-<x-form-field-horizontal for="descriptionTextarea" label="Description" label-class="form-label-optional">
+<div class="mb-3">
+    <label for="descriptionTextarea" class="form-label form-label-optional">Description</label>
     <textarea id="descriptionTextarea" rows="3" class="form-control" name="description">{{ old('description', $crew->description) }}</textarea>
     <x-form-feedback error="description" />
-</x-form-field-horizontal>
+</div>
 
 @push('scripts')
 <script>

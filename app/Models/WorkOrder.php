@@ -345,7 +345,7 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereIn('warranty_id', $values);
     }
 
-    public function scopeIncompleteStatus($query)
+    public function scopeIncompleteStatuses($query)
     {
         return $query->whereIn('status', self::getIncompleteStatuses()->all());
     }

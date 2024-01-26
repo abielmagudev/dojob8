@@ -47,7 +47,7 @@ class WorkOrderController extends Controller
             'request' => $request,
             'incomplete_work_orders' => [
                 'url' => UrlGeneratorWorkOrders::incomplete(),
-                'count' => WorkOrder::incompleteStatus()->count(),
+                'count' => WorkOrder::incompleteStatuses()->count(),
             ],
             'work_orders' => $work_orders,
         ]);

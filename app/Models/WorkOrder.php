@@ -88,6 +88,12 @@ class WorkOrder extends Model implements FilteringInterface
         'done',
     ];
 
+    public static $payment_statuses = [
+        'free' => -1,
+        'paid' => 1,
+        'unpaid' => 0,
+    ];
+
 
     // Interface
 
@@ -99,7 +105,7 @@ class WorkOrder extends Model implements FilteringInterface
             'crew' => 'filterByCrew',
             'job' => 'filterByJob',
             'dates' => 'filterByScheduledDateBetween',
-            'payment_group' => 'filterByPaymentGroup',
+            'payment_status_group' => 'filterByPaymentStatusGroup',
             'search' => 'filterBySearch',
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
@@ -233,7 +239,7 @@ class WorkOrder extends Model implements FilteringInterface
 
     public function isUnpaid()
     {
-        return $this->paymeny == 0;
+        return $this->payment == 0;
     }
 
     public function isPaid()
@@ -361,7 +367,7 @@ class WorkOrder extends Model implements FilteringInterface
 
     public function scopeWhereNotContractor($query)
     {
-        return $query->whereIsNull('contractor_id');
+        return $query->whereNull('contractor_id');
     }
 
     public function scopeWhereJob($query, $job_id)
@@ -476,9 +482,9 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereReworkNull()->whereWarrantyNull();
     }
 
-    public function scopeFilterByPaymentGroup($query, $values)
+    public function scopeFilterByPaymentStatusGroup($query, $values)
     {
-        if( empty($values) ||! is_array($values) ) {
+        if( empty($values) ||! is_array($values) || count($values) == 3 ) {
             return $query;
         }
 
@@ -613,5 +619,10 @@ class WorkOrder extends Model implements FilteringInterface
         return $work_orders->filter(function ($wo) {
             return self::inIncompleteStatuses($wo->status);
         });
+    }
+
+    public static function getPaymentStatuses()
+    {
+        return collect( self::$payment_statuses );
     }
 }

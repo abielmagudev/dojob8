@@ -19,7 +19,7 @@ class PaymentController extends Controller
         $work_orders = WorkOrder::with(['contractor','job','crew'])
         ->completedStatuses()
         ->filterByInputs( $request->all() )
-        ->orderBy('scheduled_date', $request->get('sort', 'asc'))
+        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->paginate(25)
         ->appends($request->query());
 

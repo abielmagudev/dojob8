@@ -8,33 +8,42 @@
 <x-card title="{{ $work_orders->count() }} Work Orders">
     
     @slot('options')
-    <x-modal-trigger modal-id="filterPaymentsModal">
-        <i class="bi bi-funnel"></i>
-    </x-modal-trigger>
+    @include('components.custom.form-scheduled-date', ['route' => route('payments.index')])
+    @endslot
 
-    <x-modal-trigger modal-id="updatePaymentsModal" class="btn btn-warning">
+    @slot('dropoptions')
+    <x-modal-trigger modal-id="updatePaymentsModal" class="dropdown-item">
         <i class="bi bi-arrow-clockwise"></i>
+        <span>Update</span>
+    </x-modal-trigger>
+    <x-modal-trigger modal-id="filterPaymentsModal" class="dropdown-item">
+        <i class="bi bi-funnel"></i>
+        <span>Filters</span>
     </x-modal-trigger>
     @endslot
 
+    @if( $work_orders->count() )
     <x-table class="align-middle">
         @slot('thead')
         <tr>
+            <th class="text-center">
+                <button id="selectAllButton" class="btn btn-outline-primary btn-sm border-0">
+                    <i class="bi bi-check2-square"></i>
+                </button>
+            </th>
             <th>Payment</th>
             <th>Scheduled</th>
             <th>Job</th>
             <th>Contractor</th>
             <th>Status</th>
-            <th class="text-center">
-                <button id="selectAllButton" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-check2-square"></i>
-                </button>
-            </th>
         </tr>
         @endslot
 
         @foreach($work_orders as $work_order)
         <tr>
+            <td class="text-center" style="width:1%">
+                <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">
+            </td>
             <td style="width:1%">
                 @include('payments.__.flag', ['status' => $work_order->payment_status])
             </td>
@@ -51,12 +60,10 @@
             <td>
                 @include('work-orders.__.status-flag', ['status' => $work_order->status])
             </td>
-            <td class="text-center" style="width:1%">
-                <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">
-            </td>
         </tr>
         @endforeach
     </x-table>
+    @endif
 </x-card>
 <br>
 

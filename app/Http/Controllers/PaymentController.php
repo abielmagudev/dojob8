@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaymentUpdateRequest;
 use App\Models\Contractor;
 use App\Models\Job;
 use App\Models\WorkOrder;
@@ -16,10 +17,11 @@ class PaymentController extends Controller
         }
 
         $work_orders = WorkOrder::with(['contractor','job','crew'])
+        ->completedStatuses()
         ->filterByInputs( $request->all() )
-        ->orderBy('scheduled_date', 'asc')
-        ->paginate( 25 )
-        ->appends( $request->query() );
+        ->orderBy('scheduled_date', $request->get('sort', 'asc'))
+        ->paginate(25)
+        ->appends($request->query());
 
         return view('payments.index', [
             'contractors' => Contractor::all(),
@@ -30,38 +32,14 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function updateMany(Request $request)
+    public function updateMany(PaymentUpdateRequest $request)
     {
-        return $request->all();
+        if(! WorkOrder::whereIn('id', $request->get('work_orders'))->update(['payment' => $request->get('payment')]) ) {
+            return back()->with('danger', 'Error updating the payment of work orders, try again please');
+        }
+
+        $payment_status = WorkOrder::getPaymentStatuses()->search( $request->get('payment') );
+
+        return back()->with('success', sprintf('These #%s work orders were updated with payment <b>%s</b>', implode(', #', $request->get('work_orders')), strtoupper($payment_status)) );
     }
-
-    // public function create()
-    // {
-    //     //
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
-
-    // public function show(Payment $payment)
-    // {
-    //     //
-    // }
-
-    // public function edit(Payment $payment)
-    // {
-    //     //
-    // }
-
-    // public function update(Request $request, Payment $payment)
-    // {
-    //     //
-    // }
-
-    // public function destroy(Payment $payment)
-    // {
-    //     //
-    // }
 }

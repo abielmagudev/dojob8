@@ -20,10 +20,11 @@
     <x-table class="align-middle">
         @slot('thead')
         <tr>
-            <th>Status</th>
+            <th>Payment</th>
             <th>Scheduled</th>
             <th>Job</th>
             <th>Contractor</th>
+            <th>Status</th>
             <th class="text-center">
                 <button id="selectAllButton" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-check2-square"></i>
@@ -46,6 +47,9 @@
                 @if( $work_order->hasContractor() )
                 @include('contractors.__.flag', ['name' => $work_order->contractor->name, 'tooltip' => $work_order->contractor->alias])
                 @endif
+            </td>
+            <td>
+                @include('work-orders.__.status-flag', ['status' => $work_order->status])
             </td>
             <td class="text-center" style="width:1%">
                 <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">

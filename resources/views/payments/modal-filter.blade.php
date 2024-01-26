@@ -5,6 +5,7 @@
         @include('payments.modal-filters.status')
         @include('work-orders.index.modal-filters.contractor')
         @include('work-orders.index.modal-filters.job')
+        @include('components.custom.select-sort')
         <br>
 
         <div class="text-end">

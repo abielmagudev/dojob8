@@ -88,11 +88,7 @@
             </td>
             
             <td class="text-nowrap">
-                {{ $work_order->job->name }}
-
-                @if(! $work_order->isDefault() )
-                <em class="text-capitalize text-secondary">( {{ $work_order->type }} )</em>
-                @endif
+                @include('work-orders.__.job-flag', ['work_order' => $work_order])
             </td>
 
             <td class="text-nowrap">

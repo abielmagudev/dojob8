@@ -40,8 +40,8 @@
             </td>
             <td class="text-nowrap">{{ $work_order->scheduled_date_human }}</td>
             <td class="text-nowrap">
-                <a href="{{ route('work-orders.show', $work_order) }}">#{{ $work_order->id }}</a>
-                <span>- {{ $work_order->job->name }}</span>
+                <a href="{{ route('work-orders.show', $work_order) }}" class="me-1">#{{ $work_order->id }}</a>
+                @include('work-orders.__.job-flag', ['work_order' => $work_order, 'class' => 'd-inline-block'])
             </td>
             <td>
                 @if( $work_order->hasContractor() )

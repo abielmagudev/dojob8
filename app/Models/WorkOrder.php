@@ -350,6 +350,11 @@ class WorkOrder extends Model implements FilteringInterface
         return $query->whereIn('status', self::getIncompleteStatuses()->all());
     }
 
+    public function scopeCompletedStatuses($query)
+    {
+        return $query->whereIn('status', self::getCompletedStatuses()->all());
+    }
+
     public function scopeWhereClient($query, $client_id)
     {
         return $query->where('client_id', $client_id);

@@ -10,12 +10,13 @@
     </div>
     <div class="offcanvas-body">
 
-        <div class="d-block d-md-none mb-3">
-            @include('application.search')
-        </div>
-        
         <div class="text-center text-uppercase mb-3">
-            <small>{{ $configuration->company_name }}</small>
+            <small class="fw-bold">{{ $configuration->company_name }}</small>
+        </div>
+
+        <div class="d-block d-md-none mb-3">
+            <hr>
+            @include('application.search')
         </div>
         
         @foreach($config as $header => $menu)

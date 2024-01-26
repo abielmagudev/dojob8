@@ -4,7 +4,8 @@
         @method('put')
         <div class="mb-3">
             <label for="paymentStatusSelect" class="form-label">Payment</label>
-            <select id="paymentStatusSelect" class="form-select" name="payment">
+            <select id="paymentStatusSelect" class="form-select" name="payment" required>
+                <option disabled selected label="Choose..."></option>
                 @foreach($payment_statuses->reverse() as $key => $value)
                 <option value="{{ $value }}">{{ ucfirst($key) }}</option>
                 @endforeach

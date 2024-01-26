@@ -1,7 +1,7 @@
 <?php $settings = [
     'unpaid' => 'text-bg-warning',
     'paid' => 'text-bg-success',
-    'free' => 'text-bg-secondary',
+    'free' => 'text-bg-dark',
 ] ?>
 
 <span class="badge text-uppercase {{ $settings[$status] }}">{{ $status }}</span>

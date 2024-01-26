@@ -69,7 +69,8 @@ Route::resource('work-orders', WorkOrderController::class)->except('create');
 Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
 Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
 
-Route::resource('payments', PaymentController::class)->only(['index','edit','update']);
+Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
+Route::match(['put','patch'],'payments', [PaymentController::class, 'updateMany'])->name('payments.update.many');
 
 Route::resource('configuration', ConfigurationController::class)->only(['index','update']);
 Route::get('search', SearchController::class)->name('app.search');

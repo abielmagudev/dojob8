@@ -12,10 +12,6 @@
         <i class="bi bi-funnel"></i>
     </x-modal-trigger>
 
-    <button id="selectAllButton" class="btn btn-primary">
-        <i class="bi bi-check-all"></i>
-    </button>
-
     <x-modal-trigger modal-id="updatePaymentsModal" class="btn btn-warning">
         <i class="bi bi-arrow-clockwise"></i>
     </x-modal-trigger>
@@ -28,13 +24,17 @@
             <th>Scheduled</th>
             <th>Job</th>
             <th>Contractor</th>
-            <th></th>
+            <th class="text-center">
+                <button id="selectAllButton" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-check2-square"></i>
+                </button>
+            </th>
         </tr>
         @endslot
 
         @foreach($work_orders as $work_order)
         <tr>
-            <td>
+            <td style="width:1%">
                 @include('payments.__.flag', ['status' => $work_order->payment_status])
             </td>
             <td class="text-nowrap">{{ $work_order->scheduled_date_human }}</td>
@@ -48,14 +48,17 @@
                 @endif
             </td>
             <td class="text-center" style="width:1%">
-                <div class="form-check">
-                    <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" name="process" value="">
-                </div>
+                <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">
             </td>
         </tr>
         @endforeach
     </x-table>
 </x-card>
+<br>
+
+<div class="px-3">
+    <x-pagination-simple-model :collection="$work_orders" />
+</div>
 
 @push('scripts')
 <script>

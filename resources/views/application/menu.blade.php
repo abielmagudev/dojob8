@@ -10,7 +10,7 @@ return [
         ],
         'Work orders' => [
             'active' => request()->routeIs('work-orders.*'),
-            'icon' => '<i class="bi bi-list-task"></i>',
+            'icon' => '<i class="bi bi-clipboard"></i>',
             'permission' => true,
             'route' => route('work-orders.index'),
         ],
@@ -22,7 +22,7 @@ return [
         ],
         'Payments' => [
             'active' => request()->routeIs('payments.*'),
-            'icon' => '<i class="bi bi-cash"></i>',
+            'icon' => '<i class="bi bi-cash-coin"></i>',
             'route' => route('payments.index'),
             'permission' => true,
         ],
@@ -30,13 +30,13 @@ return [
     'Staff' => [
         'Members' => [
             'active' => request()->routeIs('members.*'),
-            'icon' => '<i class="bi bi-people"></i>',
+            'icon' => '<i class="bi bi-person"></i>',
             'permission' => true,
             'route' => route('members.index'),
         ],
         'Crews' => [
             'active' => request()->routeIs('crews.*'),
-            'icon' => '<i class="bi bi-bounding-box-circles"></i>',
+            'icon' => '<i class="bi bi-people"></i>',
             'permission' => true,
             'route' => route('crews.index'),
         ],
@@ -62,7 +62,7 @@ return [
         ],
         'Contractors' => [
             'active' => request()->routeIs('contractors.*'),
-            'icon' => '<i class="bi bi-c-circle"></i>',
+            'icon' => '<i class="bi bi-bookmark-star"></i>',
             'permission' => true,
             'route' => route('contractors.index'),
         ],
@@ -76,7 +76,7 @@ return [
     'Application' => [
         'Users' => [
             'active' => request()->routeIs('users.*'),
-            'icon' => '<i class="bi bi-person"></i>',
+            'icon' => '<i class="bi bi-person-workspace"></i>',
             'permission' => true,
             'route' => route('users.index'),
         ],

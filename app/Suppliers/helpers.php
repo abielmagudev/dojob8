@@ -66,6 +66,9 @@ if(! function_exists('title') )
     }
 }
 
+
+// Bootstrap
+
 if(! function_exists('bsInputInvalid') )
 {
     function bsInputInvalid(bool $is_invalid)
@@ -73,6 +76,15 @@ if(! function_exists('bsInputInvalid') )
         return $is_invalid ? 'is-invalid' : '';
     }
 }
+
+if(! function_exists('bsIsActived') )
+{
+    function bsIsActived(bool $verified, $default = '')
+    {
+        return $verified ? 'active' : $default;
+    }
+}
+
 
 // Models
 

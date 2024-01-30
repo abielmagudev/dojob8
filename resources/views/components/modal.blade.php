@@ -1,8 +1,9 @@
-<div class="modal fade" id="{{ $attributes->get('id') }}" tabindex="-1" aria-labelledby="{{ $attributes->get('id') }}Label" @if( $attributes->has('static') ) data-bs-backdrop="static" data-bs-keyboard="false" @endif aria-hidden="true">
+<div class="modal fade" tabindex="-1" id="{{ $attributes->get('id') }}" aria-labelledby="{{ $attributes->get('id') }}Label" @if( $attributes->has('static') ) data-bs-backdrop="static" data-bs-keyboard="false" @endif aria-hidden="true">
     <div class="modal-dialog {{ $attributes->get('dialog-class') }}">
         <div class="modal-content">
 
-            <div class="modal-header align-items-start  border-0 {{ $attributes->get('header-class', '') }}">
+            {{-- Header --}}
+            <div class="modal-header align-items-start border-0 {{ $attributes->get('header-class', '') }}">
                 <div>
                     <h1 class="modal-title fs-5" id="{{ $attributes->get('id') }}Label">{{ $attributes->get('title') ?? $title ?? '' }}</h1>
                     <small>{{ $attributes->get('subtitle', '') }}</small>
@@ -12,19 +13,17 @@
                 @endif
             </div>
 
+            {{-- Body --}}
             <div class="modal-body {{ $attributes->get('body-class', '') }}">
                 {!! $slot !!}
             </div>
 
-            @if( isset($footer) || $attributes->has('footer-close')  )              
+            {{-- Footer --}}
+            @if( isset($footer) )              
             <div class="modal-footer {{ $attributes->get('footer-class', '') }}">
                 @isset($footer)
                 {!! $footer !!} 
                 @endisset
-
-                @if( $attributes->has('footer-close') )
-                <x-modal-button-close>Close</x-modal-button-close>
-                @endif
             </div>
             @endif
 

@@ -6,11 +6,11 @@ trait HasPresenceStatusTrait
 {
     public function getPresenceStatusAttribute()
     {
-        if(! is_null($this->is_available) ) {
+        if( isset($this->is_available) ) {
             return $this->isAvailable() ? 'available' : 'unavailable';
         }
 
-        if(! is_null($this->is_active) ) {
+        if( isset($this->is_active) ) {
             return $this->isActive() ? 'active' : 'inactive';
         }
 
@@ -37,20 +37,20 @@ trait HasPresenceStatusTrait
 
     public function scopeAvailable($query)
     {
-        return $query->where('is_available', 1);
+        return $query->whereAvailable(1);
     }
 
     public function scopeUnavailable($query)
     {
-        return $query->where('is_available', 0);
+        return $query->whereAvailable(0);
     }
 
-    public function available()
+    public function setAvailable()
     {
         return $this->fill(['is_available' => 1])->save();
     }
 
-    public function unavailable()
+    public function setUnavailable()
     {
         return $this->fill(['is_available' => 0])->save();
     }
@@ -75,20 +75,20 @@ trait HasPresenceStatusTrait
 
     public function scopeActive($query)
     {
-        return $query->where('is_active', 1);
+        return $query->whereActive(1);
     }
 
     public function scopeInactive($query)
     {
-        return $query->where('is_active', 0);
+        return $query->whereActive(0);
     }
 
-    public function activate()
+    public function setActive()
     {
         return $this->fill(['is_active' => 1])->save();
     }
 
-    public function deactivate()
+    public function setInactive()
     {
         return $this->fill(['is_active' => 0])->save();
     }

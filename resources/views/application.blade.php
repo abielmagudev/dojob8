@@ -42,8 +42,12 @@
         </header>
         <br>
         
+        <div>
+            @yield('subheader')
+        </div>
+
         @include('application.message')
-        
+
         @yield('content')
     </div>
 

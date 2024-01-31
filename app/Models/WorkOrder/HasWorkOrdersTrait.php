@@ -7,13 +7,6 @@ use App\Models\WorkOrder;
 trait HasWorkOrdersTrait
 {
     // Attributes
-    
-    public function getIncompleteWorkOrdersAttribute()
-    {
-        return $this->work_orders->filter(function ($work_order) {
-            return WorkOrder::inIncompleteStatuses($work_order->status);
-        });
-    }
 
     public function getIncompleteWorkOrdersCountAttribute()
     {
@@ -81,5 +74,10 @@ trait HasWorkOrdersTrait
     public function work_orders()
     {
         return $this->hasMany(WorkOrder::class);
+    }
+
+    public function incomplete_work_orders()
+    {
+        return $this->hasMany(WorkOrder::class)->whereIn('status', WorkOrder::getIncompleteStatuses()->toArray());
     }
 }

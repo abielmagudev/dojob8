@@ -45,6 +45,16 @@ trait HasPresenceStatusTrait
         return $query->whereAvailable(0);
     }
 
+    public function scopeUpdateAvailable($query)
+    {
+        return $query->update(['is_available' => 1]);
+    }
+
+    public function scopeUpdateUnavailable($query)
+    {
+        return $query->update(['is_available' => 0]);
+    }
+
     public function setAvailable()
     {
         return $this->fill(['is_available' => 1])->save();
@@ -81,6 +91,16 @@ trait HasPresenceStatusTrait
     public function scopeInactive($query)
     {
         return $query->whereActive(0);
+    }
+
+    public function scopeUpdateActive($query)
+    {
+        return $query->update(['is_active' => 1]);
+    }
+
+    public function scopeUpdateInactive($query)
+    {
+        return $query->update(['is_active' => 0]);
     }
 
     public function setActive()

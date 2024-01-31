@@ -41,10 +41,8 @@
             @yield('header')
         </header>
         <br>
-        
-        <div>
-            @yield('subheader')
-        </div>
+
+        @yield('after-header')
 
         @include('application.message')
 

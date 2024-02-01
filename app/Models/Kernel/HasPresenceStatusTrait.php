@@ -78,19 +78,19 @@ trait HasPresenceStatusTrait
         return ! $this->isActive();
     }
 
-    public function scopeWhereActive($query, $value)
+    public function scopeActiveIs($query, $value)
     {
         return $query->where('is_active', $value);
     }
 
     public function scopeActive($query)
     {
-        return $query->whereActive(1);
+        return $query->activeIs(1);
     }
 
     public function scopeInactive($query)
     {
-        return $query->whereActive(0);
+        return $query->activeIs(0);
     }
 
     public function scopeUpdateActive($query)

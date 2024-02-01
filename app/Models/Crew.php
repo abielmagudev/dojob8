@@ -21,6 +21,8 @@ class Crew extends Model
 
     const BACKGROUND_COLOR_DEFAULT = '#333333';
 
+    const BACKGROUND_COLOR_INACTIVE = '#777777';
+
     const TEXT_COLOR_DEFAULT = '#DDDDDD';
 
     public static $all_tasks = [
@@ -44,6 +46,11 @@ class Crew extends Model
     public function getBackgroundColorAttribute()
     {
         return $this->background_color_hex ?? self::BACKGROUND_COLOR_DEFAULT;
+    }
+
+    public function getBackgroundColorInactiveAttribute()
+    {
+        return self::BACKGROUND_COLOR_INACTIVE;
     }
 
     public function getTextColorAttribute()
@@ -78,6 +85,11 @@ class Crew extends Model
 
     // Validators
 
+    public function hasDescription()
+    {
+        return ! empty($this->description);
+    }
+
     public function hasMembers()
     {
         return (bool) $this->isActive() && $this->members_count || $this->members->count();
@@ -91,19 +103,19 @@ class Crew extends Model
 
     // Scopes
 
-    public function scopeWhereTasks($query, string $task)
+    public function scopeTasksLike($query, string $task)
     {
         return $query->where('tasks_json', 'like', "%{$task}%");
     }
 
     public function scopeForInspections($query)
     {
-        return $query->whereTasks('inspections');
+        return $query->tasksLike('inspections');
     }
 
     public function scopeForWorkOrders($query)
     {
-        return $query->whereTasks('work orders');
+        return $query->tasksLike('work orders');
     }
 
 

@@ -5,6 +5,8 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\CrewController;
+use App\Http\Controllers\CrewMemberController;
+use App\Http\Controllers\CrewStatusController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
@@ -13,12 +15,12 @@ use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectorController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\WorkOrderJobExtensionsAjaxController;
-use App\Http\Controllers\MemberWorkOrderController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\SearchController;
+use App\Http\Controllers\WorkOrderMemberController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,7 +51,8 @@ Route::resource('clients', ClientController::class);
 
 Route::resource('members', MemberController::class);
 
-Route::match(['put','patch'], 'crews/{crew}/members', [CrewController::class, 'membersUpdate'])->name('crews.members.update');
+Route::put('crews/members', CrewMemberController::class)->name('crews.update.members');
+Route::patch('crews/status', CrewStatusController::class)->name('crews.update.status');
 Route::resource('crews', CrewController::class);
 
 Route::resource('contractors', ContractorController::class);
@@ -62,7 +65,7 @@ Route::resource('users', UserController::class);
 
 Route::get('history', HistoryController::class)->name('history.index');
 
-Route::patch('work-orders/workers', MemberWorkOrderController::class)->name('work-orders.update.workers');
+Route::patch('work-orders/workers', WorkOrderMemberController::class)->name('work-orders.update.workers');
 Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
 Route::resource('work-orders', WorkOrderController::class)->except('create');
 

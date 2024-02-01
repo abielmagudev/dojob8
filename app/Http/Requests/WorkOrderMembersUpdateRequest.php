@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class WorkOrderUpdateMembersRequest extends FormRequest
+class WorkOrderMembersUpdateRequest extends FormRequest
 {
     public function authorize()
     {
@@ -18,6 +18,7 @@ class WorkOrderUpdateMembersRequest extends FormRequest
             'scheduled_date' => [
                 'required',
                 'date',
+                sprintf('after_or_equal:%s', now()->format('Y-m-d'))
             ],
             'keep_old_operators' => [
                 'nullable',
@@ -26,7 +27,7 @@ class WorkOrderUpdateMembersRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator(Validator $validator)
     {
         if( $validator->fails() ) {
             session()->flash('danger', $validator->errors()->first());

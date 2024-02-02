@@ -88,14 +88,14 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
         return ! empty($this->position);
     }
 
-    public function isCrewMember()
-    {
-        return (bool) $this->is_crew_member;
-    }
-
     public function hasCrews()
     {
         return (bool) $this->crews_count || $this->crews->count();
+    }
+
+    public function isCrewMember()
+    {
+        return (bool) $this->is_crew_member;
     }
  
 
@@ -106,14 +106,14 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
         $this->crews()->detach();
 
         if( $this->users ) {
-            $this->users->each(fn($user) => $user->deactivate());
+            $this->users->each(fn($user) => $user->setInactive());
         }
     }
 
     public function up()
     {
         if( $this->users ) {
-            $this->users->each(fn($user) => $user->activate());
+            $this->users->each(fn($user) => $user->setActive());
         }
     }
 

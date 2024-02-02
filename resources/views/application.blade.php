@@ -19,11 +19,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
     <style>
         .form-label-optional::after {
-            color: #888888;
+            color: var(--bs-tertiary-color);
             content: "(Optional)";
-            font-size: 0.9rem;
-            font-style: italic;
-            margin-left: 0.1rem;
+            margin-left: 0.33rem;
         }
         .last-tr-borderless > tbody > tr:last-child > td,
         .last-tr-borderless > tr:last-child > td {

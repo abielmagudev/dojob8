@@ -36,7 +36,12 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', fn() => redirect()->route('orders.index') );
 
+// Dasboards
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+// Members
+Route::resource('members', MemberController::class);
+
 
 Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
 Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
@@ -49,7 +54,6 @@ Route::resource('jobs', JobController::class);
 Route::get('clients/ajax', [ClientAjaxController::class, 'search'])->name('clients.ajax.search');
 Route::resource('clients', ClientController::class);
 
-Route::resource('members', MemberController::class);
 
 Route::put('crews/members', CrewMemberController::class)->name('crews.update.members');
 Route::patch('crews/status', CrewStatusController::class)->name('crews.update.status');
@@ -75,5 +79,6 @@ Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxCont
 Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
 Route::match(['put','patch'],'payments', [PaymentController::class, 'updateMany'])->name('payments.update.many');
 
-Route::resource('configuration', ConfigurationController::class)->only(['index','edit','update']);
+// App
 Route::get('search', SearchController::class)->name('app.search');
+Route::resource('configuration', ConfigurationController::class)->only(['index','edit','update']);

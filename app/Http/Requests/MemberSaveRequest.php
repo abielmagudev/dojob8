@@ -70,17 +70,14 @@ class MemberSaveRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->member_id = $this->route('member')->id ?? 0;
-
-        $this->merge([
-            'name' => Str::title($this->name),
-            'last_name' => Str::title($this->last_name),
-            'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
-        ]);
     }
 
     public function validated()
     {
         return array_merge(parent::validated(), [
+            'name' => Str::title($this->name),
+            'last_name' => Str::title($this->last_name),
+            'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
             'is_available' => $this->isMethod('POST') || $this->has('is_available') ? 1 : 0,
             'is_crew_member' => (int) $this->is_crew_member,
         ]);

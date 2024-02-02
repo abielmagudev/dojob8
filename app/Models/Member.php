@@ -14,8 +14,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model implements AuthenticatedInterface, FilteringInterface
 {
-    use HasContactChannelsTrait;
     use HasFactory;
+    
+    use HasContactChannelsTrait;
     use HasFilteringTrait;
     use HasHookUsersTrait;
     use HasPresenceStatusTrait;

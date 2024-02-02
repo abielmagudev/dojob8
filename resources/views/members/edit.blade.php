@@ -12,8 +12,10 @@
 @section('content')
 <x-card title="Edit member">
     <form action="{{ route('members.update', $member) }}" method="post" autocomplete="off">
-        @include('members._form')
         @method('put')
+        @csrf
+        @include('members._form')
+        
         <x-form-field-horizontal for="isCrewMemberSelect">
             <div class="alert alert-warning">
                 <div class="form-check form-switch">

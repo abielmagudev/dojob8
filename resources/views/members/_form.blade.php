@@ -1,5 +1,3 @@
-@csrf
-
 <x-form-field-horizontal for="nameInput" label="Name">
     <div class="row">
         <div class="col-md mb-3 mb-md-0">
@@ -48,6 +46,5 @@
         <option value="0" {{ isSelected( old('is_crew_member', ($member->is_crew_member ?? 0)) === 0) }}>No, it cannot be in crews.</option>
         <option value="1" {{ isSelected( old('is_crew_member', $member->is_crew_member) === 1) }}>Yes, it can be in crews.</option>
     </select>
-
     <x-form-feedback error="is_crew_member" />
 </x-form-field-horizontal>

@@ -1,13 +1,23 @@
 <div class="card shadow-sm border-0 {{ $attributes->get('class', '') }}" style="{{ $attributes->get('style', '') }}">
 
-    @if( isset($title) || isset($options) || isset($dropoptions) )
+    @if( isset($title) || isset($custom_title) isset($options) || isset($dropoptions) )
     <div class="card-header border-bottom-0 py-3">
         <div class="d-flex align-items-center justify-content-between">
+
+            {{-- Left --}}
             <div>
+                @isset( $custom_title )
+                {!! $custom_title !!}
+
+                @else
                 <b>{{ $title ?? '' }}</b>
+
+                @endisset
                 <br>
                 <small>{{ $attributes->get('subtitle', '') }}</small>
             </div>
+
+            {{-- Right --}}
             <div>
                 @isset($options)       
                 <div class="{{ $attributes->get('options-class', 'd-inline-block align-middle') }}">
@@ -45,5 +55,5 @@
         {!! $footer !!}
     </div>
     @endisset
-
+    
 </div>

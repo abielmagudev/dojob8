@@ -2,10 +2,10 @@
     {{-- Left --}}
     <div class="col text-nowrap">
         <div class="btn-group mx-1">
-            <a href="{{ route('crews.index', array_merge($request->all(), ['template' => 'grid'])) }}" class="btn btn-outline-primary {{ bsIsActived( $request->get('template', 'grid') === 'grid' ) }}" data-bs-toggle="tooltip" data-bs-title="Grid">
+            <a href="{{ route('crews.index', array_merge($request->all(), ['template' => 'grid'])) }}" class="btn btn-outline-primary {{ bsControlActive( $request->get('template', 'grid') === 'grid' ) }}" data-bs-toggle="tooltip" data-bs-title="Grid">
                 <i class="bi bi-grid"></i>
             </a>
-            <a href="{{ route('crews.index', array_merge($request->all(), ['template' => 'list'])) }}" class="btn btn-outline-primary {{ bsIsActived( $request->get('template') === 'list' ) }}" data-bs-toggle="tooltip" data-bs-title="List">
+            <a href="{{ route('crews.index', array_merge($request->all(), ['template' => 'list'])) }}" class="btn btn-outline-primary {{ bsControlActive( $request->get('template') === 'list' ) }}" data-bs-toggle="tooltip" data-bs-title="List">
                 <i class="bi bi-list-ul"></i>
             </a>
         </div>

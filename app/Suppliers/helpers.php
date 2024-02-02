@@ -77,9 +77,9 @@ if(! function_exists('bsInputInvalid') )
     }
 }
 
-if(! function_exists('bsElementActived') )
+if(! function_exists('bsControlActive') )
 {
-    function bsIsActived(bool $verified, $default = '')
+    function bsControlActive(bool $verified, $default = '')
     {
         return $verified ? 'active' : $default;
     }

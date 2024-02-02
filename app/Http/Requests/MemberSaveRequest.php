@@ -70,6 +70,10 @@ class MemberSaveRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->member_id = $this->route('member')->id ?? 0;
+
+        $this->merge([
+            'full_name' => sprintf('%s %s', $this->name, $this->lastname),
+        ]);
     }
 
     public function validated()

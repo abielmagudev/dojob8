@@ -4,10 +4,17 @@
     'Members' => route('members.index'),
     'Member'
 ]" />
-<x-page-title subtitle="{{ $member->position ?? '' }}">{{ $member->full_name }}</x-page-title>
+<x-page-title subtitle="{{ $member->position ?? '' }}">
+    {{ $member->full_name }}
+    @if( $member->isHappyBirthday() )
+    <i class="bi bi-cake2"></i>
+    @endif
+</x-page-title>
 @endsection
 
 @section('content')
+
+
 <div class="row">
 
     <div class="col-sm">

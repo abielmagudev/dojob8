@@ -35,7 +35,12 @@
                     <x-indicator-on-off :toggle="$member->isAvailable()" />
                 </x-tooltip>
             </td>
-            <td class="text-nowrap">{{ $member->full_name }}</td>
+            <td class="text-nowrap">
+                <span>{{ $member->full_name }}</span>
+                @if( $member->isHappyBirthday() )
+                <i class="bi bi-cake2"></i>
+                @endif
+            </td>
             <td class="text-nowrap">{{ $member->position }}</td>
             <td class="text-nowrap">
                 <x-custom.information-contact-channels :channels="$member->contact_data->filter()" type="tooltip" item-class="d-inline-block small mx-2" />

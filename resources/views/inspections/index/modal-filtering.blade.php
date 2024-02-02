@@ -1,4 +1,4 @@
-<x-modal id="modalInspectionFilters" title="Inspection filters" header-close footer-close>
+<x-modal id="modalInspectionFilters" title="Inspection filters" header-close>
     <form action="{{ route('inspections.index') }}" method="get" autocomplete="off" id="formInspectionFilters">
         
         @include('components.custom.input-between-dates')
@@ -10,6 +10,7 @@
     </form>
 
     @slot('footer')
+    <x-modal-button-close>Close</x-modal-button-close>
     <button class="btn btn-success" type="submit" form="formInspectionFilters" name="fltr" value="on">Set filters on Inspections</button>
     @endslot
 </x-modal>

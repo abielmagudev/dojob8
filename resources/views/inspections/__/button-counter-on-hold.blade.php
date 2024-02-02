@@ -1,5 +1,5 @@
 <x-tooltip title="On hold inspections">
-    <a href="{{ urlGeneratorInspection('onHold', $parameters ?? []) }}" class="{{ $class ?? 'btn btn-primary btn-sm' }}">
+    <a href="{{ App\Models\Inspection\InspectionUrlGenerator::onHold($parameters ?? []) }}" class="{{ $class ?? 'btn btn-primary btn-sm' }}">
         {{ $counter }}
     </a>
 </x-tooltip>

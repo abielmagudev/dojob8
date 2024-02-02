@@ -1,4 +1,4 @@
-<x-modal id="filterPaymentsModal" title="Payment filters">
+<x-modal id="filterPaymentsModal" title="Payment filters" header-close>
     <form action="{{ route('payments.index') }}" method="get" autocomplete="off" >
         @csrf
         @include('components.custom.input-between-dates')

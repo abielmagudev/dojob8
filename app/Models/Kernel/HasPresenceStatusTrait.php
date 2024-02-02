@@ -30,19 +30,19 @@ trait HasPresenceStatusTrait
         return ! $this->isAvailable();
     }
 
-    public function scopeWhereAvailable($query, $value)
-    {
-        return $query->where('is_available', $value);
-    }
-
     public function scopeAvailable($query)
     {
-        return $query->whereAvailable(1);
+        return $query->where('is_available', 1);
     }
 
     public function scopeUnavailable($query)
     {
-        return $query->whereAvailable(0);
+        return $query->where('is_available', 0);
+    }
+
+    public function scopeFilterByAvailable($query, $value)
+    {
+        return in_array($value, [0, 1]) ? $query->where('is_available', $value) : $query;
     }
 
     public function scopeUpdateAvailable($query)
@@ -78,19 +78,19 @@ trait HasPresenceStatusTrait
         return ! $this->isActive();
     }
 
-    public function scopeActiveIs($query, $value)
-    {
-        return $query->where('is_active', $value);
-    }
-
     public function scopeActive($query)
     {
-        return $query->activeIs(1);
+        return $query->where('is_active', 1);
     }
 
     public function scopeInactive($query)
     {
-        return $query->activeIs(0);
+        return $query->where('is_active', 0);
+    }
+
+    public function scopeFilterByActive($query, $value)
+    {
+        return in_array($value, [0, 1]) ? $query->where('is_active', $value) : $query;
     }
 
     public function scopeUpdateActive($query)

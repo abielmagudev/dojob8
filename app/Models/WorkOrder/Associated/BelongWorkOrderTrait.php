@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Models\WorkOrder;
+namespace App\Models\WorkOrder\Associated;
 
 use App\Models\WorkOrder;
 

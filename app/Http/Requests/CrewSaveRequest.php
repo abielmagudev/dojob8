@@ -33,7 +33,7 @@ class CrewSaveRequest extends FormRequest
             ],
             'tasks.*' => [
                 'required_with:tasks',
-                sprintf('in:%s', Crew::getAllTasks()->implode(',')),
+                sprintf('in:%s', Crew::allTasks()->implode(',')),
             ],
             'background_color' => [
                 'required',

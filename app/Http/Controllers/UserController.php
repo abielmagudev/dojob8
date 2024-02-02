@@ -27,12 +27,11 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        if(! $profile = UserProfiler::instanceProfileByRequest($request) ) {
+        if(! $profile = UserProfiler::find($request->get('profile'), $request->get('id')) ) {
             abort(404);
         }
 
         return view('users.create', [
-            'alias' => UserProfiler::getAliasNameRequest($request),
             'profile' => $profile,
             'request' => $request,
             'user' => new User,

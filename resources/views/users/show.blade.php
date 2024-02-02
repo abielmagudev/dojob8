@@ -23,7 +23,7 @@
 
     <x-small-title title="Profile">
         <span class="d-block">{{ $user->profile->authenticated_name }}</span>
-        <span class="text-capitalize text-secondary">{{ $user->profile_alias }}</span>
+        <span class="text-capitalize text-secondary">{{ $user->profiled }}</span>
     </x-small-title>
 
     <x-small-title title="Email">

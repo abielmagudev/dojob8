@@ -6,7 +6,7 @@ use App\Http\Requests\InspectionStoreRequest;
 use App\Http\Requests\InspectionUpdateRequest;
 use App\Models\Crew;
 use App\Models\Inspection;
-use App\Models\Inspection\UrlGeneratorInspection;
+use App\Models\Inspection\InspectionUrlGenerator;
 use App\Models\Inspector;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class InspectionController extends Controller
             ]);
         }
 
-        $inspections = Inspection::withNestedRelationships()
+        $inspections = Inspection::withRelationshipsForIndex()
         ->filterByInputs( $request->all() )
         ->orderByRaw("scheduled_date IS NULL DESC, scheduled_date {$request->get('sort', 'DESC')}")
         ->orderBy('inspector_id', 'ASC')
@@ -33,12 +33,12 @@ class InspectionController extends Controller
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'request' => $request,
             'pending_inspections' => [
-                'count' => Inspection::whereStatus('pending')->get()->count(),
-                'url' => UrlGeneratorInspection::pending(),
+                'count' => Inspection::where('status', 'pending')->get()->count(),
+                'url' => InspectionUrlGenerator::pending(),
             ],
             'on_hold_inspections' => [
-                'count' => Inspection::whereStatus('on hold')->get()->count(),
-                'url' => UrlGeneratorInspection::onHold(),
+                'count' => Inspection::where('status', 'on hold')->get()->count(),
+                'url' => InspectionUrlGenerator::onHold(),
             ],
         ]);
     }
@@ -46,8 +46,8 @@ class InspectionController extends Controller
     public function create(WorkOrder $work_order)
     {
         return view('inspections.create', [
-            'all_statuses_form' => Inspection::getAllStatusesForm(),
-            'crews' => Crew::forInspections()->active()->get(),
+            'all_statuses_form' => Inspection::allStatusesForm(),
+            'crews' => Crew::taskInspections()->active()->get(),
             'inspection' => new Inspection,
             'inspectors' => Inspector::all(),
             'work_order' => $work_order,
@@ -73,8 +73,8 @@ class InspectionController extends Controller
     public function edit(Request $request, Inspection $inspection)
     {
         return view('inspections.edit', [
-            'all_statuses_form' => Inspection::getAllStatusesForm(),
-            'crews' => Crew::forInspections()->active()->get(),
+            'all_statuses_form' => Inspection::allStatusesForm(),
+            'crews' => Crew::taskInspections()->active()->get(),
             'inspection' => $inspection,
             'inspectors' => Inspector::all(),
             'url_back' => $request->get('url_back', route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])),

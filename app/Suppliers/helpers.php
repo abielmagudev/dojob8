@@ -77,29 +77,10 @@ if(! function_exists('bsInputInvalid') )
     }
 }
 
-if(! function_exists('bsIsActived') )
+if(! function_exists('bsElementActived') )
 {
     function bsIsActived(bool $verified, $default = '')
     {
         return $verified ? 'active' : $default;
-    }
-}
-
-
-// Models
-
-if(! function_exists('urlGeneratorWorkOrders') )
-{
-    function urlGeneratorWorkOrders(string $method, array $parameters = [])
-    {
-        return call_user_func([App\Models\WorkOrder\UrlGeneratorWorkOrders::class, $method], $parameters);
-    }
-}
-
-if(! function_exists('urlGeneratorInspection') )
-{
-    function urlGeneratorInspection(string $method, array $parameters = [])
-    {
-        return call_user_func([App\Models\Inspection\UrlGeneratorInspection::class, $method], $parameters);
     }
 }

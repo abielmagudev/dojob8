@@ -37,7 +37,6 @@
 <br>
 
 <x-custom.modal-confirm-delete :route="route('members.destroy', $member)" concept="member">
-    <p>¿Do you want to continue to delete the member <br> <b><?= $member->fullname ?> (role)</b>?</p>
+    <p>¿Do you want to continue to delete the member <br> <b><?= $member->full_name ?> <?= $member->hasPosition() ? "({$member->position})" : '' ?></b>?</p>
 </x-custom.modal-confirm-delete>
-
 @endsection

@@ -42,7 +42,7 @@ class History extends Model implements FilteringInterface
     
     // Interface
 
-    public function inputFilterSettings(): array
+    public function getInputFilterSettings(): array
     {
         return [
             'dates' => 'filterByCreatedBetween',
@@ -69,65 +69,35 @@ class History extends Model implements FilteringInterface
 
     public function hasLink()
     {
-        return ! empty($this->link);
+        return filter_var($this->link, FILTER_VALIDATE_URL);
     }
 
 
     // Scopes
 
-    public function scopeWhereModel($query, string $classname, $id)
+    public function scopeModelIs($query, string $classname, $id)
     {
         return $query->where('model_type', $classname)->where('model_id', $id);
     }
 
-    public function scopeWhereNotModel($query, string $classname, $id)
+    public function scopeModelIsNot($query, string $classname, $id)
     {
         return $query->where('model_type', '<>', $classname)->where('model_id', '<>', $id);
     }
 
-    public function scopeWhereModelType($query, string $classname)
+    public function scopeCreatedBetween($query, array $values)
     {
-        return $query->where('model_type', $classname);
+        return $query->whereBetween('created_at', $values);
     }
 
-    public function scopeWhereNotModelType($query, string $classname)
-    {
-        return $query->where('model_type', '<>',$classname);
-    }
-
-    public function scopeWhereUser($query, $id)
-    {
-        return $query->where('user_id', $id);
-    }
-
-    public function scopeWhereNotUser($query, $id)
-    {
-        return $query->where('user_id', '<>', $id);
-    }
-
-    public function scopeWhereHasLink($query)
-    {
-        return $query->whereNotNull('link');
-    }
-
-    public function scopeWhereNotHasLink($query)
-    {
-        return $query->whereNull('link');
-    }
-
-    public function scopeWhereCreatedFrom($query, string $value)
+    public function scopeCreatedFrom($query, string $value)
     {
         return $query->whereDate('created_at', '>=', $value);
     }
 
-    public function scopeWhereCreatedTo($query, string $value)
+    public function scopeCreatedTo($query, string $value)
     {
         return $query->whereDate('created_at', '<=', $value);
-    }
-
-    public function scopeWhereCreatedBetween($query, array $values)
-    {
-        return $query->whereBetween('created_at', $values);
     }
 
 
@@ -137,17 +107,17 @@ class History extends Model implements FilteringInterface
     {
         // Both From and To
         if( isset($dates['from'], $dates['to']) ) {
-            return $query->whereCreatedBetween([$dates['from'], $dates['to']]);
+            return $query->createdBetween([$dates['from'], $dates['to']]);
         }
         
         // Only From
         if( isset($dates['from']) &&! isset($dates['to']) ) {
-            return $query->whereCreatedFrom($dates['from']);
+            return $query->createdFrom($dates['from']);
         }
 
         // Only To
         if(! isset($dates['from']) && isset($dates['to']) ) {
-            return $query->whereCreatedTo($dates['to']);
+            return $query->createdTo($dates['to']);
         }
 
         return $query;
@@ -159,14 +129,12 @@ class History extends Model implements FilteringInterface
             return $query;
         }
 
-        $classname = self::getClassnameByTopic($topic);
-
-        return $query->whereModelType($classname);
+        return $query->where('model_type', self::getClassnameByTopic($topic));
     }
 
     public function scopeFilterByUser($query, $user_id)
     {
-        return ! is_null($user_id) ? $query->whereUser($user_id) : $query;
+        return ! is_null($user_id) ? $query->where('user_id', $user_id) : $query;
     }
 
 

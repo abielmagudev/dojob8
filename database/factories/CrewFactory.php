@@ -14,8 +14,8 @@ class CrewFactory extends Factory
         if( $this->faker->boolean() )
         {
             $crew_tasks = $this->faker->boolean() 
-                        ? json_encode( Crew::getAllTasks()->toArray() ) 
-                        : json_encode([ Crew::getAllTasks()->random() ]); 
+                        ? json_encode( Crew::allTasks()->toArray() ) 
+                        : json_encode([ Crew::allTasks()->random() ]); 
         }
 
         return [

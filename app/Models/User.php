@@ -46,11 +46,11 @@ class User extends Authenticatable implements FilteringInterface
 
     // Interface
 
-    public function inputFilterSettings(): array
+    public function getInputFilterSettings(): array
     {
         return [
-            'status' => 'filterByStatus',
             'profile' => 'filterByProfile',
+            'status' => 'filterByActive',
         ];
     }
 
@@ -62,9 +62,9 @@ class User extends Authenticatable implements FilteringInterface
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function getProfileAliasAttribute()
+    public function getProfiledAttribute()
     {
-        return UserProfiler::getAliasByProfile($this->profile_type);
+        return UserProfiler::getProfileByClassname($this->profile_type);
     }
 
     public function getLastSessionDateHumanAttribute()
@@ -80,34 +80,21 @@ class User extends Authenticatable implements FilteringInterface
 
     // Validators
 
-    public function isProfileAlias(string $profile_alias)
+    public function isProfiled(string $value)
     {
-        return $this->profile_alias == $profile_alias;
-    }
-
-
-    // Scopes
-
-    public function scopeWhereProfileType($query, string $value)
-    {
-        return $query->where('profile_type', $value);
+        return $this->profiled == $value;
     }
 
 
     // Filters
 
-    public function scopeFilterByStatus($query, $value)
-    {
-        return in_array($value, ['0','1']) ? $query->whereActive($value) : $query;
-    }
-
     public function scopeFilterByProfile($query, $value)
     {
-        if( empty($value) ||! $profile = UserProfiler::getProfileByAlias($value) ) {
+        if( empty($value) ||! $classname = UserProfiler::getClassnameByProfile($value) ) {
             return $query;
         }
 
-        return $query->whereProfileType($profile);
+        return $query->where('profile_type', $classname);
     }
 
 
@@ -115,7 +102,7 @@ class User extends Authenticatable implements FilteringInterface
 
     public function profile()
     {
-        return $this->morphTo(__FUNCTION__, 'profile_type', 'profile_id');
+        return $this->morphTo(__FUNCTION__);
     }
 
     public function history()

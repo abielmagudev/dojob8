@@ -43,12 +43,11 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
 
     // Interface
 
-    public function inputFilterSettings(): array
+    public function getInputFilterSettings(): array
     {
         return [
-            'status' => 'filterByStatus',
-            'is_crew_member' => 'filterByIsCrewMember',
-            'sort_prop' => ['filterBySortProp', 'sort_prop_way'],
+            'status' => 'filterByAvailable',
+            'is_crew_member' => 'filterByCrewMember',
         ];
     }
 
@@ -95,59 +94,46 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
 
     public function hasCrews()
     {
-        return (bool) $this->isActive() && $this->crews_count || $this->crews->count();
+        return (bool) $this->crews_count || $this->crews->count();
     }
  
 
+    // Actions
+
+    public function down()
+    {
+        $this->crews()->detach();
+
+        if( $this->users ) {
+            $this->users->each(fn($user) => $user->deactivate());
+        }
+    }
+
+    public function up()
+    {
+        if( $this->users ) {
+            $this->users->each(fn($user) => $user->activate());
+        }
+    }
+
+
     // Scopes
 
-    public function scopeWhereCrewMember($query, $value)
-    {
-        return $query->where('is_crew_member', $value);
-    }
-
-    public function scopeWhereIsCrewMember($query)
+    public function scopeCrewMember($query)
     {
         return $query->where('is_crew_member', true);
-    }
-
-    public function scopeWhereIsNotCrewMember($query)
-    {
-        return $query->where('is_crew_member', false);
     }
 
 
     // Filters
 
-    public function scopeFilterByStatus($query, $value)
+    public function scopeFilterByCrewMember($query, $value)
     {
-        if( is_null($value) ||! in_array($value, ['0', '1']) ) {
+        if( is_null($value) ||! in_array($value, [0, 1]) ) {
             return $query;
         }
 
-        return $query->whereActive($value);
-    }
-
-    public function scopeFilterByIsCrewMember($query, $value)
-    {
-        if( is_null($value) ||! in_array($value, ['0', '1']) ) {
-            return $query;
-        }
-
-        return $query->whereCrewMember($value);
-    }
-
-    public function scopeFilterBySortProp($query, $value, $way = null)
-    {
-        if( is_null($value) ||! in_array($value, ['name', 'last_name']) ) {
-            return $query;
-        }
-
-        if( is_null($way) ||! in_array($way, ['asc', 'desc']) ) {
-            return $query->orderByDesc($value);
-        }
-
-        return $query->orderBy($value, $way);
+        return $query->where('is_crew_member', $value);
     }
 
 
@@ -165,7 +151,6 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
 
     public function users()
     {
-        return $this->morphMany(User::class, 'profile');
-        // return $this->morphOne(User::class, 'profile');
+        return $this->morphMany(User::class, 'profile'); // Old: morphOne(User::class, 'profile')
     }
 }

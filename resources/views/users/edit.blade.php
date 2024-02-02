@@ -12,8 +12,14 @@
 @section('content')
 <x-card title="Edit user">
     <form action="{{ route('users.update', $user) }}" method="post" autocomplete="off">
-        @include('users._form')
         @method('put')
+        @csrf
+
+        <x-form-field-horizontal label="Profile">
+            <div class="form-control text-capitalize">{{ $user->profile->authenticated_name }} ({{ $user->profiled }})</div>
+        </x-form-field-horizontal>
+
+        @include('users._form')
 
         <x-form-field-horizontal for="confirmPasswordInput">
             <div class="alert alert-warning">

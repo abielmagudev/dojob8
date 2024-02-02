@@ -14,7 +14,7 @@
     @slot('dropoptions')
     <x-modal-trigger modal-id="updatePaymentsModal" class="dropdown-item">
         <i class="bi bi-arrow-clockwise"></i>
-        <span>Update</span>
+        <span>Update selected</span>
     </x-modal-trigger>
     <x-modal-trigger modal-id="filterPaymentsModal" class="dropdown-item">
         <i class="bi bi-funnel"></i>
@@ -26,39 +26,44 @@
     <x-table class="align-middle">
         @slot('thead')
         <tr>
+            <th class="text-center">Payment</th>
+            <th>Scheduled</th>
+            <th class="text-nowrap">Work order</th>
+            <th>Job</th>
+            <th class="text-center">Contractor</th>
+            <th class="text-center">Status</th>
             <th class="text-center">
-                <button id="selectAllButton" class="btn btn-outline-primary btn-sm border-0">
+                <button id="selectAllButton" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-check2-square"></i>
                 </button>
             </th>
-            <th>Payment</th>
-            <th>Scheduled</th>
-            <th>Job</th>
-            <th>Contractor</th>
-            <th>Status</th>
         </tr>
         @endslot
 
         @foreach($work_orders as $work_order)
         <tr>
             <td class="text-center" style="width:1%">
-                <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">
-            </td>
-            <td style="width:1%">
                 @include('payments.__.flag', ['status' => $work_order->payment_status])
             </td>
-            <td class="text-nowrap">{{ $work_order->scheduled_date_human }}</td>
             <td class="text-nowrap">
-                <a href="{{ route('work-orders.show', $work_order) }}" class="me-1">#{{ $work_order->id }}</a>
-                @include('work-orders.__.job-flag', ['work_order' => $work_order, 'class' => 'd-inline-block'])
+                <span>{{ $work_order->scheduled_date_human }}</span>
             </td>
             <td>
+                <a href="{{ route('work-orders.show', $work_order) }}" class="me-1">#{{ $work_order->id }}</a>
+            </td>
+            <td class="text-nowrap">
+                @include('work-orders.__.job-flag', ['work_order' => $work_order, 'class' => 'd-inline-block'])
+            </td>
+            <td class="text-center">
                 @if( $work_order->hasContractor() )
                 @include('contractors.__.flag', ['name' => $work_order->contractor->name, 'tooltip' => $work_order->contractor->alias])
                 @endif
             </td>
-            <td>
+            <td class="text-center">
                 @include('work-orders.__.status-flag', ['status' => $work_order->status])
+            </td>
+            <td class="text-center" style="width:1%">
+                <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">
             </td>
         </tr>
         @endforeach
@@ -75,13 +80,18 @@
 <script>
 const selectAllButton = {
     trigger: document.getElementById('selectAllButton'),
+    toggle: false, 
+    checkboxes: function () {
+        return document.body.querySelectorAll('input[type="checkbox"][id^="workOrder"]')
+    },
     listen: function () {
+        let self = this;
+
         this.trigger.addEventListener('click', function (evt) {
             evt.preventDefault()
-
-            document.querySelectorAll('input[type="checkbox"][id^="workOrder"]').forEach(function (item) {
-                item.checked = !item.checked
-            })
+            self.toggle = !self.toggle;
+            self.trigger.classList.toggle('active', self.toggle)
+            self.checkboxes().forEach(item => item.checked = self.toggle)
         })
     }
 }

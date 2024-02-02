@@ -25,17 +25,17 @@ trait HasStatusTrait
 
     // Scopes
 
-    public function scopeWhereStatus($query, string $value)
+    public function scopeStatusIs($query, string $value)
     {
         return $query->where('status', $value);
     }
 
-    public function scopeWhereStatusIn($query, array $values)
+    public function scopeStatusIn($query, array $values)
     {
         return $query->whereIn('status', $values);
     }
 
-    public function scopeWhereStatusNotIn($query, array $values)
+    public function scopeStatusNotIn($query, array $values)
     {
         return $query->whereNotIn('status', $values);
     }
@@ -45,11 +45,11 @@ trait HasStatusTrait
 
     public function scopeFilterByStatus($query, $value)
     {
-        return is_string($value) &&! empty($value) ? $query->whereStatus($value) : $query;
+        return is_string($value) &&! empty($value) ? $query->statusIs($value) : $query;
     }
 
     public function scopeFilterByStatusGroup($query, $status_group)
     {
-        return is_array($status_group) &&! empty($status_group) ? $query->whereStatusIn($status_group) : $query;
+        return is_array($status_group) &&! empty($status_group) ? $query->statusIn($status_group) : $query;
     }
 }

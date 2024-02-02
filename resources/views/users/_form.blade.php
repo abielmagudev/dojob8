@@ -1,33 +1,18 @@
-@csrf
-
-<x-form-field-horizontal label="Profile type">
-    <input class="form-control text-capitalize" value="{{ $user->profile_alias }}" disabled>
-    <x-form-feedback error="profile_alias" />
-    <x-form-feedback error="profile_id" />
-</x-form-field-horizontal>
-
-<x-form-field-horizontal label="Profile name">
-    <input class="form-control" value="{{ $user->profile->authenticated_name }}" disabled>
-    <x-form-feedback error="profile_alias" />
-    <x-form-feedback error="profile_id" />
-</x-form-field-horizontal>
-
-<x-form-field-horizontal for="nameInput"> 
+<x-form-field-horizontal for="nameInput" label="Username"> 
     <x-slot name="label">
         <span>Username</span>
         <x-tooltip title="
-            <span>Minimum 6 characters.</span><br>
-            <span>Use letters, numbers, underscores and dots.</span>
+        <span>Minimum 6 characters.</span><br>
+        <span>Use letters, numbers, underscores and dots.</span>
         " 
         html>
-            <span class="link-primary">
-                <i class="bi bi-info-circle"></i>
-            </span>
-        </x-tooltip>
-    </x-slot>
-
-    <input id="nameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" name="name" value="{{ old('name', $user->name) }}" required>
-    <x-form-feedback error="name" />
+        <span class="link-primary">
+            <i class="bi bi-info-circle"></i>
+        </span>
+    </x-tooltip>
+</x-slot>
+<input id="nameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" name="name" value="{{ old('name', $user->name) }}" required>
+<x-form-feedback error="name" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="emailInput" label="Email">

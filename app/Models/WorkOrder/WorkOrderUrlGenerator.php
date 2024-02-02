@@ -4,7 +4,7 @@ namespace App\Models\WorkOrder;
 
 use App\Models\WorkOrder;
 
-class UrlGeneratorWorkOrders
+class WorkOrderUrlGenerator
 {
     public static function all(array $parameters = [])
     {

@@ -7,7 +7,7 @@ use App\Models\Kernel\HasAddressTrait;
 use App\Models\Kernel\HasContactChannelsTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\WorkOrder\HasWorkOrdersTrait;
+use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,10 +41,10 @@ class Client extends Model implements FilteringInterface
 
     // Interface
 
-    public function inputFilterSettings(): array
+    public function getInputFilterSettings(): array
     {
         return [
-            'search' => 'filterBySearch'
+            'search' => 'filterBySearch',
         ];
     }
 

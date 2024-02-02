@@ -22,7 +22,7 @@ class CrewStatusController extends Controller
             return redirect()->route('crews.index')->with('success', 'You activated crews');
         }   
 
-        CrewMember::crewNotIn( $request->get('crews', []) )->delete();
+        CrewMember::removeCrews( $request->get('crews', []) );
 
         if( $result['active'] === 0 ) {
             return redirect()->route('crews.index')->with('success', 'You deactivated crews');

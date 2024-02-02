@@ -12,7 +12,7 @@ use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\WorkOrder;
-use App\Models\WorkOrder\UrlGeneratorWorkOrders;
+use App\Models\WorkOrder\WorkOrderUrlGenerator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -41,12 +41,12 @@ class WorkOrderController extends Controller
         return view('work-orders.index', [
             'all_statuses' => WorkOrder::getAllStatuses(),
             'all_types' => WorkOrder::getAllTypes(),
-            'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
+            'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'contractors' => Contractor::all(),
             'jobs' => Job::all(),
             'request' => $request,
             'incomplete_work_orders' => [
-                'url' => UrlGeneratorWorkOrders::incomplete(),
+                'url' => WorkOrderUrlGenerator::incomplete(),
                 'count' => WorkOrder::incompleteStatuses()->count(),
             ],
             'work_orders' => $work_orders,
@@ -124,7 +124,7 @@ class WorkOrderController extends Controller
             'all_types' => WorkOrder::getAllTypes(),
             'client' => $work_order->client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
-            'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
+            'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'non_default_types' => WorkOrder::getNonDefaultTypes(),
             'request' => $request,
             'work_order' => $work_order,

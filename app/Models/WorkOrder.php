@@ -7,12 +7,15 @@ use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasScheduledDateTrait;
 use App\Models\Kernel\HasStatusTrait;
+use App\Models\WorkOrder\Traits\RelationshipsTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class WorkOrder extends Model implements FilteringInterface
 {
+    use RelationshipsTrait;
+
     use HasFactory;
     use HasFilteringTrait;
     use HasHookUsersTrait;
@@ -97,7 +100,7 @@ class WorkOrder extends Model implements FilteringInterface
 
     // Interface
 
-    public function inputFilterSettings(): array
+    public function getInputFilterSettings(): array
     {
         return [
             'client' => 'filterByClient',
@@ -293,11 +296,6 @@ class WorkOrder extends Model implements FilteringInterface
             'reworks',
             'warranties',
         ]);
-    }
-
-    public function scopeWhereId($query, $value)
-    {
-        return $query->where('id', $value);
     }
 
     public function scopeWhereSearch($query, $value, string $column = 'id')
@@ -504,55 +502,7 @@ class WorkOrder extends Model implements FilteringInterface
 
     // Relations
 
-    public function rework()
-    {
-        return $this->belongsTo(self::class, 'rework_id');
-    }
-
-    public function warranty()
-    {
-        return $this->belongsTo(self::class, 'warranty_id');
-    }
-
-    public function reworks()
-    {
-        return $this->hasMany(self::class, 'rework_id');
-    }
-
-    public function warranties()
-    {
-        return $this->hasMany(self::class, 'warranty_id');
-    }
-
-    public function client()
-    {
-        return $this->belongsTo(Client::class);
-    }
-
-    public function job()
-    {
-        return $this->belongsTo(Job::class);
-    }
-
-    public function crew()
-    {
-        return $this->belongsTo(Crew::class);
-    }
-
-    public function contractor()
-    {
-        return $this->belongsTo(Contractor::class);
-    }
-
-    public function members()
-    {
-        return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
-    }
-
-    public function inspections()
-    {
-        return $this->hasMany(Inspection::class);
-    }
+    
 
 
     // Statics

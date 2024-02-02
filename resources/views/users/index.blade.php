@@ -18,6 +18,7 @@
             <tr>
                 <th></th>
                 <th>Username</th>
+                <th>Name</th>
                 <th>Profile</th>
                 <th class="text-nowrap">Last session</th>
                 <th></th>
@@ -32,7 +33,10 @@
                 </x-tooltip>
             </td>
             <td>{{ $user->name }}</td>
-            <td class="text-capitalize text-nowrap">{{ $user->profile->authenticated_name  }} - <em class="text-secondary">{{ $user->profile_alias }}</em></td>
+            <td class="text-capitalize text-nowrap">
+                <span>{{ $user->profile->authenticated_name }}</span>
+            </td>
+            <td class="text-capitalize">{{ $user->profiled }}</td>
             <td class="text-nowrap">
                 <span class="me-1">{{ $user->last_session_date_human }}</span>
                 <span>{{ $user->last_session_time_human }}</span>

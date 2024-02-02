@@ -11,6 +11,7 @@
 @section('content')
 <x-card title="New user">
     <form action="{{ route('users.store', $request->query()) }}" method="post" autocomplete="off">
+        @csrf
         @include('users._form')
         <br>
         

@@ -17,9 +17,9 @@ class CrewController extends Controller
         ->get();
 
         return view('crews.index', [
-            'crews' => $crews,
             'active_crews' => $crews->filter(fn($crew) => $crew->isActive()),
-            'members' => Member::whereIsCrewMember()->available()->orderBy('name')->get(),
+            'crews' => $crews,
+            'members' => Member::available()->crewMember()->orderBy('name')->get(),
             'request' => $request,
             'template' => IndexTemplate::get( $request->get('template') ),
         ]);
@@ -28,7 +28,7 @@ class CrewController extends Controller
     public function create()
     {        
         return view('crews.create', [
-            'all_tasks' => Crew::getAllTasks(),
+            'all_tasks' => Crew::allTasks(),
             'crew' => new Crew,
         ]);
     }
@@ -46,16 +46,14 @@ class CrewController extends Controller
     {
         return view('crews.show', [
             'crew' => $crew,
-            'members' => Member::whereIsCrewMember()->orderBy('name')->get(),
         ]);
     }
 
     public function edit(Crew $crew)
     {
         return view('crews.edit', [
-            'all_tasks' => Crew::getAllTasks(),
+            'all_tasks' => Crew::allTasks(),
             'crew' => $crew,
-            'members' => [],
         ]);
     }
 
@@ -78,7 +76,7 @@ class CrewController extends Controller
             return back()->with('danger', "Error deleting crew, try again please");
         }
 
-        $crew->removeMembers();
+        $crew->members()->detach();
 
         return redirect()->route('crews.index')->with('success', "You deleted the crew <b>{$crew->name}</b>");
     }

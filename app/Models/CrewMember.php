@@ -11,37 +11,12 @@ class CrewMember extends Pivot
 
     const UPDATED_AT = null;
 
-    
+
     // Scopes
 
-    public function scopeCrew($query, $value)
+    public function scopeRemoveCrews($query, array $values)
     {
-        return $query->where('crew_id', $value);
-    }
-
-    public function scopeCrewIn($query, array $values)
-    {
-        return $query->whereIn('crew_id', $values);
-    }
-
-    public function scopeCrewNotIn($query, array $values)
-    {
-        return $query->whereNotIn('crew_id', $values);
-    }
-
-    public function scopeMember($query, $value)
-    {
-        return $query->where('member_id', $value);
-    }
-
-    public function scopeMemberIn($query, array $values)
-    {
-        return $query->whereIn('member_id', $values);
-    }
-
-    public function scopeMemberNotIn($query, array $values)
-    {
-        return $query->whereNotIn('member_id', $values);
+        return $query->whereIn('crew_id', $values)->delete();
     }
 
 

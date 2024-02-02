@@ -50,23 +50,11 @@ class MemberController extends Controller
             return back()->with('danger', 'Error updating member, try again please');
         }
 
-        if( $member->isInactive() )
-        {
-            $member->crews()->detach();
-
-            if($users = $member->users) {
-                $users->each(function ($user) {
-                    $user->deactivate();
-                });
-            }
+        if( $member->isInactive() ) {
+            $member->down();
         } 
-        else
-        {
-            if($users = $member->users) {
-                $users->each(function ($user) {
-                    $user->activate();
-                });
-            }
+        else {
+            $member->up();
         }
 
         return redirect()->route('members.edit', $member)->with('success', "You updated the member <b>{$member->full_name}</b>");
@@ -77,6 +65,8 @@ class MemberController extends Controller
         if(! $member->delete() ) {
             return back()->with('danger', 'Error deleting member, try again please');
         }
+
+        $member->down();
 
         return redirect()->route('members.index')->with('success', "You deleted the member <b>{$member->full_name}</b>");
     }

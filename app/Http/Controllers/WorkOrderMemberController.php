@@ -10,8 +10,11 @@ class WorkOrderMemberController extends Controller
 {
     public function __invoke(WorkOrderMembersUpdateRequest $request)
     {
-        $id_active_crews = Crew::active()->pluck('id')->toArray();
-        $work_orders = WorkOrder::with('crew.members')->incomplete()->whereIn('crew_id', $id_active_crews)->whereScheduledDate($request->scheduled_date)->get(); 
+        $work_orders = WorkOrder::with('crew.members')
+        ->incomplete()
+        ->whereIn('crew_id', Crew::active()->pluck('id')->toArray())
+        ->where('scheduled_date', $request->scheduled_date)
+        ->get(); 
         
         $results = [];
 

@@ -48,22 +48,22 @@ trait HasScheduledDateTrait
 
     // Scopes
 
-    public function scopeWhereScheduledDate($query, $value)
+    public function scopeScheduledDateIs($query, $value)
     {
         return $query->where('scheduled_date', $value);
     }
 
-    public function scopeWhereScheduledDateFrom($query, $value)
+    public function scopeScheduledDateFrom($query, $value)
     {
         return $query->where('scheduled_date', '>=', $value);
     }
 
-    public function scopeWhereScheduledDateTo($query, $value)
+    public function scopeScheduledDateTo($query, $value)
     {
         return $query->where('scheduled_date', '<=', $value);
     }
 
-    public function scopeWhereScheduledDateBetween($query, $values)
+    public function scopeScheduledDateBetween($query, $values)
     {
         return $query->whereBetween('scheduled_date', $values);
     }
@@ -73,7 +73,7 @@ trait HasScheduledDateTrait
 
     public function scopeFilterByScheduledDate($query, $value)
     {
-        return ! is_null($value) ? $query->whereScheduledDate($value) : $query;
+        return ! is_null($value) ? $query->scheduledDateIs($value) : $query;
     }
 
     public function scopeFilterByScheduledDateBetween($query, $values)
@@ -83,13 +83,13 @@ trait HasScheduledDateTrait
         }
 
         if( isset($values['from']) &&! isset($values['to']) ) {
-            return $query->whereScheduledDateFrom($values['from']);
+            return $query->scheduledDateFrom($values['from']);
         }
         
         if(! isset($values['from']) && isset($values['to']) ) {
-            return $query->whereScheduledDateTo($values['to']);
+            return $query->scheduledDateTo($values['to']);
         }
 
-        return $query->whereScheduledDateBetween($values);
+        return $query->scheduledDateBetween($values);
     }
 }

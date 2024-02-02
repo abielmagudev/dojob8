@@ -2,7 +2,7 @@
 
 namespace App\Models\Inspection;
 
-class UrlGeneratorInspection
+class InspectionUrlGenerator
 {
     public static function all(array $parameters = [])
     {

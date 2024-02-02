@@ -8,65 +8,42 @@ use Illuminate\Http\Request;
 
 class UserProfiler
 {
-    public static $aliases_profiles = [
+    public static $profiles_classnames = [
         'contractor' => Contractor::class,
         'member' => Member::class,
     ];
 
-    public static function getAliasesProfiles()
+    public static function all()
     {
-        return collect( self::$aliases_profiles );
+        return collect( self::$profiles_classnames );
     }
 
-    public static function getAliases()
+    public static function profiles()
     {
-        return self::getAliasesProfiles()->keys();
+        return self::all()->keys();
     }
 
-    public static function getProfiles()
+    public static function classnames()
     {
-        return self::getAliasesProfiles()->values();
+        return self::all()->values();
     }
 
-    public static function getAliasByProfile(string $profile_parameter)
+    public static function getProfileByClassname(string $value)
     {
-        foreach(self::getAliasesProfiles() as $alias => $profile)
-        {
-            if( $profile == $profile_parameter ) {
-                return $alias;
-            }
-        }
+        $profile = self::all()->search(function($classname) use ($value) { 
+            return $classname == $value; 
+        });
 
-        return null;
+        return $profile ?? null;
     }
 
-    public static function getProfileByAlias(string $alias_parameter)
+    public static function getClassnameByProfile(string $value)
     {
-        return self::getAliasesProfiles()[$alias_parameter] ?? null;
+        return self::all()[$value] ?? null;
     }
 
-    public static function getAliasNameRequest(Request $request)
+    public static function find($profile, $id)
     {
-        return self::getAliases()->filter(function ($alias) use ($request) {
-            return $request->has($alias);
-        })->first();
-    }
-
-    public static function getAliasValueRequest(Request $request)
-    {
-        return $request->get(
-            self::getAliasNameRequest($request)
-        );
-    }
-
-    public static function instanceProfileByRequest(Request $request)
-    {
-        if(! $alias = self::getAliasNameRequest($request) ) {
-            return;
-        }
-
-        return ( self::getProfileByAlias($alias) )::find(
-            self::getAliasValueRequest($request)
-        );
+        return ( self::getClassnameByProfile($profile) )::find($id);
     }
 }

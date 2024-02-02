@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasPresenceStatusTrait;
-use App\Models\WorkOrder\HasWorkOrdersTrait;
+use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,8 +26,8 @@ class Crew extends Model
     const TEXT_COLOR_DEFAULT = '#DDDDDD';
 
     public static $all_tasks = [
-        'work orders',
         'inspections',
+        'work orders',
     ];
 
     protected $fillable = [
@@ -56,25 +56,6 @@ class Crew extends Model
     public function getTextColorAttribute()
     {
         return $this->text_color_hex ?? self::TEXT_COLOR_DEFAULT;
-    }
-
-    public function getDatasetAttribute()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'members' => $this->members->map(function ($member) {
-                return [
-                    'id' => $member->id,
-                    'full_name' => $member->full_name,
-                ];
-            })
-        ];
-    }
-
-    public function getDatasetJsonAttribute()
-    {
-        return json_encode( $this->dataset );
     }
 
     public function getTasksArrayAttribute()
@@ -108,12 +89,12 @@ class Crew extends Model
         return $query->where('tasks_json', 'like', "%{$task}%");
     }
 
-    public function scopeForInspections($query)
+    public function scopeTaskInspections($query)
     {
         return $query->tasksLike('inspections');
     }
 
-    public function scopeForWorkOrders($query)
+    public function scopetaskWorkOrders($query)
     {
         return $query->tasksLike('work orders');
     }
@@ -134,7 +115,7 @@ class Crew extends Model
 
     // Static
 
-    public static function getAllTasks()
+    public static function allTasks()
     {
         return collect( self::$all_tasks );
     }

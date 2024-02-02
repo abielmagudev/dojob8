@@ -7,7 +7,7 @@ use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\HasScheduledDateTrait;
 use App\Models\Kernel\HasStatusTrait;
-use App\Models\WorkOrder\BelongWorkOrderTrait;
+use App\Models\WorkOrder\Associated\BelongWorkOrderTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,7 +48,7 @@ class Inspection extends Model implements FilteringInterface
     
     // Interface
 
-    public function inputFilterSettings(): array
+    public function getInputFilterSettings(): array
     {
         return [
             'crew' => 'filterByCrew',
@@ -98,17 +98,7 @@ class Inspection extends Model implements FilteringInterface
 
     // Scopes
 
-    public function scopeWhereCrew($query, int $crew_id)
-    {
-        return $query->where('crew_id', $crew_id);
-    }
-
-    public function scopeWhereInspector($query, int $inspector_id)
-    {
-        return $query->where('inspector_id', $inspector_id);
-    }
-
-    public function scopeWithNestedRelationships($query)
+    public function scopeWithRelationshipsForIndex($query)
     {
         return $query->with([
             'crew',
@@ -123,12 +113,12 @@ class Inspection extends Model implements FilteringInterface
 
     public function scopeFilterByCrew($query, $crew_id)
     {
-        return ! is_null($crew_id) ? $query->whereCrew($crew_id) : $query;
+        return ! is_null($crew_id) ? $query->where('crew_id', $crew_id) : $query;
     }
 
     public function scopeFilterByInspector($query, $inspector_id)
     {
-        return ! is_null($inspector_id) ? $query->whereInspector($inspector_id) : $query;
+        return ! is_null($inspector_id) ? $query->where('inspector_id', $inspector_id) : $query;
     }
 
 
@@ -147,14 +137,14 @@ class Inspection extends Model implements FilteringInterface
 
     // Statics
 
-    public static function getAllStatuses()
+    public static function allStatuses()
     {
         return collect( self::$all_statuses );
     }
 
-    public static function getAllStatusesForm()
+    public static function allStatusesForm()
     {
-        return self::getAllStatuses()->reject(fn($status) => $status == 'pending');
+        return self::allStatuses()->reject(fn($status) => $status == 'pending');
     }
 
     public static function validateIsPendingStatus(array $values)

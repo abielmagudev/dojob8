@@ -25,7 +25,7 @@ class InspectionUpdateRequest extends FormRequest
                 'bail',
                 'nullable',
                 'integer',
-                sprintf('in:%s', Crew::forInspections()->get()->pluck('id')->implode(',')),
+                sprintf('in:%s', Crew::taskInspections()->get()->pluck('id')->implode(',')),
             ],
             'inspector' => [
                 'bail',
@@ -39,7 +39,7 @@ class InspectionUpdateRequest extends FormRequest
             ],
             'status' => [
                 'required',
-                sprintf('in:%s', Inspection::getAllStatuses()->implode(',')),
+                sprintf('in:%s', Inspection::allStatuses()->implode(',')),
             ],
         ];
     }

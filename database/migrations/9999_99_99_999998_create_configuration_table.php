@@ -15,7 +15,9 @@ class CreateConfigurationTable extends Migration
     {
         Schema::create('configuration', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name')->default('Company name');
+            $table->text('data_json')->nullable();
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
             $table->timestamps();
         });
     }

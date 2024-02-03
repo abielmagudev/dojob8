@@ -1,8 +1,15 @@
 <input 
-    id="cityNameInput" 
     type="text" 
-    class="form-control {{ $attributes->get('class', '') }} {{ bsInputInvalid($errors->has('city')) }}" 
+
+    id="cityNameInput" 
+    
     name="city_name" 
-    value="{{ $attributes->get('old', $city_name_default) }}" 
-    @if( $attributes->has('required') ) required @endif
+    
+    value="{{ $slot->isEmpty() && $attributes->has('required') ? $configuration->get('city_name') : $slot }}" 
+    
+    class="form-control {{ bsInputInvalid($errors->has('city_name')) }} {{ $attributes->get('class', '') }}" 
+
+    @if( $attributes->has('required') )
+    required
+    @endif
 >

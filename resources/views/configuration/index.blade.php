@@ -6,14 +6,16 @@
 
 @section('content')
 <x-card>
-    @slot('options')
-    <a href="{{ route('configuration.edit', $configuration) }}" class="btn btn-warning">
-        <i class="bi bi-pencil-fill"></i>
-    </a>
-    @endslot
+    <form action="{{ route('configuration.update', $configuration) }}" method="post" autocomplete="off">
+        @method('put')
+        @csrf
+        @include('configuration._form')
+        <br>
 
-    <x-small-title title="Company name">
-        {{ $configuration->company_name }}
-    </x-small-title>
+        <div class="text-end">
+            <a href="{{ route('configuration.index') }}" class="btn btn-outline-primary me-1">Cancel</a>
+            <button type="submit" class="btn btn-warning">Update configuration</button>
+        </div>
+    </form>
 </x-card>
 @endsection

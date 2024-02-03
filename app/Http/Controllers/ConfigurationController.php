@@ -14,42 +14,24 @@ use Illuminate\Http\Request;
 
 class ConfigurationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return view('configuration.index')->with('configuration', Configuration::first());
     }
 
-    // public function create()
-    // {
-    //     // 
-    // }
+    public function update(ConfigurationSaveRequest $request)
+    {        
+        $validated = [
+            'data_json' => json_encode( $request->validated() ),
+            'updated_by' => mt_rand(1,10),
+        ];
 
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
+        $configuration = Configuration::first();
 
-    // public function show(Configuration $configuration)
-    // {
-    //     //
-    // }
-
-    public function edit(Configuration $configuration)
-    {
-        return view('configuration.edit')->with('configuration', $configuration);
-    }
-
-    public function update(ConfigurationSaveRequest $request, Configuration $configuration)
-    {
-        if(! $configuration->fill( $request->validated() )->save() ) {
+        if(! $configuration->fill( $validated )->save() ) {
             return back()->with('danger', 'Error updating configuration, try again please');
         }
 
-        return redirect()->route('configuration.edit', $configuration)->with('success', "You updated configuration");
+        return redirect()->route('configuration.index')->with('success', "You updated configuration");
     }
-
-    // public function destroy(Configuration $configuration)
-    // {
-    //     //
-    // }
 }

@@ -14,7 +14,11 @@ class ConfigurationFactory extends Factory
     public function definition()
     {
         return [
-            'company_name' => $this->faker->catchPhrase(),
+            'data_json' => json_encode([
+                'company_name' => $this->faker->catchPhrase(),
+            ]),
+            'created_by' => mt_rand(1,10),
+            'updated_by' => mt_rand(1,10),
         ];
     }
 }

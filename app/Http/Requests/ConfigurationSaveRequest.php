@@ -2,10 +2,16 @@
 
 namespace App\Http\Requests;
 
+use App\Suppliers\CountryManager;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class ConfigurationSaveRequest extends FormRequest
 {
+    public $country_codes;
+
+    public $country_state_codes;
+
     public function authorize()
     {
         return true;
@@ -15,9 +21,42 @@ class ConfigurationSaveRequest extends FormRequest
     {
         return [
             'company_name' => [
-                'required',
+                'nullable',
                 'string',
             ],
+            'city_name' => [
+                'nullable',
+                'string',
+            ],
+            'state_code' => [
+                'required',
+                'string',
+                sprintf('in:%s', $this->country_state_codes),
+            ],
+            'country_code' => [
+                'required',
+                'string',
+                sprintf('in:%s', $this->country_codes),
+            ],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        // $this->country_codes = CountryManager::codes()->implode(',');
+
+        $this->country_codes = CountryManager::default()->get('code');
+
+        $this->country_state_codes = CountryManager::exists( $this->get('country_code') ) 
+                                   ? CountryManager::get( $this->get('country_code') )->get('states')->keys()->implode(',')
+                                   : CountryManager::default()->get('states')->keys()->implode(',');
+    }
+
+    public function validated()
+    {
+        $validated = parent::validated();
+        $validated['city_name'] = Str::title( $validated['city_name'] );
+
+        return $validated;
     }
 }

@@ -26,21 +26,22 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('application.sidebar-canvas', function($view) {
-            $view->with('configuration', Configuration::first());
+        $configuration = Configuration::first();
+
+        View::composer('application.sidebar-canvas', function($view) use ($configuration) {
+            $view->with('configuration', $configuration);
+        });
+
+        View::composer('components.custom.input-city-name-data', function ($view) use ($configuration) {
+            $view->with('configuration', $configuration);
         });
 
         View::composer([
             'components.custom.select-country-code-data',
             'components.custom.select-state-code-data',
-        ], function ($view) {
-            $view->with('countries', CountryManager::only('US'));
-            $view->with('country_code_default', 'US');
-            $view->with('state_code_default', 'TX');
-        });
-
-        View::composer('components.custom.input-city-name-data', function ($view) {
-            $view->with('city_name_default', 'San Antonio');
+        ], function ($view) use ($configuration) {
+            $view->with('countryManager', CountryManager::singleton());
+            $view->with('configuration', $configuration);
         });
     }
 }

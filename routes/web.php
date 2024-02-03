@@ -79,6 +79,9 @@ Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxCont
 Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
 Route::match(['put','patch'],'payments', [PaymentController::class, 'updateMany'])->name('payments.update.many');
 
-// App
+// Search clients and work orders
 Route::get('search', SearchController::class)->name('app.search');
-Route::resource('configuration', ConfigurationController::class)->only(['index','edit','update']);
+
+// Configuration
+Route::get('configuration', [ConfigurationController::class, 'index'])->name('configuration.index');
+Route::match(['put','patch'], 'configuration', [ConfigurationController::class, 'update'])->name('configuration.update');

@@ -12,6 +12,28 @@ class Configuration extends Model
     protected $table = 'configuration';
 
     protected $fillable = [
-        'company_name',
+        'data_json',
+        'created_by',
+        'updated_by',
     ];
+
+    
+    // Attributes
+
+    public function getDataArrayAttribute()
+    {
+        return json_decode($this->data_json, true);
+    }
+
+
+    // Actions
+
+    public function get(string $key, $default = null, $strict = false)
+    {
+        if( $strict ) {
+            return isset($this->data_array[$key]) &&! empty($this->data_array[$key]) ? $this->data_array[$key] : $default;
+        }
+
+        return array_key_exists($key, $this->data_array) ? $this->data_array[$key] : $default;
+    }
 }

@@ -13,7 +13,7 @@ class ContractorSaveRequest extends FormRequest
 
     public $country_codes;
 
-    public $state_codes;
+    public $country_state_codes;
 
     public function authorize()
     {
@@ -62,7 +62,7 @@ class ContractorSaveRequest extends FormRequest
             ],
             'state_code' => [
                 'required',
-                sprintf('in:%s', $this->state_codes),
+                sprintf('in:%s', $this->country_state_codes),
             ],
             'country_code' => [
                 'required',
@@ -96,11 +96,11 @@ class ContractorSaveRequest extends FormRequest
     {
         $this->contractor_id = $this->route('contractor')->id ?? 0;
 
-        $this->country_codes = CountryManager::codes()->implode(',');
+        $this->country_codes = CountryManager::default()->get('code');
 
-        $this->state_codes = CountryManager::exists( $this->get('country_code', '?') ) 
-                           ? CountryManager::get( $this->country_code )->get('states')->keys()->implode(',') 
-                           : '?';
+        $this->country_state_codes = CountryManager::exists( $this->get('country_code') ) 
+                                   ? CountryManager::get( $this->get('country_code') )->get('states')->keys()->implode(',')
+                                   : CountryManager::default()->get('states')->keys()->implode(',');
     }
 
     public function validated()

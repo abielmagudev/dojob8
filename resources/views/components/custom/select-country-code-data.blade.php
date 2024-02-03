@@ -1,14 +1,32 @@
 <?php
-$country_code_to_select = $countries->get( $attributes->get('old') ) 
-                        ? $attributes->get('old') 
-                        : $country_code_default;
+
+// $countries = $countryManager->all();
+
+// $countries = $countryManager->only( $configuration->get('country_code', 'US') );
+
+$countries = $countryManager->only('US');
+
+$selected = $slot->isNotEmpty() ? $slot : $configuration->get('country_code');
+
 ?>
-<select id="countryCodeSelect" class="form-select {{ bsInputInvalid( $errors->has('country_code') ) }} {{ $attributes->get('class', '') }}" name="country_code" @if( $attributes->has('required') ) required @endif>
-    @if(! $attributes->has('required') )
-    <option selected label="Any country"></option>
+<select 
+    id="countryCodeSelect" 
+    class="form-select {{ bsInputInvalid( $errors->has('country_code') ) }} {{ $attributes->get('class', '') }}" 
+    name="country_code" 
+    
+    @if( $attributes->has('required') )
+    required
+    @endif
+>
+    @if(! $attributes->has('required') &&! $attributes->has('any') )
+    <option selected></option>
+    @endif
+
+    @if( $attributes->has('any') )
+    <option selected>Any country</option>
     @endif
 
     @foreach($countries as $code => $country)
-    <option value="{{ $code }}" {{ isSelected( ($country_code_to_select == $code) ) }}>{{ $country->get('name') }}</option>
+    <option value="{{ $code }}" {{ isSelected( ($selected == $code) ) }}>{{ $country->get('name') }}</option>
     @endforeach
 </select>

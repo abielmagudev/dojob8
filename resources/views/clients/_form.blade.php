@@ -33,17 +33,17 @@
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="cityNameInput" label="City">
-    <x-custom.input-city-name-data :old="old('city_name', $client->city_name)" required />
+    <x-custom.input-city-name-data required>{{ old('city_name', $client->city_name) }}</x-custom.input-city-name-data>
     <x-form-feedback error="city_name" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="stateCodeSelect" label="State">
-    <x-custom.select-state-code-data :country="old('country_code', $client->country_code)" :old="old('state_code', $client->state_code)" required />
+    <x-custom.select-state-code-data :country="old('country_code', $client->country_code)" required>{{ old('state_code', $client->state_code) }}</x-custom.select-state-code-data>
     <x-form-feedback error="state_code" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="countryCodeSelect" label="Country">
-    <x-custom.select-country-code-data :old="old('country_code', $client->country_code)" required />
+    <x-custom.select-country-code-data required>{{ old('country_code', $client->country_code) }}</x-custom.select-country-code-data>
     <x-form-feedback error="country_code" />
 </x-form-field-horizontal>
 

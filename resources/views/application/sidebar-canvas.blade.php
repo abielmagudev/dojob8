@@ -11,7 +11,7 @@
     <div class="offcanvas-body">
 
         <div class="text-center text-uppercase mb-3">
-            <small class="fw-bold">{{ $configuration->company_name }}</small>
+            <small class="fw-bold">{{ $configuration->get('company_name') }}</small>
         </div>
 
         <div class="d-block d-md-none mb-3">

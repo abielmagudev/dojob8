@@ -10,7 +10,7 @@ class ClientSaveRequest extends FormRequest
 {
     public $country_codes;
 
-    public $state_codes;
+    public $country_state_codes;
 
     public function authorize()
     {
@@ -78,11 +78,11 @@ class ClientSaveRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $this->country_codes = CountryManager::only('US')->keys()->implode(',');
+        $this->country_codes = CountryManager::default()->get('code');
 
-        $this->state_codes = CountryManager::exists( $this->get('country_code', '?') ) 
-                           ? CountryManager::get( $this->country_code )->get('states')->keys()->implode(',') 
-                           : '?';
+        $this->country_state_codes = CountryManager::exists( $this->get('country_code') ) 
+                                   ? CountryManager::get( $this->get('country_code') )->get('states')->keys()->implode(',')
+                                   : CountryManager::default()->get('states')->keys()->implode(',');
     }
 
     public function validated()

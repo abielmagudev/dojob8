@@ -15,7 +15,10 @@ class ConfigurationFactory extends Factory
     {
         return [
             'data_json' => json_encode([
-                'company_name' => $this->faker->catchPhrase(),
+                'company_name' => 'Your company name',
+                'city_name' => 'San Antonio',
+                'state_code' => 'TX',
+                'country_code' => 'US',
             ]),
             'created_by' => mt_rand(1,10),
             'updated_by' => mt_rand(1,10),

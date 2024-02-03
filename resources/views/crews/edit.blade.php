@@ -28,8 +28,8 @@
         </x-form-field-horizontal>
         <br>
         <div class="text-end">
+            <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary">Back</a>
             <button class="btn btn-warning" type="submit">Update crew</button>
-            <a href="{{ route('crews.show', $crew) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

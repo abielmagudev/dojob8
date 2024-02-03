@@ -31,8 +31,8 @@
         <br>
         
         <div class="text-end">
+            <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">Back</a>
             <button class="btn btn-warning" type="submit">Update member</button>
-            <a href="{{ route('members.show', $member) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

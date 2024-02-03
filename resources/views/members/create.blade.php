@@ -15,8 +15,8 @@
         @include('members._form')
         <br>
         <div class="text-end">
+            <a href="{{ route('members.index') }}" class="btn btn-outline-primary">Cancel</a>
             <button class="btn btn-success" type="submit">Create member</button>
-            <a href="{{ route('members.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

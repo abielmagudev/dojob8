@@ -14,8 +14,8 @@
         @include('crews._form')
         <br>
         <div class="text-end">
+            <a href="{{ route('crews.index') }}" class="btn btn-outline-primary">Cancel</a>
             <button class="btn btn-success" type="submit">Create crew</button>
-            <a href="{{ route('crews.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

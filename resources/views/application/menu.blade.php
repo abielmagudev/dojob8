@@ -80,17 +80,17 @@ return [
             'permission' => true,
             'route' => route('users.index'),
         ],
-        'History' => [
-            'active' => request()->routeIs('history.*'),
-            'icon' => '<i class="bi bi-clock-history"></i>',
-            'permission' => true,
-            'route' => route('history.index'),
-        ],
         'Configuration' => [
             'active' => request()->routeIs('configuration.*'),
             'icon' => '<i class="bi bi-gear"></i>',
             'permission' => true,
             'route' => route('configuration.index'),
+        ],
+        'History' => [
+            'active' => request()->routeIs('history.*'),
+            'icon' => '<i class="bi bi-clock-history"></i>',
+            'permission' => true,
+            'route' => route('history.index'),
         ],
     ],
 ];

@@ -4,6 +4,8 @@ namespace App\Suppliers;
 
 class CountryManager
 {
+    const DEFAULT = 'US';
+
     public static $instance;
 
     public $countries;
@@ -34,14 +36,19 @@ class CountryManager
         return self::singleton()->countries->keys();
     }
 
-    public static function exists(string $code)
+    public static function exists($code)
     {
-        return self::singleton()->countries->has($code);
+        return ! is_null($code) && self::singleton()->countries->has($code);
     }
 
     public static function get(string $code)
     {
         return self::singleton()->countries->get($code);
+    }
+
+    public static function default()
+    {
+        return self::singleton()->countries->get( self::DEFAULT );
     }
 
     public static function only($parameter)

@@ -2,7 +2,7 @@
     <form action="{{ route('inspections.index') }}" method="get" autocomplete="off" id="formInspectionFilters">
         
         @include('components.custom.input-between-dates')
-        @include('inspections.index.modal-filters.inspector')
+        @include('inspections.index.modal-filters.agency')
         @include('inspections.index.modal-filters.crew')
         @include('inspections.index.modal-filters.status-group')
         @include('components.custom.select-sort')

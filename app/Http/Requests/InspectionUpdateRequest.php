@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Agency;
 use App\Models\Crew;
 use App\Models\Inspection;
-use App\Models\Inspector;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class InspectionUpdateRequest extends FormRequest
 {
@@ -21,17 +22,9 @@ class InspectionUpdateRequest extends FormRequest
                 'nullable',
                 'date',
             ],
-            'crew' => [
-                'bail',
+            'inspector_name' => [
                 'nullable',
-                'integer',
-                sprintf('in:%s', Crew::taskInspections()->get()->pluck('id')->implode(',')),
-            ],
-            'inspector' => [
-                'bail',
-                'required',
-                'integer',
-                sprintf('exists:%s,id', Inspector::class),
+                'string',
             ],
             'observations' => [
                 'nullable',
@@ -40,6 +33,18 @@ class InspectionUpdateRequest extends FormRequest
             'status' => [
                 'required',
                 sprintf('in:%s', Inspection::allStatuses()->implode(',')),
+            ],
+            'agency' => [
+                'bail',
+                'required',
+                'integer',
+                sprintf('exists:%s,id', Agency::class),
+            ],
+            'crew' => [
+                'bail',
+                'nullable',
+                'integer',
+                sprintf('in:%s', Crew::taskInspections()->get()->pluck('id')->implode(',')),
             ],
         ];
     }
@@ -66,8 +71,9 @@ class InspectionUpdateRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
+            'inspector_name' => Str::title($this->inspector_name),
             'crew_id' => $this->crew,
-            'inspector_id' => $this->inspector,
+            'agency_id' => $this->agency,
         ]);
     }
 }

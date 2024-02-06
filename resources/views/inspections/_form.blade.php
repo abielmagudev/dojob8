@@ -5,13 +5,28 @@
     <x-form-feedback error="scheduled_date" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal for="inspectorSelect" label="Inspector">
-    <select id="inspectorSelect" class="form-select {{ bsInputInvalid( $errors->has('inspector') ) }}" name="inspector" required>
-        @foreach($inspectors as $inspector)
-        <option value="{{ $inspector->id }}" {{ isSelected($inspector->id == $inspection->inspector_id) }}>{{ $inspector->name }}</option>
+<x-form-field-horizontal for="agencySelect" label="Agency">
+    <select id="agencySelect" class="form-select {{ bsInputInvalid( $errors->has('agency') ) }}" name="agency" required>
+        @foreach($agencies as $agency)
+        <option value="{{ $agency->id }}" {{ isSelected($agency->id == $inspection->agency_id) }}>{{ $agency->name }}</option>
         @endforeach
     </select>
-    <x-form-feedback error="inspector" />
+    <x-form-feedback error="agency" />
+</x-form-field-horizontal>
+
+<x-form-field-horizontal for="inspectorNameInput" label="Inspector" label-class="form-label-optional">
+    <input id="inspectorNameInput" class="form-control" type="text" list="inspectorNamesDatalist" name="inspector_name" value="{{ old('inspector_name', $inspection->inspector_name) }}">
+    <datalist id="inspectorNamesDatalist">
+        @foreach($inspector_names as $inspector_name)
+        <option value="{{ $inspector_name }}">
+        @endforeach
+    </datalist>
+    <x-form-feedback error="inspector_name" />
+</x-form-field-horizontal>
+
+<x-form-field-horizontal for="observationsTextarea" label="Observations" label-class="form-label-optional {{ bsInputInvalid( $errors->has('observations') ) }}">
+    <textarea id="observationsTextarea" class="form-control" name="observations" rows="3">{{ old('observations', $inspection->observations) }}</textarea>
+    <x-form-feedback error="observations" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="crewSelect" label="Crew">
@@ -24,11 +39,6 @@
         </select>
         <x-form-feedback error="crew" />
     </div>
-</x-form-field-horizontal>
-
-<x-form-field-horizontal for="observationsTextarea" label="Observations" label-class="form-label-optional {{ bsInputInvalid( $errors->has('observations') ) }}">
-    <textarea id="observationsTextarea" class="form-control" name="observations" rows="3">{{ old('observations', $inspection->observations) }}</textarea>
-    <x-form-feedback error="observations" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="statusSelect" label="Status">

@@ -11,7 +11,7 @@ class Inspections extends ResponseConstructor
     {
         return [
             'show' => 'inspections',
-            'inspections' => Inspection::with(['inspector','crew'])->where('work_order_id', $this->work_order->id)->get(),
+            'inspections' => Inspection::with(['agency','crew'])->where('work_order_id', $this->work_order->id)->get(),
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Inspector;
+use App\Models\Agency;
 use Illuminate\Database\Seeder;
 
-class InspectorSeeder extends Seeder
+class AgencySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class InspectorSeeder extends Seeder
      */
     public function run()
     {
-        Inspector::factory(3)->create();
+        Agency::factory(3)->create();
     }
 }

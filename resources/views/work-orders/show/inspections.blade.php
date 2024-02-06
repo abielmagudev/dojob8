@@ -20,6 +20,7 @@
             <tr>
                 <th>Schedule</th>
                 <th>Status</th>
+                <th>Agency</th>
                 <th>Inspector</th>
                 <th>Crew</th>
                 <th>Observations</th>
@@ -36,7 +37,10 @@
                 @include('inspections.__.status-flag', ['status' => $inspection->status])
             </td>
             <td class="text-nowrap">
-                {{ $inspection->inspector->name }}
+                {{ $inspection->agency->name }}
+            </td>
+            <td class="text-nowrap">
+                {{ $inspection->inspector_name }}
             </td>
             <td class="text-nowrap">
                 @if( $inspection->hasCrew() )

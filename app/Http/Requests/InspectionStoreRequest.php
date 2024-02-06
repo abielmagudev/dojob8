@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Agency;
 use App\Models\Crew;
 use App\Models\Inspection;
-use App\Models\Inspector;
 use App\Models\WorkOrder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class InspectionStoreRequest extends FormRequest
 {
@@ -22,17 +23,13 @@ class InspectionStoreRequest extends FormRequest
                 'nullable',
                 'date',
             ],
-            'work_order' => [
-                'bail', 
-                'required', 
-                'integer', 
-                sprintf('exists:%s,id', WorkOrder::class),
-            ],
-            'inspector' => [
-                'bail',
+            'status' => [
                 'required',
-                'integer',
-                sprintf('exists:%s,id', Inspector::class),
+                sprintf('in:%s', Inspection::allStatuses()->implode(',')),
+            ],
+            'inspector_name' => [
+                'nullable',
+                'string',
             ],
             'crew' => [
                 'bail',
@@ -40,9 +37,17 @@ class InspectionStoreRequest extends FormRequest
                 'integer',
                 sprintf('in:%s', Crew::taskInspections()->get()->pluck('id')->implode(',')),
             ],
-            'status' => [
+            'agency' => [
+                'bail',
                 'required',
-                sprintf('in:%s', Inspection::allStatuses()->implode(',')),
+                'integer',
+                sprintf('exists:%s,id', Agency::class),
+            ],
+            'work_order' => [
+                'bail', 
+                'required', 
+                'integer', 
+                sprintf('exists:%s,id', WorkOrder::class),
             ],
         ];
     }
@@ -59,9 +64,10 @@ class InspectionStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'work_order_id' => $this->work_order,
-            'inspector_id' => $this->inspector,
+            'inspector_name' => Str::title($this->inspector_name),
             'crew_id' => $this->crew,
+            'agency_id' => $this->agency,
+            'work_order_id' => $this->work_order,
         ]);
     }
 }

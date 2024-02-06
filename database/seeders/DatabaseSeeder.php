@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             ContractorSeeder::class,
             CrewSeeder::class,
             InspectionSeeder::class,
-            InspectorSeeder::class,
+            AgencySeeder::class,
             JobSeeder::class,
             MemberSeeder::class,
             UserSeeder::class,

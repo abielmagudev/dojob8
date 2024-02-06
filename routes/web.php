@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConfigurationController;
@@ -12,7 +13,6 @@ use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InspectionController;
-use App\Http\Controllers\InspectorController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
@@ -42,6 +42,10 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 // Members
 Route::resource('members', MemberController::class);
 
+// Inspections
+Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
+Route::resource('inspections', InspectionController::class)->except('create');
+Route::resource('agencies', AgencyController::class);
 
 Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
 Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
@@ -60,10 +64,6 @@ Route::patch('crews/status', CrewStatusController::class)->name('crews.update.st
 Route::resource('crews', CrewController::class);
 
 Route::resource('contractors', ContractorController::class);
-Route::resource('inspectors', InspectorController::class);
-
-Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
-Route::resource('inspections', InspectionController::class)->except('create');
 
 Route::resource('users', UserController::class);
 

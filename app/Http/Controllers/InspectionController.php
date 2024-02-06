@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InspectionStoreRequest;
 use App\Http\Requests\InspectionUpdateRequest;
+use App\Models\Agency;
 use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Inspection\InspectionUrlGenerator;
-use App\Models\Inspector;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
@@ -24,11 +24,12 @@ class InspectionController extends Controller
         $inspections = Inspection::withRelationshipsForIndex()
         ->filterByInputs( $request->all() )
         ->orderByRaw("scheduled_date IS NULL DESC, scheduled_date {$request->get('sort', 'DESC')}")
-        ->orderBy('inspector_id', 'ASC')
+        ->orderBy('agency_id', 'ASC')
         ->paginate(25)
         ->appends( $request->all() );
 
         return view('inspections.index', [
+            'agencies' => Agency::all(),
             'inspections' => $inspections,
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'request' => $request,
@@ -46,10 +47,11 @@ class InspectionController extends Controller
     public function create(WorkOrder $work_order)
     {
         return view('inspections.create', [
+            'agencies' => Agency::all(),
             'all_statuses_form' => Inspection::allStatusesForm(),
             'crews' => Crew::taskInspections()->active()->get(),
             'inspection' => new Inspection,
-            'inspectors' => Inspector::all(),
+            'inspector_names' => Inspection::onlyInspectorNames(),
             'work_order' => $work_order,
         ]);
     }
@@ -73,10 +75,11 @@ class InspectionController extends Controller
     public function edit(Request $request, Inspection $inspection)
     {
         return view('inspections.edit', [
+            'agencies' => Agency::all(),
             'all_statuses_form' => Inspection::allStatusesForm(),
             'crews' => Crew::taskInspections()->active()->get(),
             'inspection' => $inspection,
-            'inspectors' => Inspector::all(),
+            'inspector_names' => Inspection::onlyInspectorNames(),
             'url_back' => $request->get('url_back', route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])),
         ]);
     }

@@ -17,10 +17,11 @@ class CreateInspectionsTable extends Migration
             $table->id();
             $table->date('scheduled_date')->nullable()->index();
             $table->text('observations')->nullable();
+            $table->string('inspector_name')->nullable()->index();
             $table->string('status')->index();
-            $table->foreignId('work_order_id');
-            $table->foreignId('inspector_id');
+            $table->foreignId('agency_id');
             $table->foreignId('crew_id')->nullable();
+            $table->foreignId('work_order_id');
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->timestamps();

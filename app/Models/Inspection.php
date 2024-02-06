@@ -23,10 +23,11 @@ class Inspection extends Model implements FilteringInterface
     protected $fillable = [
         'scheduled_date',
         'observations',
+        'inspector_name',
         'status',
-        'work_order_id',
-        'inspector_id',
+        'agency_id',
         'crew_id',
+        'work_order_id',
     ];
 
     protected $casts = [
@@ -52,7 +53,7 @@ class Inspection extends Model implements FilteringInterface
     {
         return [
             'crew' => 'filterByCrew',
-            'inspector' => 'filterByInspector',
+            'agency' => 'filterByAgency',
             'dates' => 'filterByScheduledDateBetween',
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
@@ -66,6 +67,11 @@ class Inspection extends Model implements FilteringInterface
     public function hasCrew()
     {
         return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
+    }
+
+    public function hasInspector()
+    {
+        return ! empty($this->inspector_name);
     }
 
     public function isPendingStatus()
@@ -102,10 +108,20 @@ class Inspection extends Model implements FilteringInterface
     {
         return $query->with([
             'crew',
-            'inspector', 
+            'agency', 
             'work_order.job', 
             'work_order.client',
         ]);
+    }
+
+    public function scopeOnlyInspectorNames($query)
+    {
+        return $query
+                ->select('inspector_name')
+                ->distinct()
+                ->get()
+                ->pluck('inspector_name')
+                ->filter();
     }
 
 
@@ -116,9 +132,9 @@ class Inspection extends Model implements FilteringInterface
         return ! is_null($crew_id) ? $query->where('crew_id', $crew_id) : $query;
     }
 
-    public function scopeFilterByInspector($query, $inspector_id)
+    public function scopeFilterByAgency($query, $agency_id)
     {
-        return ! is_null($inspector_id) ? $query->where('inspector_id', $inspector_id) : $query;
+        return ! is_null($agency_id) ? $query->where('agency_id', $agency_id) : $query;
     }
 
 
@@ -129,9 +145,9 @@ class Inspection extends Model implements FilteringInterface
         return $this->belongsTo(Crew::class);
     }
 
-    public function inspector()
+    public function agency()
     {
-        return $this->belongsTo(Inspector::class);
+        return $this->belongsTo(Agency::class)->withTrashed();
     }
 
 

@@ -23,9 +23,7 @@
             @foreach($agencies as $agency)
             <tr>
                 <td style="width:1%">
-                    <x-tooltip title="{{ ucfirst($agency->active_status) }}">
-                        <x-indicator-on-off :toggle="$agency->isActive()" />
-                    </x-tooltip>
+                    <x-custom.indicator-active-status :toggle="$agency->isActive()" tooltip />
                 </td>
                 <td>{{ $agency->name }}</td>
                 <td>{{ $agency->notes }}</td>

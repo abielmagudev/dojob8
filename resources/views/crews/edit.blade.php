@@ -15,18 +15,13 @@
         @include('crews._form')
         @method('put')
         <x-form-field-horizontal>
-            <div class="alert alert-warning">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" id="isActiveSwitch" type="checkbox" role="switch" name="is_active" value="1" {{ isChecked( old('is_active', $crew->is_active) == 1 ) }}>
-                    <label class="form-check-label" for="isActiveSwitch">
-                        <b>Active.</b> 
-                        <small>If it is deactivated, it cannot be used in new work orders and the members of this crew will be removed.</small>
-                    </label>
-                </div>
-            </div>
-            <x-form-feedback error="is_active" />
+            <x-custom.switch-active-status :toggle="$crew->isActive()">
+                <b class="d-block">Active.</b> 
+                <small>If it is deactivated, it cannot be used in new work orders and the members of this crew will be removed.</small>
+            </x-custom.switch-active-status>
         </x-form-field-horizontal>
         <br>
+        
         <div class="text-end">
             <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary">Back</a>
             <button class="btn btn-warning" type="submit">Update crew</button>

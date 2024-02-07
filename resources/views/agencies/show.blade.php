@@ -9,8 +9,7 @@
 @section('content')
     <x-card>
         <x-slot name="custom_title">
-            <x-indicator-on-off :toggle="$agency->isActive()" />
-            <span class="text-capitalize">{{ $agency->active_status }}</span>
+            <x-custom.indicator-active-status :toggle="$agency->isActive()" />
         </x-slot>
         <x-slot name="options">
             <a href="{{ route('agencies.edit', $agency) }}" class="btn btn-warning btn-sm">

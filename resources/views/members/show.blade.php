@@ -20,10 +20,7 @@
     <div class="col-sm">
         <x-card>
             <x-slot name="custom_title">
-                <div>
-                    <x-indicator-on-off :toggle="$member->isAvailable()" />
-                    <span class="text-capitalize">{{ $member->available_status }}</span>
-                </div>
+                <x-custom.indicator-available-status :toggle="$member->isAvailable()" />
             </x-slot>
 
             <x-slot name="options">

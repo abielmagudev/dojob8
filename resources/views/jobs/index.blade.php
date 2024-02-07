@@ -26,9 +26,7 @@
         @foreach($jobs as $job)               
         <tr>
             <td style="width:1%">
-                <x-tooltip title="{{ ucfirst($job->active_status) }}">
-                    <x-indicator-on-off :toggle="$job->isActive()" />
-                </x-tooltip>
+                <x-custom.indicator-active-status :toggle="$job->isActive()" tooltip />
             </td>
             <td>{{ $job->name }}</td>
             <td>{{ $job->description }}</td>

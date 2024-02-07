@@ -7,7 +7,7 @@ use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasContactChannelsTrait;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasPresenceStatusTrait;
+use App\Models\Kernel\Traits\HasAvailableStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +19,7 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
     use HasContactChannelsTrait;
     use HasFilteringTrait;
     use HasHookUsersTrait;
-    use HasPresenceStatusTrait;
+    use HasAvailableStatus;
     use SoftDeletes;
 
     protected $fillable = [

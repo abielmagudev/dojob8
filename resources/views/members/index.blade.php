@@ -31,7 +31,7 @@
         @foreach($members as $member)
         <tr>
             <td style="width:1%">
-                <x-tooltip title="{{ ucfirst($member->presence_status) }}">
+                <x-tooltip title="{{ ucfirst($member->available_status) }}">
                     <x-indicator-on-off :toggle="$member->isAvailable()" />
                 </x-tooltip>
             </td>

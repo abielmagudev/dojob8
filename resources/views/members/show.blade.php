@@ -22,7 +22,7 @@
             <x-slot name="custom_title">
                 <div>
                     <x-indicator-on-off :toggle="$member->isAvailable()" />
-                    <span class="text-capitalize">{{ $member->presence_status }}</span>
+                    <span class="text-capitalize">{{ $member->available_status }}</span>
                 </div>
             </x-slot>
 

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasPresenceStatusTrait;
+use App\Models\Kernel\Traits\HasActiveStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +12,7 @@ class Agency extends Model
 {
     use HasFactory;
     use HasHookUsersTrait;
-    use HasPresenceStatusTrait;
+    use HasActiveStatus;
     use SoftDeletes;
 
     protected $fillable = [

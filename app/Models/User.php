@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Kernel\FilteringInterface;
 use App\Models\Kernel\HasFilteringTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasPresenceStatusTrait;
+use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\User\UserProfiler;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +18,7 @@ class User extends Authenticatable implements FilteringInterface
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasHookUsersTrait;
-    use HasPresenceStatusTrait;
+    use HasActiveStatus;
     use HasFilteringTrait;
     use SoftDeletes;
 

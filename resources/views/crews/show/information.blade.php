@@ -7,7 +7,7 @@
 
     <p>
         <x-indicator-on-off :toggle="$crew->isActive()" />
-        <span class="text-capitalize">{{ $crew->presence_status }}</span>
+        <span class="text-capitalize">{{ $crew->active_status }}</span>
     </p>
 
     <p>

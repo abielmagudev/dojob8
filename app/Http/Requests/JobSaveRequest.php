@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Inspector;
+use App\Models\Agency;
 use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -36,7 +36,7 @@ class JobSaveRequest extends FormRequest
                 'array',
             ],
             'preconfigured_required_inspections.*' => [
-                sprintf('in:%s', Inspector::all()->pluck('id')->implode(','))
+                sprintf('in:%s', Agency::all()->pluck('id')->implode(','))
             ],
         ];
     }

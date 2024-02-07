@@ -1,12 +1,17 @@
 @extends('application')
 @section('header')
     <x-breadcrumb :items="[
-        'Agencies' => route('agencies.index')
+        'Agencies' => route('agencies.index'),
+        'Agency'
     ]" />
     <x-page-title>{{ $agency->name }}</x-page-title>
 @endsection
 @section('content')
     <x-card>
+        <x-slot name="custom_title">
+            <x-indicator-on-off :toggle="$agency->isActive()" />
+            <span class="text-capitalize">{{ $agency->active_status }}</span>
+        </x-slot>
         <x-slot name="options">
             <a href="{{ route('agencies.edit', $agency) }}" class="btn btn-warning btn-sm">
                 <i class="bi bi-pencil-fill"></i>

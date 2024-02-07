@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasPresenceStatusTrait;
+use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +13,7 @@ class Job extends Model
 {
     use HasFactory;
     use HasHookUsersTrait;
-    use HasPresenceStatusTrait;
+    use HasActiveStatus;
     use HasWorkOrdersTrait;
     use SoftDeletes;
 
@@ -40,7 +40,7 @@ class Job extends Model
     public function getInspectorsPreconfiguredAttribute()
     {
         return $this->hasPreconfiguredRequiredInspections() 
-            ? Inspector::whereIn('id', $this->preconfigured_required_inspections_array)->get()
+            ? Agency::whereIn('id', $this->preconfigured_required_inspections_array)->get()
             : collect([]);
     }
     

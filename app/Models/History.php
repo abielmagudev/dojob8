@@ -27,13 +27,13 @@ class History extends Model implements FilteringInterface
     ];
 
     public static $topics_classnames = [
+        'agencies' => Agency::class,
         'clients' => Client::class,
         'configuration' => Configuration::class,
         'contractor' => Contractor::class,
         'crews' => Crew::class,
         'extensions' => Extension::class,
         'inspections' => Inspection::class,
-        'inspector' => Inspector::class,
         'jobs' => Job::class,
         'members' => Member::class,
         'users' => User::class,

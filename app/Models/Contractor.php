@@ -6,7 +6,7 @@ use App\Models\Kernel\AuthenticatedInterface;
 use App\Models\Kernel\HasAddressTrait;
 use App\Models\Kernel\HasContactChannelsTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasPresenceStatusTrait;
+use App\Models\Kernel\Traits\HasAvailableStatus;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +19,7 @@ class Contractor extends Model implements AuthenticatedInterface
     use HasContactChannelsTrait;
     use HasFactory;
     use HasHookUsersTrait;
-    use HasPresenceStatusTrait;
+    use HasAvailableStatus;
     use HasWorkOrdersTrait;
     use SoftDeletes;
     

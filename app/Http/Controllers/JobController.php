@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\JobSaveRequest;
+use App\Models\Agency;
 use App\Models\Extension;
-use App\Models\Inspector;
 use App\Models\Job;
 
 class JobController extends Controller
@@ -23,7 +23,7 @@ class JobController extends Controller
     public function create()
     {
         return view('jobs.create', [
-            'inspectors' => Inspector::all()->sortBy('name'),
+            'agencies' => Agency::all()->sortBy('name'),
             'job' => new Job,
         ]);
     }
@@ -47,7 +47,7 @@ class JobController extends Controller
     public function edit(Job $job)
     {
         return view('jobs.edit', [
-            'inspectors' => Inspector::all()->sortBy('name'),
+            'agencies' => Agency::all()->sortBy('name'),
             'job' => $job,
         ]);
     }

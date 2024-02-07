@@ -17,17 +17,17 @@
 <x-form-field-horizontal label="Pre-configured required inspections" label-class="form-label-optional">    
     <div class="form-control {{ bsInputInvalid( $errors->has('preconfigured_required_inspections') ?? $errors->has('preconfigured_required_inspections.*') ) }} p-0">
         <x-table class="m-0">
-            @foreach($inspectors as $inspector)
-            <?php $checkbox_id = "inspector{$inspector->id}Checkbox" ?>
+            @foreach($agencies as $agency)
+            <?php $checkbox_id = "agency{$agency->id}Checkbox" ?>
             <tr>
                 <td style="width:1%" class="{{ $loop->last ? 'border-0' : '' }} bg-transparent">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="preconfigured_required_inspections[]" value="{{ $inspector->id }}" id="{{ $checkbox_id }}" {{ isChecked( in_array($inspector->id, $job->preconfigured_required_inspections_array) ) }}>
+                        <input class="form-check-input" type="checkbox" name="preconfigured_required_inspections[]" value="{{ $agency->id }}" id="{{ $checkbox_id }}" {{ isChecked( in_array($agency->id, $job->preconfigured_required_inspections_array) ) }}>
                     </div>
                 </td>
                 <td class="{{ $loop->last ? 'border-0' : '' }} bg-transparent ">
                     <label class="form-check-label" for="{{ $checkbox_id }}">
-                        {{ $inspector->name }}
+                        {{ $agency->name }}
                     </label>
                 </td>
             </tr>

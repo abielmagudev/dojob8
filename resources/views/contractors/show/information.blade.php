@@ -7,7 +7,7 @@
 
     <p>
         <x-indicator-on-off :toggle="$contractor->isAvailable()" />
-        <span class="text-capitalize">{{ $contractor->presence_status }}</span>
+        <span class="text-capitalize">{{ $contractor->available_status }}</span>
     </p>
 
     <x-small-title title="Address">

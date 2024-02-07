@@ -18,7 +18,7 @@
 
     <p>
         <x-indicator-on-off :toggle="$user->isActive()" />
-        <span class="text-capitalize">{{ $user->presence_status }}</span>
+        <span class="text-capitalize">{{ $user->active_status }}</span>
     </p>
 
     <x-small-title title="Profile">

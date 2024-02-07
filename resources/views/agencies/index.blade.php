@@ -13,6 +13,7 @@
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Notes</th>
                 <th></th>
@@ -21,6 +22,11 @@
         <tbody>
             @foreach($agencies as $agency)
             <tr>
+                <td style="width:1%">
+                    <x-tooltip title="{{ ucfirst($agency->active_status) }}">
+                        <x-indicator-on-off :toggle="$agency->isActive()" />
+                    </x-tooltip>
+                </td>
                 <td>{{ $agency->name }}</td>
                 <td>{{ $agency->notes }}</td>
                 <td class="text-end">

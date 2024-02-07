@@ -30,7 +30,7 @@ return [
         ], 
         'Agencies' => [
             'active' => request()->routeIs('agencies.*'),
-            'icon' => '<i class="bi bi-eyeglasses"></i>',
+            'icon' => '<i class="bi bi-award"></i>',
             'route' => route('agencies.index'),
             'permission' => true,
         ],

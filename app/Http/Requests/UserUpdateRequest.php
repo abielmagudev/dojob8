@@ -46,7 +46,7 @@ class UserUpdateRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'is_active' => (int) $this->has('is_active'),
+            'is_active' => (int) $this->has('active'),
         ]);
     }
 

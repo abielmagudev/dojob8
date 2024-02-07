@@ -42,7 +42,7 @@ class UserProfiler
         return self::all()[$value] ?? null;
     }
 
-    public static function find($profile, $id)
+    public static function find($id, $profile)
     {
         return ( self::getClassnameByProfile($profile) )::find($id);
     }

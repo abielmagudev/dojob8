@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UserStoreRequest extends FormRequest
 {
-    public $profile_request;
+    public $profile;
 
     public function authorize()
     {
@@ -45,7 +45,7 @@ class UserStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if(! $this->profile_request = UserProfiler::instanceProfileByRequest($this) ) {
+        if(! $this->profile = UserProfiler::find($this->id, $this->profile) ) {
             abort(404);
         }
     }
@@ -53,8 +53,8 @@ class UserStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'profile_type' => get_class($this->profile_request),
-            'profile_id' => $this->profile_request->id,
+            'profile_type' => get_class($this->profile),
+            'profile_id' => $this->profile->id,
         ]);
     }
 }

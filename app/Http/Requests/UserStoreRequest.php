@@ -53,6 +53,7 @@ class UserStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
+            'is_active' => 1,
             'profile_type' => get_class($this->profile),
             'profile_id' => $this->profile->id,
         ]);

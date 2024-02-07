@@ -28,9 +28,7 @@
         @foreach($users as $user)
         <tr>
             <td class="text-center" style="width:1%">
-                <x-tooltip title="{{ ucfirst($user->active_status) }}">
-                    <x-indicator-on-off :toggle="$user->isActive()" />
-                </x-tooltip>
+                <x-custom.indicator-active-status :toggle="$user->isActive()" tooltip/>
             </td>
             <td>{{ $user->name }}</td>
             <td class="text-capitalize text-nowrap">

@@ -11,8 +11,7 @@
 @section('content')
 <x-card title="Information">
     <x-slot name="custom_title">
-        <x-indicator-on-off :toggle="$user->isActive()" />
-        <span class="text-capitalize ms-1">{{ $user->active_status }}</span>
+        <x-custom.indicator-active-status :toggle="$user->isActive()" />
     </x-slot>
 
     <x-slot name="options">

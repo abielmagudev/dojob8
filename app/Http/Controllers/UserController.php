@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Models\Member;
 use App\Models\User;
 use App\Models\User\UserProfiler;
 use Illuminate\Http\Request;
@@ -27,7 +26,7 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        if(! $profile = UserProfiler::find($request->get('profile'), $request->get('id')) ) {
+        if(! $profile = UserProfiler::find($request->get('id'), $request->get('profile')) ) {
             abort(404);
         }
 

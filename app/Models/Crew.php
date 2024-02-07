@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasHookUsersTrait;
 use App\Models\Kernel\Traits\HasActiveStatus;
+use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Crew extends Model
 {
-    use HasFactory;
-    use HasHookUsersTrait;
     use HasActiveStatus;
+    use HasFactory;
+    use HasHookUsers;
     use HasWorkOrdersTrait;
     use SoftDeletes;
 

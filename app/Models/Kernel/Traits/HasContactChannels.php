@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Models\Kernel;
+namespace App\Models\Kernel\Traits;
 
-trait HasContactChannelsTrait
+trait HasContactChannels
 {
     public function setEmailAttribute($value)
     {

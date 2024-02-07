@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Models\Kernel;
+namespace App\Models\Kernel\Traits;
 
-use Illuminate\Http\Request;
-
-trait HasPreviousNextTrait
+trait HasPreviousNext
 {
     public function previous()
     {

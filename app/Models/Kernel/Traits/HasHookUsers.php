@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Kernel;
+namespace App\Models\Kernel\Traits;
 
 use App\Models\User;
 
-trait HasHookUsersTrait
+trait HasHookUsers
 {
     public function creator()
     {

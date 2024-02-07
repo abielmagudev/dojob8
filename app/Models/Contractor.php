@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\AuthenticatedInterface;
-use App\Models\Kernel\HasAddressTrait;
-use App\Models\Kernel\HasContactChannelsTrait;
-use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\Interfaces\Authenticable;
 use App\Models\Kernel\Traits\HasActiveStatus;
+use App\Models\Kernel\Traits\HasAddress;
+use App\Models\Kernel\Traits\HasContactChannels;
+use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Contractor extends Model implements AuthenticatedInterface
+class Contractor extends Model implements Authenticable
 {
-    use HasAddressTrait;
-    use HasContactChannelsTrait;
-    use HasFactory;
-    use HasHookUsersTrait;
     use HasActiveStatus;
+    use HasAddress;
+    use HasContactChannels;
+    use HasFactory;
+    use HasHookUsers;
     use HasWorkOrdersTrait;
     use SoftDeletes;
     

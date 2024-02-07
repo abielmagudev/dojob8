@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Models\Kernel;
+namespace App\Models\Kernel\Interfaces;
 
-interface AuthenticatedInterface
+interface Authenticable
 {
     public function getAuthenticatedNameAttribute(): string;
 }

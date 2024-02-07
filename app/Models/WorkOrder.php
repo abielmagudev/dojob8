@@ -2,25 +2,24 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\FilteringInterface;
-use App\Models\Kernel\HasFilteringTrait;
-use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasScheduledDateTrait;
-use App\Models\Kernel\HasStatusTrait;
+use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Traits\HasHookUsers;
+use App\Models\Kernel\Traits\HasScheduledDate;
+use App\Models\Kernel\Traits\HasStatus;
 use App\Models\WorkOrder\Traits\RelationshipsTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WorkOrder extends Model implements FilteringInterface
+class WorkOrder extends Model implements Filterable
 {
-    use RelationshipsTrait;
-
     use HasFactory;
-    use HasFilteringTrait;
-    use HasHookUsersTrait;
-    use HasScheduledDateTrait;
-    use HasStatusTrait;
+    use HasFiltering;
+    use HasHookUsers;
+    use HasScheduledDate;
+    use HasStatus;
+    use RelationshipsTrait;
 
     const INITIAL_STATUS = 'new';
 
@@ -100,7 +99,7 @@ class WorkOrder extends Model implements FilteringInterface
 
     // Interface
 
-    public function getInputFilterSettings(): array
+    public function getParameterFilterSettings(): array
     {
         return [
             'client' => 'filterByClient',

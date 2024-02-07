@@ -2,23 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\FilteringInterface;
-use App\Models\Kernel\HasAddressTrait;
-use App\Models\Kernel\HasContactChannelsTrait;
-use App\Models\Kernel\HasFilteringTrait;
-use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Traits\HasAddress;
+use App\Models\Kernel\Traits\HasContactChannels;
+use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-class Client extends Model implements FilteringInterface
+class Client extends Model implements Filterable
 {
-    use HasAddressTrait;
-    use HasContactChannelsTrait;
+    use HasAddress;
+    use HasContactChannels;
     use HasFactory;
-    use HasFilteringTrait;
-    use HasHookUsersTrait;
+    use HasFiltering;
+    use HasHookUsers;
     use HasWorkOrdersTrait;
     use SoftDeletes;
 
@@ -41,7 +41,7 @@ class Client extends Model implements FilteringInterface
 
     // Interface
 
-    public function getInputFilterSettings(): array
+    public function getParameterFilterSettings(): array
     {
         return [
             'search' => 'filterBySearch',

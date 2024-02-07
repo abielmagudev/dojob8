@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::with('profile')
-        ->filterByInputs( $request->all() )
+        ->filterByParameters( $request->all() )
         ->orderBy('id', $request->get('sort', 'desc'))
         ->paginate(25)
         ->appends( $request->query() );

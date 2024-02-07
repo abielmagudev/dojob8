@@ -1,14 +1,15 @@
 <?php 
 
-namespace App\Models\Kernel;
+namespace App\Models\Kernel\Traits;
 
-use Carbon\Carbon;
+/**
+ * IMPORTANT: Set "scheduled_date" in the property protect $casts to cast with Carbon::class
+ * 
+ * Carbon\Carbon::parse($this->scheduled_date)->format('Y-m-d');
+ */
 
-trait HasScheduledDateTrait
+trait HasScheduledDate
 {
-    // IMPORTANT: Set "scheduled_date" in the property protect $casts to cast with Carbon::class
-
-
     // Attributes
 
     public function getScheduledDateRawAttribute()
@@ -25,12 +26,6 @@ trait HasScheduledDateTrait
     {
         return $this->scheduled_date ? $this->scheduled_date->format('D d M, Y') : null;
     }
-
-    /**
-     *  Carbon::class
-     * 
-     *  Carbon::parse($this->scheduled_date)->format('Y-m-d');
-     */
 
 
     // Validatiors

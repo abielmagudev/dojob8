@@ -2,23 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\FilteringInterface;
-use App\Models\Kernel\HasFilteringTrait;
-use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\HasScheduledDateTrait;
-use App\Models\Kernel\HasStatusTrait;
+use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Traits\HasHookUsers;
+use App\Models\Kernel\Traits\HasScheduledDate;
+use App\Models\Kernel\Traits\HasStatus;
 use App\Models\WorkOrder\Associated\BelongWorkOrderTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Inspection extends Model implements FilteringInterface
+class Inspection extends Model implements Filterable
 {
-    use HasFactory;
-    use HasFilteringTrait;
-    use HasHookUsersTrait;
-    use HasScheduledDateTrait;
-    use HasStatusTrait;
     use BelongWorkOrderTrait;
+    use HasFactory;
+    use HasFiltering;
+    use HasHookUsers;
+    use HasScheduledDate;
+    use HasStatus;
 
     protected $fillable = [
         'scheduled_date',
@@ -49,7 +49,7 @@ class Inspection extends Model implements FilteringInterface
     
     // Interface
 
-    public function getInputFilterSettings(): array
+    public function getParameterFilterSettings(): array
     {
         return [
             'crew' => 'filterByCrew',

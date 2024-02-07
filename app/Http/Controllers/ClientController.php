@@ -11,7 +11,7 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         $clients = Client::with('work_orders')
-        ->filterByInputs( $request->all() )
+        ->filterByParameters( $request->all() )
         ->orderByDesc('id')
         ->paginate(25)
         ->appends( $request->query() );

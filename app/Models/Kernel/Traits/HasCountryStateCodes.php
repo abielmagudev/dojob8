@@ -1,11 +1,11 @@
 <?php 
 
-namespace App\Models\Kernel;
+namespace App\Models\Kernel\Traits;
 
 use App\Suppliers\CountryManager;
 use Illuminate\Support\Str;
 
-trait HasCountryStateCodesTrait
+trait HasCountryStateCodes
 {
     // Mutators
 

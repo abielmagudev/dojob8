@@ -30,7 +30,7 @@ class WorkOrderController extends Controller
         }
 
         $work_orders = WorkOrder::withBasicRelationships()
-        ->filterByInputs( $request->all() )
+        ->filterByParameters( $request->all() )
         ->orderBy( 
             $request->has('fltr') ? 'scheduled_date' : 'crew_id', 
             $request->get('sort', 'desc')

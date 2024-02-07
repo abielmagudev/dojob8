@@ -10,7 +10,7 @@ class MemberController extends Controller
 {
     public function index(Request $request)
     {
-        $members = Member::filterByInputs( $request->all() )
+        $members = Member::filterByParameters( $request->all() )
         ->orderBy('id', $request->get('sort', 'desc'))
         ->paginate(25);
 

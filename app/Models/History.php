@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\FilteringInterface;
-use App\Models\Kernel\HasFilteringTrait;
+use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Traits\HasFiltering;
 use Illuminate\Database\Eloquent\Model;
 
-class History extends Model implements FilteringInterface
+class History extends Model implements Filterable
 {
-    use HasFilteringTrait;
+    use HasFiltering;
 
     protected $table = 'history';
     
@@ -43,7 +43,7 @@ class History extends Model implements FilteringInterface
     
     // Interface
 
-    public function getInputFilterSettings(): array
+    public function getParameterFilterSettings(): array
     {
         return [
             'dates' => 'filterByCreatedBetween',

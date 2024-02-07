@@ -1,12 +1,12 @@
 <?php 
 
-namespace App\Models\Kernel;
+namespace App\Models\Kernel\Traits;
 
 use Illuminate\Support\Str;
 
-trait HasAddressTrait
+trait HasAddress
 {
-    use HasCountryStateCodesTrait;
+    use HasCountryStateCodes;
 
 
     // Mutators

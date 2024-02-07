@@ -2,24 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\AuthenticatedInterface;
-use App\Models\Kernel\FilteringInterface;
-use App\Models\Kernel\HasContactChannelsTrait;
-use App\Models\Kernel\HasFilteringTrait;
-use App\Models\Kernel\HasHookUsersTrait;
+use App\Models\Kernel\Interfaces\Authenticable;
+use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasAvailableStatus;
+use App\Models\Kernel\Traits\HasContactChannels;
+use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Traits\HasHookUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Member extends Model implements AuthenticatedInterface, FilteringInterface
+class Member extends Model implements Authenticable, Filterable
 {
-    use HasFactory;
-    
-    use HasContactChannelsTrait;
-    use HasFilteringTrait;
-    use HasHookUsersTrait;
     use HasAvailableStatus;
+    use HasContactChannels;
+    use HasFactory;
+    use HasFiltering;
+    use HasHookUsers;
     use SoftDeletes;
 
     protected $fillable = [
@@ -44,7 +43,7 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
 
     // Interface
 
-    public function getInputFilterSettings(): array
+    public function getParameterFilterSettings(): array
     {
         return [
             'status' => 'filterByAvailable',
@@ -106,14 +105,14 @@ class Member extends Model implements AuthenticatedInterface, FilteringInterface
         $this->crews()->detach();
 
         if( $this->users ) {
-            $this->users->each(fn($user) => $user->setInactive());
+            $this->users->each(fn($user) => $user->saveInactive());
         }
     }
 
     public function up()
     {
         if( $this->users ) {
-            $this->users->each(fn($user) => $user->setActive());
+            $this->users->each(fn($user) => $user->saveActive());
         }
     }
 

@@ -24,6 +24,7 @@ class ContractorFactory extends Factory
         $country = CountryManager::get('US');
 
         return [
+            'is_active' => (int) $this->faker->boolean(),
             'name' => $company_name,
             'alias' => wordInitials($company_name),
             'contact_name' => $this->faker->name,
@@ -36,7 +37,6 @@ class ContractorFactory extends Factory
             'country_code' => $country->get('code'), // $this->faker->country(),
             'zip_code' => $this->faker->postcode(),
             'notes' => $this->faker->optional()->text(),
-            'is_available' => (int) $this->faker->boolean(),
         ];
     }
 }

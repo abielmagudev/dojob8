@@ -6,7 +6,7 @@ use App\Models\Kernel\AuthenticatedInterface;
 use App\Models\Kernel\HasAddressTrait;
 use App\Models\Kernel\HasContactChannelsTrait;
 use App\Models\Kernel\HasHookUsersTrait;
-use App\Models\Kernel\Traits\HasAvailableStatus;
+use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,11 +19,12 @@ class Contractor extends Model implements AuthenticatedInterface
     use HasContactChannelsTrait;
     use HasFactory;
     use HasHookUsersTrait;
-    use HasAvailableStatus;
+    use HasActiveStatus;
     use HasWorkOrdersTrait;
     use SoftDeletes;
     
     protected $fillable = [
+        'is_active',
         'name',
         'alias',
         'contact_name',
@@ -36,7 +37,6 @@ class Contractor extends Model implements AuthenticatedInterface
         'country_code',
         'zip_code',
         'notes',
-        'is_available',
     ];
 
 
@@ -56,9 +56,22 @@ class Contractor extends Model implements AuthenticatedInterface
     }
 
 
+    // Actions
+
+    public function down()
+    {
+        $this->users->each(fn($user) => $user->saveInactive());
+    }
+
+    public function up()
+    {
+        $this->users->each(fn($user) => $user->saveActive());
+    }
+
+
     // Relationships
 
-    public function user()
+    public function users()
     {
         return $this->morphMany(User::class, 'profile');
     }

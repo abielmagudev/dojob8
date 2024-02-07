@@ -1,14 +1,13 @@
-<x-card title="Information" class="h-100">
-    @slot('options')
-    <a href="{{ route('contractors.edit', $contractor) }}" class="btn btn-warning">
-        <i class="bi bi-pencil-fill"></i>
-    </a>
-    @endslot
+<x-card class="h-100">
+    <x-slot name="custom_title">
+        <x-custom.indicator-active-status :toggle="$contractor->isActive()" />
+    </x-slot>
 
-    <p>
-        <x-indicator-on-off :toggle="$contractor->isAvailable()" />
-        <span class="text-capitalize">{{ $contractor->available_status }}</span>
-    </p>
+    <x-slot name="options">
+        <a href="{{ route('contractors.edit', $contractor) }}" class="btn btn-warning">
+            <i class="bi bi-pencil-fill"></i>
+        </a>
+    </x-slot>
 
     <x-small-title title="Address">
         @include('contractors.__.address')

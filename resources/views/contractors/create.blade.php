@@ -13,9 +13,10 @@
     <form action="{{ route('contractors.store') }}" method="post" autocomplete="off">
         @include('contractors._form')
         <br>
+
         <div class="text-end">
+            <a href="{{ route('contractors.index') }}" class="btn btn-outline-primary">Cancel</a>
             <button type="submit" class="btn btn-success">Create contractor</button>
-            <a href="{{ route('contractors.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

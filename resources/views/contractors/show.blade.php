@@ -5,7 +5,9 @@
     'Contractors' => route('contractors.index'),
     'Contractor',
 ]" />
-<x-page-title>{{ $contractor->name }} ({{ $contractor->alias }})</x-page-title>
+<x-page-title>
+    {{ $contractor->name }} ({{ $contractor->alias }})
+</x-page-title>
 @endsection
 
 @section('content')

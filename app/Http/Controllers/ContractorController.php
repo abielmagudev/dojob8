@@ -47,6 +47,12 @@ class ContractorController extends Controller
             return back()->with('danger', 'Error updating contractor, try again please');
         }
 
+        if( $contractor->isActive() ) {
+            $contractor->up();
+        } else {
+            $contractor->down();
+        }
+
         return redirect()->route('contractors.edit', $contractor)->with('success', "You updated the contractor <b>{$contractor->name}</b>");
     }
 

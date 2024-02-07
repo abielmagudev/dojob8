@@ -14,19 +14,17 @@
     <form action="{{ route('contractors.update', $contractor) }}" method="post" autocomplete="off">
         @method('put')
         @include('contractors._form')
-        <x-form-field-horizontal for="availableSwitch">
-            <div class="alert alert-warning">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="availableSwitch" name="available" value="1" {{ isChecked( $contractor->isAvailable() ) }}>
-                    <label class="form-check-label" for="availableSwitch">Available</label>
-                    <small class="d-block">If you deactivate this option, you will not be able to use this contractor for new orders and all of his user accounts will also be deactivated.</small>
-                </div>
-            </div>
+        <x-form-field-horizontal>
+            <x-custom.switch-active-status :toggle="$contractor->isActive()">
+                <b>Active</b>
+                <small class="d-block">If you deactivate this option, you will not be able to use this contractor for new orders and all of his user accounts will also be deactivated.</small>
+            </x-custom.switch-active-status>
         </x-form-field-horizontal>
         <br>
+
         <div class="text-end">
+            <a href="{{ route('contractors.show', $contractor) }}" class="btn btn-outline-primary">Cancel</a>
             <button type="submit" class="btn btn-warning">Update contractor</button>
-            <a href="{{ route('contractors.show', $contractor) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $contractors->total() }} contractors">
+<x-card title="{{ $contractors->total() }}">
     <x-slot name="options">
         <a href="{{ route('contractors.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i>
@@ -26,9 +26,7 @@
         @foreach($contractors as $contractor)
         <tr>
             <td class="text-center">
-                <x-tooltip title="{{ ucfirst($contractor->available_status) }}">
-                    <x-indicator-on-off :toggle="$contractor->isAvailable()" />
-                </x-tooltip>
+                <x-custom.indicator-active-status :toggle="$contractor->isActive()" tooltip />
             </td>
             <td class="text-nowrap">{{ $contractor->name }} ({{ $contractor->alias }})</td>
             <td class="text-nowrap">{{ $contractor->contact_name }}</td>

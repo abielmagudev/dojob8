@@ -110,7 +110,7 @@ class ContractorSaveRequest extends FormRequest
         }
 
         return array_merge(parent::validated(), [
-            'is_available' => $this->has('available') ? 1 : 0,
+            'is_active' => (int) $this->has('active'),
         ]);
     }
 }

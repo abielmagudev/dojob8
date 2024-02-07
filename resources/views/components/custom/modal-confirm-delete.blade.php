@@ -12,8 +12,8 @@
         <form action="{{ $attributes->get('route') }}" method="post" id='formConfirmDelete'>
             @csrf
             @method('delete')
-            <button class="btn btn-outline-danger" type="submit" form="formConfirmDelete">Yes, delete {{ $attributes->get('concept') }}</button>
             <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-outline-danger" type="submit" form="formConfirmDelete">Yes, delete {{ $attributes->get('concept') }}</button>
         </form>
     </div>
 </x-modal>

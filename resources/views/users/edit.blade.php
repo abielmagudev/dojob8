@@ -35,8 +35,8 @@
 
         <br>
         <div class="text-end">
+            <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">Cancel</a>
             <button class="btn btn-warning" type="submit">Update user</button>
-            <a href="{{ route('users.show', $user) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>    

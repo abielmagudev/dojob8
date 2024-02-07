@@ -10,20 +10,20 @@
 
 @section('content')
 <x-card title="Information">
+    <x-slot name="custom_title">
+        <x-indicator-on-off :toggle="$user->isActive()" />
+        <span class="text-capitalize ms-1">{{ $user->active_status }}</span>
+    </x-slot>
+
     <x-slot name="options">
         <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">
             <i class="bi bi-pencil-fill"></i>
         </a>
     </x-slot>
 
-    <p>
-        <x-indicator-on-off :toggle="$user->isActive()" />
-        <span class="text-capitalize">{{ $user->active_status }}</span>
-    </p>
-
     <x-small-title title="Profile">
         <span class="d-block">{{ $user->profile->authenticated_name }}</span>
-        <span class="text-capitalize text-secondary">{{ $user->profiled }}</span>
+        <span class="text-capitalize">{{ $user->profiled }}</span>
     </x-small-title>
 
     <x-small-title title="Email">

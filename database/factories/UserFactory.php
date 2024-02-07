@@ -16,16 +16,16 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
+            'is_active' => (int) $this->faker->boolean(),
             'name' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'profile_type' => $this->faker->randomElement( UserProfiler::classnames() ),
             'profile_id' => $this->faker->numberBetween(1, 10),
-            'is_active' => (int) $this->faker->boolean(),
-            'last_session_ip' => $this->faker->optional()->ipv4(),
+            'last_session_at' => $this->faker->dateTime(),
             'last_session_device' => $this->faker->optional()->randomElement(['desktop','mobile','tablet']),
-            'last_session_at' => $this->faker->optional()->dateTime(),
+            'last_session_ip' => $this->faker->optional()->ipv4(),
             'remember_token' => Str::random(10),
         ];
     }

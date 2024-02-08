@@ -11,11 +11,13 @@
 @section('content')
 <x-card title="New job">
     <form action="{{ route('jobs.store') }}" method="post" autocomplete="off">
+        @csrf
         @include('jobs._form')
         <br>
+        
         <div class="text-end">
+            <a href="{{ route('jobs.index') }}" class="btn btn-outline-primary">Cancel</a>
             <button type="submit" class="btn btn-success">Create job</button>
-            <a href="{{ route('jobs.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

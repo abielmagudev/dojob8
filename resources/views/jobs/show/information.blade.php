@@ -13,13 +13,13 @@
         {{ $job->description }}
     </x-small-title>
 
-    <x-small-title title="Successful inspections required">
-        {{ $job->successful_inspections_required }}
+    <x-small-title title="Approved inspections required">
+        {{ $job->approved_inspections_required_count }}
     </x-small-title>
 
-    <x-small-title title="Preconfigured inspections required">
-    @if( $job->hasPreconfiguredRequiredInspections() )           
-        @foreach($job->inspectors_preconfigured as $agency)
+    <x-small-title title="Agencies to generate inspections">
+    @if( $job->hasAgenciesToGenerateInspections() )           
+        @foreach($job->agenciesToGenerateInspections() as $agency)
         <span class="badge border">
             <a href="{{ route('agencies.show', $agency) }}" class="text-decoration-none">{{ $agency->name }}</a>
         </span>

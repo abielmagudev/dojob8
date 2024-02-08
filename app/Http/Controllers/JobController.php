@@ -11,7 +11,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Job::with('work_orders')
+        $jobs = Job::with('incomplete_work_orders')
         ->withCount('extensions')
         ->orderBy('name')
         ->paginate(25);

@@ -13,24 +13,20 @@
 <x-card title="Edit job">
     <form action="{{ route('jobs.update', $job) }}" method="post" autocomplete="off">
         @method('put')
+        @csrf
         @include('jobs._form')
-        <x-form-field-horizontal for="activeSwitch">
-            <div class="alert alert-warning">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="activeSwitch" name="active" value="1" {{ isChecked( $job->isActive() ) }}>
-                    <label class="form-check-label" for="activeSwitch">
-                        <b>Active.</b>
-                        <small>If you deactivate this option, you will not be able to use this job in new orders.</small>
-                    </label>
-                </div> 
-            </div>
+        <x-form-field-horizontal>
+            <x-custom.switch-active-status :toggle="$job->isActive()">
+                <b class="d-block">Active.</b>
+                <small>If you deactivate this option, you will not be able to use this job in new work orders.</small>
+            </x-custom.switch-active-status>
             <x-form-feedback error="active" />
         </x-form-field-horizontal>
         <br>
 
         <div class="text-end">
+            <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary">Back</a>
             <button type="submit" class="btn btn-warning">Update job</button>
-            <a href="{{ route('jobs.show', $job) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

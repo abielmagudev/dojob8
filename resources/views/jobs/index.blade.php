@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $jobs->total() }} jobs">
+<x-card title="{{ $jobs->total() }}">
     <x-slot name="options">
         <a href="{{ route('jobs.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i>
@@ -18,7 +18,7 @@
                 <th></th>
                 <th>Name</th>
                 <th>Description</th>
-                <th class="text-nowrap">Inspections required</th>
+                <th class="text-nowrap">Approved inspections required</th>
                 <th>Extensions</th>
                 <th></th>
             </tr>
@@ -30,7 +30,7 @@
             </td>
             <td>{{ $job->name }}</td>
             <td>{{ $job->description }}</td>
-            <td class="text-center">{{ $job->successful_inspections_required }}</td>
+            <td class="text-center">{{ $job->approved_inspections_required_count }}</td>
             <td class="text-center">{{ $job->extensions_count }}</td>
             <td class="text-nowrap text-end">
                 @includeWhen($job->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [

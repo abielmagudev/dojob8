@@ -18,30 +18,23 @@ class Job extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'is_active',
         'name',
         'description',
-        'successful_inspections_required',
-        'preconfigured_required_inspections',
-        'is_active',
+        'approved_inspections_required_count',
+        'agencies_generate_inspections_json',
     ];
 
 
     // Attributes
 
-    public function getPreconfiguredRequiredInspectionsArrayAttribute()
+    public function getAgenciesGenerateInspectionsArrayAttribute()
     {
-        if( is_null($this->preconfigured_required_inspections) ) {
+        if( is_null($this->agencies_generate_inspections_json) ) {
             return array();
         }
 
-        return json_decode($this->preconfigured_required_inspections); // (json_last_error() == JSON_ERROR_NONE)
-    }
-
-    public function getInspectorsPreconfiguredAttribute()
-    {
-        return $this->hasPreconfiguredRequiredInspections() 
-            ? Agency::whereIn('id', $this->preconfigured_required_inspections_array)->get()
-            : collect([]);
+        return json_decode($this->agencies_generate_inspections_json); // (json_last_error() == JSON_ERROR_NONE)
     }
     
 
@@ -49,17 +42,30 @@ class Job extends Model
     
     public function hasExtensions(): bool
     {
-        return (bool) ($this->extensions_count ?? $this->extensions->count());
+        return (bool) $this->extensions_count || $this->extensions->count();
     }
 
-    public function hasPreconfiguredRequiredInspections(): bool
+    public function requiresApprovedInspections(): bool
     {
-        return (bool) count($this->preconfigured_required_inspections_array);
+        return (bool) $this->approved_inspections_required_count;
     }
 
-    public function requiresSuccessfulInspections()
+    public function hasAgenciesToGenerateInspections(): bool
     {
-        return (bool) $this->successful_inspections_required;
+        return (bool) count($this->agencies_generate_inspections_array);
+    }
+
+    public function hasAgencyToGenerateInspections($agency_id): bool
+    {
+        return in_array($agency_id, $this->agencies_generate_inspections_array);
+    }
+
+
+    // Actions
+
+    public function agenciesToGenerateInspections()
+    {
+        return Agency::whereIn('id', $this->agencies_generate_inspections_array)->get();
     }
 
 

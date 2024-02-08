@@ -23,10 +23,6 @@
             content: "(Optional)";
             margin-left: 0.1rem;
         }
-        .last-tr-borderless > tbody > tr:last-child > td,
-        .last-tr-borderless > tr:last-child > td {
-            border: none !important;
-        }
     </style>
 </head>
 <body class="bg-body-secondary">

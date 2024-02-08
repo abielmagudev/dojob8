@@ -25,7 +25,7 @@
                 @endisset
 
                 @isset($dropoptions)              
-                <div class="{{ $attributes->get('dropoptions-class', '') }}">
+                <div class="{{ $attributes->get('dropoptions-class', '') }} ms-3">
                     <div class="dropdown dropdown-menu-end">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-three-dots-vertical"></i>

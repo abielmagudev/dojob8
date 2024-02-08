@@ -18,7 +18,7 @@
 
     {{-- Center --}}
     <div class="d-none d-md-inline-block">
-      @include('application.search')
+      @include('components.application.search')
     </div>
 
     {{-- Right --}}

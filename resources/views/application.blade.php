@@ -31,8 +31,8 @@
 </head>
 <body class="bg-body-secondary">
 
-    @include('application.sidebar-canvas')
-    @include('application.topbar')
+    @include('components.application.sidebar-canvas')
+    @include('components.application.navbar')
 
     <div class="container-fluid" id="main">
         <header>
@@ -42,7 +42,7 @@
 
         @yield('after-header')
 
-        @include('application.message')
+        @include('components.application.message')
 
         @yield('content')
     </div>
@@ -52,8 +52,8 @@
     <br>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    @include('application.scripts.bs-components')
-    @include('application.scripts.bs-custom')
+    @include('components.application.scripts.bs-components')
+    @include('components.application.scripts.bs-custom')
     @stack('scripts')
 </body>
 </html>

@@ -28,7 +28,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         $configuration = Configuration::first();
 
-        View::composer('application.sidebar-canvas', function($view) use ($configuration) {
+        View::composer('components.application.sidebar-canvas', function($view) use ($configuration) {
             $view->with('configuration', $configuration);
         });
 

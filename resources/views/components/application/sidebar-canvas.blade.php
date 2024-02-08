@@ -1,4 +1,4 @@
-<?php $config = include( resource_path('views/application/menu.blade.php') ) ?>
+<?php $content = include( resource_path('views/components/application/menu.blade.php') ) ?>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebarMenu" aria-labelledby="offcanvasSidebarMenuLabel">
     <div class="offcanvas-header">
@@ -16,10 +16,10 @@
 
         <div class="d-block d-md-none mb-3">
             <hr>
-            @include('application.search')
+            @include('components.application.search')
         </div>
         
-        @foreach($config as $header => $menu)
+        @foreach($content as $header => $menu)
         <div class="mb-3">
 
             <small class="text-uppercase text-secondary fw-light">{{ $header }}</small>

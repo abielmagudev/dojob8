@@ -5,12 +5,12 @@ namespace App\Models\WorkOrder\Traits;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
-use App\Models\Inspector;
+use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\Member;
 use App\Models\MemberWorkOrder;
 
-trait RelationshipsTrait
+trait Relationships
 {
     public function rework()
     {
@@ -59,6 +59,6 @@ trait RelationshipsTrait
 
     public function inspections()
     {
-        return $this->hasMany(Inspector::class);
+        return $this->hasMany(Inspection::class);
     }
 }

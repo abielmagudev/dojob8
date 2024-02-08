@@ -7,7 +7,7 @@ use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
-use App\Models\WorkOrder\Traits\RelationshipsTrait;
+use App\Models\WorkOrder\Traits\Relationships;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +19,7 @@ class WorkOrder extends Model implements Filterable
     use HasHookUsers;
     use HasScheduledDate;
     use HasStatus;
-    use RelationshipsTrait;
+    use Relationships;
 
     const INITIAL_STATUS = 'new';
 

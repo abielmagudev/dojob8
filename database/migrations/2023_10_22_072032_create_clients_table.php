@@ -28,9 +28,9 @@ class CreateClientsTable extends Migration
             $table->string('zip_code')->index();
             $table->string('district_code')->nullable();
             $table->text('notes')->nullable();
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
-            $table->foreignId('deleted_by')->nullable();
+            $table->foreignId('created_by')->nullable()->index();
+            $table->foreignId('updated_by')->nullable()->index();
+            $table->foreignId('deleted_by')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
         });

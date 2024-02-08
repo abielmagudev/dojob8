@@ -21,7 +21,7 @@
         .form-label-optional::after {
             color: var(--bs-tertiary-color);
             content: "(Optional)";
-            margin-left: 0.33rem;
+            margin-left: 0.1rem;
         }
         .last-tr-borderless > tbody > tr:last-child > td,
         .last-tr-borderless > tr:last-child > td {

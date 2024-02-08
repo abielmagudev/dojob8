@@ -35,14 +35,13 @@ class Inspection extends Model implements Filterable
     ];
 
     public static $all_statuses = [
-        'pending',
-        'on hold',
-        'passed',
+        'awaiting',
+        'approved',
         'failed',
+        'pending',
     ];
 
     public static $attributes_for_pending_statuses = [
-        'scheduled',
         'scheduled_date',
     ];
 
@@ -52,8 +51,8 @@ class Inspection extends Model implements Filterable
     public function getParameterFilterSettings(): array
     {
         return [
-            'crew' => 'filterByCrew',
             'agency' => 'filterByAgency',
+            'crew' => 'filterByCrew',
             'dates' => 'filterByScheduledDateBetween',
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
@@ -74,31 +73,31 @@ class Inspection extends Model implements Filterable
         return ! empty($this->inspector_name);
     }
 
-    public function isPendingStatus()
-    {
-        return self::validateIsPendingStatus([
-            'scheduled_date' => $this->getRawOriginal('scheduled_date'),
-        ]);
-    }
-
     public function isPending()
     {
         return $this->status == 'pending';
     }
 
-    public function isOnHold()
+    public function isAwaiting()
     {
-        return $this->status == 'on hold';
+        return $this->status == 'awaiting';
     }
 
-    public function isPassed()
+    public function isApproved()
     {
-        return $this->status == 'passed';
+        return $this->status == 'approved';
     }
 
     public function isFailed()
     {
         return $this->status == 'failed';
+    }
+
+    public function qualifiesPendingStatus()
+    {
+        return self::qualifyPendingStatus([
+            'scheduled_date' => $this->getRawOriginal('scheduled_date'),
+        ]);
     }
 
 
@@ -107,21 +106,20 @@ class Inspection extends Model implements Filterable
     public function scopeWithRelationshipsForIndex($query)
     {
         return $query->with([
-            'crew',
             'agency', 
-            'work_order.job', 
+            'crew',
             'work_order.client',
+            'work_order.job', 
         ]);
     }
 
     public function scopeOnlyInspectorNames($query)
     {
-        return $query
-                ->select('inspector_name')
-                ->distinct()
-                ->get()
-                ->pluck('inspector_name')
-                ->filter();
+        return $query->select('inspector_name')
+                     ->distinct()
+                     ->get()
+                     ->pluck('inspector_name')
+                     ->filter();
     }
 
 
@@ -163,12 +161,12 @@ class Inspection extends Model implements Filterable
         return self::allStatuses()->reject(fn($status) => $status == 'pending');
     }
 
-    public static function validateIsPendingStatus(array $values)
+    public static function qualifyPendingStatus(array $values)
     {
-        return ! empty( 
-            array_filter($values, function ($value, $key) {
-                return in_array($key, self::$attributes_for_pending_statuses) && empty($value);
-            }, ARRAY_FILTER_USE_BOTH)
-        );
+        $result = array_filter($values, function ($value, $key) {
+            return in_array($key, self::$attributes_for_pending_statuses) && empty($value);
+        }, ARRAY_FILTER_USE_BOTH);
+
+        return count($result) > 0;
     }
 }

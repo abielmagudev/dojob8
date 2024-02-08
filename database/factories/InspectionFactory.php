@@ -16,7 +16,7 @@ class InspectionFactory extends Factory
     {        
         $attributes = [
             'scheduled_date' => $this->faker->optional()->dateTimeBetween('-1 years'),
-            'crew_id' => $this->faker->optional()->numberBetween(1, 10),
+            // 'crew_id' => $this->faker->optional()->numberBetween(1, 10),
         ];
 
         return [
@@ -24,9 +24,9 @@ class InspectionFactory extends Factory
             'observations' => $this->faker->optional()->sentences(3, true),
             'inspector_name' => $this->faker->optional()->name(),
             'agency_id' => $this->faker->numberBetween(1, 3),
-            'crew_id' => $attributes['crew_id'],
+            'crew_id' => $this->faker->optional()->numberBetween(1, 10),
             'work_order_id' => $this->faker->numberBetween(1, 500),
-            'status' => ! Inspection::validateIsPendingStatus($attributes) 
+            'status' => ! Inspection::qualifyPendingStatus($attributes) 
                         ? $this->faker->randomElement( Inspection::allStatusesForm()->toArray() )
                         : 'pending',
         ];

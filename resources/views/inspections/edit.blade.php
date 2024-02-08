@@ -5,7 +5,6 @@
     'Inspections' => route('inspections.index'),
     'Edit'
     ]" />
-{{-- sprintf('#%s', $inspection->id) => route('inspections.show', $inspection), --}}
 <x-page-title>
     Inspection #{{ $inspection->id }}
     @slot('subtitle')
@@ -21,13 +20,14 @@
 @section('content')
 <x-card title="Edit inspection">
     <form action="{{ route('inspections.update', $inspection) }}" method="post" autocomplete="off">
-        @include('inspections._form')
         @method('put')
+        @csrf
+        @include('inspections._form')
         <br>
 
         <div class="text-end">
+            <a href="{{ $url_back }}" class="btn btn-outline-primary me-1">Back</a>
             <button class="btn btn-warning" type="submit">Update inspection</button>
-            <a href="{{ $url_back }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

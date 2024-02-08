@@ -15,7 +15,8 @@ class InspectionController extends Controller
 {
     public function index(Request $request)
     {
-        if( count($request->all()) == 0 ) {
+        if( empty($request->all()) )
+        {
             $request->merge([
                 'scheduled_date' => now()->toDateString(),
             ]);
@@ -37,9 +38,9 @@ class InspectionController extends Controller
                 'count' => Inspection::where('status', 'pending')->get()->count(),
                 'url' => InspectionUrlGenerator::pending(),
             ],
-            'on_hold_inspections' => [
-                'count' => Inspection::where('status', 'on hold')->get()->count(),
-                'url' => InspectionUrlGenerator::onHold(),
+            'awaiting_inspections' => [
+                'count' => Inspection::where('status', 'awaiting')->get()->count(),
+                'url' => InspectionUrlGenerator::awaiting(),
             ],
         ]);
     }
@@ -90,8 +91,8 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error updating inspection, try again please');
         }
 
-        if( $inspection->isPassed() ) {
-            $inspection->work_order->changesToInspectedStatus();
+        if( $inspection->isApproved() ) {
+            // $inspection->work_order->changesToInspectedStatus();
         }
 
         return redirect()->route('inspections.edit', $inspection)->with('success', "You updated inspection <b>{$inspection->id}</b>");

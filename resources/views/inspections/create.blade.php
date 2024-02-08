@@ -20,13 +20,14 @@
 @section('content')
 <x-card title="New inspection">
     <form action="{{ route('inspections.store') }}" method="post" autocomplete="off">
+        @csrf
         @include('inspections._form')
         <input type="hidden" name="work_order" value="{{ $work_order->id }}">
         <br>
 
         <div class="text-end">
+            <a href="{{ route('work-orders.show', [$work_order, 'tab' => 'inspections']) }}" class="btn btn-outline-primary">Cancel</a>
             <button class="btn btn-success" type="submit">Create inspection</button>
-            <a href="{{ route('work-orders.show', [$work_order, 'tab' => 'inspections']) }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 </x-card>

@@ -2,10 +2,10 @@
     'failed' => [
         'class' => 'text-bg-danger',
     ],
-    'on hold' => [
+    'awaiting' => [
         'class' => 'text-bg-primary',
     ],
-    'passed' => [
+    'approved' => [
         'class' => 'text-bg-success',
     ],
     'pending' => [

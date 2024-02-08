@@ -22,10 +22,10 @@
                 </a>
             </li>
             <li>
-                <a class="dropdown-item" href="{{ $on_hold_inspections['url'] }}">
+                <a class="dropdown-item" href="{{ $awaiting_inspections['url'] }}">
                     <i class="bi bi-alarm"></i>
-                    <span class=" mx-1">On hold</span>
-                    <span class="badge text-bg-primary">{{ $on_hold_inspections['count'] }}</span>
+                    <span class=" mx-1">Awaiting</span>
+                    <span class="badge text-bg-primary">{{ $awaiting_inspections['count'] }}</span>
                 </a>
             </li>
             <li>

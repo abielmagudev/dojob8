@@ -52,21 +52,13 @@ class InspectionStoreRequest extends FormRequest
         ];
     }
 
-    public function prepareForValidation()
-    {
-        if( Inspection::validateIsPendingStatus( $this->only(['scheduled_date', 'crew']) ) ) {
-            $this->merge([
-                'status' => 'pending',
-            ]);
-        }
-    }
-
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'inspector_name' => Str::title($this->inspector_name),
-            'crew_id' => $this->crew,
             'agency_id' => $this->agency,
+            'crew_id' => $this->crew,
+            'inspector_name' => Str::title($this->inspector_name),
+            'status' => Inspection::qualifyPendingStatus( $this->all() ) ? 'pending' : $this->get('status'),
             'work_order_id' => $this->work_order,
         ]);
     }

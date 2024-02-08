@@ -20,17 +20,17 @@ class InspectionUrlGenerator
         ]));
     }
 
-    public static function onHold(array $parameters = [])
+    public static function awaiting(array $parameters = [])
     {
         return route('inspections.index', array_merge($parameters, [
-            'status_group' => ['on hold']
+            'status_group' => ['awaiting']
         ]));
     }
 
-    public static function pendingAndOnHold(array $parameters = [])
+    public static function pendingAndAwaiting(array $parameters = [])
     {
         return route('inspections.index', array_merge($parameters, [
-            'status_group' => ['pending', 'on hold']
+            'status_group' => ['pending', 'awaiting']
         ]));
     }
 }

@@ -3,53 +3,57 @@
 namespace App\Observers;
 
 use App\Models\Agency;
+use App\Models\History;
 use App\Observers\Kernel\HasObserverConstructor;
-use App\Observers\Kernel\HookUserSetters;
 
 class AgencyObserver
 {
     use HasObserverConstructor;
-    use HookUserSetters;
-
-    public function creating(Agency $agency)
-    {
-        $this->creatingBy($agency, mt_rand(1, 10));
-        $this->updatingBy($agency, mt_rand(1, 10));
-    }
 
     public function created(Agency $agency)
     {
-        //
-    }
+        Agency::withoutEvents(function() use ($agency) {
+            $agency->updateCreatorUpdater();
+        });
 
-    public function updating(Agency $agency)
-    {
-        $this->updatingBy($agency, mt_rand(1, 10));
+        History::create([
+            'description' => sprintf("The <em>{$agency->name}</em> agency was created."),
+            'link' => route('agencies.show', $agency),
+            'model_type' => Agency::class,
+            'model_id' => $agency->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
-
 
     public function updated(Agency $agency)
     {
-        //
+        Agency::withoutEvents(function() use ($agency) {
+            $agency->updateUpdater();
+        });
+
+        History::create([
+            'description' => sprintf("The <em>{$agency->name}</em> agency was updated."),
+            'link' => route('agencies.show', $agency),
+            'model_type' => Agency::class,
+            'model_id' => $agency->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 
     public function deleting(Agency $agency)
     {
-        $this->deletingBy($agency, mt_rand(1, 10));
+        Agency::withoutEvents(function() use ($agency) {
+            $agency->updateDeleter();
+        });
     }
 
     public function deleted(Agency $agency)
     {
-
-    }
-
-    public function restored(Agency $agency)
-    {
-        //
-    }
-
-    public function forceDeleted(Agency $agency)
-    {
-        //
+        History::create([
+            'description' => sprintf("The <em>{$agency->name}</em> agency was deleted."),
+            'model_type' => Agency::class,
+            'model_id' => $agency->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 }

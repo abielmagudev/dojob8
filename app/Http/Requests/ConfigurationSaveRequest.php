@@ -54,9 +54,10 @@ class ConfigurationSaveRequest extends FormRequest
 
     public function validated()
     {
-        $validated = parent::validated();
-        $validated['city_name'] = Str::title( $validated['city_name'] );
+        $validated = array_merge(parent::validated(), [
+            'city_name' => Str::title( $this->get('city_name') ),
+        ]);
 
-        return $validated;
+        return ['data_json' => json_encode($validated)];
     }
 }

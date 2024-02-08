@@ -2,53 +2,58 @@
 
 namespace App\Observers;
 
+use App\Models\History;
 use App\Models\Job;
 use App\Observers\Kernel\HasObserverConstructor;
-use App\Observers\Kernel\HookUserSetters;
 
 class JobObserver
 {
     use HasObserverConstructor;
-    use HookUserSetters;
-
-    public function creating(Job $job)
-    {
-        $this->creatingBy($job, mt_rand(1,10));
-        $this->updatingBy($job, mt_rand(1,10));
-    }
 
     public function created(Job $job)
     {
-        //
-    }
+        Job::withoutEvents(function() use ($job) {
+            $job->updateCreatorUpdater();
+        });
 
-    public function updating(Job $job)
-    {
-        $this->updatingBy($job, mt_rand(1,10));
+        History::create([
+            'description' => sprintf("The <em>{$job->name}</em> job was created."),
+            'link' => route('jobs.show', $job),
+            'model_type' => Job::class,
+            'model_id' => $job->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 
     public function updated(Job $job)
     {
-        //
+        Job::withoutEvents(function() use ($job) {
+            $job->updateUpdater();
+        });
+
+        History::create([
+            'description' => sprintf("The <em>{$job->name}</em> job was updated."),
+            'link' => route('jobs.show', $job),
+            'model_type' => Job::class,
+            'model_id' => $job->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 
     public function deleting(Job $job)
     {
-        $this->deletingBy($job, mt_rand(1,10));
+        Job::withoutEvents(function() use ($job) {
+            $job->updateDeleter();
+        });
     }
 
     public function deleted(Job $job)
     {
-        //
-    }
-
-    public function restored(Job $job)
-    {
-        //
-    }
-
-    public function forceDeleted(Job $job)
-    {
-        //
+        History::create([
+            'description' => sprintf("The <em>{$job->name}</em> job was deleted."),
+            'model_type' => Job::class,
+            'model_id' => $job->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 }

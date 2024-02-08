@@ -4,11 +4,18 @@ namespace App\Observers;
 
 use App\Models\Configuration;
 use App\Models\History;
+use App\Observers\Kernel\HasObserverConstructor;
 
 class ConfigurationObserver
 {
+    use HasObserverConstructor;
+
     public function created(Configuration $configuration)
     {
+        Configuration::withoutEvents(function() use ($configuration) {
+            $configuration->updateCreatorUpdater();
+        });
+
         History::create([
             'description' => sprintf("<em>Configuration</em> was created."),
             'link' => route('configuration.index'),
@@ -20,6 +27,10 @@ class ConfigurationObserver
 
     public function updated(Configuration $configuration)
     {
+        Configuration::withoutEvents(function() use ($configuration) {
+            $configuration->updateUpdater();
+        });
+
         History::create([
             'description' => sprintf("<em>Configuration</em> was updated."),
             'link' => route('configuration.index'),

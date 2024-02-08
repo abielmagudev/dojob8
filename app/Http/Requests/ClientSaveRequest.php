@@ -83,17 +83,10 @@ class ClientSaveRequest extends FormRequest
         $this->country_state_codes = CountryManager::exists( $this->get('country_code') ) 
                                    ? CountryManager::get( $this->get('country_code') )->get('states')->keys()->implode(',')
                                    : CountryManager::default()->get('states')->keys()->implode(',');
-
     }
 
     public function validated()
     {
-        $validated = parent::validated();
-
-        if( $this->isMethod('POST') ) {
-            $validated['created_by'] = mt_rand(1, 10);
-        }
-
         return array_merge(parent::validated(), [
             'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
             'updated_by' => mt_rand(1, 10),

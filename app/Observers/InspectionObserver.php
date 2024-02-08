@@ -2,48 +2,51 @@
 
 namespace App\Observers;
 
+use App\Models\History;
 use App\Models\Inspection;
 use App\Observers\Kernel\HasObserverConstructor;
-use App\Observers\Kernel\HookUserSetters;
 
 class InspectionObserver
 {
     use HasObserverConstructor;
-    use HookUserSetters;
-
-    public function creating(Inspection $inspection)
-    {
-        $this->creatingBy($inspection, mt_rand(1, 10));
-        $this->updatingBy($inspection, mt_rand(1, 10));
-    }
 
     public function created(Inspection $inspection)
     {
-        //
-    }
+        Inspection::withoutEvents(function() use ($inspection) {
+            $inspection->updateCreatorUpdater();
+        });
 
-    public function updating(Inspection $inspection)
-    {
-        $this->updatingBy($inspection, mt_rand(1, 10));
+        History::create([
+            'description' => sprintf("The <em>{$inspection->id}</em> inspection was created."),
+            'link' => route('inspections.show', $inspection),
+            'model_type' => Inspection::class,
+            'model_id' => $inspection->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 
     public function updated(Inspection $inspection)
     {
-        //
+        Inspection::withoutEvents(function() use ($inspection) {
+            $inspection->updateUpdater();
+        });
+
+        History::create([
+            'description' => sprintf("The <em>{$inspection->id}</em> inspection was updated."),
+            'link' => route('inspections.show', $inspection),
+            'model_type' => Inspection::class,
+            'model_id' => $inspection->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 
     public function deleted(Inspection $inspection)
     {
-        // 
-    }
-
-    public function restored(Inspection $inspection)
-    {
-        //
-    }
-
-    public function forceDeleted(Inspection $inspection)
-    {
-        //
+        History::create([
+            'description' => sprintf("The <em>{$inspection->id}</em> inspection was deleted."),
+            'model_type' => Inspection::class,
+            'model_id' => $inspection->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 }

@@ -49,12 +49,12 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        Configuration::observe(ConfigurationObserver::class);
+        Agency::observe(AgencyObserver::class);
         Client::observe(ClientObserver::class);
+        Configuration::observe(ConfigurationObserver::class);
+        Contractor::observe(ContractorObserver::class);
         Crew::observe(CrewObserver::class);
         Inspection::observe(InspectionObserver::class);
-        Agency::observe(AgencyObserver::class);
-        Contractor::observe(ContractorObserver::class);
         Job::observe(JobObserver::class);
         Member::observe(MemberObserver::class);
         User::observe(UserObserver::class);

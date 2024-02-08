@@ -32,12 +32,12 @@ class History extends Model implements Filterable
         'configuration' => Configuration::class,
         'contractor' => Contractor::class,
         'crews' => Crew::class,
-        'extensions' => Extension::class,
         'inspections' => Inspection::class,
         'jobs' => Job::class,
         'members' => Member::class,
         'users' => User::class,
         'work orders' => WorkOrder::class,
+        // 'extensions' => Extension::class,
     ];
 
     

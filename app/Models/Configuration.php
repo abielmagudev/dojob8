@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\Traits\HasHookUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Configuration extends Model
 {
     use HasFactory;
+    use HasHookUsers;
 
     protected $table = 'configuration';
 

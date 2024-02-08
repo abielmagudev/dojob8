@@ -37,18 +37,8 @@ class AgencySaveRequest extends FormRequest
 
     public function validated()
     {
-        $validated = parent::validated();
-
-        $validated['is_active'] = (int) $this->filled('active');
-
-        if( $this->isMethod('POST') ) {
-            $validated['created_by'] = mt_rand(1,10);
-        }
-
-        if( $this->isMethod('PUT') || $this->isMethod('PATCH') ) {
-            $validated['updated_by'] = mt_rand(1,10);
-        }
-
-        return $validated;
+        return array_merge(parent::validated(), [
+            'is_active' => (int) $this->filled('active'),
+        ]);
     }
 }

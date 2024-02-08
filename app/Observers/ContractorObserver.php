@@ -3,52 +3,57 @@
 namespace App\Observers;
 
 use App\Models\Contractor;
+use App\Models\History;
 use App\Observers\Kernel\HasObserverConstructor;
-use App\Observers\Kernel\HookUserSetters;
 
 class ContractorObserver
 {
     use HasObserverConstructor;
-    use HookUserSetters;
-
-    public function creating(Contractor $contractor)
-    {
-        $this->creatingBy($contractor, mt_rand(1,10));
-        $this->updatingBy($contractor, mt_rand(1,10));
-    }
 
     public function created(Contractor $contractor)
     {
+        Contractor::withoutEvents(function() use ($contractor) {
+            $contractor->updateCreatorUpdater();
+        });
 
-    }
-
-    public function updating(Contractor $contractor)
-    {
-        $this->updatingBy($contractor, mt_rand(1,10));
+        History::create([
+            'description' => sprintf("The <em>{$contractor->name}</em> contractor was created."),
+            'link' => route('contractors.show', $contractor),
+            'model_type' => Contractor::class,
+            'model_id' => $contractor->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 
     public function updated(Contractor $contractor)
     {
+        Contractor::withoutEvents(function() use ($contractor) {
+            $contractor->updateUpdater();
+        });
 
+        History::create([
+            'description' => sprintf("The <em>{$contractor->name}</em> contractor was updated."),
+            'link' => route('contractors.show', $contractor),
+            'model_type' => Contractor::class,
+            'model_id' => $contractor->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 
     public function deleting(Contractor $contractor)
     {
-        $this->deletingBy($contractor, mt_rand(1,10));
+        Contractor::withoutEvents(function() use ($contractor) {
+            $contractor->updateDeleter();
+        });      
     }
 
     public function deleted(Contractor $contractor)
     {
-
-    }
-
-    public function restored(Contractor $contractor)
-    {
-        //
-    }
-
-    public function forceDeleted(Contractor $contractor)
-    {
-        //
+        History::create([
+            'description' => sprintf("The <em>{$contractor->name}</em> contractor was deleted."),
+            'model_type' => Contractor::class,
+            'model_id' => $contractor->id,
+            'user_id' => mt_rand(1,10),
+        ]);
     }
 }

@@ -22,13 +22,17 @@ class ClientObserver
 
     public function updated(Client $client)
     {
-        History::create([
-            'description' => sprintf("<em>{$client->full_name}</em> client was updated."),
-            'link' => route('clients.show', $client),
-            'model_type' => get_class($client),
-            'model_id' => $client->id,
-            'user_id' => mt_rand(1,10),
-        ]);
+        if(! $client->trashed() ) 
+        {
+            History::create([
+                'description' => sprintf("<em>{$client->full_name}</em> client was updated."),
+                'link' => route('clients.show', $client),
+                'model_type' => get_class($client),
+                'model_id' => $client->id,
+                'user_id' => mt_rand(1,10),
+            ]);
+        }
+
     }
 
     public function deleted(Client $client)

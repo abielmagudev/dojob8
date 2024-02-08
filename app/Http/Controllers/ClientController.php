@@ -57,8 +57,6 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
-        $client->fill(['deleted_by' => mt_rand(1, 10)])->save();
-
         if(! $client->delete() ) {
             return back()->with('danger', 'Error deleting client, try again please');
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\WorkOrder;
+namespace App\Http\Controllers\WorkOrderController;
 
 use App\Models\WorkOrder;
 

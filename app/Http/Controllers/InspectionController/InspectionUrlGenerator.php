@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models\Inspection;
+namespace App\Http\Controllers\InspectionController;
+
+use App\Models\Inspection;
 
 class InspectionUrlGenerator
 {

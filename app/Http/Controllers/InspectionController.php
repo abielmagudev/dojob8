@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\InspectionController\InspectionUrlGenerator;
 use App\Http\Requests\InspectionStoreRequest;
 use App\Http\Requests\InspectionUpdateRequest;
 use App\Models\Agency;
 use App\Models\Crew;
 use App\Models\Inspection;
-use App\Models\Inspection\InspectionUrlGenerator;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 

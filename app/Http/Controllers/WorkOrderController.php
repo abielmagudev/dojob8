@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
 use App\Http\Controllers\WorkOrderController\ShowAction;
+use App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator;
 use App\Http\Requests\WorkOrderStoreRequest;
 use App\Http\Requests\WorkOrderUpdateRequest;
 use App\Models\Client;
@@ -12,7 +13,6 @@ use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\WorkOrder;
-use App\Models\WorkOrder\WorkOrderUrlGenerator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;

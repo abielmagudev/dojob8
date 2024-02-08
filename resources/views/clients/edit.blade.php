@@ -16,8 +16,8 @@
         @method('put')
         <br>
         <div class="text-end">
+            <a href="{{ route('clients.show', $client) }}" class="btn btn-outline-primary">Back</a>
             <button class="btn btn-warning" type="submit">Update client</button>
-            <a href="{{ route('clients.show', $client) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

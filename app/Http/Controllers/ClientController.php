@@ -10,7 +10,7 @@ class ClientController extends Controller
 {
     public function index(Request $request)
     {
-        $clients = Client::with('work_orders')
+        $clients = Client::with('incomplete_work_orders')
         ->filterByParameters( $request->all() )
         ->orderByDesc('id')
         ->paginate(25)
@@ -32,9 +32,7 @@ class ClientController extends Controller
         if(! $client = Client::create( $request->validated() ) )
             return back()->with('danger', 'Error saving client, please try again');
 
-        $route = $request->has('after_saving') ? route('work-orders.create', $client) : route('clients.index');
-
-        return redirect($route)->with('success', "You created the client <b>{$client->full_name}</b>");
+        return redirect()->route('work-orders.create', $client)->with('success', "You created the client <b>{$client->full_name}</b>");
     }
 
     public function show(Client $client)

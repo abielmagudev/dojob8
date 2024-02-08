@@ -42,6 +42,10 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 // Members
 Route::resource('members', MemberController::class);
 
+// Clients
+Route::get('clients/ajax', ClientAjaxController::class)->name('clients.ajax.search');
+Route::resource('clients', ClientController::class);
+
 // Inspections
 Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
 Route::resource('inspections', InspectionController::class)->except('create');
@@ -54,10 +58,6 @@ Route::resource('extensions', ExtensionController::class)->except(['create','sto
 Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
 Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
 Route::resource('jobs', JobController::class);
-
-Route::get('clients/ajax', [ClientAjaxController::class, 'search'])->name('clients.ajax.search');
-Route::resource('clients', ClientController::class);
-
 
 Route::put('crews/members', CrewMemberController::class)->name('crews.update.members');
 Route::patch('crews/status', CrewStatusController::class)->name('crews.update.status');

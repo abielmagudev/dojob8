@@ -62,11 +62,19 @@ class Client extends Model implements Filterable
     }
 
 
-    // Attributes 
+    // Validators
 
-    public function getUrlSearchAddressGoogleMapsAttribute()
+    public function hasDistrictCode()
     {
-        $query_string = $this->address_data->only([
+        return ! is_null($this->district_code);
+    }
+
+
+    // Actions
+
+    public function generateUrlGoogleMaps()
+    {
+        $query = $this->address_data->only([
             'street',
             'city_name',
             'state_name',
@@ -74,15 +82,7 @@ class Client extends Model implements Filterable
             'zip_code',
         ])->implode('+');
 
-        return sprintf("https://www.google.com.mx/maps/search/%s", $query_string);
-    }
-
-
-    // Validators
-
-    public function hasDistrictCode()
-    {
-        return ! is_null($this->district_code);
+        return sprintf("https://www.google.com.mx/maps/search/%s", $query);
     }
 
     

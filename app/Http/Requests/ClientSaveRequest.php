@@ -48,7 +48,7 @@ class ClientSaveRequest extends FormRequest
             ],
             'state_code' => [
                 'required',
-                sprintf('in:%s', $this->state_codes),
+                sprintf('in:%s', $this->country_state_codes),
             ],
             'country_code' => [
                 'required',
@@ -83,19 +83,20 @@ class ClientSaveRequest extends FormRequest
         $this->country_state_codes = CountryManager::exists( $this->get('country_code') ) 
                                    ? CountryManager::get( $this->get('country_code') )->get('states')->keys()->implode(',')
                                    : CountryManager::default()->get('states')->keys()->implode(',');
+
     }
 
     public function validated()
     {
-        $data = [
-            'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
-            'updated_by' => mt_rand(1, 10),
-        ];
+        $validated = parent::validated();
 
         if( $this->isMethod('POST') ) {
-            $data['created_by'] = mt_rand(1, 10);
+            $validated['created_by'] = mt_rand(1, 10);
         }
 
-        return array_merge(parent::validated(), $data);
+        return array_merge(parent::validated(), [
+            'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
+            'updated_by' => mt_rand(1, 10),
+        ]);
     }
 }

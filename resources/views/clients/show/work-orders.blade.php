@@ -36,7 +36,6 @@
             <td>
                 @include('crews.__.flag', [
                     'crew' => $work_order->crew,
-                    'class' => 'w-100'
                 ])
             </td>
             <td class="text-nowrap">
@@ -51,7 +50,6 @@
                 @include('contractors.__.flag', [
                     'name' => $work_order->contractor->alias,
                     'tooltip' => $work_order->contractor->name,
-                    'class' => 'd-block',
                 ])
                 @endif
             </td>

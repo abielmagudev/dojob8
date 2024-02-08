@@ -20,6 +20,18 @@ return [
             'route' => route('payments.index'),
             'permission' => true,
         ],
+        'Clients' => [
+            'active' => request()->routeIs('clients.*'),
+            'icon' => '<i class="bi bi-book"></i>',
+            'permission' => true,
+            'route' => route('clients.index'),
+        ],
+        'Contractors' => [
+            'active' => request()->routeIs('contractors.*'),
+            'icon' => '<i class="bi bi-bookmark-star"></i>',
+            'permission' => true,
+            'route' => route('contractors.index'),
+        ],
     ],
     'Inspections' => [
         'Inspections' => [
@@ -61,20 +73,6 @@ return [
             'route' => route('extensions.index')
         ],
     ],
-    'Participants' => [
-        'Clients' => [
-            'active' => request()->routeIs('clients.*'),
-            'icon' => '<i class="bi bi-book"></i>',
-            'permission' => true,
-            'route' => route('clients.index'),
-        ],
-        'Contractors' => [
-            'active' => request()->routeIs('contractors.*'),
-            'icon' => '<i class="bi bi-bookmark-star"></i>',
-            'permission' => true,
-            'route' => route('contractors.index'),
-        ],
-    ],
     'Application' => [
         'Users' => [
             'active' => request()->routeIs('users.*'),
@@ -82,17 +80,17 @@ return [
             'permission' => true,
             'route' => route('users.index'),
         ],
-        'Configuration' => [
-            'active' => request()->routeIs('configuration.*'),
-            'icon' => '<i class="bi bi-gear"></i>',
-            'permission' => true,
-            'route' => route('configuration.index'),
-        ],
         'History' => [
             'active' => request()->routeIs('history.*'),
             'icon' => '<i class="bi bi-clock-history"></i>',
             'permission' => true,
             'route' => route('history.index'),
+        ],
+        'Configuration' => [
+            'active' => request()->routeIs('configuration.*'),
+            'icon' => '<i class="bi bi-gear"></i>',
+            'permission' => true,
+            'route' => route('configuration.index'),
         ],
     ],
 ];

@@ -1,6 +1,4 @@
-<?php
-
-$settings = [
+<?php $settings = [
     'pause' => [
         'class' => 'text-bg-info animate__animated animate__tada animate__infinite fst-italic',
     ],
@@ -23,9 +21,10 @@ $settings = [
     'denialed' => [
         'class' => 'text-bg-danger',
     ],
-];
-
-?>
-<span class="badge text-uppercase {{ $settings[$status]['class'] ?? '' }} {{ $class ?? '' }}" style="{{ $settings[$status]['style'] ?? '' }}">
+]; ?>
+<span 
+    class="badge text-uppercase {{ $settings[$status]['class'] ?? '' }}" 
+    style="{{ $settings[$status]['style'] ?? '' }}"
+>
     {{ $status }}
 </span>

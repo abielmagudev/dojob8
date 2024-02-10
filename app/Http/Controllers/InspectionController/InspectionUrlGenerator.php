@@ -16,21 +16,24 @@ class InspectionUrlGenerator
     public static function pending(array $parameters = [])
     {
         return route('inspections.index', array_merge($parameters, [
-            'status_group' => ['pending']
+            'status_group' => ['pending'],
+            'dates' => 'any',
         ]));
     }
 
     public static function awaiting(array $parameters = [])
     {
         return route('inspections.index', array_merge($parameters, [
-            'status_group' => ['awaiting']
+            'status_group' => ['awaiting'],
+            'dates' => 'any',
         ]));
     }
 
     public static function pendingAndAwaiting(array $parameters = [])
     {
         return route('inspections.index', array_merge($parameters, [
-            'status_group' => ['pending', 'awaiting']
+            'status_group' => ['pending', 'awaiting'],
+            'dates' => 'any',
         ]));
     }
 }

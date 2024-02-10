@@ -1,5 +1,5 @@
 <span 
-    class="{{ $attributes->get('class', 'd-inline-block') }}" 
+    class="{{ $attributes->get('class', '') }}" 
 
     data-bs-toggle="tooltip" 
     

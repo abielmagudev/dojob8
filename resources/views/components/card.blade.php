@@ -5,14 +5,17 @@
         <div class="row align-items-center">
 
             {{-- Left --}}
+            @if( isset($title) )              
             <div class="col-sm mb-3 mb-md-0">
                 <div class="{{ $attributes->get('title-class', 'fw-bold') }}">
                     {!! $title !!}
                 </div>
                 <small class="{{ $attributes->get('subtitle-class', '') }}">{{ $attributes->get('subtitle', '') }}</small>
             </div>
+            @endif
 
             {{-- Right --}}
+            @if( isset($options) || isset($dropoptions) )  
             <div class="col-sm">
                 <div class="d-flex align-items-center justify-content-between justify-content-md-end">
 
@@ -37,6 +40,7 @@
 
                 </div>
             </div>
+            @endif
         </div>
     </div>
     @endif

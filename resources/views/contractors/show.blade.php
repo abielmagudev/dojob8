@@ -1,10 +1,12 @@
 @extends('application')
 
 @section('header')
+
 <x-breadcrumb :items="[
     'Contractors' => route('contractors.index'),
     'Contractor',
 ]" />
+
 <x-page-title>
     {{ $contractor->name }} ({{ $contractor->alias }})
 </x-page-title>
@@ -21,5 +23,4 @@
     </div>
 </div>
 
-@include('contractors.show.work-orders')
 @endsection

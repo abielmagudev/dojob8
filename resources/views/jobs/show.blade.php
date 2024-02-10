@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="row mb-3">
-    <div class="col-md col-md-4 mb-3">
+    <div class="col-md mb-3">
         @include('jobs.show.information')
     </div>
 
@@ -18,7 +18,6 @@
         @include('jobs.show.extensions')
     </div>
 </div>
-@include('jobs.show.work-orders')
 
 @include('jobs.show.modal-add-extension')
 @include('jobs.show.modal-remove-extension')

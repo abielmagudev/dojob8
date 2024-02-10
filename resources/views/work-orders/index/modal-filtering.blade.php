@@ -1,4 +1,4 @@
-<x-modal id="modalWorkOrdersFilter" title="Work order filters" dialog-class="modal-dialog-scrollable" header-close footer-close>
+<x-modal id="modalWorkOrdersFilter" title="Work order filters" dialog-class="modal-dialog-scrollable" header-close>
     
     <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off" id="formWorkOrderFilters">
         @include('components.custom.input-between-dates')
@@ -11,6 +11,7 @@
     </form>
     
     @slot('footer')
+    <x-modal-button-close>Cancel</x-modal-button-close>
     <button class="btn btn-success" form="formWorkOrderFilters" name="fltr" value="on">Set filters on Work orders</button>
     @endslot
 </x-modal>

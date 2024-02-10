@@ -22,6 +22,9 @@
         </x-modal-trigger>
     </li>
     <li>
+        <hr class="dropdown-divider">
+    </li>
+    <li>
         <a href="<?= $incomplete_work_orders['url'] ?>" class="dropdown-item">
             <div class="float-end ms-3">
                 <span class="badge text-bg-warning">{{ $incomplete_work_orders['count'] }}</span>
@@ -35,7 +38,7 @@
     <li>
         <x-modal-trigger modal-id="modalWorkOrdersFilter" class="dropdown-item">
             <i class="bi bi-funnel"></i>
-            <span class="ms-1">Filters</span>
+            <span class="ms-1">More filters</span>
         </x-modal-trigger>
     </li>
     @endslot
@@ -49,12 +52,12 @@
             <th>Scheduled</th>
             @endif
 
-            <th>Priority</th>
-            <th>Crew</th>
-            <th>Contractor</th>
+            <th class="text-center">Priority</th>
+            <th class="text-center">Crew</th>
             <th>Job</th>
             <th>Client</th>
-            <th>Status</th>
+            <th class="text-center">Contractor</th>
+            <th class="text-center">Status</th>
             <th></th>
         </tr>
         @endslot
@@ -67,25 +70,15 @@
             </td>
             @endif
 
-            <td>
+            <td style="width:1%">
                 <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
             </td>
 
-            <td class="text-nowrap">
+            <td class="text-nowrap" style="width:1%">
                 @include('crews.__.flag', [
                     'crew' => $work_order->crew,
                     'class' => 'w-100',
                 ])
-            </td>
-
-            <td class="text-nowrap">
-            @if( $work_order->hasContractor() )    
-                @include('contractors.__.flag', [
-                    'name' => $work_order->contractor->alias,
-                    'tooltip' => $work_order->contractor->name,
-                    'class' => 'd-block',
-                ])
-            @endif
             </td>
             
             <td class="text-nowrap">
@@ -98,19 +91,29 @@
                 ])
             </td>
 
-            <td>
+            <td class="text-nowrap" style="width:1%">
+                @if( $work_order->hasContractor() )    
+                    @include('contractors.__.flag', [
+                        'name' => $work_order->contractor->alias,
+                        'tooltip' => $work_order->contractor->name,
+                        'class' => 'w-100',
+                    ])
+                @endif
+            </td>
+
+            <td style="width:1%">
                 @include('work-orders.__.status-flag', [
                     'status' => $work_order->status,
-                    'class' => 'd-block',
+                    'class' => 'w-100',
                 ])
             </td>
 
-            <td class="text-nowrap text-end">
+            <td class="text-nowrap text-end" style="width:1%">
                 <a href="{{ route('work-orders.edit', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
                 <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-eye-fill"></i>
+                    <span>#{{ $work_order->id }}</span>
                 </a>
             </td>
         </tr>

@@ -1,9 +1,23 @@
 <x-card>
-    <x-slot name="custom_title">
+    <x-slot name="title">
         <x-custom.indicator-active-status :toggle="$job->isActive()" />
     </x-slot>
 
     <x-slot name="options">
+        @if( $job->hasWorkOrdersWithIncompleteStatus() )                  
+        @include('work-orders.__.button-counter-incomplete', [
+            'class' => 'btn btn-outline-warning',
+            'counter' => $job->onlyIncompleteWorkOrders()->count(),
+            'parameters' => ['job' => $job->id],
+        ])
+        @endif
+
+        @include('work-orders.__.button-counter-all', [
+            'class' => 'btn btn-outline-primary',
+            'counter' => $job->work_orders->count(),
+            'parameters' => ['job' => $job->id],
+        ])
+        
         <a href="{{ route('jobs.edit', $job) }}" class="btn btn-warning">
             <i class="bi bi-pencil-fill"></i>
         </a>

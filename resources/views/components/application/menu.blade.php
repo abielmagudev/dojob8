@@ -14,12 +14,20 @@ return [
             'permission' => true,
             'route' => route('work-orders.index'),
         ],
+        'Inspections' => [
+            'active' => request()->routeIs('inspections.*'),
+            'icon' => '<i class="bi bi-clipboard-check"></i>',
+            'route' => route('inspections.index'),
+            'permission' => true,
+        ], 
         'Payments' => [
             'active' => request()->routeIs('payments.*'),
             'icon' => '<i class="bi bi-cash-coin"></i>',
             'route' => route('payments.index'),
             'permission' => true,
         ],
+    ],
+    'Third parties' => [
         'Clients' => [
             'active' => request()->routeIs('clients.*'),
             'icon' => '<i class="bi bi-book"></i>',
@@ -32,14 +40,6 @@ return [
             'permission' => true,
             'route' => route('contractors.index'),
         ],
-    ],
-    'Inspections' => [
-        'Inspections' => [
-            'active' => request()->routeIs('inspections.*'),
-            'icon' => '<i class="bi bi-clipboard-check"></i>',
-            'route' => route('inspections.index'),
-            'permission' => true,
-        ], 
         'Agencies' => [
             'active' => request()->routeIs('agencies.*'),
             'icon' => '<i class="bi bi-award"></i>',

@@ -1,4 +1,4 @@
-<x-tooltip title="{{ $tooltip }}" class="w-100">
+<x-tooltip title="{{ $tooltip }}">
     <span class="badge text-bg-dark {{ $class ?? '' }}">
         {{ $name }}
     </span>

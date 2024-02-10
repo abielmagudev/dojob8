@@ -30,8 +30,9 @@ class JobController extends Controller
 
     public function store(JobSaveRequest $request)
     {
-        if(! $job = Job::create( $request->validated() ) )
+        if(! $job = Job::create( $request->validated() ) ) {
             return back()->with('danger', 'Error creating job, please try again');
+        }
 
         return redirect()->route('jobs.show', $job)->with('success', "You created job <b>{$job->name}</b>");
     }
@@ -54,16 +55,18 @@ class JobController extends Controller
 
     public function update(JobSaveRequest $request, Job $job)
     {
-        if(! $job->fill( $request->validated() )->save() )
+        if(! $job->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating job, please try again'); 
+        }
 
         return redirect()->route('jobs.edit', $job)->with('success', "You updated job <b>{$job->name}</b>");
     }
 
     public function destroy(Job $job)
     {
-        if(! $job->delete() )
+        if(! $job->delete() ) {
             return back()->with('danger', 'Error deleting job, please try again');
+        }
 
         return redirect()->route('jobs.index')->with('success', "You deleted job <b>{$job->name}</b>");
     }

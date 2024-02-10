@@ -4,6 +4,20 @@
     </x-slot>
 
     <x-slot name="options">
+        @if( $contractor->hasWorkOrdersWithIncompleteStatus() )                  
+        @include('work-orders.__.button-counter-incomplete', [
+            'class' => 'btn btn-outline-warning',
+            'counter' => $contractor->onlyIncompleteWorkOrders()->count(),
+            'parameters' => ['contractor' => $contractor->id],
+        ])
+        @endif
+
+        @include('work-orders.__.button-counter-all', [
+            'class' => 'btn btn-outline-primary',
+            'counter' => $contractor->work_orders->count(),
+            'parameters' => ['contractor' => $contractor->id],
+        ])
+
         <a href="{{ route('contractors.edit', $contractor) }}" class="btn btn-warning">
             <i class="bi bi-pencil-fill"></i>
         </a>

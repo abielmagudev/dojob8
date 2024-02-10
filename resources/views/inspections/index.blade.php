@@ -15,14 +15,14 @@
 
         @slot('dropoptions')
             <li>
-                <a class="dropdown-item" href="{{ $pending_inspections['url'] }}">
+                <a href="{{ $pending_inspections['url'] }}" class="dropdown-item">
                     <i class="bi bi-exclamation-triangle"></i>
                     <span class=" mx-1">Pending</span>
                     <span class="badge text-bg-warning">{{ $pending_inspections['count'] }}</span>
                 </a>
             </li>
             <li>
-                <a class="dropdown-item" href="{{ $awaiting_inspections['url'] }}">
+                <a href="{{ $awaiting_inspections['url'] }}" class="dropdown-item">
                     <i class="bi bi-alarm"></i>
                     <span class=" mx-1">Awaiting</span>
                     <span class="badge text-bg-primary">{{ $awaiting_inspections['count'] }}</span>
@@ -31,7 +31,7 @@
             <li>
                 <x-modal-trigger modal-id="modalInspectionFilters" class="dropdown-item" link>
                     <i class="bi bi-funnel"></i>
-                    <span class=" mx-1">Filters</span>
+                    <span class=" mx-1">More filters</span>
                 </x-modal-trigger>
             </li>
         @endslot
@@ -41,7 +41,11 @@
             <x-slot name="thead">
                 <tr>
                     <th class="text-center">Status</th>
+
+                    @if( $request->has('dates') )
                     <th>Scheduled</th>
+                    @endif
+
                     <th>Agency</th>
                     <th>Inspector</th>
                     <th>Client</th>
@@ -60,6 +64,7 @@
                     ])
                 </td>
 
+                @if( $request->has('dates') )
                 <td class="text-nowrap">
                     @if( $inspection->hasScheduledDate() )
                     {{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}
@@ -71,6 +76,7 @@
 
                     @endif
                 </td>
+                @endif
 
                 <td class="text-nowrap">
                     {{ $inspection->agency->name }}
@@ -85,13 +91,16 @@
                 </td>
 
                 <td class="text-nowrap">
-                    {{ $inspection->work_order->job->name }}
+                    @include('work-orders.__.job-flag', [
+                        'work_order' => $inspection->work_order,
+                    ])
                 </td>
 
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center" style="width:1%">
                 @if( $inspection->hasCrew() )
                     @include('crews.__.flag', [
                         'crew' => $inspection->crew,
+                        'class' => 'w-100',
                     ])
                 @endif
                 </td>

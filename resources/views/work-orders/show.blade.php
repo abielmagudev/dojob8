@@ -8,7 +8,7 @@
 ]" />
 
 <x-page-title>
-    <span>Work order #{{ $work_order->id }}</span>
+    <span>#{{ $work_order->id }}</span>
     @if( $work_order->isNonstandard() )
     <span class="text-secondary text-capitalize fw-normal ">({{ $work_order->type }})</span>
     @endif

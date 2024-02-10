@@ -18,9 +18,41 @@ trait PaymentStatus
 
     // Scopes
 
+    public function scopeWithRelationshipsForPayments($query)
+    {
+        return $query->with([
+            'client',
+            'contractor',
+            'crew',
+            'job',
+        ]);
+    }
+
     public function scopeForPayment($query)
     {
         return $query->whereIn('status', self::getStatusesForPayment()->toArray());
+    }
+
+    public function scopeUpdatePaymentStatus($query, $value)
+    {
+        return $query->update(['payment_status' => $value]);
+    }
+
+    public function scopeUpdatePaymentStatusById($query, $value, array $values)
+    {
+        return $query->whereIn('id', $values)->updatePaymentStatus($value);
+    }
+
+
+    // Filters
+
+    public function scopeFilterByPaymentStatusGroup($query, $values)
+    {
+        if(! is_array($values) || empty($values) ) {
+            return $query;
+        }
+
+        return $query->whereIn('payment_status', $values);
     }
 
 

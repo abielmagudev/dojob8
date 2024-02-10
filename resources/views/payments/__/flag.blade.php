@@ -3,5 +3,4 @@
     'paid' => 'text-bg-success',
     'free' => 'text-bg-dark',
 ] ?>
-
 <span class="badge text-uppercase {{ $settings[$status] }}">{{ $status }}</span>

@@ -5,34 +5,48 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $work_orders->count() }} Work Orders">
+<x-card title="{{ $work_orders->total() }} Work Orders" options-class="d-flex align-items-center ">
     
     @slot('options')
-    @include('components.custom.form-scheduled-date', ['route' => route('payments.index')])
+        <div>
+            @include('components.custom.form-scheduled-date', ['route' => route('payments.index')])
+        </div>
+        
+        <div class="mx-2">
+            <x-tooltip title="Filters">
+                <x-modal-trigger modal-id="filterPaymentsModal" class="btn btn-primary">
+                    <i class="bi bi-funnel"></i>
+                </x-modal-trigger>
+            </x-tooltip>
+        </div>
+    
+        <div>
+            <x-tooltip title="Update selected">
+                <x-modal-trigger modal-id="updatePaymentsModal" class="btn btn-warning">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </x-modal-trigger>
+            </x-tooltip>
+        </div>
     @endslot
 
-    @slot('dropoptions')
-    <x-modal-trigger modal-id="updatePaymentsModal" class="dropdown-item">
-        <i class="bi bi-arrow-clockwise"></i>
-        <span>Update selected</span>
-    </x-modal-trigger>
-    <x-modal-trigger modal-id="filterPaymentsModal" class="dropdown-item">
-        <i class="bi bi-funnel"></i>
-        <span>Filters</span>
-    </x-modal-trigger>
-    @endslot
+    {{-- @slot('dropoptions')
+    @endslot --}}
 
     @if( $work_orders->count() )
-    <x-table class="align-middle">
+    <x-table class="align-top">
         @slot('thead')
         <tr>
-            <th class="text-center">Payment</th>
+            @if( $request->filled('dates') )
             <th>Scheduled</th>
-            <th class="text-nowrap">Work order</th>
+            @endif
+
+            <th>Payment</th>
+            <th></th>
+            <th>Client</th>
             <th>Job</th>
             <th class="text-center">Contractor</th>
             <th class="text-center">Status</th>
-            <th class="text-center">
+            <th>
                 <button id="selectAllButton" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-check2-square"></i>
                 </button>
@@ -42,26 +56,38 @@
 
         @foreach($work_orders as $work_order)
         <tr>
-            <td class="text-center" style="width:1%">
-                @include('payments.__.flag', ['status' => $work_order->payment_status])
-            </td>
+            @if( $request->filled('dates') )
             <td class="text-nowrap">
                 <span>{{ $work_order->scheduled_date_human }}</span>
             </td>
+            @endif
+            
+            <td class="text-center" style="width:1%">
+                @include('payments.__.flag', ['status' => $work_order->payment_status])
+            </td>
+
             <td>
-                <a href="{{ route('work-orders.show', $work_order) }}" class="me-1">#{{ $work_order->id }}</a>
+                <a href="{{ route('work-orders.show', $work_order) }}" class="badge text-bg-primary text-decoration-none w-100">{{ $work_order->id }}</a>
             </td>
+
             <td class="text-nowrap">
-                @include('work-orders.__.job-flag', ['work_order' => $work_order, 'class' => 'd-inline-block'])
+                @include('clients.__.accordion-address-contact', ['client' => $work_order->client])
             </td>
+
+            <td class="text-nowrap">
+                @include('work-orders.__.job-flag')
+            </td>
+
             <td class="text-center">
                 @if( $work_order->hasContractor() )
-                @include('contractors.__.flag', ['name' => $work_order->contractor->name, 'tooltip' => $work_order->contractor->alias])
+                @include('contractors.__.flag', ['name' => $work_order->contractor->alias, 'tooltip' => $work_order->contractor->name])
                 @endif
             </td>
+
             <td class="text-center">
                 @include('work-orders.__.status-flag', ['status' => $work_order->status])
             </td>
+
             <td class="text-center" style="width:1%">
                 <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">
             </td>

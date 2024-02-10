@@ -12,11 +12,11 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-        if( count($request->all()) == 0 ) {
-            $request->merge(['payment_status_group' => [0]]);
+        if( empty($request->all()) ) {
+            $request->merge(['payment_status_group' => ['unpaid']]);
         }
 
-        $work_orders = WorkOrder::with(['contractor','job','crew'])
+        $work_orders = WorkOrder::withRelationshipsForPayments()
         ->forPayment()
         ->filterByParameters( $request->all() )
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
@@ -34,12 +34,14 @@ class PaymentController extends Controller
 
     public function updateMany(PaymentUpdateRequest $request)
     {
-        if(! WorkOrder::whereIn('id', $request->get('work_orders'))->update(['payment_status' => $request->get('payment')]) ) {
+        if( WorkOrder::updatePaymentStatusById($request->get('payment'), $request->get('work_orders')) === false ) {
             return back()->with('danger', 'Error updating the payment of work orders, try again please');
         }
 
-        $payment_status = WorkOrder::getPaymentStatuses()->search( $request->get('payment') );
-
-        return back()->with('success', sprintf('These #%s work orders were updated with payment <b>%s</b>', implode(', #', $request->get('work_orders')), strtoupper($payment_status)) );
+        return back()->with('success', sprintf(
+            'These #%s work orders were updated with payment <b>%s</b>', 
+            implode(', #', $request->get('work_orders')), 
+            strtoupper($request->get('payment'))
+        ));
     }
 }

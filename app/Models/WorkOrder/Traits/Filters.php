@@ -14,6 +14,7 @@ trait Filters
             'crew' => 'filterByCrew', 
             'dates' => 'filterByScheduledDateBetween',
             'job' => 'filterByJob',
+            'payment_status_group' => 'filterByPaymentStatusGroup',
             'scheduled_date' => 'filterByScheduledDate',
             'search' => 'filterBySearch',
             'status_group' => 'filterByStatusGroup',

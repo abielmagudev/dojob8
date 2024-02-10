@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentUpdateRequest extends FormRequest
 {
-    public $completed_work_orders_ids = '';
+    public $work_orders_id_for_payment = '';
 
     public function authorize()
     {
@@ -27,7 +27,7 @@ class PaymentUpdateRequest extends FormRequest
                 'array',
             ],
             'work_orders.*' => [
-                sprintf('in:%s', $this->completed_work_orders_ids),
+                sprintf('in:%s', $this->work_orders_id_for_payment),
             ],
         ];
     }
@@ -45,8 +45,11 @@ class PaymentUpdateRequest extends FormRequest
     {
         if( is_array($this->get('work_orders')) &&! empty($this->get('work_orders')) )
         {
-            $work_orders = WorkOrder::whereIn('id', $this->get('work_orders'))->forPayment()->get();
-            $this->completed_work_orders_ids = $work_orders->pluck('id')->implode(',');
+            $this->work_orders_id_for_payment = WorkOrder::whereIn('id', $this->get('work_orders'))
+                                                         ->forPayment()
+                                                         ->get()
+                                                         ->pluck('id')
+                                                         ->implode(',');
         }
     }
 

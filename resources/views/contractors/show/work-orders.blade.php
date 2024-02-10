@@ -16,7 +16,7 @@
     @endslot
 
     @if( $contractor->hasWorkOrders() )
-    <x-table class="align-middle">
+    <x-table>
         <x-slot name="thead">
             <tr>
                 <th>Scheduled</th>
@@ -39,7 +39,7 @@
             </td>
             <td class="text-nowrap">{{ $work_order->job->name }}</td>
             <td class="text-nowrap">
-                @include('clients.__.inline-summary-information', ['client' => $work_order->client])
+                @include('clients.__.accordion-address-contact', ['client' => $work_order->client])
             </td>
             <td>
                 @include('work-orders.__.status-flag', [

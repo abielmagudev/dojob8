@@ -1,18 +1,16 @@
 @extends('application')
-
 @section('header')
+
 <x-breadcrumb :items="[
     'Work orders' => route('work-orders.index'),
     sprintf(' %s ', $work_order->id) => route('work-orders.show', $work_order),
     'Edit',
 ]" />
-<x-page-title>
-    Work order #{{ $work_order->id }}
-    @slot('subtitle')
-        @include('clients.__.inline-summary-information', ['client' => $work_order->client])
-        <a href="{{ route('clients.show', $client) }}" class="text-decoration-none small">See client</a>
-    @endslot
-</x-page-title>
+
+<x-page-title>Work order #{{ $work_order->id }}</x-page-title>
+
+@include('work-orders.__.inline-client', ['client' => $work_order->client])
+
 @endsection
 
 @section('content')

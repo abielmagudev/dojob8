@@ -52,7 +52,7 @@
     <x-form-feedback error="zip_code" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal for="districtCodeInput" label="District code" label-class="form-label-optional">
+<x-form-field-horizontal for="districtCodeInput" label="Council District" label-class="form-label-optional">
     <input id="districtCodeInput" type="text" class="form-control {{ bsInputInvalid($errors->has('district_code')) }}" name="district_code" value="{{ old('district_code', $client->district_code) }}">
     <x-form-feedback error="district_code" />
 </x-form-field-horizontal>

@@ -60,6 +60,7 @@ class ClientSaveRequest extends FormRequest
             ],
             'district_code' => [
                 'nullable',
+                'string',
             ],
             'notes' => [
                 'nullable',
@@ -72,6 +73,7 @@ class ClientSaveRequest extends FormRequest
     {
         return [
             'country_code.in' => __('The selected country is invalid'),
+            'district_code.string' => __('Enter a valid council district'),
             'state_code.in' => __('The selected state is invalid'),
         ];
     }

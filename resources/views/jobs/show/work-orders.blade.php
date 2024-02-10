@@ -4,7 +4,7 @@
         <em>Last 10 work orders</em>
     </p>
 
-    <x-table class="align-middle">
+    <x-table>
         @slot('thead')
         <tr>
             <th>Scheduled</th>
@@ -27,7 +27,7 @@
             @endif
             </td>
             <td>
-                @include('clients.__.inline-summary-information', ['client' => $work_order->client])
+                @include('clients.__.accordion-address-contact', ['client' => $work_order->client])
             </td>
             <td>
                 @include('work-orders.__.status-flag', ['status' => $work_order->status])

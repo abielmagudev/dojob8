@@ -41,13 +41,14 @@
     @endslot
 
     @if( $work_orders->count() ) 
-    <x-table class="align-middle">
+    <x-table>
 
         @slot('thead')
         <tr>
             @if( $request->filled('fltr') )
             <th>Scheduled</th>
             @endif
+
             <th>Priority</th>
             <th>Crew</th>
             <th>Contractor</th>
@@ -92,7 +93,7 @@
             </td>
 
             <td class="text-nowrap">
-                @include('clients.__.inline-summary-information', [
+                @include('clients.__.accordion-address-contact', [
                     'client' => $work_order->client,
                 ])
             </td>

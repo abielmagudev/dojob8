@@ -37,16 +37,16 @@
         @endslot
 
         @if( $inspections->count() )  
-        <x-table class="align-middle">
+        <x-table>
             <x-slot name="thead">
                 <tr>
-                    <th>Status</th>
+                    <th class="text-center">Status</th>
                     <th>Scheduled</th>
                     <th>Agency</th>
                     <th>Inspector</th>
-                    <th>Crew</th>
-                    <th>Job</th>
                     <th>Client</th>
+                    <th>Job</th>
+                    <th class="text-center">Crew</th>
                     <th></th>
                 </tr>
             </x-slot>
@@ -59,21 +59,43 @@
                         'class' => 'w-100',
                     ])
                 </td>
-                <td class="text-nowrap">{{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}</td>
-                <td class="text-nowrap">{{ $inspection->agency->name }}</td>
-                <td class="text-nowrap text-capitalize">{{ $inspection->inspector_name }}</td>
+
                 <td class="text-nowrap">
-                    @if( $inspection->hasCrew() )
-                        @include('crews.__.flag', [
-                            'crew' => $inspection->crew,
-                            'class' => 'w-100',
-                        ])
+                    @if( $inspection->hasScheduledDate() )
+                    {{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}
+                        
+                    @else
+                    <div class="text-center text-secondary">
+                        <b>?</b>
+                    </div>
+
                     @endif
                 </td>
-                <td class="text-nowrap">{{ $inspection->work_order->job->name }}</td>
+
                 <td class="text-nowrap">
-                    @include('clients.__.inline-summary-information', ['client' => $inspection->work_order->client])
+                    {{ $inspection->agency->name }}
                 </td>
+
+                <td class="text-nowrap text-capitalize">
+                    {{ $inspection->inspector_name }}
+                </td>
+
+                <td class="text-nowrap">
+                    @include('clients.__.accordion-address-contact', ['client' => $inspection->work_order->client])
+                </td>
+
+                <td class="text-nowrap">
+                    {{ $inspection->work_order->job->name }}
+                </td>
+
+                <td class="text-nowrap text-center">
+                @if( $inspection->hasCrew() )
+                    @include('crews.__.flag', [
+                        'crew' => $inspection->crew,
+                    ])
+                @endif
+                </td>
+
                 <td class="text-end">
                     <a href="{{ route('inspections.edit', [$inspection, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                         <i class="bi bi-pencil-fill"></i>

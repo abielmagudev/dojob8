@@ -5,19 +5,19 @@
             <span class="d-block text-uppercase small">Total</span>
         </div>
         <div class="col-sm mb-3 mb-md-0">
-            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isStatus('pending'))->count() }}</span>
+            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isPending())->count() }}</span>
             <span class="d-block text-uppercase small">Pending</span>
         </div>
         <div class="col-sm mb-3 mb-md-0">
-            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isStatus('on hold'))->count() }}</span>
-            <span class="d-block text-uppercase small">On hold</span>
+            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isAwaiting())->count() }}</span>
+            <span class="d-block text-uppercase small">Awaiting</span>
         </div>
         <div class="col-sm mb-3 mb-md-0">
-            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isStatus('passed'))->count() }}</span>
-            <span class="d-block text-uppercase small">Passed</span>
+            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isApproved())->count() }}</span>
+            <span class="d-block text-uppercase small">Approved</span>
         </div>
         <div class="col-sm mb-3 mb-md-0">
-            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isStatus('failed'))->count() }}</span>
+            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isFailed())->count() }}</span>
             <span class="d-block text-uppercase small">Failed</span>
         </div>
     </div>

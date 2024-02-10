@@ -29,13 +29,10 @@ class WorkOrderController extends Controller
             ]);
         }
 
-        $work_orders = WorkOrder::withBasicRelationships()
+        $work_orders = WorkOrder::withRelationshipsForIndex()
         ->filterByParameters( $request->all() )
-        ->orderBy( 
-            $request->has('fltr') ? 'scheduled_date' : 'crew_id', 
-            $request->get('sort', 'desc')
-        )
-        ->paginate( $request->has('fltr') ? 25 : 250 )
+        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->paginate(25)
         ->appends( $request->query() );
 
         return view('work-orders.index', [
@@ -47,28 +44,24 @@ class WorkOrderController extends Controller
             'request' => $request,
             'incomplete_work_orders' => [
                 'url' => WorkOrderUrlGenerator::incomplete(),
-                'count' => WorkOrder::incompleteStatuses()->count(),
+                'count' => WorkOrder::incomplete()->count(),
             ],
             'work_orders' => $work_orders,
         ]);
     }
 
-    public function create(Request $request, Client $client)
+    public function create(Client $client)
     {
         $this->reflashInputErrors();
 
         return view('work-orders.create', [
             'all_statuses' => WorkOrder::getAllStatuses(),
             'all_types' => WorkOrder::getAllTypes(),
-            'client' => $client->load(['work_orders.job']),
+            'client' => $client,
             'contractors' => Contractor::orderBy('name')->get(),
-            'crews' => Crew::forWorkOrders()->active()->orderBy('name', 'desc')->get(),
+            'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'jobs' => Job::with('extensions')->orderBy('name')->get(),
-            'non_default_types' => WorkOrder::getNonDefaultTypes(),
-            'non_default_types' => WorkOrder::getNonDefaultTypes(),
-            'request' => $request,
             'work_order' => new WorkOrder,
-            'url_back' => '',
         ]);
     }
 
@@ -82,11 +75,11 @@ class WorkOrderController extends Controller
             $work_order->crew->members->pluck('id')
         );
 
-        if( $work_order->job->hasPreconfiguredRequiredInspections() )
+        if( $work_order->job->hasAgenciesToGenerateInspections() )
         {
-            foreach($work_order->job->preconfigured_required_inspections_array as $inspector_id) {
+            foreach($work_order->job->agencies_generate_inspections_array as $agency_id) {
                 Inspection::create([
-                    'inspector_id' => $inspector_id,
+                    'agency_id' => $agency_id,
                     'work_order_id' => $work_order->id,
                     'status' => 'pending',
                 ]);
@@ -125,7 +118,6 @@ class WorkOrderController extends Controller
             'client' => $work_order->client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
-            'non_default_types' => WorkOrder::getNonDefaultTypes(),
             'request' => $request,
             'work_order' => $work_order,
         ]);

@@ -13,10 +13,7 @@ class WorkOrderUpdateRequest extends FormRequest
 {    
     use ResolveExtensionRequestsTrait;
 
-    public $work_order_ids_to_bind = [
-        'rework' => '',
-        'warranty' => '',
-    ];
+    public $work_order_ids_for_rectification = '';
 
     public $crew_ids = '';
 
@@ -38,11 +35,11 @@ class WorkOrderUpdateRequest extends FormRequest
             ],
             'rework' => [
                 'required_if:type,rework',
-                sprintf('in:%s', $this->work_order_ids_to_bind['rework']),
+                sprintf('in:%s', $this->work_order_ids_for_rectification),
             ],
             'warranty' => [
                 'required_if:type,warranty',
-                sprintf('in:%s', $this->work_order_ids_to_bind['warranty']),
+                sprintf('in:%s', $this->work_order_ids_for_rectification),
             ],
             'crew' => [
                 'required', 
@@ -81,21 +78,11 @@ class WorkOrderUpdateRequest extends FormRequest
     {
         $work_order = $this->route('work_order');
 
-        $this->crew_ids = Crew::forWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
+        $this->crew_ids = Crew::taskWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
 
-        if(! WorkOrder::getNonDefaultTypes()->contains( $this->get('type') ) ) {
-            return;
+        if( WorkOrder::getAllTypes()->contains($this->get('type')) && $this->get('type') <> 'standard' ) {
+            $this->work_order_ids_for_rectification = $work_order->client->onlyWorkOrdersForRectification()->pluck('id')->implode(',');
         }
-
-        $work_orders_to_bind = $this->get('type') == 'rework' 
-                            ? $work_order->client->work_orders_for_rework
-                            : $work_order->client->work_orders_for_warranty;
-
-        if( $work_order->isType( $this->get('type') ) &&! $work_orders_to_bind->contains($work_order->bound_id) ) {
-            $work_orders_to_bind->push($work_order->bound);
-        }
-
-        $this->work_order_ids_to_bind[ $this->get('type') ] = $work_orders_to_bind->pluck('id')->implode(',');
     }
 
     public function passedValidation()

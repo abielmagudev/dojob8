@@ -1,8 +1,3 @@
-@includeWhen($crew->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
-    'parameters' => ['crew' => $crew->id],
-    'counter' => $crew->incomplete_work_orders_count
-])
-
 <x-tooltip title="Add more crew members">
     <x-modal-trigger 
         modal-id="addCrewMembersModal" 

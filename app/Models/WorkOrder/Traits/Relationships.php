@@ -12,16 +12,6 @@ use App\Models\MemberWorkOrder;
 
 trait Relationships
 {
-    public function rework()
-    {
-        return $this->belongsTo(self::class, 'rework_id');
-    }
-
-    public function warranty()
-    {
-        return $this->belongsTo(self::class, 'warranty_id');
-    }
-
     public function reworks()
     {
         return $this->hasMany(self::class, 'rework_id');

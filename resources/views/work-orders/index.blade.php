@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $work_orders->total() }} work orders">
+<x-card title="{{ $work_orders->total() }}">
     @slot('options')
     <div class="d-inline-block align-middle ">
         <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off">
@@ -88,7 +88,7 @@
             </td>
             
             <td class="text-nowrap">
-                @include('work-orders.__.job-flag', ['work_order' => $work_order])
+                @include('work-orders.__.job-flag')
             </td>
 
             <td class="text-nowrap">

@@ -7,6 +7,6 @@
 @include('work-orders._form.permit-code')
 @include('work-orders._form.notes')
 
-@if( $request->filled('url_back') )
+{{-- @if( $request->filled('url_back') )
 <input type="hidden" name="url_back" value="{{ $request->get('url_back') }}">
-@endif
+@endif --}}

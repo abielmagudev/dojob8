@@ -9,7 +9,7 @@ class Reworks extends ResponseConstructor
     public function forData(): array
     {
         return [
-            'show' => $this->work_order->isDefault() ? 'reworks' : 'information',
+            'show' => $this->work_order->isStandard() ? 'reworks' : 'information',
         ];
     }
 }

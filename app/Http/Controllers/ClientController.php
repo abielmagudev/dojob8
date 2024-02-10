@@ -10,7 +10,7 @@ class ClientController extends Controller
 {
     public function index(Request $request)
     {
-        $clients = Client::with('incomplete_work_orders')
+        $clients = Client::withCount('incomplete_work_orders')
         ->filterByParameters( $request->all() )
         ->orderByDesc('id')
         ->paginate(25)

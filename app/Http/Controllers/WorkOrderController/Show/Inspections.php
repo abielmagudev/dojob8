@@ -9,6 +9,12 @@ class Inspections extends ResponseConstructor
 {
     public function forData(): array
     {
+        if(! $this->work_order->job->requiresApprovedInspections() ) {
+            return [
+                'show' => 'information'
+            ];
+        }
+
         return [
             'show' => 'inspections',
             'inspections' => Inspection::with(['agency','crew'])->where('work_order_id', $this->work_order->id)->get(),

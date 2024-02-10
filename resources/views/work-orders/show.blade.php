@@ -10,7 +10,7 @@
     @slot('subtitle')
         <div class="mb-3">
             @include('work-orders.__.status-flag', ['status' => $work_order->status])
-            @if( $work_order->isBound() )
+            @if( $work_order->isNonstandard() )
             <span class="text-secondary text-capitalize align-middle ms-1">{{ $work_order->type }}</span>
             @endif
         </div>

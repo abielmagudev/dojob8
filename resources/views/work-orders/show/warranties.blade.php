@@ -1,11 +1,9 @@
 <x-card title="{{ $work_order->warranties->count() }} warranties">
-    @if( $work_order->qualifiesForWarranty() )       
     @slot('options')
     <a href="{{ route('work-orders.create', [$work_order->client, 'type' => 'warranty', 'bind' => $work_order->id]) }}" class="btn btn-primary">
         <i class="bi bi-plus-lg"></i>
     </a>
     @endslot
-    @endif
 
     @if( $work_order->warranties->count() )
     <?php $work_order->warranties->load(['crew','contractor','job']) ?>

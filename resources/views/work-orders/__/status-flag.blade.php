@@ -1,30 +1,24 @@
 <?php
 
 $settings = [
-    'pending' => [
-        'class' => 'text-bg-warning animate__animated animate__tada animate__infinite',
+    'pause' => [
+        'class' => 'text-bg-info animate__animated animate__tada animate__infinite fst-italic',
     ],
     'new' => [
         'class' => 'text-bg-primary',
     ],
     'working' => [
-        'class' => 'fst-italic text-white animate__animated animate__pulse animate__infinite',
-        'style' => 'background-color:#FF5B2E', // Orange: FF5B2E, Purple: 712f79
+        'class' => 'text-bg-warning',
+        // 'style' => 'background-color:#FF6624', // Orange
     ],
     'done' => [
-        'class' => 'fst-italic text-bg-success animate__animated animate__pulse animate__infinite',
-    ],
-    'completed' => [
         'class' => 'text-bg-success',
     ],
-    'inspected' => [
-        'class' => 'bg-light text-success',
-    ],
-    'closed' => [
-        'class' => 'text-bg-dark',
+    'completed' => [
+        'class' => 'text-success border border-success',
     ],
     'canceled' => [
-        'class' => 'text-bg-danger',
+        'class' => 'text-danger border border-danger',
     ],
     'denialed' => [
         'class' => 'text-bg-danger',

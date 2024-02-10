@@ -17,20 +17,24 @@ class CreateWorkOrdersTable extends Migration
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
             $table->string('status')->index();
-            $table->foreignId('client_id')->index();
-            $table->foreignId('contractor_id')->nullable();
-            $table->foreignId('crew_id');
-            $table->foreignId('job_id');
-            $table->foreignId('rework_id')->nullable();
-            $table->foreignId('warranty_id')->nullable();
+            $table->string('payment_status')->nullable()->index();
+            $table->string('inspection_status')->nullable()->index();
+
             $table->date('scheduled_date')->index();
             $table->dateTime('working_at')->nullable();
             $table->dateTime('done_at')->nullable();
             $table->dateTime('completed_at')->nullable();
-            $table->dateTime('archived_at')->nullable();
+
+            $table->foreignId('rework_id')->nullable();
+            $table->foreignId('warranty_id')->nullable();
+            $table->foreignId('client_id')->index();
+            $table->foreignId('contractor_id')->nullable();
+            $table->foreignId('crew_id');
+            $table->foreignId('job_id');
+
             $table->string('permit_code')->nullable();
             $table->text('notes')->nullable();
-            $table->tinyInteger('payment')->default(0);
+
             $table->foreignId('created_by')->nullable()->index();
             $table->foreignId('updated_by')->nullable()->index();
             $table->timestamps();

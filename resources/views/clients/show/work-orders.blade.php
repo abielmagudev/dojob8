@@ -1,7 +1,7 @@
 <x-card title="Work orders" class="h-100">
     <x-slot name="options">
-        @includeWhen($client->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
-            'counter' => $client->incomplete_work_orders_count,
+        @includeWhen($client->hasWorkOrdersWithIncompleteStatus(), 'work-orders.__.button-counter-incomplete', [
+            'counter' => $client->onlyIncompleteWorkOrders()->count(),
             'parameters' => ['client' => $client->id],
             'class' => 'btn btn-warning',
         ])
@@ -41,7 +41,7 @@
             <td class="text-nowrap">
                 {{ $work_order->job->name }} 
 
-                @if(! $work_order->isDefault() )
+                @if( $work_order->isNonstandard() )
                 <em class="text-capitalize text-secondary">( {{ $work_order->type }} )</em>
                 @endif
             </td>

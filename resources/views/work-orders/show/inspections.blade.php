@@ -6,10 +6,10 @@
     @endslot
 
     <div>
-        <div class="badge text-bg-success text-uppercase">Requires {{ $work_order->job->successful_inspections_required }} Passed</div>
+        <div class="badge text-bg-success text-uppercase">Requires {{ $work_order->job->approved_inspections_required_count }} Passed</div>
         <div class="badge text-bg-warning d-none">{{ $inspections->filter(fn($i) => $i->isPending())->count() }} Pending</div>
-        <div class="badge text-bg-primary d-none">{{ $inspections->filter(fn($i) => $i->isOnHold())->count() }} On hold</div>
-        <div class="badge text-bg-success d-none">{{ $inspections->filter(fn($i) => $i->isPassed())->count() }} Passed</div>
+        <div class="badge text-bg-primary d-none">{{ $inspections->filter(fn($i) => $i->isAwaiting())->count() }} Awaiting</div>
+        <div class="badge text-bg-success d-none">{{ $inspections->filter(fn($i) => $i->isApproved())->count() }} Passed</div>
         <div class="badge text-bg-danger d-none">{{ $inspections->filter(fn($i) => $i->isFailed())->count() }} Failed</div>
         <div class="badge text-bg-secondary d-none">{{ $inspections->count() }} Total</div>
     </div>

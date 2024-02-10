@@ -9,7 +9,7 @@ class Warranties extends ResponseConstructor
     public function forData(): array
     {
         return [
-            'show' => $this->work_order->isDefault() ? 'warranties' : 'information',
+            'show' => $this->work_order->isStandard() ? 'warranties' : 'information',
         ];
     }
 }

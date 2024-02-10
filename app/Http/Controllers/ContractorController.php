@@ -11,7 +11,7 @@ class ContractorController extends Controller
     public function index()
     {
         return view('contractors.index', [
-            'contractors' => Contractor::with('work_orders')->orderBy('id', 'desc')->paginate(25),
+            'contractors' => Contractor::withCount('incomplete_work_orders')->orderBy('id', 'desc')->paginate(25),
         ]);
     }
 

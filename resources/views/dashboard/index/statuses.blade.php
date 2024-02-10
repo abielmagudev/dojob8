@@ -12,7 +12,7 @@
             @foreach($all_statuses_work_order as $status)
             <td class="fs-3 border-0" style="min-width:128px">
                 {{ $work_orders->filter(function ($wo) use ($status) {
-                    return $wo->status == $status;
+                    return $wo->isStatus($status);
                 })->count() }}
             </td>
             @endforeach

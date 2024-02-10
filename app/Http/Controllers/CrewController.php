@@ -12,7 +12,8 @@ class CrewController extends Controller
 {
     public function index(Request $request)
     {
-        $crews = Crew::with(['members', 'incomplete_work_orders'])
+        $crews = Crew::with('members')
+        ->withCount('incomplete_work_orders')
         ->orderBy('name')
         ->get();
 

@@ -7,38 +7,52 @@ use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
+use App\Models\WorkOrder\Traits\Attributes;
+use App\Models\WorkOrder\Traits\Filters;
+use App\Models\WorkOrder\Traits\InspectionStatus;
+use App\Models\WorkOrder\Traits\PaymentStatus;
 use App\Models\WorkOrder\Traits\Relationships;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\WorkOrder\Traits\Scopes;
+use App\Models\WorkOrder\Traits\Validators;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class WorkOrder extends Model implements Filterable
 {
+    use Attributes;
+    use Filters;
+    use InspectionStatus;
+    use PaymentStatus;
+    use Relationships;
+    use Scopes;
+    use Validators;
     use HasFactory;
     use HasFiltering;
     use HasHookUsers;
     use HasScheduledDate;
     use HasStatus;
-    use Relationships;
 
     const INITIAL_STATUS = 'new';
 
     protected $fillable = [
         'status',
+        'payment_status',
+        'inspection_status',
+
         'scheduled_date',
+        'working_at',
+        'done_at',
+        'completed_at',
+
         'rework_id',
         'warranty_id',
         'client_id',
         'contractor_id',
         'crew_id',
         'job_id',
-        'working_at',
-        'done_at',
-        'completed_at',
-        'archived_at',
+
         'permit_code',
         'notes',
-        'payment',
     ];
 
     protected $casts = [
@@ -46,464 +60,35 @@ class WorkOrder extends Model implements Filterable
     ];
 
     public static $all_types = [
-        'default',
+        'standard',
         'rework',
         'warranty',
     ];
 
     public static $all_statuses = [
-        'pending',
+        'pause',
         'new',
         'working',
         'done',
         'completed',
-        'inspected',
-        'closed',
         'canceled',
         'denialed',
     ];
 
     public static $incomplete_statuses = [ 
-        'pending',
+        'pause',
         'new',
         'working',
         'done',
     ];
 
-    public static $archived_statuses = [ 
-        'closed',
+    public static $closed_statuses = [ 
+        'completed',
         'canceled',
         'denialed',
     ];
 
-    public static $rework_statuses = [
-        'completed',
-        'inspected',
-    ];
-
-    public static $warranty_statuses = [
-        'closed',
-    ];
-
-    public static $crew_statuses = [
-        'working',
-        'done',
-    ];
-
-    public static $payment_statuses = [
-        'free' => -1,
-        'paid' => 1,
-        'unpaid' => 0,
-    ];
-
-
-    // Interface
-
-    public function getParameterFilterSettings(): array
-    {
-        return [
-            'client' => 'filterByClient',
-            'contractor' => 'filterByContractor',
-            'crew' => 'filterByCrew',
-            'job' => 'filterByJob',
-            'dates' => 'filterByScheduledDateBetween',
-            'payment_status_group' => 'filterByPaymentStatusGroup',
-            'search' => 'filterBySearch',
-            'scheduled_date' => 'filterByScheduledDate',
-            'status_group' => 'filterByStatusGroup',
-            'status' => 'filterByStatus',
-            'type_group' => 'filterByTypeGroup',
-        ];
-    }
-
-
-    // Attributes
-
-    public function getTypeAttribute()
-    {
-        if( $this->isRework() ) {
-            return 'rework';
-        }
-
-        if( $this->isWarranty() ) {
-            return 'warranty';
-        }
-
-        return 'default';
-    }
-
-    public function getBoundIdAttribute()
-    {
-        return $this->rework_id ?? $this->warranty_id;
-    }
-
-    public function getBoundAttribute()
-    {
-        return $this->isRework() ? $this->rework : $this->warranty;
-    }
-
-    public function getPaymentStatusAttribute()
-    {
-        if( $this->isUnpaid() ) {
-            return 'unpaid';
-        } 
-
-        if( $this->isPaid() ) {
-            return 'paid';
-        }
-
-        return 'free';
-    }
-
-
-    // Validators
-
-    public function isRework()
-    {
-        return ! is_null($this->rework_id) && is_a($this->rework, self::class);
-    }
-
-    public function isWarranty()
-    {
-        return ! is_null($this->warranty_id) && is_a($this->warranty, self::class);
-    }
-
-    public function isBound()
-    {
-        return $this->isRework() || $this->isWarranty();
-    }
-
-    public function isDefault()
-    {
-        return ! $this->isRework() &&! $this->isWarranty();
-    }
-
-    public function isType(string $type)
-    {
-        return $this->type == $type;
-    }
-
-    public function qualifiesForRework()
-    {
-        return $this->isDefault() && self::inReworkStatuses($this->status);
-    }
-
-    public function qualifiesForWarranty()
-    {
-        return $this->isDefault() && self::inWarrantyStatuses($this->status);
-    }
-
-    public function qualifiesToBind()
-    {
-        return $this->qualifiesForRework() || $this->qualifiesForWarranty();
-    }
     
-    public function isIncomplete()
-    {
-        return self::inIncompleteStatuses($this->status);
-    }
-
-    public function isCompleted()
-    {
-        return ! self::inIncompleteStatuses($this->status);
-    }
-
-    public function hasReworks()
-    {
-        return (bool) $this->reworks_count || $this->reworks->count();
-    }
-
-    public function hasWarranties()
-    {
-        return (bool) $this->warranties_count || $this->members->count();
-    }
-
-    public function hasMembers()
-    {
-        return (bool) $this->members_count || $this->members->count();
-    }
-
-    public function hasCrew()
-    {
-        return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
-    }
-    
-    public function hasContractor()
-    {
-        return (bool) $this->contractor_id && is_a($this->contractor, Contractor::class);
-    }
-
-    public function hasPermitCode()
-    {
-        return $this->permit_code <> null && $this->permit_code <> '';
-    }
-
-
-    public function isUnpaid()
-    {
-        return $this->payment == 0;
-    }
-
-    public function isPaid()
-    {
-        return $this->payment == 1;
-    }
-
-    public function isFreePayment()
-    {
-        return $this->payment == -1;
-    }
-
-
-    // Actions
-
-    public function changesToInspectedStatus()
-    {
-        if(! $this->job->requiresSuccessfulInspections() ) {
-            return;
-        }
-
-        if( $this->inspections->filter(fn($i) => $i->isPassed())->count() < $this->job->successful_inspections_required ) {
-            return;
-        }
-
-        return $this->fill(['status' => 'inspected'])->save();
-    }
-
-
-    // Scopes
-
-    public function scopeWithBasicRelationships($query)
-    {
-        return $query->with([
-            'client',
-            'contractor',
-            'crew',
-            'job',
-        ]);
-    }
-
-    public function scopeWithAllRelationships($query)
-    {
-        return $query->with([
-            'client',
-            'contractor',
-            'crew',
-            'job',
-            'rework',
-            'warranty',
-            'reworks',
-            'warranties',
-        ]);
-    }
-
-    public function scopeWhereSearch($query, $value, string $column = 'id')
-    {
-        return $query->where($column, 'like', "%{$value}%");
-    }
-
-    public function scopeWhereRework($query, $value)
-    {
-        return $query->where('rework_id', $value);
-    }
-
-    public function scopeWhereReworkNull($query, bool $strict = true)
-    {
-        return $strict ? $query->whereNull('rework_id') : $query->orWhereNull('rework_id');
-    }
-
-    public function scopeWhereReworkNotNull($query, bool $strict = true)
-    {
-        return $strict ? $query->whereNotNull('rework_id') : $query->orWhereNotNull('rework_id');
-    }
-
-    public function scopeWhereInRework($query, array $values)
-    {
-        return $query->whereIn('rework_id', $values);
-    }
-
-    public function scopeWhereWarranty($query, $value)
-    {
-        return $query->where('warranty_id', $value);
-    }
-
-    public function scopeWhereWarrantyNull($query, bool $strict = true)
-    {
-        return $strict ? $query->whereNull('warranty_id') : $query->orWhereNotNull('warranty_id');
-    }
-
-    public function scopeWhereWarrantyNotNull($query, bool $strict = true)
-    {
-        return $strict ? $query->whereNotNull('warranty_id'): $query->orWhereNotNull('warranty_id');
-    }
-
-    public function scopeWhereInWarranty($query, array $values)
-    {
-        return $query->whereIn('warranty_id', $values);
-    }
-
-    public function scopeIncomplete($query)
-    {
-        return $query->whereIn('status', self::getIncompleteStatuses()->all());
-    }
-
-    public function scopeIncompleteStatuses($query)
-    {
-        return $query->whereIn('status', self::getIncompleteStatuses()->all());
-    }
-
-    public function scopeCompletedStatuses($query)
-    {
-        return $query->whereIn('status', self::getCompletedStatuses()->all());
-    }
-
-    public function scopeWhereClient($query, $client_id)
-    {
-        return $query->where('client_id', $client_id);
-    }
-
-    public function scopeWhereCrew($query, $crew_id)
-    {
-        return $query->where('crew_id', $crew_id);
-    }
-
-    public function scopeWhereContractor($query, $contractor_id)
-    {
-        return $query->where('contractor_id', $contractor_id);
-    }
-
-    public function scopeWhereNotContractor($query)
-    {
-        return $query->whereNull('contractor_id');
-    }
-
-    public function scopeWhereJob($query, $job_id)
-    {
-        return $query->where('job_id', $job_id);
-    }
-
-    public function scopeWhereJobsAvailable($query)
-    {
-        $jobs_id = Job::all('id')->pluck('id')->toArray();
-        
-        return $query->whereIn('job_id', $jobs_id);
-    }
-
-    public function scopeWherePermitCode($query, $value)
-    {
-        return $query->where('permit_code', $value);
-    }
-
-    public function scopeWherePermitCodeLike($query, $value)
-    {
-        return $query->where('permit_code', 'like', $value);
-    }
-
-    public function scopeWherePayment($query, $value)
-    {
-        return $query->where('payment', $value);
-    }
-
-    public function scopeWherePaymentIn($query, array $values)
-    {
-        return $query->whereIn('payment', $values);
-    }
-
-    public function scopeUnpaid($query)
-    {
-        return $query->where('payment', 0);
-    }
-
-    public function scopePaid($query)
-    {
-        return $query->where('payment', 1);
-    }
-
-    public function scopeFreePayment($query)
-    {
-        return $query->where('payment', -1);
-    }
-
-
-    // Filters
-
-    public function scopeFilterBySearch($query, $value)
-    {
-        return ! is_null($value) ? $query->whereId($value) : $query;
-    }
-
-    public function scopeFilterByClient($query, $client_id)
-    {
-        return ! is_null($client_id) ? $query->whereClient($client_id) : $query;
-    }
-
-    public function scopeFilterByCrew($query, $crew_id)
-    {
-        return ! is_null($crew_id) ? $query->whereCrew($crew_id) : $query;
-    }
-
-    public function scopeFilterByJob($query, $job_id)
-    {
-        return ! is_null($job_id) ? $query->whereJob($job_id) : $query;
-    }
-
-    public function scopeFilterByContractor($query, $contractor_id)
-    {
-        if( is_null($contractor_id) ) {
-            return $query;
-        }
-
-        if( $contractor_id == 0 ) {
-            return $query->whereNotContractor();
-        }
-
-        return $query->whereContractor($contractor_id);
-    }
-
-    public function scopeFilterByTypeGroup($query, $type_group)
-    {
-        if( empty($type_group) || count($type_group) == 3 ) {
-            return $query;
-        }
-
-        if( count($type_group) == 2 && in_array('rework', $type_group) && in_array('warranty', $type_group) ) {
-            return $query->whereReworkNotNull(false)->whereWarrantyNotNull(false);
-        }
-
-        if( count($type_group) == 2 && in_array('rework', $type_group) &&! in_array('warranty', $type_group) ) {
-            return $query->whereWarrantyNull();
-        }
-
-        if( count($type_group) == 2 && in_array('warranty', $type_group) &&! in_array('rework', $type_group) ) {
-            return $query->whereReworkNull();
-        }
-
-        if( count($type_group) == 1 && in_array('rework', $type_group) ) {
-            return $query->whereReworkNotNull();
-        }
-
-        if( count($type_group) == 1 && in_array('warranty', $type_group) ) {
-            return $query->whereWarrantyNotNull();
-        }
-
-        return $query->whereReworkNull()->whereWarrantyNull();
-    }
-
-    public function scopeFilterByPaymentStatusGroup($query, $values)
-    {
-        if( empty($values) ||! is_array($values) || count($values) == 3 ) {
-            return $query;
-        }
-
-        return $query->wherePaymentIn($values);
-    }
-
-
-    // Relations
-
-    
-
-
     // Statics
 
     public static function getAllTypes()
@@ -513,75 +98,26 @@ class WorkOrder extends Model implements Filterable
 
     public static function getAllStatuses()
     {
-        return collect(self::$all_statuses);
-    }
-
-    public static function getNonDefaultTypes()
-    {
-        return self::getAllTypes()->filter(fn($value) => $value <> 'default');
-    }
-
-    public static function getReworkStatuses()
-    {
-        return collect( self::$rework_statuses );
-    }
-
-    public static function getWarrantyStatuses()
-    {
-        return collect( self::$warranty_statuses );
-    }
-    
-    public static function inNonDefaultTypes(string $status)
-    {
-        return self::getNonDefaultTypes()->contains($status);
-    }
-
-    public static function inReworkStatuses(string $status)
-    {
-        return in_array($status, self::$rework_statuses);
-    }
-
-    public static function inWarrantyStatuses(string $status)
-    {
-        return in_array($status, self::$warranty_statuses);
+        return collect( self::$all_statuses );
     }
 
     public static function getIncompleteStatuses()
     {
-        return collect(self::$incomplete_statuses);
+        return collect( self::$incomplete_statuses );
     }
 
-    public static function getCompletedStatuses()
+    public static function inIncompleteStatuses($value)
     {
-        return self::getAllStatuses()->diff(
-            self::getIncompleteStatuses()->toArray()
-        );
+        return self::getIncompleteStatuses()->contains($value);
     }
 
-    public static function inCrewStatuses(string $status)
+    public static function getClosedStatuses()
     {
-        return in_array($status, self::$crew_statuses);
-    }
-    
-    public static function inArchivedStatuses(string $status)
-    {
-        return in_array($status, self::$archived_statuses);
+        return collect( self::$closed_statuses );
     }
 
-    public static function inIncompleteStatuses(string $status)
+    public static function inClosedStatuses($value)
     {
-        return in_array($status, self::$incomplete_statuses);
-    }
-
-    public static function filterCollectionByIncompleteStatuses(Collection $work_orders)
-    {
-        return $work_orders->filter(function ($wo) {
-            return self::inIncompleteStatuses($wo->status);
-        });
-    }
-
-    public static function getPaymentStatuses()
-    {
-        return collect( self::$payment_statuses );
+        return self::getClosedStatuses()->contains($value);
     }
 }

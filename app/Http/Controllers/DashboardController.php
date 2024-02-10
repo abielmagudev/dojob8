@@ -22,7 +22,6 @@ class DashboardController extends Controller
             'all_statuses_work_order' => WorkOrder::getAllStatuses(),
             'clients' => Client::all(),
             'contractors' => Contractor::all(),
-            'incomplete_work_orders' => WorkOrder::filterCollectionByIncompleteStatuses($work_orders),
             'inspections' => Inspection::with('agency')->get(),
             'jobs' => Job::withTrashed()->get(),
             'user' => User::all(),

@@ -5,6 +5,7 @@
                 <th>Name</th>
                 <th class="text-nowrap ps-5">Members</th>
                 <th></th>
+                <th></th>
             </tr>
         </x-slot>
         
@@ -22,7 +23,15 @@
                 @endif
                 </div>
             </td>
-            <td class="text-nowrap text-end">
+            <td class="text-nowrap" style="width:1%">
+                @if( $crew->hasIncompleteWorkOrders() )
+                @include('work-orders.__.button-counter-incomplete', [
+                    'parameters' => ['crew' => $crew->id],
+                    'counter' => $crew->incomplete_work_orders_count
+                ])
+                @endif
+            </td>
+            <td class="text-nowrap text-end" style="width:1%">
                 @include('crews.index.quick-buttons')
             </td>
         </tr>        

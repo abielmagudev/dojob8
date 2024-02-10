@@ -1,11 +1,9 @@
 <x-card title="{{ $work_order->reworks->count() }} reworks">
-    @if( $work_order->qualifiesForRework() )       
     @slot('options')
     <a href="{{ route('work-orders.create', [$work_order->client, 'type' => 'rework', 'bind' => $work_order->id]) }}" class="btn btn-primary">
         <i class="bi bi-plus-lg"></i>
     </a>
     @endslot
-    @endif
 
     @if( $work_order->reworks->count() )
     <?php $work_order->reworks->load(['crew','contractor','job']) ?>

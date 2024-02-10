@@ -10,8 +10,8 @@
         <small>{{ $work_order->job->description }}</small>
     </x-small-title>
 
-    <x-small-title title="Successful inspections required">
-        {{ $work_order->job->requiresSuccessfulInspections() ? $work_order->job->successful_inspections_required : 0 }}
+    <x-small-title title="Approved inspections required">
+        {{ $work_order->job->requiresApprovedInspections() ? $work_order->job->successful_inspections_required : 0 }}
     </x-small-title>
 
     <x-small-title title="Extensions">

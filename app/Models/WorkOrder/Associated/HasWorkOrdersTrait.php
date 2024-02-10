@@ -8,64 +8,49 @@ trait HasWorkOrdersTrait
 {
     // Attributes
 
-    public function getIncompleteWorkOrdersCountAttribute()
+    public function getWorkOrdersCounterAttribute()
     {
-        return $this->incomplete_work_orders ? $this->incomplete_work_orders->count() : 0;
+        return $this->work_orders_count ?? $this->work_orders->count();
     }
 
-    public function getWorkOrdersForReworkAttribute()
+    public function getIncompleteWorkOrdersCounterAttribute()
     {
-        return $this->work_orders->filter(fn($wo) => $wo->qualifiesForRework() );
+        return $this->incomplete_work_orders_count ?? $this->incomplete_work_orders->count();
     }
 
-    public function getWorkOrdersForWarrantyAttribute()
+
+    // Validators
+
+    public function hasWorkOrders()
     {
-        return $this->work_orders->filter(fn($wo) => $wo->qualifiesForWarranty() );
+        return (bool) ($this->work_orders_count ?? $this->work_orders->count());
     }
 
-    public function getWorkOrdersToBindAttribute()
+    public function hasWorkOrdersWithIncompleteStatus()
     {
-        return $this->work_orders->filter(fn($wo) => $wo->qualifiesForBind() );
+        return (bool) $this->onlyIncompleteWorkOrders()->count();
+    }
+    
+    public function hasIncompleteWorkOrders()
+    {
+        return (bool) ($this->incomplete_work_orders_count ?? $this->incomplete_work_orders->count());
     }
 
 
     // Actions
 
-    public function getWorkOrdersWith(array $relations)
+    public function onlyIncompleteWorkOrders()
     {
-        return $this->work_orders->load($relations);
+        return $this->work_orders->filter(function ($wo) {
+            return $wo->hasIncompleteStatus();
+        });
     }
 
-    public function getWorkOrdersByStatus(string $value)
+    public function onlyWorkOrdersForRectification()
     {
-        return $this->work_orders->filter(fn($work_order) => $work_order->status == $value);
-    }
-
-    
-    // Validators
-
-    public function hasWorkOrders()
-    {
-        return (bool) $this->work_orders->count();
-    }
-
-    public function hasWorkOrdersForRework()
-    {
-        return (bool) $this->work_orders_for_rework->count();
-    }
-    public function hasWorkOrdersForWarranty()
-    {
-        return (bool) $this->work_orders_for_warranty->count();
-    }
-
-    public function hasWorkOrdersToBind()
-    {
-        return (bool) $this->work_orders_to_bind->count();
-    }
-    
-    public function hasIncompleteWorkOrders()
-    {
-        return (bool) $this->incomplete_work_orders_count;
+        return $this->work_orders->filter(function ($wo) {
+            return $wo->isStandard() && $wo->isCompleted();
+        });
     }
 
 

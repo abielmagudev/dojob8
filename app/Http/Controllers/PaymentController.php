@@ -17,7 +17,7 @@ class PaymentController extends Controller
         }
 
         $work_orders = WorkOrder::with(['contractor','job','crew'])
-        ->completedStatuses()
+        ->forPayment()
         ->filterByParameters( $request->all() )
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->paginate(25)
@@ -34,7 +34,7 @@ class PaymentController extends Controller
 
     public function updateMany(PaymentUpdateRequest $request)
     {
-        if(! WorkOrder::whereIn('id', $request->get('work_orders'))->update(['payment' => $request->get('payment')]) ) {
+        if(! WorkOrder::whereIn('id', $request->get('work_orders'))->update(['payment_status' => $request->get('payment')]) ) {
             return back()->with('danger', 'Error updating the payment of work orders, try again please');
         }
 

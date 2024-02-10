@@ -1,11 +1,9 @@
-<x-card title="Work orders" class="mb-3">
-    @if( $contractor->work_orders->count() )
-
+<x-card title="Work orders" subtitle="Last 10" class="mb-3">
     @slot('options')
-        @if( $contractor->hasIncompleteWorkOrders() )                  
+        @if( $contractor->hasWorkOrdersWithIncompleteStatus() )                  
         @include('work-orders.__.button-counter-incomplete', [
             'class' => 'btn btn-warning',
-            'counter' => $contractor->incomplete_work_orders_count,
+            'counter' => $contractor->onlyIncompleteWorkOrders()->count(),
             'parameters' => ['contractor' => $contractor->id],
         ])
         @endif
@@ -18,10 +16,6 @@
     @endslot
 
     @if( $contractor->hasWorkOrders() )
-    <p class="text-secondary">
-        <i class="bi bi-info-circle"></i>
-        <em>Last 10 work orders</em>
-    </p>
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
@@ -61,7 +55,5 @@
         </tr>
         @endforeach
     </x-table>
-    @endif
-
     @endif
 </x-card>

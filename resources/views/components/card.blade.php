@@ -2,11 +2,11 @@
 
     @if( isset($title) || isset($options) || isset($dropoptions) )
     <div class="card-header border-bottom-0 py-3">
-        <div class="row align-items-center">
+        <div class="row align-items-center {{ !$attributes->has('header-wrap') ? 'flex-nowrap' : '' }}">
 
             {{-- Left --}}
             @if( isset($title) )              
-            <div class="col-sm mb-3 mb-md-0">
+            <div class="col mb-3 mb-md-0">
                 <div class="{{ $attributes->get('title-class', 'fw-bold') }}">
                     {!! $title !!}
                 </div>
@@ -16,7 +16,7 @@
 
             {{-- Right --}}
             @if( isset($options) || isset($dropoptions) )  
-            <div class="col-sm">
+            <div class="col">
                 <div class="d-flex align-items-center justify-content-between justify-content-md-end">
 
                     @isset($options)       

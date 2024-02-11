@@ -9,7 +9,7 @@ class InspectionUrlGenerator
     public static function all(array $parameters = [])
     {
         return route('inspections.index', array_merge($parameters, [
-            // ...
+            'dates' => 'any',
         ]));
     }
 

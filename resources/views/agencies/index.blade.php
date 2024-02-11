@@ -25,9 +25,23 @@
                 <td style="width:1%">
                     <x-custom.indicator-active-status :toggle="$agency->isActive()" tooltip />
                 </td>
-                <td>{{ $agency->name }}</td>
-                <td>{{ $agency->notes }}</td>
-                <td class="text-end">
+                <td class="text-nowrap pe-5" style="width:1%">
+                    {{ $agency->name }}
+                </td>
+                <td>
+                    {{ $agency->notes }}
+                </td>
+                <td class="text-end text-nowrap">
+                    @includeWhen($agency->hasPendingInspections(), 'inspections.__.button-counter-pending', [
+                        'counter' => $agency->pending_inspections_counter,
+                        'parameters' => ['agency' => $agency->id],
+                    ])
+
+                    @includeWhen($agency->hasAwaitingInspections(), 'inspections.__.button-counter-awaiting', [
+                        'counter' => $agency->awaiting_inspections_counter,
+                        'parameters' => ['agency' => $agency->id],
+                    ])
+
                     <a href="{{ route('agencies.show', $agency) }}" class="btn btn-outline-primary btn-sm">
                         <i class="bi bi-eye-fill"></i>
                     </a>

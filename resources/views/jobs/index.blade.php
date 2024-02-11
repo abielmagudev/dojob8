@@ -23,7 +23,7 @@
                 <th></th>
             </tr>
         </x-slot>
-        @foreach($jobs->loadCount('incomplete_work_orders') as $job)               
+        @foreach($jobs as $job)               
         <tr>
             <td style="width:1%">
                 <x-custom.indicator-active-status :toggle="$job->isActive()" tooltip />
@@ -33,8 +33,8 @@
             <td class="text-center">{{ $job->approved_inspections_required_count }}</td>
             <td class="text-center">{{ $job->extensions_count }}</td>
             <td class="text-nowrap text-end">
-                @includeWhen($job->incomplete_work_orders_count, 'work-orders.__.button-counter-incomplete', [
-                        'counter' => $job->incomplete_work_orders_count,
+                @includeWhen($job->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
+                        'counter' => $job->incomplete_work_orders_counter,
                         'parameters' => ['job' => $job->id]
                 ])
 

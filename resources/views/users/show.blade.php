@@ -9,8 +9,8 @@
 @endsection
 
 @section('content')
-<x-card title="Information">
-    <x-slot name="custom_title">
+<x-card>
+    <x-slot name="title">
         <x-custom.indicator-active-status :toggle="$user->isActive()" />
     </x-slot>
 

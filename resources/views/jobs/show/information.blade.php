@@ -4,17 +4,15 @@
     </x-slot>
 
     <x-slot name="options">
-        @if( $job->hasWorkOrdersWithIncompleteStatus() )                  
-        @include('work-orders.__.button-counter-incomplete', [
+        @includeWhen($job->hasWorkOrdersWithIncompleteStatus(), 'work-orders.__.button-counter-incomplete', [
             'class' => 'btn btn-outline-warning',
-            'counter' => $job->onlyIncompleteWorkOrders()->count(),
+            'counter' => $job->work_orders_with_incomplete_status_counter,
             'parameters' => ['job' => $job->id],
         ])
-        @endif
 
-        @include('work-orders.__.button-counter-all', [
+        @includeWhen($job->hasWorkOrders(), 'work-orders.__.button-counter-all', [
             'class' => 'btn btn-outline-primary',
-            'counter' => $job->work_orders->count(),
+            'counter' => $job->work_orders_counter,
             'parameters' => ['job' => $job->id],
         ])
         

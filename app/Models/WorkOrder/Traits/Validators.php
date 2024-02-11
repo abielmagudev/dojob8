@@ -43,4 +43,9 @@ trait Validators
     {
         return $this->isStandard() && $this->isCompleted();
     }
+
+    public function qualifiesForInspection()
+    {
+        return $this->isCompleted();
+    }
 }

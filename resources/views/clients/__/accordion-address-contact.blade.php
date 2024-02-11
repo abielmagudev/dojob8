@@ -10,13 +10,13 @@
 
 <div>
     <div>
-        <a href="#!" class="toggle-information-accordion icon-link me-1">
+        @include('clients.__.link-google-maps')
+        {{ $collection_address->implode(', ') }}
+        <a href="#!" class="toggle-information-accordion icon-link ms-1">
             <i class="bi bi-info-circle"></i>
         </a>
-        {{ $collection_address->implode(', ') }}
-        @include('clients.__.link-google-maps')
     </div>
-    <div class="d-none information-accordion" style="margin-left:24px">
+    <div class="d-none information-accordion" style="margin-left:20px">
         <small>{{ $client->full_name }}</small>
         <div class="d-inline-block me-1">
             <x-custom.information-contact-channels 

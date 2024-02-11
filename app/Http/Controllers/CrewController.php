@@ -13,7 +13,7 @@ class CrewController extends Controller
     public function index(Request $request)
     {
         $crews = Crew::with('members')
-        ->withCount('incomplete_work_orders')
+        ->withCount(['incomplete_work_orders', 'pending_inspections'])
         ->orderBy('name')
         ->get();
 
@@ -63,7 +63,7 @@ class CrewController extends Controller
         }
 
         if( $crew->isInactive() ) {
-            $crew->members()->detach();
+            $crew->down();
         }
 
         return redirect()->route('crews.edit', $crew)->with('success', "You updated the crew <b>{$crew->name}</b>");
@@ -75,7 +75,7 @@ class CrewController extends Controller
             return back()->with('danger', "Error deleting crew, try again please");
         }
 
-        $crew->members()->detach();
+        $crew->down();
 
         return redirect()->route('crews.index')->with('success', "You deleted the crew <b>{$crew->name}</b>");
     }

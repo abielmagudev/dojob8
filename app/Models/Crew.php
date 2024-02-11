@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Inspection\Associated\HasInspectionsTrait;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
@@ -15,6 +16,7 @@ class Crew extends Model
     use HasFactory;
     use HasHookUsers;
     use HasWorkOrdersTrait;
+    use HasInspectionsTrait;
     use SoftDeletes;
 
     const COLOR_HEX_PATTERN = '/^#[0-9A-Fa-f]{6}$/';
@@ -79,6 +81,14 @@ class Crew extends Model
     public function hasTask(string $task)
     {
         return in_array($task, $this->tasks_array);
+    }
+
+
+    // Actions
+
+    public function down()
+    {
+        return $this->members()->detach();
     }
 
 

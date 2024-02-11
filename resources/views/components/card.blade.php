@@ -1,22 +1,26 @@
 <div class="card shadow-sm border-0 {{ $attributes->get('class', '') }}" style="{{ $attributes->get('style', '') }}">
 
     @if( isset($title) || isset($options) || isset($dropoptions) )
+    <?php $col_classname = $attributes->has('header-wrap') ? 'col-sm mb-3 mb-md-0' : 'col' ?>
+
     <div class="card-header border-bottom-0 py-3">
         <div class="row align-items-center">
 
             {{-- Left --}}
             @if( isset($title) )              
-            <div class="{{ $attributes->has('header-wrap') ? 'col-sm' : 'col' }} mb-3 mb-md-0">
-                <div class="{{ $attributes->get('title-class', 'fw-bold') }}">
-                    {!! $title !!}
+            <div class="{{ $col_classname }}">
+                <div>
+                    <div class="{{ $attributes->get('title-class', 'fw-bold') }}">
+                        {!! $title !!}
+                    </div>
+                    <small class="{{ $attributes->get('subtitle-class', '') }}">{{ $attributes->get('subtitle', '') }}</small>
                 </div>
-                <small class="{{ $attributes->get('subtitle-class', '') }}">{{ $attributes->get('subtitle', '') }}</small>
             </div>
             @endif
 
             {{-- Right --}}
             @if( isset($options) || isset($dropoptions) )  
-            <div class="{{ $attributes->has('header-wrap') ? 'col-sm' : 'col' }}">
+            <div class="{{ $col_classname }}">
                 <div class="d-flex align-items-center justify-content-end">
 
                     @isset($options)       

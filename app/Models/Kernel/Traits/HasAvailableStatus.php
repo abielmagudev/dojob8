@@ -8,7 +8,9 @@ trait HasAvailableStatus
 
     public function setIsAvailableAttribute($value)
     {
-        $this->attributes['is_available'] = is_int($this->id) ? (int) !empty($value) : 1;
+        if(! is_null($this->id) ) {
+            $this->attributes['is_available'] = (int) !empty($value);
+        }
     }
 
 

@@ -8,7 +8,9 @@ trait HasActiveStatus
 
     public function setIsActiveAttribute($value)
     {
-        $this->attributes['is_active'] = is_int($this->id) ? (int) !empty($value) : 1;
+        if(! is_null($this->id) ) {
+            $this->attributes['is_active'] = (int) !empty($value);
+        }
     }
 
 

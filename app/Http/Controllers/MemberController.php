@@ -36,7 +36,8 @@ class MemberController extends Controller
 
     public function show(Member $member)
     {
-        return view('members.show')->with('member', $member->load('crews.members'));
+        $member->load('crews.members');
+        return view('members.show')->with('member', $member);
     }
 
     public function edit(Member $member)

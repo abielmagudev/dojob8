@@ -21,8 +21,6 @@ class ExtensionController extends Controller
 
     public function index(Request $request)
     {
-        return view('extensions.index', [
-            'extensions' => Extension::all(),
-        ]);
+        return view('extensions.index')->with('extensions', Extension::all());
     }
 }

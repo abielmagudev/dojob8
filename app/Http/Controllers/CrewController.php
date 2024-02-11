@@ -45,9 +45,7 @@ class CrewController extends Controller
 
     public function show(Crew $crew)
     {
-        return view('crews.show', [
-            'crew' => $crew,
-        ]);
+        return view('crews.show')->with('crew', $crew);
     }
 
     public function edit(Crew $crew)

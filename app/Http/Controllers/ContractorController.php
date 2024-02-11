@@ -32,7 +32,6 @@ class ContractorController extends Controller
     public function show(Contractor $contractor)
     {
         $contractor->work_orders->load(['job','crew','client']);
-
         return view('contractors.show')->with('contractor', $contractor);
     }
 

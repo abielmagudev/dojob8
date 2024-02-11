@@ -38,7 +38,6 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         $client->work_orders->load(['crew','contractor','job']);
-
         return view('clients.show')->with('client', $client);
     }
 

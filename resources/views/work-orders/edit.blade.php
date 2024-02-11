@@ -9,7 +9,7 @@
 
 <x-page-title>Work order #{{ $work_order->id }}</x-page-title>
 
-@include('work-orders.__.inline-client', ['client' => $work_order->client])
+@include('work-orders.__.client', ['client' => $work_order->client])
 
 @endsection
 

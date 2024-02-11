@@ -1,20 +1,18 @@
 <x-card class="h-100">
-    <x-slot name="custom_title">
+    <x-slot name="title">
         <x-custom.indicator-active-status :toggle="$contractor->isActive()" />
     </x-slot>
 
     <x-slot name="options">
-        @if( $contractor->hasWorkOrdersWithIncompleteStatus() )                  
-        @include('work-orders.__.button-counter-incomplete', [
+        @includeWhen($contractor->hasWorkOrdersWithIncompleteStatus(), 'work-orders.__.button-counter-incomplete', [
             'class' => 'btn btn-outline-warning',
-            'counter' => $contractor->onlyIncompleteWorkOrders()->count(),
+            'counter' => $contractor->work_orders_with_incomplete_status_counter,
             'parameters' => ['contractor' => $contractor->id],
-        ])
-        @endif
+        ]) 
 
-        @include('work-orders.__.button-counter-all', [
+        @includeWhen($contractor->hasWorkOrders(), 'work-orders.__.button-counter-all', [
             'class' => 'btn btn-outline-primary',
-            'counter' => $contractor->work_orders->count(),
+            'counter' => $contractor->work_orders_counter,
             'parameters' => ['contractor' => $contractor->id],
         ])
 

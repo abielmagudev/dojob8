@@ -9,16 +9,7 @@ class WorkOrderUrlGenerator
     public static function all(array $parameters = [])
     {
         return route('work-orders.index', array_merge($parameters, [
-            // ...
-        ]));
-    }
-
-    public static function completed(array $parameters = [])
-    {
-        return route('work-orders.index', array_merge($parameters, [
-            'status_group' => WorkOrder::getCompletedStatuses()->all(),
-            'sort' => 'asc',
-            'fltr' => 'on',
+            'dates' => 'any',
         ]));
     }
 
@@ -27,7 +18,16 @@ class WorkOrderUrlGenerator
         return route('work-orders.index', array_merge($parameters, [
             'status_group' => WorkOrder::getIncompleteStatuses()->all(),
             'sort' => 'asc',
-            'fltr' => 'on',
+            'dates' => 'any',
+        ]));
+    }
+
+    public static function closed(array $parameters = [])
+    {
+        return route('work-orders.index', array_merge($parameters, [
+            'status_group' => WorkOrder::getClosedStatuses()->all(),
+            'sort' => 'asc',
+            'dates' => 'any',
         ]));
     }
 }

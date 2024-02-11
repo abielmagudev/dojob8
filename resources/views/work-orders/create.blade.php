@@ -8,7 +8,7 @@
 
 <x-page-title>Work order</x-page-title>
 
-@include('work-orders.__.inline-client')
+@include('work-orders.__.client')
 
 @endsection
 

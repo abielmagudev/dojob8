@@ -67,7 +67,7 @@
             <td class="text-nowrap text-end">
 
                 @includeWhen($client->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
-                    'counter' => $client->incomplete_work_orders_count,
+                    'counter' => $client->incomplete_work_orders_counter,
                     'parameters' => ['client' => $client->id],
                 ])
 

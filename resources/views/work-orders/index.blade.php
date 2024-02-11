@@ -25,13 +25,13 @@
         <hr class="dropdown-divider">
     </li>
     <li>
-        <a href="<?= $incomplete_work_orders['url'] ?>" class="dropdown-item">
-            <div class="float-end ms-3">
-                <span class="badge text-bg-warning">{{ $incomplete_work_orders['count'] }}</span>
-            </div>
-            <div style="min-width:152px">
+        <a href="<?= $incomplete_work_orders['url'] ?>" class="dropdown-item d-flex">
+            <div class="me-3">
                 <i class="bi bi-alarm"></i>
                 <span class="ms-1">Incomplete</span>
+            </div>
+            <div>
+                <span class="badge text-bg-warning">{{ $incomplete_work_orders['count'] }}</span>
             </div>
         </a>
     </li>
@@ -48,7 +48,7 @@
 
         @slot('thead')
         <tr>
-            @if( $request->filled('fltr') )
+            @if( $request->has('dates') )
             <th>Scheduled</th>
             @endif
 
@@ -59,12 +59,13 @@
             <th class="text-center">Contractor</th>
             <th class="text-center">Status</th>
             <th></th>
+            <th></th>
         </tr>
         @endslot
 
         @foreach($work_orders as $work_order)           
         <tr>
-            @if( $request->filled('fltr') )
+            @if( $request->filled('dates') )
             <td class="text-nowrap">
                 <span class="d-block">{{ ! $work_order->isToday() ? $work_order->scheduled_date_human : 'Today' }}</span>
             </td>
@@ -109,11 +110,13 @@
             </td>
 
             <td class="text-nowrap text-end" style="width:1%">
+                <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm w-100">
+                    <span>#{!! marker($request->get('value', ''), $work_order->id) !!}</span>
+                </a>
+            </td>
+            <td>             
                 <a href="{{ route('work-orders.edit', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
-                </a>
-                <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm">
-                    <span>#{{ $work_order->id }}</span>
                 </a>
             </td>
         </tr>

@@ -12,8 +12,12 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-        if( empty($request->all()) ) {
-            $request->merge(['payment_status_group' => ['unpaid']]);
+        if( empty($request->all()) )
+        {
+            $request->merge([
+                'payment_status_group' => ['unpaid'],
+                'dates' => 'any',
+            ]);
         }
 
         $work_orders = WorkOrder::withRelationshipsForPayments()

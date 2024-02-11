@@ -6,7 +6,7 @@ trait Scopes
 {
     public function scopeSearch($query, $value, string $column = 'id')
     {
-        return $query->where($column, 'like', "%{$value}%");
+        return $query->where($column, 'like', "%{$value}%")->orderBy('id','asc');
     }
 
     public function scopeIncomplete($query)

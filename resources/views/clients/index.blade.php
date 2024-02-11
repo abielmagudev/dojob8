@@ -34,9 +34,11 @@
 
         @foreach($clients as $client)
         <tr>
+
             <td class="text-nowrap">
                 {!! marker($request->get('search', ''), $client->full_name) !!}
             </td>
+
             <td class="text-nowrap">
                 {!! marker($request->get('search', ''), $client->street) !!},
                 {!! marker($request->get('search', ''), $client->city_name) !!},
@@ -44,14 +46,17 @@
                 {{-- {!! marker($request->get('search', ''), $client->country_name) !!} --}}
                 @include('clients.__.link-google-maps')
             </td>
+
             <td class="text-nowrap text-center">
                 {!! marker($request->get('search', ''), $client->zip_code) !!}
             </td>
+
             {{-- 
             <td class="text-nowrap text-center">
                 {!! marker($request->get('search', ''), $client->district_code ?? '') !!}
             </td>  
             --}}
+
             <td class="text-nowrap">
                 @foreach($client->contact_data->filter() as $key => $value)
                 <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>
@@ -64,6 +69,7 @@
                 </x-tooltip>
                 @endforeach
             </td>
+            
             <td class="text-nowrap text-end">
 
                 @includeWhen($client->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [

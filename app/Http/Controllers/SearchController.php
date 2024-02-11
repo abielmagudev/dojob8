@@ -19,7 +19,10 @@ class SearchController extends Controller
 
         $controller = self::getController( $request->get('topic') );
 
-        $request->merge(['search' => $request->get('value')]);
+        $request->merge([
+            'search' => $request->get('value'),
+            'dates' => 'any',
+        ]);
 
         return app()->call([$controller, 'index'], [$request]);
     }

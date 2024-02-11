@@ -43,11 +43,20 @@
     </li>
     @endslot
 
+    @if( $request->filled('search') )
+    <p>
+        <span class="text-secondary">Searching:</span>
+        <em class="ms-1">"{{ $request->get('search') }}"</em>
+    </p>
+    @endif
+
     @if( $work_orders->count() ) 
     <x-table>
 
         @slot('thead')
         <tr>
+            <th></th>
+
             @if( $request->has('dates') )
             <th>Scheduled</th>
             @endif
@@ -65,6 +74,8 @@
 
         @foreach($work_orders as $work_order)           
         <tr>
+            <td class="text-center text-secondary small" style="width:1%">{!! marker($request->get('value', ''), $work_order->id) !!}</td>
+
             @if( $request->filled('dates') )
             <td class="text-nowrap">
                 <span class="d-block">{{ ! $work_order->isToday() ? $work_order->scheduled_date_human : 'Today' }}</span>
@@ -111,7 +122,7 @@
 
             <td class="text-nowrap text-end" style="width:1%">
                 <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm w-100">
-                    <span>#{!! marker($request->get('value', ''), $work_order->id) !!}</span>
+                    <span>#{{ $work_order->id }}</span>
                 </a>
             </td>
             <td>             

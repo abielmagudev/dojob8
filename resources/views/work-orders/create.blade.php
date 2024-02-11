@@ -15,6 +15,7 @@
 @section('content')
 <x-card title="New work order">
     <form action="{{ route('work-orders.store') }}" method="post" autocomplete="off">
+        @csrf
         @include('work-orders._form')
         <input type="hidden" name="client" value="{{ $client->id }}">  
         <x-form-field-horizontal>

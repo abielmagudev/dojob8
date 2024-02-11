@@ -1,7 +1,7 @@
 <x-form-field-horizontal for="nameInput" label="Name">
     <div class="row">
         <div class="col-md mb-3 mb-md-0">
-            <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name', $member->name) }}" placeholder="Name" required>
+            <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name', $member->name) }}" placeholder="Name" autofocus required>
             <x-form-feedback error="name" />
         </div>
         <div class="col-md">

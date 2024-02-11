@@ -1,6 +1,5 @@
-@csrf
 <x-form-field-horizontal for="nameInput" label="Name">
-    <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name', $crew->name) }}" required>
+    <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name', $crew->name) }}" autofocus required>
     <x-form-feedback error="name" />
 </x-form-field-horizontal>
 

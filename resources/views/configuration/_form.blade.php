@@ -1,7 +1,7 @@
 <h6 class="text-secondary mb-3">Customer</h6>
 <div class="mb-3">
     <label for="companyNameInput" class="form-label">Company</label>
-    <input id="companyNameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('company_name') ) }}" name="company_name" value="{{ old('company_name', $configuration->get('company_name')) }}" required>
+    <input id="companyNameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('company_name') ) }}" name="company_name" value="{{ old('company_name', $configuration->get('company_name')) }}" autofocus required>
     <x-form-feedback error="company_name" />
 </div>
 <br>

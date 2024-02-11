@@ -12,8 +12,10 @@
 @section('content')
 <x-card title="Edit crew">
     <form action="{{ route('crews.update', $crew) }}" method="post" autocomplete="off">
-        @include('crews._form')
         @method('put')
+        @csrf
+        @include('crews._form')
+
         <x-form-field-horizontal>
             <x-custom.switch-active-status :toggle="$crew->isActive()">
                 <b class="d-block">Active.</b> 

@@ -11,7 +11,7 @@
         </span>
     </x-tooltip>
 </x-slot>
-<input id="nameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" name="name" value="{{ old('name', $user->name) }}" required>
+<input id="nameInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" name="name" value="{{ old('name', $user->name) }}" autofocus required>
 <x-form-feedback error="name" />
 </x-form-field-horizontal>
 

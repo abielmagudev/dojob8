@@ -21,8 +21,6 @@ class AgencyFactory extends Factory
         return [
             'name' => $agency_name,
             'notes' => $this->faker->optional()->sentence(),
-            'created_by' => mt_rand(1,10),
-            'updated_by' => mt_rand(1,10),
         ];
     }
 }

@@ -20,8 +20,6 @@ class ConfigurationFactory extends Factory
                 'state_code' => 'TX',
                 'country_code' => 'US',
             ]),
-            'created_by' => mt_rand(1,10),
-            'updated_by' => mt_rand(1,10),
         ];
     }
 }

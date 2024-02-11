@@ -37,9 +37,6 @@ class WorkOrderFactory extends Factory
 
             'permit_code' => $this->faker->optional()->ean13(),
             'notes' => $this->faker->optional()->sentence(),
-
-            'created_by' => $this->faker->numberBetween(1, 10),
-            'updated_by' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

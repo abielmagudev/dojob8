@@ -46,16 +46,12 @@ trait HasWorkOrdersTrait
 
     public function onlyIncompleteWorkOrders()
     {
-        return $this->work_orders->filter(function ($wo) {
-            return $wo->hasIncompleteStatus();
-        });
+        return $this->work_orders->filter(fn($wo) => $wo->hasIncompleteStatus());
     }
 
     public function onlyWorkOrdersForRectification()
     {
-        return $this->work_orders->filter(function ($wo) {
-            return $wo->isStandard() && $wo->isCompleted();
-        });
+        return $this->work_orders->filter(fn($wo) => $wo->isStandard() && $wo->isCompleted());
     }
 
 

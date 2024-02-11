@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $work_orders->total() }}">
+<x-card title="{{ $work_orders->total() }}" subtitle="{{ $request->has('search') ? sprintf('Searching: %s', $request->get('search')) : '' }}">
     @slot('options')
     <div class="d-inline-block align-middle ">
         <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off">
@@ -42,13 +42,6 @@
         </x-modal-trigger>
     </li>
     @endslot
-
-    @if( $request->filled('search') )
-    <p>
-        <span class="text-secondary">Searching:</span>
-        <em class="ms-1">"{{ $request->get('search') }}"</em>
-    </p>
-    @endif
 
     @if( $work_orders->count() ) 
     <x-table>

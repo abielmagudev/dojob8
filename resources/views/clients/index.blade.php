@@ -5,19 +5,12 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $clients->total() }}">
+<x-card title="{{ $clients->total() }}" subtitle="{{ $request->has('search') ? sprintf('Searching: %s', $request->get('search')) : '' }}">
     <x-slot name="options">
         <a href="{{ route('clients.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i>
         </a>
     </x-slot>
-
-    @if( $request->filled('search') )
-    <p>
-        <span class="text-secondary">Searching:</span>
-        <em class="ms-1">"{{ $request->get('search') }}"</em>
-    </p>
-    @endif
 
     @if( $clients->count() )
     <x-table class="align-middle">

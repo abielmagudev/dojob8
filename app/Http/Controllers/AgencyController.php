@@ -10,7 +10,7 @@ class AgencyController extends Controller
     public function index()
     {
         return view('agencies.index', [
-            'agencies' => Agency::withCount(['inspections'])->orderBy('id')->get(),
+            'agencies' => Agency::with(['inspections'])->orderBy('id')->get(),
         ]);
     }
 
@@ -30,7 +30,8 @@ class AgencyController extends Controller
 
     public function show(Agency $agency)
     {
-        return view('agencies.show')->with('agency', $agency->load('inspections'));
+        $agency->load('inspections');
+        return view('agencies.show')->with('agency', $agency);
     }
 
     public function edit(Agency $agency)

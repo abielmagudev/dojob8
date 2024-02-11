@@ -10,6 +10,7 @@
             <i class="bi bi-plus-lg"></i>
         </a>
     </x-slot>
+
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
@@ -32,13 +33,13 @@
                     {{ $agency->notes }}
                 </td>
                 <td class="text-end text-nowrap">
-                    @includeWhen($agency->hasPendingInspections(), 'inspections.__.button-counter-pending', [
-                        'counter' => $agency->pending_inspections_counter,
+                    @includeWhen($agency->hasInspectionsWithPendingStatus(), 'inspections.__.button-counter-pending', [
+                        'counter' => $agency->inspections_with_pending_status_counter,
                         'parameters' => ['agency' => $agency->id],
                     ])
 
-                    @includeWhen($agency->hasAwaitingInspections(), 'inspections.__.button-counter-awaiting', [
-                        'counter' => $agency->awaiting_inspections_counter,
+                    @includeWhen($agency->hasInspectionsWithAwaitingStatus(), 'inspections.__.button-counter-awaiting', [
+                        'counter' => $agency->inspections_with_awaiting_status_counter,
                         'parameters' => ['agency' => $agency->id],
                     ])
 
@@ -50,5 +51,6 @@
             @endforeach
         </tbody>
     </x-table>
+
 </x-card>
 @endsection

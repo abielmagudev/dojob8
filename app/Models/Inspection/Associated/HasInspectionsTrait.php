@@ -13,22 +13,24 @@ trait HasInspectionsTrait
         return $this->inspections_count ?? $this->inspections->count();
     }
 
+    public function getInspectionsWithPendingStatusCounterAttribute()
+    {
+        return $this->onlyPendingInspections()->count();
+    }
+
+    public function getInspectionsWithAwaitingStatusCounterAttribute()
+    {
+        return $this->onlyAwaitingInspections()->count();
+    }
+
     public function getPendingInspectionsCounterAttribute()
     {
-        if( $this->relationLoaded('pending_inspections') ) {
-            return ($this->pending_inspections_count ?? $this->pending_inspections->count());
-        }
-
-        return $this->onlyPendingInspections()->count();
+        return ($this->pending_inspections_count ?? $this->pending_inspections->count());
     }
 
     public function getAwaitingInspectionsCounterAttribute()
     {
-        if( $this->relationLoaded('awaiting_inspections') ) {
-            return ($this->awaiting_inspections_count ?? $this->awaiting_inspections->count());
-        }
-
-        return $this->onlyAwaitingInspections()->count();
+        return ($this->awaiting_inspections_count ?? $this->awaiting_inspections->count());
     }
 
 
@@ -37,6 +39,16 @@ trait HasInspectionsTrait
     public function hasInspections(): bool
     {
         return (bool) $this->inspections_counter;
+    }
+
+    public function hasInspectionsWithPendingStatus()
+    {
+        return (bool) $this->inspections_with_pending_status_counter;
+    }
+
+    public function hasInspectionsWithAwaitingStatus()
+    {
+        return (bool) $this->inspections_with_awaiting_status_counter;
     }
 
     public function hasPendingInspections(): bool

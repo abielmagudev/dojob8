@@ -68,9 +68,7 @@ class InspectionController extends Controller
 
     public function show(Inspection $inspection)
     {
-        return view('inspections.show', [
-            'inspection' => $inspection,
-        ]);
+        return view('inspections.show')->with('inspection', $inspection);
     }
 
     public function edit(Request $request, Inspection $inspection)

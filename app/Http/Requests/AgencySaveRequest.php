@@ -38,7 +38,7 @@ class AgencySaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'is_active' => $this->filled('active'),
+            'is_active' => $this->get('active'),
         ]);
     }
 }

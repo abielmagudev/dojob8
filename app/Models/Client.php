@@ -61,6 +61,11 @@ class Client extends Model implements Filterable
         $this->attributes['last_name'] = Str::title($value);
     }
 
+    public function setFullNameAttribute($value)
+    {
+        $this->attributes['full_name'] = Str::title($value);
+    }
+
 
     // Validators
 

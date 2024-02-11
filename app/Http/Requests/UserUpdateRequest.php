@@ -45,7 +45,7 @@ class UserUpdateRequest extends FormRequest
         $validated = is_null($this->password) ? collect( parent::validated() )->except('password')->toArray() : parent::validated();
 
         return array_merge($validated, [
-            'is_active' => $this->filled('active'),
+            'is_active' => $this->get('active'),
         ]);
     }
 }

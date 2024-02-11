@@ -72,7 +72,7 @@ class CrewSaveRequest extends FormRequest
             'background_color_hex' => $this->get('background_color'),
             'tasks_json' => json_encode( $this->get('tasks', []) ),
             'text_color_hex' => $this->get('text_color'),
-            'is_active' => $this->filled('active'),
+            'is_active' => $this->get('active'),
         ]);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Suppliers\CountryManager;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
 class ClientSaveRequest extends FormRequest
 {
@@ -90,7 +89,7 @@ class ClientSaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
+            'full_name' => sprintf('%s %s', $this->name, $this->last_name),
         ]);
     }
 }

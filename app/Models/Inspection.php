@@ -10,6 +10,7 @@ use App\Models\Kernel\Traits\HasStatus;
 use App\Models\WorkOrder\Associated\BelongWorkOrderTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Inspection extends Model implements Filterable
 {
@@ -58,6 +59,14 @@ class Inspection extends Model implements Filterable
             'status_group' => 'filterByStatusGroup',
             'status' => 'filterByStatus', 
         ];
+    }
+
+
+    // Mutators
+
+    public function setInspectorNameAttribute($value)
+    {
+        $this->attributes['inspector_name'] = Str::title($value);
     }
 
 

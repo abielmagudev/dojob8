@@ -11,6 +11,7 @@ use App\Models\Kernel\Traits\HasHookUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Member extends Model implements Authenticable, Filterable
 {
@@ -54,6 +55,24 @@ class Member extends Model implements Authenticable, Filterable
     public function getAuthenticatedNameAttribute(): string
     {
         return $this->full_name;
+    }
+
+
+    // Mutators
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = Str::title($value);
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = Str::title($value);
+    }
+
+    public function setFullNameAttribute($value)
+    {
+        $this->attributes['full_name'] = Str::title($value);
     }
 
 

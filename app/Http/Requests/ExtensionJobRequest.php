@@ -23,15 +23,17 @@ class ExtensionJobRequest extends FormRequest
             ],
         ];
 
-        if(! $this->isMethod('POST') )
+        if(! $this->isMethod('POST') ) {
             unset( $rules['extension'][2] ); // Rule::unique
+        }
 
         return $rules;
     }
 
     public function withValidator($validator)
     {
-        if( $validator->fails() )
+        if( $validator->fails() ) {
             session()->flash('danger', $validator->errors()->first());
+        }
     }
 }

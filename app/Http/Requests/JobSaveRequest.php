@@ -61,7 +61,7 @@ class JobSaveRequest extends FormRequest
     {
         return array_merge(parent::validated(), [
             'agencies_generate_inspections_json' => $this->filled('agencies_generate_inspections') ? json_encode( $this->get('agencies_generate_inspections') ) : null,
-            'is_active' => $this->filled('active'),
+            'is_active' => $this->get('active'),
         ]);
     }
 }

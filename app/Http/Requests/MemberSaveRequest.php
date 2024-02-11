@@ -75,11 +75,11 @@ class MemberSaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'name' => Str::title($this->name),
-            'last_name' => Str::title($this->last_name),
-            'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
-            'is_crew_member' => (int) $this->is_crew_member,
-            'is_available' => $this->filled('available'),
+            'name' => $this->name,
+            'last_name' => $this->last_name,
+            'full_name' =>  $this->full_name,
+            'is_crew_member' => $this->get('is_crew_member'),
+            'is_available' => $this->get('available'),
         ]);
     }
 }

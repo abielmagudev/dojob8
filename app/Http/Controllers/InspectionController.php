@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\InspectionController\InspectionUrlGenerator;
-use App\Http\Requests\InspectionStoreRequest;
-use App\Http\Requests\InspectionUpdateRequest;
+use App\Http\Requests\InspectionSaveRequest;
 use App\Models\Agency;
 use App\Models\Crew;
 use App\Models\Inspection;
@@ -47,6 +46,10 @@ class InspectionController extends Controller
 
     public function create(WorkOrder $work_order)
     {
+        if(! $work_order->qualifiesForInspection() ) {
+            return redirect()->route('work-orders.show', $work_order)->with('danger', 'Only work orders with a completed status can have inspections.');
+        }
+
         return view('inspections.create', [
             'agencies' => Agency::all(),
             'all_statuses_form' => Inspection::allStatusesForm(),
@@ -57,7 +60,7 @@ class InspectionController extends Controller
         ]);
     }
 
-    public function store(InspectionStoreRequest $request)
+    public function store(InspectionSaveRequest $request)
     {
         if(! $inspection = Inspection::create( $request->validated() ) ) {
             return back()->with('danger', 'Error creating inspection, try again please');
@@ -83,7 +86,7 @@ class InspectionController extends Controller
         ]);
     }
 
-    public function update(InspectionUpdateRequest $request, Inspection $inspection)
+    public function update(InspectionSaveRequest $request, Inspection $inspection)
     {
         if(! $inspection->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating inspection, try again please');

@@ -1,4 +1,4 @@
-<x-modal id="changeStatusCrewsModal" title="Change status crews" subtitle="Active and inactive">
+<x-modal id="changeStatusCrewsModal" title="Change status crews" subtitle="Active and inactive" header-close>
     <form action="{{ route('crews.update.status') }}" method="post" autocomplete="off" id="updateStatusCrewsForm">
         @csrf
         @method('patch')

@@ -14,9 +14,9 @@ class CrewMember extends Pivot
 
     // Scopes
 
-    public function scopeRemoveCrews($query, array $values)
+    public function scopeRemoveCrewsExcept($query, array $values)
     {
-        return $query->whereIn('crew_id', $values)->delete();
+        return $query->whereNotIn('crew_id', $values)->delete();
     }
 
 

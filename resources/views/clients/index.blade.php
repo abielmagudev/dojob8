@@ -13,7 +13,7 @@
     </x-slot>
 
     @if( $clients->count() )
-    <x-table class="align-middle">
+    <x-table>
         <x-slot name="thead">
             <tr>
                 <th class="text-nowrap">Full name</th>
@@ -51,16 +51,18 @@
             --}}
 
             <td class="text-nowrap">
-                @foreach($client->contact_data->filter() as $key => $value)
-                <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>
-                <x-tooltip title="{{ ucfirst($key) }}">
-                    <span class="d-inline-block small mx-2">
-                        <a href="{{ $prefix }}:{{ $value }}" class="text-decoration-none">
-                            {!! marker($request->get('search', ''), $value) !!}
-                        </a>
-                    </span>
-                </x-tooltip>
-                @endforeach
+                <div class="d-flex flex-column flex-md-row flex-wrap">
+                    @foreach($client->contact_data->filter() as $key => $value)
+                    <?php $prefix = $key <> 'email' ? 'tel' : 'mailto' ?>
+                    <x-tooltip title="{{ ucfirst($key) }}">
+                        <span class="d-inline-block small mx-2">
+                            <a href="{{ $prefix }}:{{ $value }}" class="text-decoration-none">
+                                {!! marker($request->get('search', ''), $value) !!}
+                            </a>
+                        </span>
+                    </x-tooltip>
+                    @endforeach
+                </div>
             </td>
             
             <td class="text-nowrap text-end">

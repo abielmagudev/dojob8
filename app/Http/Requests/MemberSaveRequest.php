@@ -52,10 +52,6 @@ class MemberSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'is_available' => [
-                'nullable',
-                'boolean',
-            ],
             'is_crew_member' => [
                 'required',
                 'boolean',
@@ -82,8 +78,8 @@ class MemberSaveRequest extends FormRequest
             'name' => Str::title($this->name),
             'last_name' => Str::title($this->last_name),
             'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
-            'is_available' => $this->isMethod('POST') || $this->has('is_available') ? 1 : 0,
             'is_crew_member' => (int) $this->is_crew_member,
+            'is_available' => $this->filled('available'),
         ]);
     }
 }

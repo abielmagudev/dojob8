@@ -51,7 +51,7 @@ class MemberController extends Controller
             return back()->with('danger', 'Error updating member, try again please');
         }
 
-        if( $member->isInactive() ) {
+        if( $member->isUnavailable() ) {
             $member->down();
         } 
         else {

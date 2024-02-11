@@ -38,8 +38,8 @@ class Crew extends Model
         'tasks_json',
         'background_color_hex',
         'text_color_hex',
-        'is_active',
         'lead_member_id',
+        'is_active',
     ];
 
 

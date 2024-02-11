@@ -4,6 +4,14 @@ namespace App\Models\Kernel\Traits;
 
 trait HasActiveStatus
 {
+    // Mutators
+
+    public function setIsActiveAttribute($value)
+    {
+        $this->attributes['is_active'] = is_int($this->id) ? (int) !empty($value) : 1;
+    }
+
+
     // Attributes
 
     public function getActiveStatusAttribute()

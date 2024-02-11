@@ -31,9 +31,9 @@ class Member extends Model implements Authenticable, Filterable
         'email',
         'position',
         'category',
-        'is_available',
         'is_crew_member',
         'notes',
+        'is_available',
     ];
 
     protected $casts = [

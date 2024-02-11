@@ -27,9 +27,9 @@ class MemberFactory extends Factory
             'mobile_number' => $this->faker->optional()->phoneNumber(),
             'email' => $this->faker->optional()->email(),
             'position' => $this->faker->optional()->jobTitle(),
-            'is_available' => $this->faker->boolean(),
             'is_crew_member' => $this->faker->boolean(),
             'notes' => $this->faker->optional()->sentences(3, true),
+            'is_available' => $this->faker->boolean(),
         ];
     }
 }

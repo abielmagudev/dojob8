@@ -20,8 +20,8 @@ class CreateCrewsTable extends Migration
             $table->string('tasks_json')->index()->nullable();
             $table->string('background_color_hex', 24);
             $table->string('text_color_hex', 24);
-            $table->boolean('is_active')->default(true);
             $table->foreignId('lead_member_id')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->foreignId('deleted_by')->nullable();

@@ -15,9 +15,9 @@ class CreateAgenciesTable extends Migration
     {
         Schema::create('agencies', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_active')->default(true);
             $table->string('name')->unique();
             $table->text('notes')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->foreignId('deleted_by')->nullable();

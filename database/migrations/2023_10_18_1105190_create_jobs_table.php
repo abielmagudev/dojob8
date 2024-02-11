@@ -15,11 +15,11 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_active')->default(true);
             $table->string('name');
             $table->text('description')->nullable();
             $table->tinyInteger('approved_inspections_required_count', false, true)->default(0);
             $table->text('agencies_generate_inspections_json')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->foreignId('deleted_by')->nullable();

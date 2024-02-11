@@ -59,16 +59,9 @@ class JobSaveRequest extends FormRequest
 
     public function validated()
     {
-        $validated = parent::validated();
-
-        if( in_array($this->method(), ['PATCH','PUT']) ) {
-            $validated['is_active'] = $this->has('active') ? 1 : 0;
-        }
-
-        if( $this->filled('agencies_generate_inspections') ) {
-            $validated['agencies_generate_inspections_json'] = json_encode( $this->get('agencies_generate_inspections') );
-        }
-
-        return $validated;
+        return array_merge(parent::validated(), [
+            'agencies_generate_inspections_json' => $this->filled('agencies_generate_inspections') ? json_encode( $this->get('agencies_generate_inspections') ) : null,
+            'is_active' => $this->filled('active'),
+        ]);
     }
 }

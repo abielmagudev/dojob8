@@ -16,7 +16,6 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'is_active' => (int) $this->faker->boolean(),
             'name' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
@@ -27,6 +26,7 @@ class UserFactory extends Factory
             'last_session_device' => $this->faker->optional()->randomElement(['desktop','mobile','tablet']),
             'last_session_ip' => $this->faker->optional()->ipv4(),
             'remember_token' => Str::random(10),
+            'is_active' => (int) $this->faker->boolean(),
         ];
     }
 

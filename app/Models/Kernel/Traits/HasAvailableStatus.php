@@ -4,7 +4,15 @@ namespace App\Models\Kernel\Traits;
 
 trait HasAvailableStatus
 {
-    // Atributes
+    // Mutators
+
+    public function setIsAvailableAttribute($value)
+    {
+        $this->attributes['is_available'] = is_int($this->id) ? (int) !empty($value) : 1;
+    }
+
+
+    // Attributes
 
     public function getAvailableStatusAttribute()
     {

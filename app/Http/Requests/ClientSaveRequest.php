@@ -91,7 +91,6 @@ class ClientSaveRequest extends FormRequest
     {
         return array_merge(parent::validated(), [
             'full_name' => Str::title( sprintf('%s %s', $this->name, $this->last_name) ),
-            'updated_by' => mt_rand(1, 10),
         ]);
     }
 }

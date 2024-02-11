@@ -45,7 +45,7 @@ class CrewSaveRequest extends FormRequest
                 'string',
                 sprintf('regex:%s', Crew::COLOR_HEX_PATTERN),
             ],
-            'is_active' => [
+            'active' => [
                 'nullable',
                 'boolean',
             ],
@@ -69,10 +69,10 @@ class CrewSaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'is_active' => $this->isMethod('PATCH') || $this->isMethod('PUT') ? (int) $this->has('is_active') : 1,
-            'tasks_json' => json_encode( $this->get('tasks', []) ),
             'background_color_hex' => $this->get('background_color'),
+            'tasks_json' => json_encode( $this->get('tasks', []) ),
             'text_color_hex' => $this->get('text_color'),
+            'is_active' => $this->filled('active'),
         ]);
     }
 }

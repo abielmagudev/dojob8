@@ -105,12 +105,8 @@ class ContractorSaveRequest extends FormRequest
 
     public function validated()
     {
-        if( $this->isMethod('POST') ) {
-            return parent::validated();
-        }
-
         return array_merge(parent::validated(), [
-            'is_active' => (int) $this->has('active'),
+            'is_active' => $this->filled('active'),
         ]);
     }
 }

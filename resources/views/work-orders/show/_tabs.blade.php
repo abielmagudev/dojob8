@@ -5,18 +5,18 @@
         'title' => 'Information',
     ],
     'inspections' => [
-        'display' => true,
-        'enabled' => $work_order->job->requiresApprovedInspections(),
+        'display' => $work_order->job->requiresApprovedInspections(),
+        'enabled' => $work_order->qualifiesForInspection(),
         'title' => 'Inspections',
     ],
     'reworks' => [
         'display' => $work_order->isStandard(),
-        'enabled' => $work_order->isStandard(),
+        'enabled' => $work_order->qualifiesForRectification(),
         'title' => 'Reworks',
     ],
     'warranties' => [
         'display' => $work_order->isStandard(),
-        'enabled' => $work_order->isStandard(),
+        'enabled' => $work_order->qualifiesForRectification(),
         'title' => 'Warranties',
     ],
     'timeline' => [

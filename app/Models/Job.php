@@ -37,13 +37,13 @@ class Job extends Model
         return json_decode($this->agencies_generate_inspections_json); // (json_last_error() == JSON_ERROR_NONE)
     }
     
+    public function getExtensionsCounterAttribute()
+    {
+        return ($this->extensions_count || $this->extensions->count());
+    }
+
 
     // Validators
-    
-    public function hasExtensions(): bool
-    {
-        return (bool) $this->extensions_count || $this->extensions->count();
-    }
 
     public function requiresApprovedInspections(): bool
     {
@@ -58,6 +58,11 @@ class Job extends Model
     public function hasAgencyToGenerateInspections($agency_id): bool
     {
         return in_array($agency_id, $this->agencies_generate_inspections_array);
+    }
+
+    public function hasExtensions(): bool
+    {
+        return (bool) $this->extensions_counter;
     }
 
 

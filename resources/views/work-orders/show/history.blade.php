@@ -1,24 +1,10 @@
-<x-card>
-    <ul class="list-group">
+<x-card title="Activities">
+    <ul class="list-group list-group-flush">
+        @foreach($history as $activity)   
         <li class="list-group-item">
-            <span class="d-block">Lorem ipsum dolor sit amet</span>
-            <small class="d-block">By username, {{ now() }}</small>
+            <span class="d-block mb-1">{!! $activity->description !!}</span>
+            <small class="d-block text-secondary">{{ $activity->created_date_human }}, {{ $activity->created_time_human }} by {{ $activity->user->name }}</small>
         </li>
-        <li class="list-group-item">
-            <span class="d-block">Lorem ipsum dolor sit amet</span>
-            <small class="d-block">By username, {{ now() }}</small>
-        </li>
-        <li class="list-group-item">
-            <span class="d-block">Lorem ipsum dolor sit amet</span>
-            <small class="d-block">By username, {{ now() }}</small>
-        </li>
-        <li class="list-group-item">
-            <span class="d-block">Lorem ipsum dolor sit amet</span>
-            <small class="d-block">By username, {{ now() }}</small>
-        </li>
-        <li class="list-group-item">
-            <span class="d-block">Lorem ipsum dolor sit amet</span>
-            <small class="d-block">By username, {{ now() }}</small>
-        </li>
+        @endforeach
     </ul> 
 </x-card>

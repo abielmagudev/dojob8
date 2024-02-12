@@ -5,6 +5,7 @@ namespace App\Models\WorkOrder\Traits;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
+use App\Models\History;
 use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\Member;
@@ -50,5 +51,10 @@ trait Relationships
     public function inspections()
     {
         return $this->hasMany(Inspection::class);
+    }
+
+    public function history()
+    {
+        return $this->morphMany(History::class, 'model');
     }
 }

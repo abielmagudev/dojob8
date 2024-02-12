@@ -8,8 +8,11 @@ class History extends ResponseConstructor
 {
     public function forData(): array
     {
+        $this->work_order->load('history.user');
+
         return [
             'show' => 'history',
+            'history' => $this->work_order->history->sortByDesc('id'),
         ];
     }
 }

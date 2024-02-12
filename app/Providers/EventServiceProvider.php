@@ -12,6 +12,7 @@ use App\Models\Contractor;
 use App\Models\Job;
 use App\Models\Member;
 use App\Models\User;
+use App\Models\WorkOrder;
 use App\Observers\ClientObserver;
 use App\Observers\ConfigurationObserver;
 use App\Observers\CrewObserver;
@@ -21,6 +22,7 @@ use App\Observers\ContractorObserver;
 use App\Observers\JobObserver;
 use App\Observers\MemberObserver;
 use App\Observers\UserObserver;
+use App\Observers\WorkOrderObserver;
 // Dependences 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -58,5 +60,6 @@ class EventServiceProvider extends ServiceProvider
         Job::observe(JobObserver::class);
         Member::observe(MemberObserver::class);
         User::observe(UserObserver::class);
+        WorkOrder::observe(WorkOrderObserver::class);
     }
 }

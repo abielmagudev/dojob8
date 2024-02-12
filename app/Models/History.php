@@ -62,7 +62,7 @@ class History extends Model implements Filterable
 
     public function getCreatedTimeHumanAttribute()
     {
-        return $this->created_at->format('h:m A'); 
+        return $this->created_at->format('g:i A'); 
     }
 
 
@@ -79,11 +79,6 @@ class History extends Model implements Filterable
     public function scopeModelIs($query, string $classname, $id)
     {
         return $query->where('model_type', $classname)->where('model_id', $id);
-    }
-
-    public function scopeModelIsNot($query, string $classname, $id)
-    {
-        return $query->where('model_type', '<>', $classname)->where('model_id', '<>', $id);
     }
 
     public function scopeCreatedBetween($query, array $values)

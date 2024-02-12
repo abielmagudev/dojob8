@@ -178,4 +178,22 @@ class Inspection extends Model implements Filterable
 
         return count($result) > 0;
     }
+
+    public static function generateByWorkOrderSetup(WorkOrder $work_order)
+    {
+        $created = [];
+
+        foreach($work_order->job->inspections_setup->all() as $setting)
+        {
+            $inspection = self::create([
+                'agency_id' => $setting['agency'],
+                'work_order_id' => $work_order->id,
+                'status' => 'pending',
+            ]);
+
+            array_push($created, $inspection);
+        }
+        
+        return $created;
+    }
 }

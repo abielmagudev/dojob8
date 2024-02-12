@@ -18,11 +18,18 @@ class Agency extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'is_active',
         'name',
         'notes',
+        'is_active',
         'created_by',
         'updated_by',
         'deleted_by',
     ];
+
+    // Actions
+
+    public function down()
+    {
+        Job::removeFromInspectionsSetup('agency', $this->id);
+    }
 }

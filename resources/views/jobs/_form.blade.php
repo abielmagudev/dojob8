@@ -13,18 +13,19 @@
     <x-form-feedback error="approved_inspections_required_count" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal label="Choose the agencies to autogenerate inspections after a work order with this job has been created" label-class="form-label-optional">    
-    <div class="list-group list-group-flush rounded border {{ $errors->has('agencies_generate_inspections') || $errors->has('agencies_generate_inspections.*') ? 'border-danger' : '' }}">
+<x-form-field-horizontal label="Configure to generate inspections after creating a work order with this job." label-class="form-label-optional">    
+    <div class="list-group list-group-flush rounded border {{ $errors->has('agencies') || $errors->has('agencies.*') ? 'border-danger' : '' }}">
         @foreach($agencies as $agency)
+        <?php $checked = $job->inspections_setup->hasAgency($agency->id) ?>
         <?php $checkbox_id = "agency{$agency->id}Checkbox" ?>
         <div class="list-group-item list-group-item-action">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="agencies_generate_inspections[]" value="{{ $agency->id }}" id="{{ $checkbox_id }}" {{ isChecked( $job->hasAgencyToGenerateInspections($agency->id) ) }}>
+                <input class="form-check-input" type="checkbox" id="{{ $checkbox_id }}" name="agencies[]" value="{{ $agency->id }}" {{ isChecked( $checked ) }}>
                 <label class="form-check-label" for="{{ $checkbox_id }}">{{ $agency->name }}</label>
             </div>
         </div>
         @endforeach
     </div>
-    <x-form-feedback error="agencies_generate_inspections" />
-    <x-form-feedback error="agencies_generate_inspections.*" />
+    <x-form-feedback error="agencies" />
+    <x-form-feedback error="agencies.*" />
 </x-form-field-horizontal>

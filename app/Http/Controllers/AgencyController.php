@@ -45,6 +45,10 @@ class AgencyController extends Controller
             return back()->with('danger', "Error updating agency, try again please");
         }
 
+        if( $agency->isInactive() ) {
+            $agency->down();
+        }
+
         return redirect()->route('agencies.edit', $agency)->with('success', sprintf('You updated agency <b>%s</b>', $agency->name));
     }
 
@@ -53,6 +57,8 @@ class AgencyController extends Controller
         if(! $agency->delete() ) {
             return back()->with('danger', "Error deleting agency, try again please");
         }
+
+        $agency->down();
 
         return redirect()->route('agencies.index')->with('success', sprintf('You deleted agency <b>%s</b>', $agency->name));
     }

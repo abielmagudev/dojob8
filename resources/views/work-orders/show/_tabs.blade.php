@@ -6,7 +6,7 @@
     ],
     'inspections' => [
         'display' => $work_order->job->requiresApprovedInspections(),
-        'enabled' => $work_order->qualifiesForInspection(),
+        'enabled' => $work_order->job->requiresApprovedInspections(), // $work_order->qualifiesForInspection()
         'title' => 'Inspections',
     ],
     'reworks' => [

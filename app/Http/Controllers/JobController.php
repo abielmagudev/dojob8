@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\JobSaveRequest;
 use App\Models\Agency;
+use App\Models\Crew;
 use App\Models\Extension;
 use App\Models\Job;
 
@@ -23,7 +24,8 @@ class JobController extends Controller
     public function create()
     {
         return view('jobs.create', [
-            'agencies' => Agency::all()->sortBy('name'),
+            'agencies' => Agency::active()->orderBy('name')->get(),
+            'crews' => Crew::taskInspections()->active()->get(),
             'job' => new Job,
         ]);
     }
@@ -48,7 +50,8 @@ class JobController extends Controller
     public function edit(Job $job)
     {
         return view('jobs.edit', [
-            'agencies' => Agency::all()->sortBy('name'),
+            'agencies' => Agency::active()->orderBy('name')->get(),
+            'crews' => Crew::taskInspections()->active()->get(),
             'job' => $job,
         ]);
     }
@@ -68,6 +71,8 @@ class JobController extends Controller
             return back()->with('danger', 'Error deleting job, please try again');
         }
 
+        $job->down();
+        
         return redirect()->route('jobs.index')->with('success', "You deleted job <b>{$job->name}</b>");
     }
 }

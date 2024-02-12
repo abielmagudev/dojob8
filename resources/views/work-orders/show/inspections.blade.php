@@ -1,18 +1,20 @@
 <x-card>
+    @slot('title')
+    <div>
+        @if($work_order->job->requiresApprovedInspections())
+        <div class="badge text-bg-secondary">{{ $work_order->job->approved_inspections_required_count }} Approved required</div>
+        @endif
+
+        <div class="badge text-bg-success">{{ $inspections->filter(fn($i) => $i->isApproved())->count() }} Approved</div>
+    </div>
+    @endslot
+
     @slot('options')
     <a href="{{ route('inspections.create', ['work_order' => $work_order->id]) }}" class="btn btn-primary">
         <i class="bi bi-plus-lg"></i>
     </a>
     @endslot
 
-    <div>
-        <div class="badge text-bg-success text-uppercase">Requires {{ $work_order->job->approved_inspections_required_count }} Passed</div>
-        <div class="badge text-bg-warning d-none">{{ $inspections->filter(fn($i) => $i->isPending())->count() }} Pending</div>
-        <div class="badge text-bg-primary d-none">{{ $inspections->filter(fn($i) => $i->isAwaiting())->count() }} Awaiting</div>
-        <div class="badge text-bg-success d-none">{{ $inspections->filter(fn($i) => $i->isApproved())->count() }} Passed</div>
-        <div class="badge text-bg-danger d-none">{{ $inspections->filter(fn($i) => $i->isFailed())->count() }} Failed</div>
-        <div class="badge text-bg-secondary d-none">{{ $inspections->count() }} Total</div>
-    </div>
 
     @if( $inspections->count() )
     <x-table>

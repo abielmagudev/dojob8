@@ -29,17 +29,8 @@
         {{ $job->approved_inspections_required_count }}
     </x-small-title>
 
-    <x-small-title title="Agencies to generate inspections">
-    @if( $job->hasAgenciesToGenerateInspections() )           
-        @foreach($job->agenciesToGenerateInspections() as $agency)
-        <span class="badge border">
-            <a href="{{ route('agencies.show', $agency) }}" class="text-decoration-none">{{ $agency->name }}</a>
-        </span>
-        @endforeach
-
-    @else
-        <span>No</span>
-    @endif
+    <x-small-title title="Configuration to generate inspections">
+        {{ $job->hasInspectionsSetup() ? 'Yes' : 'No' }}
     </x-small-title>
     
     <x-custom.information-hook-users :model="$job" />

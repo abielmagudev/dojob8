@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Job\InspectionsSetupWizard;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
@@ -18,25 +19,49 @@ class Job extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'is_active',
         'name',
         'description',
         'approved_inspections_required_count',
-        'agencies_generate_inspections_json',
+        'inspections_setup_json',
+        'is_active',
     ];
 
+    private $inspections_setup_wizard_cache = null;
 
-    // Attributes
 
-    public function getAgenciesGenerateInspectionsArrayAttribute()
+    // Mutators
+
+    public function setInspectionsSetupJsonAttribute($value)
     {
-        if( is_null($this->agencies_generate_inspections_json) ) {
-            return array();
+        if( is_array($value) &&! empty($value) )
+        {
+            $this->attributes['inspections_setup_json'] = InspectionsSetupWizard::mapToJson($value);
+        } 
+        elseif( isJson($value) && $value <> '[]' )
+        {
+            $this->attributes['inspections_setup_json'] = $value;
+        } 
+        else 
+        {
+            $this->attributes['inspections_setup_json'] = null;
         }
 
-        return json_decode($this->agencies_generate_inspections_json); // (json_last_error() == JSON_ERROR_NONE)
+        // Clear cache when this attribute is modified.
+        $this->inspections_setup_wizard_cache = null;
     }
+
+
+    // Accesors
     
+    public function getInspectionsSetupAttribute()
+    {
+        if( is_null($this->inspections_setup_wizard_cache) ) {
+            $this->inspections_setup_wizard_cache = new InspectionsSetupWizard($this->inspections_setup_json);
+        }
+
+        return $this->inspections_setup_wizard_cache;
+    }
+
     public function getExtensionsCounterAttribute()
     {
         return ($this->extensions_count || $this->extensions->count());
@@ -50,14 +75,9 @@ class Job extends Model
         return (bool) $this->approved_inspections_required_count;
     }
 
-    public function hasAgenciesToGenerateInspections(): bool
+    public function hasInspectionsSetup(): bool
     {
-        return (bool) count($this->agencies_generate_inspections_array);
-    }
-
-    public function hasAgencyToGenerateInspections($agency_id): bool
-    {
-        return in_array($agency_id, $this->agencies_generate_inspections_array);
+        return ! empty($this->inspections_setup_json);
     }
 
     public function hasExtensions(): bool
@@ -68,9 +88,11 @@ class Job extends Model
 
     // Actions
 
-    public function agenciesToGenerateInspections()
+    public function down()
     {
-        return Agency::whereIn('id', $this->agencies_generate_inspections_array)->get();
+        if( $this->trashed() ) {
+            $this->update(['inspections_setup_json' => null]);
+        }
     }
 
 
@@ -79,5 +101,23 @@ class Job extends Model
     public function extensions()
     {
         return $this->belongsToMany(Extension::class);
+    }
+
+
+    // Statics
+
+    public static function removeFromInspectionsSetup($key, $value)
+    {
+        $jobs = self::all();
+
+        foreach($jobs as $job)
+        {
+            if( $job->inspections_setup->has($key, $value) )
+            {
+                $job->inspections_setup->remove($key, $value);
+                $job->inspections_setup_json = $job->inspections_setup->all(true);
+                $job->save();
+            }
+        }
     }
 }

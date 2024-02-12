@@ -32,6 +32,7 @@ class WorkOrderController extends Controller
         $work_orders = WorkOrder::withRelationshipsForIndex()
         ->filterByParameters( $request->all() )
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->orderBy('id', $request->get('sort', 'desc'))
         ->paginate(25)
         ->appends( $request->query() );
 
@@ -71,19 +72,10 @@ class WorkOrderController extends Controller
             return back()->with('danger', "Error saving work order, try again please");
         }
         
-        $work_order->members()->attach( 
-            $work_order->crew->members->pluck('id')
-        );
+        $work_order->attachWorkers();
 
-        if( $work_order->job->hasAgenciesToGenerateInspections() )
-        {
-            foreach($work_order->job->agencies_generate_inspections_array as $agency_id) {
-                Inspection::create([
-                    'agency_id' => $agency_id,
-                    'work_order_id' => $work_order->id,
-                    'status' => 'pending',
-                ]);
-            }
+        if( $work_order->job->hasInspectionsSetup() ) {
+            Inspection::generateByWorkOrderSetup($work_order);
         }
 
         $this->saveOrderByExtensions(

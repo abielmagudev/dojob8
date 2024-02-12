@@ -7,6 +7,7 @@ use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
+use App\Models\WorkOrder\Traits\Actions;
 use App\Models\WorkOrder\Traits\Attributes;
 use App\Models\WorkOrder\Traits\Filters;
 use App\Models\WorkOrder\Traits\InspectionStatus;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkOrder extends Model implements Filterable
 {
+    use Actions;
     use Attributes;
     use Filters;
     use InspectionStatus;

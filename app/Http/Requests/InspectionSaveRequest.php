@@ -28,7 +28,7 @@ class InspectionSaveRequest extends FormRequest
                 'bail',
                 'required',
                 'integer',
-                sprintf('exists:%s,id', Agency::class),
+                sprintf('exists:%s,id,is_active,1', Agency::class),
             ],
             'inspector_name' => [
                 'nullable',

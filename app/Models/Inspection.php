@@ -117,9 +117,7 @@ class Inspection extends Model implements Filterable
 
     public function qualifiesPendingStatus()
     {
-        return self::qualifyPendingStatus([
-            'scheduled_date' => $this->getRawOriginal('scheduled_date'),
-        ]);
+        return self::qualifyPendingStatus( $this->getAttributes() );
     }
 
 

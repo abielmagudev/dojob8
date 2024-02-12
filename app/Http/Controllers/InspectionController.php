@@ -46,10 +46,6 @@ class InspectionController extends Controller
 
     public function create(WorkOrder $work_order)
     {
-        if(! $work_order->qualifiesForInspection() ) {
-            return redirect()->route('work-orders.show', $work_order)->with('danger', 'Only work orders with a completed status can have inspections.');
-        }
-
         return view('inspections.create', [
             'agencies' => Agency::all(),
             'all_statuses_form' => Inspection::allStatusesForm(),

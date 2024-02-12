@@ -17,6 +17,7 @@
     <div class="mb-3">
         @include('work-orders.__.status-flag', ['status' => $work_order->status])
         @include('work-orders.__.inspection-status-flag', ['status' => $work_order->inspection_status])
+        @include('payments.__.flag', ['status' => $work_order->payment_status])
     </div>
     @endslot
 </x-page-title>

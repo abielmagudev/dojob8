@@ -1,4 +1,4 @@
-<x-card title="Activities">
+<x-card title="{{ $history->count() }} Activities">
     <ul class="list-group list-group-flush">
         @foreach($history as $activity)   
         <li class="list-group-item">

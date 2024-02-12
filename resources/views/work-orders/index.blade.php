@@ -115,7 +115,7 @@
 
             <td class="text-nowrap text-end" style="width:1%">
                 <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm w-100">
-                    <span>#{{ $work_order->id }}</span>
+                    <i class="bi bi-eye-fill"></i>
                 </a>
             </td>
             <td>             

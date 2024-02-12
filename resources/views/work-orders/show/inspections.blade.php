@@ -4,8 +4,6 @@
         @if($work_order->job->requiresApprovedInspections())
         <div class="badge border border-success text-success">{{ $work_order->job->approved_inspections_required_count }} Approved required</div>
         @endif
-
-        <div class="badge text-bg-success">{{ $inspections->filter(fn($i) => $i->isApproved())->count() }} Approved</div>
     </div>
     @endslot
 

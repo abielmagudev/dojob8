@@ -20,8 +20,8 @@ class WorkOrderFactory extends Factory
 
         return [
             'status' => $status,
-            'payment_status' => WorkOrder::inStatusesForPayment($status) ? $this->faker->randomElement( WorkOrder::getPaymentStatuses() ) : 'unpaid',
-            'inspection_status' => null,
+            'payment_status' => WorkOrder::inStatusesForPayment($status) ? $this->faker->randomElement( WorkOrder::getPaymentStatuses() ) : WorkOrder::initialPaymentStatus(),
+            'inspection_status' => WorkOrder::initialInspectionStatus(),
 
             'scheduled_date' => $this->faker->dateTimeBetween('-2 years'),
             'working_at' => in_array($status, ['working','done','completed']) ? $this->faker->dateTimeBetween('-2 years') : null,

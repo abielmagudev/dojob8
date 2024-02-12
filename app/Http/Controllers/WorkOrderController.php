@@ -74,6 +74,10 @@ class WorkOrderController extends Controller
         
         $work_order->attachWorkers();
 
+        if( $work_order->job->requiresApprovedInspections() ) {
+            $work_order->updateInspectionStatus();
+        }
+        
         if( $work_order->job->hasInspectionsSetup() ) {
             Inspection::generateByWorkOrderSetup($work_order);
         }

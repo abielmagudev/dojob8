@@ -96,6 +96,8 @@ class WorkOrderStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
+            'payment_status' => WorkOrder::initialPaymentStatus(),
+            'inspection_status' => WorkOrder::initialInspectionStatus(),
             'rework_id' => $this->get('type') == 'rework' ? $this->get('type_id') : null,
             'warranty_id' => $this->get('type') == 'warranty' ? $this->get('type_id') : null,
             'client_id' => $this->client,

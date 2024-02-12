@@ -88,8 +88,8 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error updating inspection, try again please');
         }
 
-        if( $inspection->isApproved() ) {
-            // $inspection->work_order->changesToInspectedStatus();
+        if( $inspection->work_order->job->requiresApprovedInspections() ) {
+            $inspection->work_order->updateInspectionStatus();
         }
 
         return redirect()->route('inspections.edit', $inspection)->with('success', "You updated inspection <b>{$inspection->id}</b>");

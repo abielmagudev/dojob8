@@ -52,7 +52,7 @@ class InspectionSaveRequest extends FormRequest
                 'bail', 
                 'required', 
                 'integer', 
-                sprintf('exists:%s,id,status,completed', WorkOrder::class),
+                sprintf('exists:%s,id', WorkOrder::class),
             ],
         ];
 

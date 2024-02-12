@@ -38,7 +38,7 @@
     </x-small-title>
 
     <x-small-title title="Inspector">
-        {{ $inspection->inspector->name }}
+        {{ $inspection->inspector_name }}
     </x-small-title>
 
     <x-small-title title="Crew">

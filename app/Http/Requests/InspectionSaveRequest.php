@@ -85,9 +85,9 @@ class InspectionSaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'agency_id' => $this->agency,
-            'crew_id' => $this->crew,
-            'status' => Inspection::qualifyPendingStatus( $this->all() ) ? 'pending' : $this->get('status'),
+            'agency_id' => $this->get('agency'),
+            'crew_id' => $this->get('crew'),
+            'status' => $this->get('status'),
             'work_order_id' => $this->isMethod('POST') ? $this->work_order : $this->route('inspection')->work_order_id,
         ]);
     }

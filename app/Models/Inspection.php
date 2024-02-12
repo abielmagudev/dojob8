@@ -64,6 +64,19 @@ class Inspection extends Model implements Filterable
 
     // Mutators
 
+    public function setStatusAttribute($value)
+    {
+        if( self::qualifyPendingStatus( request()->all() ) ) {
+            $value = 'pending';
+        }
+
+        if( $value == 'pending' && request()->filled('scheduled_date') ) {
+            $value = 'awaiting';
+        }
+
+        $this->attributes['status'] = $value;
+    }
+
     public function setInspectorNameAttribute($value)
     {
         $this->attributes['inspector_name'] = Str::title($value);

@@ -62,7 +62,9 @@
 
         @slot('thead')
         <tr>
+            @if( $request->has('search') )            
             <th></th>
+            @endif
 
             @if( $request->has('dates') )
             <th>Scheduled</th>
@@ -81,9 +83,11 @@
 
         @foreach($work_orders as $work_order)           
         <tr>
+            @if( $request->has('search') )            
             <td class="text-center text-secondary" style="width:1%">
                 {!! marker($request->get('value', ''), $work_order->id) !!}
             </td>
+            @endif
 
             @if( $request->filled('dates') )
             <td class="text-nowrap">

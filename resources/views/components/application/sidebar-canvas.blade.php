@@ -11,7 +11,6 @@
     <div class="offcanvas-body">
 
         <div class="d-block d-md-none mb-3">
-            <hr>
             @include('components.application.search')
         </div>
         

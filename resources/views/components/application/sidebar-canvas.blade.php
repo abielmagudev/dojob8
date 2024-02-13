@@ -3,16 +3,12 @@
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebarMenu" aria-labelledby="offcanvasSidebarMenuLabel">
     <div class="offcanvas-header">
         <div class="lh-1">
-            <h5 class="offcanvas-title" id="offcanvasSidebarMenuLabel">Dojob</h5>
+            <h5 class="offcanvas-title" id="offcanvasSidebarMenuLabel">{{ $configuration->get('company_name') }}</h5>
             <small>{{ now()->toFormattedDayDateString() }}</small>
         </div>
         <button type="button" class="btn-close xbtn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-
-        <div class="text-center text-uppercase mb-3">
-            <small class="fw-bold">{{ $configuration->get('company_name') }}</small>
-        </div>
 
         <div class="d-block d-md-none mb-3">
             <hr>
@@ -37,5 +33,8 @@
         @endforeach
         <br>
         
+        <p class="text-end text-secondary text-uppercase small">
+            <small>{{ config('app.name') }} {{ date('Y') }}</small>
+        </p>
     </div>
 </div>

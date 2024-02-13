@@ -28,11 +28,11 @@ class ViewServiceProvider extends ServiceProvider
     {
         $configuration = Configuration::first();
 
-        View::composer('components.application.sidebar-canvas', function($view) use ($configuration) {
-            $view->with('configuration', $configuration);
-        });
-
-        View::composer('components.custom.input-city-name-data', function ($view) use ($configuration) {
+        View::composer([
+            'components.application.navbar',
+            'components.application.sidebar-canvas',
+            'components.custom.input-city-name-data',
+        ], function($view) use ($configuration) {
             $view->with('configuration', $configuration);
         });
 

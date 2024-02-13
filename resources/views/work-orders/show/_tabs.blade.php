@@ -5,7 +5,7 @@
         'title' => 'Information',
     ],
     'inspections' => [
-        'display' => $work_order->job->requiresApprovedInspections(),
+        'display' => $work_order->isStandard(),
         'enabled' => $work_order->job->requiresApprovedInspections(), // $work_order->qualifiesForInspection()
         'title' => 'Inspections',
     ],

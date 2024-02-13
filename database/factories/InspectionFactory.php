@@ -26,8 +26,8 @@ class InspectionFactory extends Factory
             'agency_id' => $this->faker->numberBetween(1, 3),
             'crew_id' => $this->faker->optional()->numberBetween(1, 10),
             'work_order_id' => $this->faker->numberBetween(1, 500),
-            'status' => ! Inspection::qualifyPendingStatus($attributes) 
-                        ? $this->faker->randomElement( Inspection::allStatusesForm()->toArray() )
+            'status' => ! Inspection::qualifyPendingStatus( $attributes ) 
+                        ? $this->faker->randomElement( Inspection::allStatusesForm()->toArray() ) 
                         : 'pending',
         ];
     }

@@ -70,6 +70,25 @@ class InspectionSaveRequest extends FormRequest
         ];
     }
 
+    public function prepareForValidation()
+    {
+        if(! Inspection::qualifyPendingStatus( $this->all() ) )
+        {
+            if( $this->get('status') == 'pending' ) 
+            {
+                $this->merge([
+                    'status' => 'awaiting'
+                ]);
+            }
+        }
+        else
+        {
+            $this->merge([
+                'status' => 'pending'
+            ]);         
+        }
+    }
+
     protected function failedValidation(Validator $validator)
     {
         if( $validator->errors()->has('work_order') )

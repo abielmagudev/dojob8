@@ -13,6 +13,11 @@ trait Validators
     {
         return self::inIncompleteStatuses($this->status);
     }
+
+    public function hasCompletedAt()
+    {
+        return ! empty( $this->completed_at );
+    }
     
     public function isCompleted()
     {

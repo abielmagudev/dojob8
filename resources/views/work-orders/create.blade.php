@@ -29,8 +29,8 @@
         <br>
 
         <div class="text-end">
+            <a href="{{ route('work-orders.index') }}" class="btn btn-outline-primary">Cancel</a>
             <button class="btn btn-success" type="submit">Create work order</button>
-            <a href="{{ route('work-orders.index') }}" class="btn btn-primary">Cancel</a>
         </div>
     </form>
 

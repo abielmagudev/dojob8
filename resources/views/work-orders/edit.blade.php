@@ -19,12 +19,13 @@
         @method('patch')
         @csrf
         @include('work-orders._form')
+        @include('work-orders._form.timeline')
         @include('work-orders._form.status')
         <br>
 
         <div class="text-end">
+            <a href="{{ $request->get('url_back', route('work-orders.show', $work_order)) }}" class="btn btn-outline-primary">Back</a>
             <button class="btn btn-warning" type="submit">Update work order</button>
-            <a href="{{ $request->get('url_back', route('work-orders.show', $work_order)) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

@@ -69,7 +69,7 @@ class WorkOrderStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if(! WorkOrder::getAllTypes()->contains($this->get('type')) ) {
+        if(! WorkOrder::getAllTypes()->contains( $this->get('type') ) ) {
             return;
         }
 

@@ -33,12 +33,8 @@ class WorkOrderUpdateRequest extends FormRequest
                 'required',
                 sprintf('in:%s', WorkOrder::getAllTypes()->implode(',')),
             ],
-            'rework' => [
-                'required_if:type,rework',
-                sprintf('in:%s', $this->work_order_ids_for_rectification),
-            ],
-            'warranty' => [
-                'required_if:type,warranty',
+            'type_id' => [
+                'required_if:type,rework,warranty',
                 sprintf('in:%s', $this->work_order_ids_for_rectification),
             ],
             'crew' => [
@@ -55,6 +51,24 @@ class WorkOrderUpdateRequest extends FormRequest
             ],
             'notes' => [
                 'nullable',
+            ],
+            'working_date' => [
+                'nullable',
+                'date',
+            ],
+            'working_time' => [
+                'nullable',
+                'required_with:working_date',
+                'date_format:H:i',
+            ],
+            'done_date' => [
+                'nullable',
+                'date',
+            ],
+            'done_time' => [
+                'nullable',
+                'required_with:done_date',
+                'date_format:H:i',
             ],
             'status' => [
                 'required',
@@ -80,7 +94,7 @@ class WorkOrderUpdateRequest extends FormRequest
 
         $this->crew_ids = Crew::taskWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
 
-        if( WorkOrder::getAllTypes()->contains($this->get('type')) && $this->get('type') <> 'standard' ) {
+        if( WorkOrder::getAllTypes()->contains( $this->get('type') ) && $this->get('type') <> 'standard' ) {
             $this->work_order_ids_for_rectification = $work_order->client->onlyWorkOrdersForRectification()->pluck('id')->implode(',');
         }
     }
@@ -105,6 +119,9 @@ class WorkOrderUpdateRequest extends FormRequest
             'warranty_id' => $this->get('type') == 'warranty' ? $this->get('warranty') : null,
             'contractor_id' => $this->contractor,
             'crew_id' => $this->crew,
+            'working_at' => $this->only(['working_date', 'working_time']), // Mutator
+            'done_at' => $this->only(['done_date', 'done_time']), // Mutator
+            'completed_at' => $this->get('status'), // Mutator
         ]);
     }
 }

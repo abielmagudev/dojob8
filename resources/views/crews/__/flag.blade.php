@@ -1,4 +1,4 @@
-@if( $crew->hasDescription() )
+@if( isset($tooltip) && $crew->hasDescription() )
 <x-tooltip title="{{ $crew->description }}">
     <span class="badge {{ $class ?? '' }} align-middle" style="background-color:{{ $crew->background_color }}; color: {{ $crew->text_color }}">
         {{ $crew->name }}

@@ -2,7 +2,7 @@
     <form action="{{ route('payments.index') }}" method="get" autocomplete="off" >
         @csrf
         @include('components.custom.input-between-dates')
-        @include('payments.modal-filters.status')
+        @include('payments.index.modal-filters.status')
         @include('work-orders.index.modal-filters.contractor')
         @include('work-orders.index.modal-filters.job')
         @include('components.custom.select-sort')

@@ -23,8 +23,8 @@
     </li>
     <li>
         <x-modal-trigger modal-id="filterPaymentsModal" class="dropdown-item">
-            <i class="bi bi-funnel"></i>
-            <span class="ms-1">Set filters</span>
+            <i class="bi bi-filter"></i>
+            <span class="ms-1">More filters</span>
         </x-modal-trigger>
     </li>
     @endslot
@@ -42,7 +42,7 @@
             <th>Client</th>
             <th class="text-center">Contractor</th>
             <th class="text-center">Status</th>
-            <th class="text-nowrap text-center">Work order</th>
+            <th></th>
             <th>
                 <button id="selectAllButton" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-check2-square"></i>
@@ -72,7 +72,7 @@
             </td>
 
             <td class="text-nowrap">
-                @include('clients.__.accordion-address-contact', [
+                @include('clients.__.inline-address-contact', [
                     'client' => $work_order->client
                 ])
             </td>
@@ -95,7 +95,9 @@
             </td>
 
             <td>
-                <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm w-100">#{{ $work_order->id }}</a>
+                <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-eye-fill"></i>    
+                </a>
             </td>
 
             <td class="text-center" style="width:1%">
@@ -135,6 +137,6 @@ selectAllButton.listen()
 </script>
 @endpush
 
-@include('payments.modal-filter')
-@include('payments.modal-update')
+@include('payments.index.modal-filter')
+@include('payments.index.modal-update')
 @endsection

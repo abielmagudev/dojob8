@@ -22,7 +22,7 @@
     {{-- Right --}}
     <div class="col text-nowrap text-end">
 
-        <x-tooltip title="Change status crews" class="d-inline-block">
+        <x-tooltip title="Change status crews">
             <x-modal-trigger modal-id="changeStatusCrewsModal" class="btn btn-outline-primary">
                 <i class="bi bi-toggles"></i>
             </x-modal-trigger>

@@ -21,7 +21,7 @@
                     'id' => $crew->id, 
                     'name' => $crew->name, 
                 ]) ?>
-                <x-tooltip title="Add crew members" class="d-inline-block">
+                <x-tooltip title="Add crew members">
                     <x-modal-trigger data-crew="{{ $data_crew_json }}" modal-id="addCrewMembersModal" class="btn btn-outline-success btn-sm text-nowrap ">
                         <i class="bi bi-person-plus-fill"></i>
                     </x-modal-trigger>

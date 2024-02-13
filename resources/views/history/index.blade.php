@@ -8,8 +8,8 @@
 <x-card title="{{ $history->total() }} activities">
 
     @slot('options')
-    <x-modal-trigger modal-id="historyFilterModal" class="btn btn-primary">
-        <i class="bi bi-funnel"></i>
+    <x-modal-trigger modal-id="historyFilterModal" class="btn btn-outline-primary">
+        <i class="bi bi-filter"></i>
     </x-modal-trigger>
     @endslot
 

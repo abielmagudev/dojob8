@@ -30,7 +30,7 @@
             </li>
             <li>
                 <x-modal-trigger modal-id="modalInspectionFilters" class="dropdown-item" link>
-                    <i class="bi bi-funnel"></i>
+                    <i class="bi bi-filter"></i>
                     <span class=" mx-1">More filters</span>
                 </x-modal-trigger>
             </li>
@@ -87,7 +87,7 @@
                 </td>
 
                 <td class="text-nowrap">
-                    @include('clients.__.accordion-address-contact', ['client' => $inspection->work_order->client])
+                    @include('clients.__.inline-address-contact', ['client' => $inspection->work_order->client])
                 </td>
 
                 <td class="text-nowrap">
@@ -97,12 +97,10 @@
                 </td>
 
                 <td class="text-nowrap text-center" style="width:1%">
-                @if( $inspection->hasCrew() )
-                    @include('crews.__.flag', [
+                    @includeWhen($inspection->hasCrew(), 'crews.__.flag', [
                         'crew' => $inspection->crew,
                         'class' => 'w-100',
                     ])
-                @endif
                 </td>
 
                 <td class="text-end">

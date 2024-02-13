@@ -7,9 +7,11 @@
 @section('content')
 <x-card title="{{ $members->total() }} members">
     @slot('options')
-        <x-modal-trigger modal-id="modalMembersFilters">
-            <i class="bi bi-funnel"></i>
-        </x-modal-trigger>
+        <x-tooltip title="More filters">
+            <x-modal-trigger modal-id="modalMembersFilters" class="btn btn-outline-primary">
+                <i class="bi bi-filter"></i>
+            </x-modal-trigger>
+        </x-tooltip>
 
         <a href="{{ route('members.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i>

@@ -102,12 +102,12 @@
                 ])
             </td>
             
-            <td class="text-nowrap">
+            <td class="text-nowrap" style="width:1%">
                 @include('work-orders.__.job-flag')
             </td>
 
             <td class="text-nowrap">
-                @include('clients.__.accordion-address-contact', [
+                @include('clients.__.inline-address-contact', [
                     'client' => $work_order->client,
                 ])
             </td>

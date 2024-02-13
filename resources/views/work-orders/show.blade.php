@@ -22,7 +22,7 @@
     @endslot
 </x-page-title>
 
-@include('work-orders.__.client', ['client' => $work_order->client])
+@include('work-orders.__.summary-client', ['client' => $work_order->client])
 
 @endsection
 

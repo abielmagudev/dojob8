@@ -47,4 +47,9 @@ trait Attributes
 
         return 'standard';
     }
+
+    public function getTypeIdAttribute()
+    {
+        return $this->rework_id ?? $this->warranty_id;
+    }
 }

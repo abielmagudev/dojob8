@@ -21,6 +21,7 @@
     <x-table class="align-middle ">
         @slot('thead')
         <tr>
+            <th></th>
             <th>Scheduled</th>
             <th>Job</th>
             <th class="text-center">Crew</th>
@@ -32,6 +33,8 @@
 
         @foreach($client->work_orders->sortByDesc('id') as $work_order)
         <tr>
+            <td class="text-center text-secondary">{{ $work_order->id }}</td>
+
             <td class="text-nowrap">{{ $work_order->scheduled_date_human }}</td>
 
             <td class="text-nowrap">
@@ -64,7 +67,7 @@
 
             <td class="text-end w-1">
                 <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm w-100">
-                    <span>#{{ $work_order->id }}</span>
+                    <i class="bi bi-eye-fill"></i>
                 </a>
             </td>
         </tr>

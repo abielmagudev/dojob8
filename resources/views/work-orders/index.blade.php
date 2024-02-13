@@ -67,7 +67,7 @@
 
         @foreach($work_orders as $work_order)           
         <tr>
-            <td class="text-center text-secondary small" style="width:1%">{!! marker($request->get('value', ''), $work_order->id) !!}</td>
+            <td class="text-center text-secondary" style="width:1%">{!! marker($request->get('value', ''), $work_order->id) !!}</td>
 
             @if( $request->filled('dates') )
             <td class="text-nowrap">

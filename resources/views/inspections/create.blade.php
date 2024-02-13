@@ -26,7 +26,7 @@
         <br>
 
         <div class="text-end">
-            <a href="{{ route('work-orders.show', [$work_order, 'tab' => 'inspections']) }}" class="btn btn-outline-primary">Cancel</a>
+            <a href="{{ $url_back }}" class="btn btn-outline-primary">Cancel</a>
             <button class="btn btn-success" type="submit">Create inspection</button>
         </div>
     </form>

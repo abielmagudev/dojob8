@@ -51,7 +51,7 @@
                 {{ $inspection->observations }}
             </td>
             <td class="text-nowrap text-end" style="width:1%">
-                <a href="{{ route('inspections.edit', [$inspection, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
+                <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>

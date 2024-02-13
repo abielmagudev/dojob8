@@ -53,6 +53,7 @@ class InspectionController extends Controller
             'inspection' => new Inspection,
             'inspector_names' => Inspection::onlyInspectorNames(),
             'work_order' => $work_order,
+            'url_back' => route('work-orders.show', [$work_order, 'tab' => 'inspections']),
         ]);
     }
 
@@ -72,13 +73,15 @@ class InspectionController extends Controller
 
     public function edit(Request $request, Inspection $inspection)
     {
+        $url_back = $request->filled('url_back') ? $request->get('url_back') : route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections']);
+
         return view('inspections.edit', [
             'agencies' => Agency::all(),
             'all_statuses_form' => Inspection::allStatusesForm(),
             'crews' => Crew::taskInspections()->active()->get(),
             'inspection' => $inspection,
             'inspector_names' => Inspection::onlyInspectorNames(),
-            'url_back' => $request->get('url_back', route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])),
+            'url_back' => $url_back,
         ]);
     }
 

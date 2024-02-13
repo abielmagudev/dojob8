@@ -4,32 +4,14 @@ namespace App\Models\WorkOrder\Traits;
 
 trait Mutators
 {
-    public function setReworkIdAttribute($values)
+    public function setWorkingAtAttribute($value)
     {
-        $this->attributes['rework_id'] = $values['type'] == 'rework' ? $values['type_id'] : null;
+        $this->attributes['working_at'] = ! empty($value) ? $value : null;
     }
 
-    public function setWarrantyIdAttribute($values)
+    public function setDoneAtAttribute($value)
     {
-        $this->attributes['warranty_id'] = $values['type'] == 'warranty' ? $values['type_id'] : null;
-    }
-
-    public function setWorkingAtAttribute($values)
-    {
-        if( is_array($values) && empty( array_filter($values) ) || empty($values) ) {
-            $values = null;
-        }
-
-        $this->attributes['working_at'] = is_array($values) ? implode(' ', $values) : $values;
-    }
-
-    public function setDoneAtAttribute($values)
-    {
-        if( is_array($values) && empty( array_filter($values) ) || empty($values) ) {
-            $values = null;
-        }
-
-        $this->attributes['done_at'] = is_array($values) ? implode(' ', $values) : $values;
+        $this->attributes['done_at'] = ! empty($value) ? $value : null;
     }
 
     public function setCompletedAtAttribute($status)

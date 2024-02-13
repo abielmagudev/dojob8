@@ -2,8 +2,8 @@
     <div class="mb-3">
         <div class="input-group">
             <span class="input-group-text" style="width:106px">Working</span>
-            <input type="date" class="form-control {{ bsInputInvalid( $errors->has('working_date') ) }}" name="working_date" value="{{ $work_order->working_date_input }}">
-            <input type="time" class="form-control {{ bsInputInvalid( $errors->has('working_time') ) }}" name="working_time" value="{{ $work_order->working_time_input }}">
+            <input type="date" class="form-control {{ bsInputInvalid( $errors->has('working_date') ) }}" name="working_date" value="{{ old('working_date', $work_order->working_date_input) }}">
+            <input type="time" class="form-control {{ bsInputInvalid( $errors->has('working_time') ) }}" name="working_time" value="{{ old('working_time', $work_order->working_time_input) }}">
         </div>
         <x-form-feedback error="working_date" />
         <x-form-feedback error="working_time" />
@@ -12,8 +12,8 @@
     <div>
         <div class="input-group">
             <span class="input-group-text" style="width:106px">Done</span>
-            <input type="date" class="form-control {{ bsInputInvalid( $errors->has('done_date') ) }}" name="done_date" value="{{ $work_order->done_date_input }}">
-            <input type="time" class="form-control {{ bsInputInvalid( $errors->has('done_time') ) }}" name="done_time" value="{{ $work_order->done_time_input }}">
+            <input type="date" class="form-control {{ bsInputInvalid( $errors->has('done_date') ) }}" name="done_date" value="{{ old('done_date', $work_order->done_date_input) }}">
+            <input type="time" class="form-control {{ bsInputInvalid( $errors->has('done_time') ) }}" name="done_time" value="{{ old('done_time', $work_order->done_time_input) }}">
         </div>
         <x-form-feedback error="done_date" />
         <x-form-feedback error="done_time" />

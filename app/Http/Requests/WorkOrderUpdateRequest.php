@@ -113,12 +113,12 @@ class WorkOrderUpdateRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'rework_id' => $this->only(['type', 'type_id']), // Mutator
-            'warranty_id' => $this->only(['type', 'type_id']), // Mutator
+            'rework_id' => $this->get('type') == 'rework' ? $this->get('type_id') : null,
+            'warranty_id' => $this->get('type') == 'warranty' ? $this->get('type_id') : null,
             'contractor_id' => $this->get('contractor'),
             'crew_id' => $this->get('crew'),
-            'working_at' => $this->only(['working_date', 'working_time']), // Mutator
-            'done_at' => $this->only(['done_date', 'done_time']), // Mutator
+            'working_at' => collect($this->only(['working_date', 'working_time']))->filter()->implode(' '), // Mutator
+            'done_at' => collect($this->only(['done_date', 'done_time']))->filter()->implode(' '), // Mutator
             'completed_at' => $this->get('status'), // Mutator
         ]);
     }

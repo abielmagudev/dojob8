@@ -27,7 +27,7 @@ trait Attributes
 
     public function getCompletedDateHumanAttribute()
     {
-        return ! is_null($this->completed_at) ? Carbon::parse($this->completed_at)->format('D d M, Y') : null;
+        return ! is_null($this->completed_at) ? Carbon::parse($this->completed_at)->format('d M, Y') : null;
     }
 
     public function getCompletedTimeHumanAttribute()

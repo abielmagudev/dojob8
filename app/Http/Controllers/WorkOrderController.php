@@ -31,8 +31,9 @@ class WorkOrderController extends Controller
 
         $work_orders = WorkOrder::withRelationshipsForIndex()
         ->filterByParameters( $request->all() )
+        ->orderBy('crew_id')
+        ->orderBy('ordered', 'asc')
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
-        ->orderBy('id', $request->get('sort', 'desc'))
         ->paginate(25)
         ->appends( $request->query() );
 

@@ -28,7 +28,7 @@ trait Filters
 
     public function scopeFilterBySearch($query, $value)
     {
-        return ! is_null($value) ? $query->search($value) : $query;
+        return ! is_null($value) ? $query->search($value)->orderBy('id', 'asc') : $query;
     }
 
     public function scopeFilterByClient($query, $value)

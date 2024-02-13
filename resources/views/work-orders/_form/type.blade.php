@@ -11,13 +11,9 @@
     <x-form-feedback error="type" />
 
     <div class="{{ $old_type == 'standard' ? 'd-none' : '' }} mt-3">
-        <?php $work_orders_of_client = isset($client) ? $client->load('work_orders.job') : $work_order->client->load('work_orders.job')  ?>
-
-        <select name="type_id" id="typeIdSelect" class="form-select" {{ $old_type == 'standard' ? 'disabled' : '' }} required>
-            @foreach($work_orders_of_client->work_orders as $wo)
-            @if( $wo->qualifiesForRectification() )
+        <select name="type_id" id="typeIdSelect" class="form-select {{ bsInputInvalid( $errors->has('type_id') ) }}" {{ $old_type == 'standard' ? 'disabled' : '' }} required>
+            @foreach($work_orders_for_rectification as $wo)
             <option value="{{ $wo->id }}">#{{ $wo->id }} - {{ $wo->job->name }}</option>
-            @endif
             @endforeach
         </select>
         <x-form-feedback error="type_id" important>Only standard work orders with completed status from the current client will be displayed.</x-form-feedback>

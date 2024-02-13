@@ -81,10 +81,8 @@ class WorkOrderUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'rework.required_if' => __('Choose a work order for rework'),
-            'rework.in' => __('Choose a work order valid for rework'),
-            'warranty.required_if' => __('Choose a work order for warranty'),
-            'warranty.in' => __('Choose a work order valid for warranty'),
+            'type_id.required_if' => __(sprintf('Choose a work order for %s', $this->get('type'))),
+            'type_id.in' => __(sprintf('Choose a valid work order for %s', $this->get('type'))),
         ];
     }
 
@@ -95,7 +93,7 @@ class WorkOrderUpdateRequest extends FormRequest
         $this->crew_ids = Crew::taskWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
 
         if( WorkOrder::getAllTypes()->contains( $this->get('type') ) && $this->get('type') <> 'standard' ) {
-            $this->work_order_ids_for_rectification = $work_order->client->onlyWorkOrdersForRectification()->pluck('id')->implode(',');
+            $this->work_order_ids_for_rectification = $work_order->client->onlyWorkOrdersForRectification($work_order)->pluck('id')->implode(',');
         }
     }
 
@@ -115,10 +113,10 @@ class WorkOrderUpdateRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'rework_id' => $this->get('type') == 'rework' ? $this->get('rework') : null,
-            'warranty_id' => $this->get('type') == 'warranty' ? $this->get('warranty') : null,
-            'contractor_id' => $this->contractor,
-            'crew_id' => $this->crew,
+            'rework_id' => $this->only(['type', 'type_id']), // Mutator
+            'warranty_id' => $this->only(['type', 'type_id']), // Mutator
+            'contractor_id' => $this->get('contractor'),
+            'crew_id' => $this->get('crew'),
             'working_at' => $this->only(['working_date', 'working_time']), // Mutator
             'done_at' => $this->only(['done_date', 'done_time']), // Mutator
             'completed_at' => $this->get('status'), // Mutator

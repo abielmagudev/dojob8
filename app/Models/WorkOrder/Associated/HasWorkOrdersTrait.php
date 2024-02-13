@@ -49,9 +49,15 @@ trait HasWorkOrdersTrait
         return $this->work_orders->filter(fn($wo) => $wo->hasIncompleteStatus());
     }
 
-    public function onlyWorkOrdersForRectification()
+    public function onlyWorkOrdersForRectification($except = [])
     {
-        return $this->work_orders->filter(fn($wo) => $wo->isStandard() && $wo->isCompleted());
+        if(! is_array($except) ) {
+            $except = is_a($except, WorkOrder::class) ? [$except->id] : [];
+        }
+
+        return $this->work_orders->filter(function($wo) use($except) {
+            return $wo->isStandard() && $wo->isCompleted() &&! in_array($wo->id, $except);
+        });
     }
 
 

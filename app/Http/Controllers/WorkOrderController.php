@@ -55,6 +55,8 @@ class WorkOrderController extends Controller
     {
         $this->reflashInputErrors();
 
+        $client->load('work_orders.job');
+
         return view('work-orders.create', [
             'all_statuses' => WorkOrder::getAllStatuses(),
             'all_types' => WorkOrder::getAllTypes(),
@@ -63,6 +65,7 @@ class WorkOrderController extends Controller
             'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'jobs' => Job::with('extensions')->orderBy('name')->get(),
             'work_order' => new WorkOrder,
+            'work_orders_for_rectification' => $client->onlyWorkOrdersForRectification(),
         ]);
     }
 
@@ -104,9 +107,11 @@ class WorkOrderController extends Controller
         ]));
     }
 
-    public function edit(WorkOrder $work_order, Request $request)
+    public function edit(Request $request, WorkOrder $work_order)
     {
         $this->reflashInputErrors();
+
+        $work_order->client->load('work_orders.job');
 
         return view('work-orders.edit', [
             'all_statuses' => WorkOrder::getAllStatuses(),
@@ -116,6 +121,7 @@ class WorkOrderController extends Controller
             'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
             'request' => $request,
             'work_order' => $work_order,
+            'work_orders_for_rectification' => $work_order->client->onlyWorkOrdersForRectification($work_order),
         ]);
     }
 

@@ -98,12 +98,12 @@ class WorkOrderStoreRequest extends FormRequest
         return array_merge(parent::validated(), [
             'payment_status' => WorkOrder::initialPaymentStatus(),
             'inspection_status' => WorkOrder::initialInspectionStatus(),
-            'rework_id' => $this->get('type') == 'rework' ? $this->get('type_id') : null,
-            'warranty_id' => $this->get('type') == 'warranty' ? $this->get('type_id') : null,
-            'client_id' => $this->client,
-            'contractor_id' => $this->contractor,
-            'job_id' => $this->job,
-            'crew_id' => $this->crew,
+            'rework_id' => $this->only(['type', 'type_id']), // Mutator
+            'warranty_id' => $this->only(['type', 'type_id']), // Mutator
+            'client_id' => $this->get('client'),
+            'contractor_id' => $this->get('contractor'),
+            'job_id' => $this->get('job'),
+            'crew_id' => $this->get('crew'),
             'status' => WorkOrder::INITIAL_STATUS,
         ]);
     }

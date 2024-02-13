@@ -39,6 +39,7 @@ class WorkOrder extends Model implements Filterable
     const INITIAL_STATUS = 'new';
 
     protected $fillable = [
+        'ordered',
         'status',
         'payment_status',
         'inspection_status',

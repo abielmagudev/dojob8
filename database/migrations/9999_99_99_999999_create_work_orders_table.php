@@ -16,6 +16,7 @@ class CreateWorkOrdersTable extends Migration
     {
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('ordered', false, true)->nullable();
             $table->string('status')->index();
             $table->string('payment_status')->nullable()->index();
             $table->string('inspection_status')->nullable()->index();

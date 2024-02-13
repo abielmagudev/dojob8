@@ -19,6 +19,7 @@ class WorkOrderFactory extends Factory
         $rework_id = $this->faker->optional()->numberBetween(1, 500);
 
         return [
+            'ordered' => $this->faker->optional()->numberBetween(1, 5),
             'status' => $status,
             'payment_status' => WorkOrder::inStatusesForPayment($status) ? $this->faker->randomElement( WorkOrder::getPaymentStatuses() ) : WorkOrder::initialPaymentStatus(),
             'inspection_status' => WorkOrder::initialInspectionStatus(),
@@ -26,7 +27,7 @@ class WorkOrderFactory extends Factory
             'scheduled_date' => $this->faker->dateTimeBetween('-2 years'),
             'working_at' => in_array($status, ['working','done','completed']) ? $this->faker->dateTimeBetween('-2 years') : null,
             'done_at' => in_array($status, ['done','completed']) ? $this->faker->dateTimeBetween('-2 years') : null,
-            'completed_at' => $status == 'completed' ? $this->faker->dateTimeBetween('-2 years') : null,
+            'completed_at' => $status,
 
             'rework_id' => $rework_id,
             'warranty_id' => is_null($rework_id) ? $this->faker->optional()->numberBetween(1, 500) : null,

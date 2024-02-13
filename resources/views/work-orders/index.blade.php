@@ -25,6 +25,20 @@
         <hr class="dropdown-divider">
     </li>
     <li>
+        <form action="{{ route('work-orders.update.ordered') }}" method="post" id="formWorkOrderOrdered">
+            @method('patch')
+            @csrf
+            <input type="hidden" name="url_back" value="{{ $request->fullUrl() }}">
+            <button class="dropdown-item">
+                <i class="bi bi-floppy"></i>
+                <span class="ms-1">Update order</span>
+            </button>
+        </form>
+    </li>
+    <li>
+        <hr class="dropdown-divider">
+    </li>
+    <li>
         <a href="<?= $incomplete_work_orders['url'] ?>" class="dropdown-item d-flex">
             <div class="me-3">
                 <i class="bi bi-alarm"></i>
@@ -37,7 +51,7 @@
     </li>
     <li>
         <x-modal-trigger modal-id="modalWorkOrdersFilter" class="dropdown-item">
-            <i class="bi bi-funnel"></i>
+            <i class="bi bi-filter"></i>
             <span class="ms-1">More filters</span>
         </x-modal-trigger>
     </li>
@@ -54,7 +68,7 @@
             <th>Scheduled</th>
             @endif
 
-            <th class="text-center">Priority</th>
+            <th class="text-center">Order</th>
             <th class="text-center">Crew</th>
             <th>Job</th>
             <th>Client</th>
@@ -67,16 +81,18 @@
 
         @foreach($work_orders as $work_order)           
         <tr>
-            <td class="text-center text-secondary" style="width:1%">{!! marker($request->get('value', ''), $work_order->id) !!}</td>
+            <td class="text-center text-secondary" style="width:1%">
+                {!! marker($request->get('value', ''), $work_order->id) !!}
+            </td>
 
             @if( $request->filled('dates') )
             <td class="text-nowrap">
-                <span class="d-block">{{ ! $work_order->isToday() ? $work_order->scheduled_date_human : 'Today' }}</span>
+                {{ ! $work_order->isToday() ? $work_order->scheduled_date_human : 'Today' }}
             </td>
             @endif
 
             <td style="width:1%">
-                <input type="number" class="form-control form-control-sm" min="1" step="1" style="width:56px">
+                <input type="number" class="form-control form-control-sm" style="width:56px" min="1" step="1" name="ordered[{{ $work_order->id }}]" value="{{ $work_order->ordered }}" form="formWorkOrderOrdered">
             </td>
 
             <td class="text-nowrap" style="width:1%">

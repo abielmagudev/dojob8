@@ -2,30 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use App\Models\Inspection;
-use App\Models\Contractor;
-use App\Models\Job;
-use App\Models\WorkOrder;
-use App\Models\User;
+use App\Http\Controllers\DashboardController\StatisticalDataGenerator;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $work_orders = WorkOrder::whereYear('scheduled_date', date('Y'))
-        ->orderBy('scheduled_date', 'desc')
-        ->get();
+        if(! $request->filled('from') )
+        {
+            $request->merge([
+                'from' => date('Y-01-01'),
+            ]);
+        }
 
-        return view('dashboard.index', [
-            'all_statuses_work_order' => WorkOrder::getAllStatuses(),
-            'clients' => Client::all(),
-            'contractors' => Contractor::all(),
-            'inspections' => Inspection::with('agency')->get(),
-            'jobs' => Job::withTrashed()->get(),
-            'user' => User::all(),
-            'work_orders' => $work_orders,
-        ]);
+        if(! $request->has('to') )
+        {
+            $request->merge([
+                'to' => date('Y-m-d'),
+            ]);
+        }
+
+
+        $generator = new StatisticalDataGenerator($request);
+
+        return view('dashboard.index', array_merge(
+            $generator->dataByDefault(),
+            $generator->dataByRequest(),
+            ['request' => $request]
+        ));
     }
 }

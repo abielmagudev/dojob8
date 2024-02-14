@@ -19,11 +19,6 @@
         'enabled' => $work_order->qualifiesForRectification(),
         'title' => 'Warranties',
     ],
-    'timeline' => [
-        'display' => true,
-        'enabled' => true,
-        'title' => 'Timeline',
-    ],
     'media' => [
         'display' => true,
         'enabled' => true,

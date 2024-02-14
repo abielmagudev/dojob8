@@ -31,8 +31,8 @@ class Checker
             {
                 evt.preventDefault()
     
-                self.toggle = !self.toggle;
-                self.trigger().classList.toggle('active', self.toggle)
+                self.toggle = ! self.toggle;
+                // self.trigger().classList.toggle('active', self.toggle)
                 self.checkboxes().forEach(item => item.checked = self.toggle)
             })
         }

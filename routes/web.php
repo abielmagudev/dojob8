@@ -13,6 +13,7 @@ use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionJobController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InspectionController;
+use App\Http\Controllers\InspectionStatusController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
@@ -48,6 +49,7 @@ Route::get('clients/ajax', ClientAjaxController::class)->name('clients.ajax.sear
 Route::resource('clients', ClientController::class);
 
 // Inspections
+Route::patch('inspections/status', InspectionStatusController::class)->name('inspections.update.status');
 Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
 Route::resource('inspections', InspectionController::class)->except('create');
 Route::resource('agencies', AgencyController::class);

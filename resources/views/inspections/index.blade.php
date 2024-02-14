@@ -14,32 +14,46 @@
         @endslot
 
         @slot('dropoptions')
-            <li>
-                <a href="{{ $pending_inspections['url'] }}" class="dropdown-item">
-                    <i class="bi bi-exclamation-triangle"></i>
-                    <span class=" mx-1">Pending</span>
-                    <span class="badge text-bg-warning">{{ $pending_inspections['count'] }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ $awaiting_inspections['url'] }}" class="dropdown-item">
-                    <i class="bi bi-alarm"></i>
-                    <span class=" mx-1">Awaiting</span>
-                    <span class="badge text-bg-primary">{{ $awaiting_inspections['count'] }}</span>
-                </a>
-            </li>
-            <li>
-                <x-modal-trigger modal-id="modalInspectionFilters" class="dropdown-item" link>
-                    <i class="bi bi-filter"></i>
-                    <span class=" mx-1">More filters</span>
-                </x-modal-trigger>
-            </li>
+        <li>
+            <x-modal-trigger modal-id="modalInspectionStatusUpdate" class="dropdown-item">
+                <i class="bi bi-arrow-counterclockwise"></i>
+                <span class="ms-1">Update selected</span>
+            </x-modal-trigger>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+            <a href="{{ $pending_inspections['url'] }}" class="dropdown-item">
+                <i class="bi bi-exclamation-triangle"></i>
+                <span class=" mx-1">Pending</span>
+                <span class="badge text-bg-warning">{{ $pending_inspections['count'] }}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ $awaiting_inspections['url'] }}" class="dropdown-item">
+                <i class="bi bi-alarm"></i>
+                <span class=" mx-1">Awaiting</span>
+                <span class="badge text-bg-primary">{{ $awaiting_inspections['count'] }}</span>
+            </a>
+        </li>
+        <li>
+            <x-modal-trigger modal-id="modalInspectionFilters" class="dropdown-item" link>
+                <i class="bi bi-filter"></i>
+                <span class=" mx-1">More filters</span>
+            </x-modal-trigger>
+        </li>
         @endslot
 
         @if( $inspections->count() )  
         <x-table>
             <x-slot name="thead">
                 <tr>
+                    <th class="text-center">
+                        <button class="btn btn-outline-primary btn-sm border-0" type="button" id="checkerButton">
+                            <i class="bi bi-check2-square"></i>
+                        </button>
+                    </th>
                     <th class="text-center">Status</th>
 
                     @if( $request->has('dates') )
@@ -57,6 +71,11 @@
         
             @foreach($inspections as $inspection)
             <tr>
+                <td class="text-center">
+                    @if(! $inspection->isPending() )    
+                    <input type="checkbox" class="form-check-input" id="checkboxInspection{{ $inspection->id }}" name="inspections[]" value="{{ $inspection->id }}" form="formInspectionStatusUpdate">
+                    @endif
+                </td>
                 <td style="width:1%">
                     @include('inspections.__.status-flag', [
                         'status' => $inspection->status,
@@ -120,4 +139,10 @@
     </div>
 
 @include('inspections.index.modal-filtering')
+@include('inspections.index.modal-update-status')
+@include('components.scripts.Checker')
+<script>
+const checker = new Checker('checkboxInspection');
+checker.listen()
+</script>
 @endsection

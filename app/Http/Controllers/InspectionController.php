@@ -29,6 +29,7 @@ class InspectionController extends Controller
         ->appends( $request->all() );
 
         return view('inspections.index', [
+            'all_statuses_form' => Inspection::allStatusesForm(),
             'agencies' => Agency::all(),
             'inspections' => $inspections,
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),

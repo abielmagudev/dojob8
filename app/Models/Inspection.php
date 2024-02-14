@@ -129,6 +129,11 @@ class Inspection extends Model implements Filterable
                      ->filter();
     }
 
+    public function scopeNoPendingStatus($query)
+    {
+        return $query->where('status', '!=', 'pending');
+    }
+
 
     // Filters
 

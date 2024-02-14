@@ -16,11 +16,11 @@ return [
             'permission' => true,
             'route' => route('work-orders.index'),
         ],
-        'Payments' => [
-            'active' => request()->routeIs('payments.*'),
-            'icon' => '<i class="bi bi-cash-coin"></i>',
-            'route' => route('payments.index'),
+        'Clients' => [
+            'active' => request()->routeIs('clients.*'),
+            'icon' => '<i class="bi bi-book"></i>',
             'permission' => true,
+            'route' => route('clients.index'),
         ],
         'Jobs' => [
             'active' => request()->routeIs('jobs.*'),
@@ -34,11 +34,11 @@ return [
             'permission' => true,
             'route' => route('extensions.index')
         ],
-        'Clients' => [
-            'active' => request()->routeIs('clients.*'),
-            'icon' => '<i class="bi bi-book"></i>',
+        'Payments' => [
+            'active' => request()->routeIs('payments.*'),
+            'icon' => '<i class="bi bi-cash-coin"></i>',
+            'route' => route('payments.index'),
             'permission' => true,
-            'route' => route('clients.index'),
         ],
     ],
     'Inspections' => [

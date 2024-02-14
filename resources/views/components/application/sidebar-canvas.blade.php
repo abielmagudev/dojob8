@@ -10,15 +10,17 @@
     </div>
     <div class="offcanvas-body">
 
-        <div class="d-block d-md-none mb-3">
+        <div class="d-block d-lg-none mb-3">
             @include('components.application.search')
         </div>
         
         @foreach($content as $header => $menu)
         <div class="mb-3">
 
+            @if( is_string($header) )
             <small class="text-uppercase text-secondary fw-light">{{ $header }}</small>
-
+            @endif
+            
             <div class="list-group list-group-flush">
                 @foreach($menu as $title => $item)               
                 <a href="{{ $item['route'] }}" class="list-group-item list-group-item-action rounded border-0 {{ $item['active'] ? 'active' : '' }}">

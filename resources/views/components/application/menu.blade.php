@@ -1,45 +1,53 @@
 <?php
 
 return [
-    'Calendar' => [
+    'Home' => [
         'Dashboard' => [
             'active' => request()->routeIs('dashboard.*'),
             'icon' => '<i class="bi bi-bar-chart-line"></i>',
             'permission' => true,
             'route' => route('dashboard.index'),
         ],
+    ],
+    'Work orders' => [
         'Work orders' => [
             'active' => request()->routeIs('work-orders.*'),
             'icon' => '<i class="bi bi-clipboard"></i>',
             'permission' => true,
             'route' => route('work-orders.index'),
         ],
-        'Inspections' => [
-            'active' => request()->routeIs('inspections.*'),
-            'icon' => '<i class="bi bi-clipboard-check"></i>',
-            'route' => route('inspections.index'),
-            'permission' => true,
-        ], 
         'Payments' => [
             'active' => request()->routeIs('payments.*'),
             'icon' => '<i class="bi bi-cash-coin"></i>',
             'route' => route('payments.index'),
             'permission' => true,
         ],
-    ],
-    'Third parties' => [
+        'Jobs' => [
+            'active' => request()->routeIs('jobs.*'),
+            'icon' => '<i class="bi bi-nut"></i>',
+            'permission' => true,
+            'route' => route('jobs.index'),
+        ],
+        'Extensions' => [
+            'active' => request()->routeIs('extensions.*'),
+            'icon' => '<i class="bi bi-plug"></i>',
+            'permission' => true,
+            'route' => route('extensions.index')
+        ],
         'Clients' => [
             'active' => request()->routeIs('clients.*'),
             'icon' => '<i class="bi bi-book"></i>',
             'permission' => true,
             'route' => route('clients.index'),
         ],
-        'Contractors' => [
-            'active' => request()->routeIs('contractors.*'),
-            'icon' => '<i class="bi bi-bookmark-star"></i>',
+    ],
+    'Inspections' => [
+        'Inspections' => [
+            'active' => request()->routeIs('inspections.*'),
+            'icon' => '<i class="bi bi-clipboard-check"></i>',
+            'route' => route('inspections.index'),
             'permission' => true,
-            'route' => route('contractors.index'),
-        ],
+        ], 
         'Agencies' => [
             'active' => request()->routeIs('agencies.*'),
             'icon' => '<i class="bi bi-award"></i>',
@@ -60,26 +68,20 @@ return [
             'permission' => true,
             'route' => route('crews.index'),
         ],
-        'Jobs' => [
-            'active' => request()->routeIs('jobs.*'),
-            'icon' => '<i class="bi bi-nut"></i>',
+        'Contractors' => [
+            'active' => request()->routeIs('contractors.*'),
+            'icon' => '<i class="bi bi-bookmark-star"></i>',
             'permission' => true,
-            'route' => route('jobs.index'),
+            'route' => route('contractors.index'),
         ],
-        'Extensions' => [
-            'active' => request()->routeIs('extensions.*'),
-            'icon' => '<i class="bi bi-plug"></i>',
-            'permission' => true,
-            'route' => route('extensions.index')
-        ],
-    ],
-    'Application' => [
         'Users' => [
             'active' => request()->routeIs('users.*'),
             'icon' => '<i class="bi bi-person-workspace"></i>',
             'permission' => true,
             'route' => route('users.index'),
         ],
+    ],
+    'Application' => [
         'History' => [
             'active' => request()->routeIs('history.*'),
             'icon' => '<i class="bi bi-clock-history"></i>',

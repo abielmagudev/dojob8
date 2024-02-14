@@ -17,7 +17,7 @@
     </div>
 
     {{-- Center --}}
-    <div class="d-none d-md-inline-block">
+    <div class="d-none d-lg-inline-block">
       @include('components.application.search')
     </div>
 

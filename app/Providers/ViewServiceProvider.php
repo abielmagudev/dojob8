@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Configuration;
+use App\Models\Settings;
 use App\Suppliers\CountryManager;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -26,22 +26,22 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $configuration = Configuration::first();
+        $settings = Settings::first();
 
         View::composer([
             'components.application.navbar',
             'components.application.sidebar-canvas',
             'components.custom.input-city-name-data',
-        ], function($view) use ($configuration) {
-            $view->with('configuration', $configuration);
+        ], function($view) use ($settings) {
+            $view->with('settings', $settings);
         });
 
         View::composer([
             'components.custom.select-country-code-data',
             'components.custom.select-state-code-data',
-        ], function ($view) use ($configuration) {
+        ], function ($view) use ($settings) {
             $view->with('countryManager', CountryManager::singleton());
-            $view->with('configuration', $configuration);
+            $view->with('settings', $settings);
         });
     }
 }

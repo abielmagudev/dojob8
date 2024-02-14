@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\CrewMember;
-use App\Models\MemberWorkOrder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,17 +24,17 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // 
+            AgencySeeder::class,
             ClientSeeder::class,
-            ConfigurationSeeder::class,
             ContractorSeeder::class,
             CrewSeeder::class,
+            ExtensionSeeder::class,
             InspectionSeeder::class,
-            AgencySeeder::class,
             JobSeeder::class,
             MemberSeeder::class,
+            SettingsSeeder::class,
             UserSeeder::class,
             WorkOrderSeeder::class,
-            ExtensionSeeder::class,
 
             //
             CrewMemberSeeder::class,

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Configuration;
+use App\Models\Settings;
 use Illuminate\Database\Seeder;
 
-class ConfigurationSeeder extends Seeder
+class SettingsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class ConfigurationSeeder extends Seeder
      */
     public function run()
     {
-        Configuration::factory(1)->create();
+        Settings::factory(1)->create();
     }
 }

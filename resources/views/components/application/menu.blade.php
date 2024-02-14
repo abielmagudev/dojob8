@@ -88,11 +88,11 @@ return [
             'permission' => true,
             'route' => route('history.index'),
         ],
-        'Configuration' => [
-            'active' => request()->routeIs('configuration.*'),
+        'Settings' => [
+            'active' => request()->routeIs('settings.*'),
             'icon' => '<i class="bi bi-gear"></i>',
             'permission' => true,
-            'route' => route('configuration.index'),
+            'route' => route('settings.index'),
         ],
     ],
 ];

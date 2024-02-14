@@ -6,7 +6,7 @@ use App\Suppliers\CountryManager;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class ConfigurationSaveRequest extends FormRequest
+class SettingsSaveRequest extends FormRequest
 {
     public $country_codes;
 

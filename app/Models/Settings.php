@@ -6,12 +6,12 @@ use App\Models\Kernel\Traits\HasHookUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Configuration extends Model
+class Settings extends Model
 {
     use HasFactory;
     use HasHookUsers;
 
-    protected $table = 'configuration';
+    protected $table = 'settings';
 
     protected $fillable = [
         'data_json',

@@ -3,7 +3,7 @@
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebarMenu" aria-labelledby="offcanvasSidebarMenuLabel">
     <div class="offcanvas-header">
         <div class="lh-1">
-            <h5 class="offcanvas-title" id="offcanvasSidebarMenuLabel">{{ $configuration->get('company_name') }}</h5>
+            <h5 class="offcanvas-title" id="offcanvasSidebarMenuLabel">{{ $settings->get('company_name') }}</h5>
             <small>{{ now()->toFormattedDayDateString() }}</small>
         </div>
         <button type="button" class="btn-close xbtn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>

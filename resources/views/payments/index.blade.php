@@ -110,7 +110,7 @@
                     'class' => 'w-100'
                 ])
             </td>
-            <td>
+            <td class="text-end">
                 <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>    
                 </a>

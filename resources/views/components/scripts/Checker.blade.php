@@ -27,7 +27,7 @@ class Checker
 
         if( this.trigger() )
         {
-            ['click', 'touchstart', 'pointerdown'].forEach(function (event) {
+            ['click', 'touchstart', 'pointerdown', 'touchend'].forEach(function (event) {
                 self.trigger().addEventListener(event, function (evt)
                 {
                     evt.preventDefault()

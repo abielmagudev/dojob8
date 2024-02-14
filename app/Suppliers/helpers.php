@@ -80,6 +80,14 @@ if(! function_exists('title') )
     }
 }
 
+if(! function_exists('humanDateFormat') )
+{
+    function humanDateFormat(string $date, $format = 'D d M, Y')
+    {
+        return Carbon\Carbon::parse($date)->format($format);
+    }
+}
+
 
 // Bootstrap
 

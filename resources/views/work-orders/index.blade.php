@@ -6,21 +6,24 @@
 
 @section('content')
 <x-card title="{{ $work_orders->total() }}" subtitle="{{ $request->has('search') ? sprintf('Searching: %s', $request->get('search')) : '' }}">
+    
+    {{-- OPTIONS --}}
     @slot('options')
     <div class="d-inline-block align-middle ">
-        <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off">
-            <input type="date" class="form-control" onchange="this.closest('form').submit()" name="scheduled_date" value="{{ $request->get('scheduled_date') }}">
-        </form>
+        @include('components.custom.form-scheduled-date', [
+            'url' => route('work-orders.index')
+        ])
     </div>
     @endslot
 
+    {{-- DROPOPTIONS --}}
     @slot('dropoptions')
     <li>
         <x-modal-trigger modal-id="modalSearchClientToCreateWorkOrder" class="dropdown-item">
             <i class="bi bi-plus-lg"></i>
             <span class="ms-1">Create</span>
         </x-modal-trigger>
-        <x-modal-trigger modal-id="modalModifyStatusWorkOrders" class="dropdown-item">
+        <x-modal-trigger modal-id="modalModifyStatus" class="dropdown-item">
             <i class="bi bi-pencil-square"></i>
             <span class="ms-1">Modify selected status</span>
         </x-modal-trigger>
@@ -61,9 +64,11 @@
     </li>
     @endslot
 
+    {{-- BODY --}}
     @if( $work_orders->count() ) 
     <x-table>
 
+        {{-- THEAD --}}
         @slot('thead')
         <tr>
             @if( $request->has('search') )            
@@ -90,6 +95,7 @@
         </tr>
         @endslot
 
+        {{-- TBODY --}}
         @foreach($work_orders as $work_order)           
         <tr>            
             @if( $request->has('search') )            
@@ -99,7 +105,7 @@
             @endif
 
             <td class="text-center" style="width:1%">
-                <input class="form-check-input" type="checkbox" form="formUpdateStatusWorkOrders" name="work_orders[]" value="{{ $work_order->id }}">
+                <input class="form-check-input" type="checkbox" form="formUpdateStatus" name="work_orders[]" value="{{ $work_order->id }}">
             </td>
 
             @if( $request->filled('dates') )
@@ -112,15 +118,15 @@
                 <input type="number" class="form-control form-control-sm" style="width:56px" min="1" step="1" name="ordered[{{ $work_order->id }}]" value="{{ $work_order->ordered }}" form="formWorkOrderOrdered">
             </td>
 
-            <td class="text-nowrap" style="width:1%">
+            <td class="text-nowrap">
                 @include('crews.__.flag', [
                     'crew' => $work_order->crew,
                     'class' => 'w-100',
                 ])
             </td>
             
-            <td class="text-nowrap" style="width:1%">
-                @include('work-orders.__.job-flag')
+            <td class="text-nowrap">
+                @include('work-orders.__.summary-job')
             </td>
 
             <td class="text-nowrap">
@@ -129,7 +135,7 @@
                 ])
             </td>
 
-            <td class="text-nowrap" style="width:1%">
+            <td class="text-nowrap text-center">
                 @if( $work_order->hasContractor() )    
                     @include('contractors.__.flag', [
                         'name' => $work_order->contractor->alias,
@@ -139,8 +145,8 @@
                 @endif
             </td>
 
-            <td style="width:1%">
-                @include('work-orders.__.status-flag', [
+            <td>
+                @include('work-orders.__.flag-status', [
                     'status' => $work_order->status,
                     'class' => 'w-100',
                 ])

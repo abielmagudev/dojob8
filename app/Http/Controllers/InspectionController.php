@@ -35,11 +35,11 @@ class InspectionController extends Controller
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'request' => $request,
             'pending_inspections' => [
-                'count' => Inspection::where('status', 'pending')->get()->count(),
+                'count' => Inspection::pendingStatusCount(),
                 'url' => InspectionUrlGenerator::pending(),
             ],
             'awaiting_inspections' => [
-                'count' => Inspection::where('status', 'awaiting')->get()->count(),
+                'count' => Inspection::awaitingStatusCount(),
                 'url' => InspectionUrlGenerator::awaiting(),
             ],
         ]);

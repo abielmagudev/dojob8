@@ -82,12 +82,13 @@ Route::resource('work-orders', WorkOrderController::class)->except('create');
 Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
 Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
 
+// Payments
 Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
-Route::match(['put','patch'],'payments', [PaymentController::class, 'updateMany'])->name('payments.update.many');
-
-// Search clients and work orders
-Route::get('search', SearchController::class)->name('app.search');
+Route::patch('payments', [PaymentController::class, 'update'])->name('payments.update');
 
 // Settings
 Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
 Route::patch('settings', [SettingsController::class, 'update'])->name('settings.update');
+
+// Search clients and work orders
+Route::get('search', SearchController::class)->name('app.search');

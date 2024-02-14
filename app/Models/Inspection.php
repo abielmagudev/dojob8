@@ -10,6 +10,7 @@ use App\Models\Kernel\Traits\HasStatus;
 use App\Models\WorkOrder\Associated\BelongWorkOrderTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Inspection extends Model implements Filterable
@@ -132,6 +133,22 @@ class Inspection extends Model implements Filterable
     public function scopeNoPendingStatus($query)
     {
         return $query->where('status', '!=', 'pending');
+    }
+
+    public function scopePendingStatusCount($query)
+    {
+        return $query->select( DB::raw('COUNT(*) as count') )
+                     ->where('status', 'pending')
+                     ->first()
+                     ->count;
+    }
+
+    public function scopeAwaitingStatusCount($query)
+    {
+        return $query->select( DB::raw('COUNT(*) as count') )
+                     ->where('status', 'awaiting')
+                     ->first()
+                     ->count;
     }
 
 

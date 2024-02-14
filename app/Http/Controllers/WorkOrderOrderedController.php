@@ -9,19 +9,23 @@ class WorkOrderOrderedController extends Controller
 {
     public function __invoke(WorkOrderOrderedUpdateRequest $request)
     {
-        $updated = array();
+        $result = collect([]);
 
         foreach($request->get('ordered') as $work_order_id => $order)
         {
-            $updated[] = WorkOrder::where('id', $work_order_id)->update([
+            $updated = WorkOrder::where('id', $work_order_id)->update([
                 'ordered' => $order,
             ]);
+
+            $result->push($updated);
         }
 
-        $message = count($updated) == count($request->get('ordered'))
-                 ? ['status' => 'success', 'text' => 'Updated the order of all work orders.']
-                 : ['status' => 'warning', 'text' => 'Updated the order of some work orders.'];
-        
-        return redirect($request->get('url_back'))->with($message['status'], $message['text']);
+        // if( $result === false ) {
+        //     return redirect($request->url_back)->with('danger', "Error updating work order order, try again...");
+        // }
+
+        $comparison_updated = sprintf('%s/%s', count($request->get('ordered')), $result->filter()->count());
+
+        return redirect($request->get('url_back'))->with('success', "{$comparison_updated} Work orders were updated with order");
     }
 }

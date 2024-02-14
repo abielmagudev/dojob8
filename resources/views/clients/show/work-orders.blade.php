@@ -38,7 +38,7 @@
             <td class="text-nowrap">{{ $work_order->scheduled_date_human }}</td>
 
             <td class="text-nowrap">
-                @include('work-orders.__.job-flag')
+                @include('work-orders.__.summary-job')
             </td>
 
             <td>
@@ -59,7 +59,7 @@
             </td>
 
             <td>
-                @include('work-orders.__.status-flag', [
+                @include('work-orders.__.flag-status', [
                     'status' => $work_order->status,
                     'class' => 'd-block',
                 ])

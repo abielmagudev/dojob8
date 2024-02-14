@@ -10,13 +10,14 @@ class WorkOrderStatusController extends Controller
     public function __invoke(WorkOrderStatusUpdateRequest $request)
     {
         $result = WorkOrder::whereIn('id', $request->get('work_orders'))->update(['status' => $request->get('status')]);
-
         $status_uppercase = strtoupper($request->get('status'));
 
-        $message = $result === false
-                 ? ['warning', sprintf('Error updating work order status <b>%s</b>, try again...', $status_uppercase)]
-                 : ['success', sprintf('%s Work orders were updated with status <b>%s</b>', $result, $status_uppercase)];
+        if( $result === false ) {
+            return redirect($request->url_back)->with('danger', "Error updating work order status <b>{$status_uppercase}</b>, try again...");
+        }
 
-        return redirect($request->url_back)->with($message[0], $message[1]);
+        $comparison_updated = sprintf('%s/%s', count($request->get('work_orders')), $result);
+
+        return redirect($request->url_back)->with('success', "{$comparison_updated} Work orders were updated with status <b>{$status_uppercase}</b>");
     }
 }

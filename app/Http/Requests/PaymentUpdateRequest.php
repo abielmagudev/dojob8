@@ -18,10 +18,6 @@ class PaymentUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'payment' => [
-                'required',
-                sprintf('in:%s', WorkOrder::getPaymentStatuses()->implode(',')),
-            ],
             'work_orders' => [
                 'required',
                 'array',
@@ -29,15 +25,27 @@ class PaymentUpdateRequest extends FormRequest
             'work_orders.*' => [
                 sprintf('in:%s', $this->work_orders_id_for_payment),
             ],
+            'payment_status' => [
+                'required',
+                sprintf('in:%s', WorkOrder::getPaymentStatuses()->implode(',')),
+            ],
+            'url_back' => [
+                'required',
+                'string',
+            ],
         ];
     }
 
     public function messages()
     {
         return [
-            'work_orders.required' => __('Choose one or more work orders.'),
-            'work_orders.array' => __('Choose some work orders from the list.'),
-            'work_orders.*.in' => __('Choose only valid work orders.'),
+            'work_orders.required' => __('Choose one or more work orders'),
+            'work_orders.array' => __('Choose some work orders from the list'),
+            'work_orders.*.in' => __('Choose only valid work orders'),
+            'payment_status.required' => __('Choose a payment status'),
+            'payment_status.in' => __('Choose a valid payment status'),
+            'url_back.required' => __('Parameters are missing to update the payment status'),
+            'url_back.string' => __('Parameters are missing to update the payment status'),
         ];
     }
 

@@ -1,5 +1,5 @@
-<x-modal id="modalInspectionStatusUpdate" title="Update status of inspections selected" header-close>
-    <form action="{{ route('inspections.update.status') }}" method="post" id="formInspectionStatusUpdate">
+<x-modal id="modalModifyStatus" title="Modify the status of selected inspections" header-close>
+    <form action="{{ route('inspections.update.status') }}" method="post" id="formUpdateStatus">
         @method('patch')
         @csrf
         <div class="mb-3">
@@ -15,6 +15,6 @@
 
     @slot('footer')
     <x-modal-button-close>Close</x-modal-button-close>
-    <button class="btn btn-warning" type="submit" form="formInspectionStatusUpdate">Update inspections</button>
+    <button class="btn btn-warning" type="submit" form="formUpdateStatus">Update inspections</button>
     @endslot
 </x-modal>

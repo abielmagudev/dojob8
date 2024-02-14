@@ -2,6 +2,8 @@
 
 namespace App\Models\WorkOrder\Traits;
 
+use Illuminate\Support\Facades\DB;
+
 trait PaymentStatus
 {
     protected static $payment_statuses = [
@@ -10,7 +12,7 @@ trait PaymentStatus
         'unpaid',
     ];
 
-    protected static $statuses_for_payment_status = [
+    protected static $statuses_for_payment = [
         'completed',
         'denialed',
     ];
@@ -33,14 +35,18 @@ trait PaymentStatus
         return $query->whereIn('status', self::getStatusesForPayment()->toArray());
     }
 
-    public function scopeUpdatePaymentStatus($query, $value)
+    public function scopePaymentStatusUnpaid($query)
     {
-        return $query->update(['payment_status' => $value]);
+        return $query->where('payment_status', 'unpaid');
     }
 
-    public function scopeUpdatePaymentStatusById($query, $value, array $values)
+    public function scopePaymentStatusUnpaidCount($query)
     {
-        return $query->whereIn('id', $values)->updatePaymentStatus($value);
+        return $query->select( DB::raw('COUNT(*) as count') )
+                     ->whereIn('status', self::getStatusesForPayment()->toArray())
+                     ->where('payment_status', 'unpaid')
+                     ->first()
+                     ->count;
     }
 
 
@@ -70,7 +76,7 @@ trait PaymentStatus
 
     public static function getStatusesForPayment()
     {
-        return collect( self::$statuses_for_payment_status );
+        return collect( self::$statuses_for_payment );
     }
 
     public static function inStatusesForPayment($value)

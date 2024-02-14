@@ -34,7 +34,7 @@
                 {{ $inspection->scheduled_date_human }}
             </td>
             <td style="width:1%">
-                @include('inspections.__.status-flag', ['status' => $inspection->status])
+                @include('inspections.__.flag-status', ['status' => $inspection->status])
             </td>
             <td class="text-nowrap">
                 {{ $inspection->agency->name }}

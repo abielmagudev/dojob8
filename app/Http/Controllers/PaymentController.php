@@ -15,14 +15,14 @@ class PaymentController extends Controller
         if( empty($request->all()) )
         {
             $request->merge([
-                'payment_status_group' => ['unpaid'],
+                'payment_status_group' => [WorkOrder::initialPaymentStatus()],
                 'dates' => 'any',
             ]);
         }
 
         $work_orders = WorkOrder::withRelationshipsForPayments()
-        ->forPayment()
         ->filterByParameters( $request->all() )
+        ->forPayment()
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->paginate(35)
         ->appends($request->query());
@@ -30,22 +30,26 @@ class PaymentController extends Controller
         return view('payments.index', [
             'contractors' => Contractor::all(),
             'jobs' => Job::all(),
+            'payment_status_unpaid_count' => WorkOrder::paymentStatusUnpaidCount(),
             'payment_statuses' => WorkOrder::getPaymentStatuses(),
             'request' => $request,
             'work_orders' => $work_orders,
         ]);
     }
 
-    public function updateMany(PaymentUpdateRequest $request)
+    public function update(PaymentUpdateRequest $request)
     {
-        if( WorkOrder::updatePaymentStatusById($request->get('payment'), $request->get('work_orders')) === false ) {
-            return back()->with('danger', 'Error updating the payment of work orders, try again please');
+        $result = WorkOrder::whereIn('id', $request->get('work_orders'))->update([
+            'payment_status' => $request->get('payment_status'),
+        ]);
+
+        if( $result === false ) {
+            return redirect($request->get('url_back'))->with('danger', 'Error updating the payment status of work orders, try again...');
         }
 
-        return back()->with('success', sprintf(
-            'These #%s work orders were updated with payment <b>%s</b>', 
-            implode(', #', $request->get('work_orders')), 
-            strtoupper($request->get('payment'))
-        ));
+        $payment_status_uppercase = strtoupper($request->get('payment_status'));
+        $comparison_updated = sprintf('%s/%s', count($request->get('work_orders')), $result);
+
+        return redirect($request->get('url_back'))->with('success', "{$comparison_updated} Work orders were updated with the payment status of <b>{$payment_status_uppercase}</b>");
     }
 }

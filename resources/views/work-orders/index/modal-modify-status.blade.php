@@ -1,5 +1,5 @@
-<x-modal id="modalModifyStatusWorkOrders" title="Modify status of selected work orders" header-close>
-    <form action="{{ route('work-orders.update.status') }}" method="post" id="formUpdateStatusWorkOrders">
+<x-modal id="modalModifyStatus" title="Modify status of selected work orders" header-close>
+    <form action="{{ route('work-orders.update.status') }}" method="post" id="formUpdateStatus">
         @method('patch')
         @csrf
         <div>
@@ -14,6 +14,6 @@
     </form>
     <x-slot name="footer">
         <x-modal-button-close>Cancel</x-modal-button-close>
-        <button class="btn btn-warning" type="sumit" form="formUpdateStatusWorkOrders">Update work orders</button>
+        <button class="btn btn-warning" type="sumit" form="formUpdateStatus">Update work orders</button>
     </x-slot>
 </x-modal>

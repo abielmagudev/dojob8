@@ -45,7 +45,7 @@
                 <span class="ms-1">Incomplete</span>
             </div>
             <div>
-                <span class="badge text-bg-warning">{{ $incomplete_work_orders['count'] }}</span>
+                <span class="badge border border-warning text-warning">{{ $incomplete_work_orders['count'] }}</span>
             </div>
         </a>
     </li>

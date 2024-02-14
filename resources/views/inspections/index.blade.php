@@ -27,14 +27,14 @@
             <a href="{{ $pending_inspections['url'] }}" class="dropdown-item">
                 <i class="bi bi-exclamation-triangle"></i>
                 <span class=" mx-1">Pending</span>
-                <span class="badge text-bg-warning">{{ $pending_inspections['count'] }}</span>
+                <span class="badge border border-warning text-warning">{{ $pending_inspections['count'] }}</span>
             </a>
         </li>
         <li>
             <a href="{{ $awaiting_inspections['url'] }}" class="dropdown-item">
                 <i class="bi bi-alarm"></i>
                 <span class=" mx-1">Awaiting</span>
-                <span class="badge text-bg-primary">{{ $awaiting_inspections['count'] }}</span>
+                <span class="badge border border-primary text-primary">{{ $awaiting_inspections['count'] }}</span>
             </a>
         </li>
         <li>

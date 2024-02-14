@@ -32,8 +32,8 @@ class WorkOrderController extends Controller
         $work_orders = WorkOrder::withRelationshipsForIndex()
         ->filterByParameters( $request->all() )
         ->orderBy('crew_id')
-        ->orderBy('ordered', 'asc')
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->orderByRaw('ordered IS NULL, ordered asc')
         ->paginate(50)
         ->appends( $request->query() );
 
@@ -123,6 +123,7 @@ class WorkOrderController extends Controller
             'request' => $request,
             'work_order' => $work_order,
             'work_orders_for_rectification' => $work_order->client->onlyWorkOrdersForRectification($work_order),
+            'url_back' => $request->filled('url_back') ? $request->get('url_back') : route('work-orders.show', $work_order),
         ]);
     }
 
@@ -139,9 +140,7 @@ class WorkOrderController extends Controller
             'update'
         );
 
-        $parameters = $request->filled('url_back') 
-                    ? [$work_order, 'url_back' => $request->get('url_back')]
-                    : $work_order;
+        $parameters = $request->filled('url_back') ? [$work_order, 'url_back' => $request->get('url_back')] : $work_order;
 
         return redirect()->route('work-orders.edit', $parameters)->with('success', "You updated the work order <b>#{$work_order->id}</b>");
     }

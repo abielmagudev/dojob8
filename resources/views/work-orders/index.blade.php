@@ -9,7 +9,7 @@
     @slot('options')
     <div class="d-inline-block align-middle ">
         <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off">
-            <input type="date" class="form-control" onchange="this.closest('form').submit()" name="scheduled_date" value="{{ $request->get('scheduled_date', date('Y-m-d')) }}">
+            <input type="date" class="form-control" onchange="this.closest('form').submit()" name="scheduled_date" value="{{ $request->get('scheduled_date') }}">
         </form>
     </div>
     @endslot
@@ -24,20 +24,6 @@
             <i class="bi bi-pencil-square"></i>
             <span class="ms-1">Modify selected status</span>
         </x-modal-trigger>
-    </li>
-    <li>
-        <hr class="dropdown-divider">
-    </li>
-    <li>
-        <form action="{{ route('work-orders.update.ordered') }}" method="post" id="formWorkOrderOrdered">
-            @method('patch')
-            @csrf
-            <input type="hidden" name="url_back" value="{{ $request->fullUrl() }}">
-            <button class="dropdown-item">
-                <i class="bi bi-floppy"></i>
-                <span class="ms-1">Update order</span>
-            </button>
-        </form>
     </li>
     <li>
         <hr class="dropdown-divider">
@@ -58,6 +44,20 @@
             <i class="bi bi-filter"></i>
             <span class="ms-1">More filters</span>
         </x-modal-trigger>
+    </li>
+    <li>
+        <hr class="dropdown-divider">
+    </li>
+    <li>
+        <form action="{{ route('work-orders.update.ordered') }}" method="post" id="formWorkOrderOrdered">
+            @method('patch')
+            @csrf
+            <input type="hidden" name="url_back" value="{{ $request->fullUrl() }}">
+            <button class="dropdown-item">
+                <i class="bi bi-floppy"></i>
+                <span class="ms-1">Update current order</span>
+            </button>
+        </form>
     </li>
     @endslot
 
@@ -147,7 +147,7 @@
             </td>
 
             <td class="text-nowrap text-end" style="width:1%">
-                <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm">
+                <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
                 <a href="{{ route('work-orders.edit', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">

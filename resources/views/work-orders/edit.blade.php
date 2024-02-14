@@ -15,16 +15,17 @@
 
 @section('content')
 <x-card title="Edit work order">
-    <form action="{{ route('work-orders.update', [$work_order, $request->get('url_back')]) }}" method="post" autocomplete="off">
+    <form action="{{ route('work-orders.update', $work_order) }}" method="post" autocomplete="off">
         @method('patch')
         @csrf
         @include('work-orders._form')
         @include('work-orders._form.timeline')
         @include('work-orders._form.status')
+        <input type="hidden" name="url_back" value="{{ $request->get('url_back') }}">
         <br>
 
         <div class="text-end">
-            <a href="{{ $request->get('url_back', route('work-orders.show', $work_order)) }}" class="btn btn-outline-primary">Back</a>
+            <a href="{{ $url_back }}" class="btn btn-outline-primary">Back</a>
             <button class="btn btn-warning" type="submit">Update work order</button>
         </div>
     </form>

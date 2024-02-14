@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             // 
             AgencySeeder::class,
             ClientSeeder::class,
+            CommentSeeder::class,
             ContractorSeeder::class,
             CrewSeeder::class,
             ExtensionSeeder::class,

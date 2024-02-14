@@ -105,6 +105,11 @@ class User extends Authenticatable implements Filterable
         return $this->morphTo(__FUNCTION__);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function history()
     {
         return $this->hasMany(History::class);

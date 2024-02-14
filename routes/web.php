@@ -3,6 +3,7 @@
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\CrewMemberController;
@@ -81,6 +82,9 @@ Route::resource('work-orders', WorkOrderController::class)->except('create');
 
 Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
 Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
+
+// Comments
+Route::post('comments/{work_order}', CommentController::class)->name('comments.create');
 
 // Payments
 Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');

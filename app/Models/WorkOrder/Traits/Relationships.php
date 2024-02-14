@@ -3,6 +3,7 @@
 namespace App\Models\WorkOrder\Traits;
 
 use App\Models\Client;
+use App\Models\Comment;
 use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\History;
@@ -51,6 +52,11 @@ trait Relationships
     public function inspections()
     {
         return $this->hasMany(Inspection::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function history()

@@ -24,7 +24,8 @@ class CreateHistoryTable extends Migration
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('device')->nullable();
-            $table->timestamp('created_at');
+            $table->timestamps();
+            // $table->timestamp('created_at');
         });
     }
 

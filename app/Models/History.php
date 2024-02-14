@@ -12,8 +12,6 @@ class History extends Model implements Filterable
 
     protected $table = 'history';
     
-    public $timestamps = false;
-
     protected $fillable = [
         'description',
         'link',
@@ -167,17 +165,5 @@ class History extends Model implements Filterable
     public static function getClassnameByTopic($topic)
     {
         return self::existsTopic($topic) ? self::getTopicsClassnames()[$topic] : null;
-    }
-
-
-    // Hooks
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->created_at = $model->freshTimestamp();
-        });
     }
 }

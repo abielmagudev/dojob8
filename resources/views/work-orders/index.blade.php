@@ -20,6 +20,10 @@
             <i class="bi bi-plus-lg"></i>
             <span class="ms-1">Create</span>
         </x-modal-trigger>
+        <x-modal-trigger modal-id="modalModifyStatusWorkOrders" class="dropdown-item">
+            <i class="bi bi-pencil-square"></i>
+            <span class="ms-1">Modify selected status</span>
+        </x-modal-trigger>
     </li>
     <li>
         <hr class="dropdown-divider">
@@ -66,6 +70,12 @@
             <th></th>
             @endif
 
+            <th>
+                <button id="checkerButton" class="btn btn-outline-primary btn-sm border-0">
+                    <i class="bi bi-check2-square"></i>
+                </button>
+            </th>
+
             @if( $request->has('dates') )
             <th>Scheduled</th>
             @endif
@@ -77,17 +87,20 @@
             <th class="text-center">Contractor</th>
             <th class="text-center">Status</th>
             <th></th>
-            <th></th>
         </tr>
         @endslot
 
         @foreach($work_orders as $work_order)           
-        <tr>
+        <tr>            
             @if( $request->has('search') )            
             <td class="text-center text-secondary" style="width:1%">
                 {!! marker($request->get('value', ''), $work_order->id) !!}
             </td>
             @endif
+
+            <td class="text-center" style="width:1%">
+                <input class="form-check-input" type="checkbox" form="formUpdateStatusWorkOrders" name="work_orders[]" value="{{ $work_order->id }}">
+            </td>
 
             @if( $request->filled('dates') )
             <td class="text-nowrap">
@@ -134,11 +147,9 @@
             </td>
 
             <td class="text-nowrap text-end" style="width:1%">
-                <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm w-100">
+                <a href="{{ route('work-orders.show', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
-            </td>
-            <td>             
                 <a href="{{ route('work-orders.edit', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
@@ -156,8 +167,13 @@
     <x-pagination-simple-model :collection="$work_orders" />
 </div>
 
+@include('components.scripts.Checker')
+<script>
+const checker = new Checker('work_orders');
+checker.listen()
+</script>
+
+@include('work-orders.index.modal-modify-status')
 @include('work-orders.index.modal-filtering')
-
 @include('work-orders.index.modal-search-client-to-create-work-order')
-
 @endsection

@@ -34,7 +34,7 @@ class WorkOrderController extends Controller
         ->orderBy('crew_id')
         ->orderBy('ordered', 'asc')
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
-        ->paginate(25)
+        ->paginate(50)
         ->appends( $request->query() );
 
         return view('work-orders.index', [

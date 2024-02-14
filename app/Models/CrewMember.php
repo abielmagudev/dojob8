@@ -9,7 +9,7 @@ class CrewMember extends Pivot
 {
     use HasFactory;
 
-    const UPDATED_AT = null;
+    // const UPDATED_AT = null;
 
 
     // Scopes
@@ -22,6 +22,7 @@ class CrewMember extends Pivot
 
     // Hooks
 
+    /*
     public static function boot()
     {
         parent::boot();
@@ -30,4 +31,5 @@ class CrewMember extends Pivot
             $model->created_at = now();
         });
     }
+    */
 }

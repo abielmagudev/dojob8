@@ -119,7 +119,7 @@ class Crew extends Model
 
     public function members()
     {
-        return $this->belongsToMany(Member::class)->using(CrewMember::class);
+        return $this->belongsToMany(Member::class)->using(CrewMember::class)->withTimestamps();
     }
 
 

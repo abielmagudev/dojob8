@@ -45,7 +45,7 @@ trait Relationships
 
     public function members()
     {
-        return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class);
+        return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class)->withTimestamps();
     }
 
     public function inspections()

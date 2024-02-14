@@ -16,7 +16,8 @@ class CreateCrewMemberTable extends Migration
         Schema::create('crew_member', function (Blueprint $table) {
             $table->foreignId('crew_id')->on('crews')->onDelete('cascade');
             $table->foreignId('member_id')->on('members')->onDelete('cascade');
-            $table->dateTime('created_at')->nullable();
+            $table->timestamps();
+            // $table->dateTime('created_at')->nullable();
         });
     }
 

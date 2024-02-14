@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
 
             //
             CrewMemberSeeder::class,
+            InspectionMemberSeeder::class,
             MemberWorkOrderSeeder::class,
         ]);
     }

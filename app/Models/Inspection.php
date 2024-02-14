@@ -177,6 +177,11 @@ class Inspection extends Model implements Filterable
         return $this->belongsTo(Agency::class)->withTrashed();
     }
 
+    public function members()
+    {
+        return $this->belongsToMany(Member::class)->using(InspectionMember::class)->withTimestamps();
+    }
+
 
     // Statics
 

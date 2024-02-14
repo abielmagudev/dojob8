@@ -64,6 +64,13 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error creating inspection, try again please');
         }
 
+        if( $inspection->hasCrew() && $inspection->crew->hasMembers() )
+        {
+            $inspection->members()->attach( 
+                $inspection->crew->members->pluck('id')->toArray()
+            );
+        }
+
         return redirect()->route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])->with('success', "You created inspection <b>{$inspection->id}</b>");
     }
 
@@ -88,12 +95,21 @@ class InspectionController extends Controller
 
     public function update(InspectionSaveRequest $request, Inspection $inspection)
     {
+        $old_crew_id = $inspection->crew_id;
+
         if(! $inspection->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating inspection, try again please');
         }
 
         if( $inspection->work_order->job->requiresApprovedInspections() ) {
             $inspection->work_order->updateInspectionStatus();
+        }
+
+        if( $old_crew_id <> $inspection->crew_id && $inspection->hasCrew() && $inspection->crew->hasMembers() )
+        {
+            $inspection->members()->sync( 
+                $inspection->crew->members->pluck('id')->toArray()
+            );
         }
 
         return redirect()->route('inspections.edit', $inspection)->with('success', "You updated inspection <b>{$inspection->id}</b>");

@@ -27,13 +27,15 @@ class Checker
 
         if( this.trigger() )
         {
-            this.trigger().addEventListener('click', function (evt)
-            {
-                evt.preventDefault()
-    
-                self.toggle = ! self.toggle;
-                self.checkboxes().forEach(item => item.checked = self.toggle)
-                // self.trigger().classList.toggle('active', self.toggle)
+            ['click', 'touchstart'].forEach(function (event) {
+                self.trigger().addEventListener(event, function (evt)
+                {
+                    evt.preventDefault()
+        
+                    self.toggle = ! self.toggle;
+                    self.checkboxes().forEach(item => item.checked = self.toggle)
+                    // self.trigger().classList.toggle('active', self.toggle)
+                })
             })
         }
     }

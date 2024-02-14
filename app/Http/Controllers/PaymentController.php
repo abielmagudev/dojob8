@@ -24,7 +24,7 @@ class PaymentController extends Controller
         ->forPayment()
         ->filterByParameters( $request->all() )
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
-        ->paginate(25)
+        ->paginate(35)
         ->appends($request->query());
 
         return view('payments.index', [

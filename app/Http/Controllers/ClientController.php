@@ -13,7 +13,7 @@ class ClientController extends Controller
         $clients = Client::withCount('incomplete_work_orders')
         ->filterByParameters( $request->all() )
         ->orderByDesc('id')
-        ->paginate(25)
+        ->paginate(35)
         ->appends( $request->query() );
 
         return view('clients.index', [

@@ -13,7 +13,7 @@ class HistoryController extends Controller
         $history = History::with('user.profile')
         ->filterByParameters( $request->all() )
         ->orderBy('id', $request->get('sort', 'desc'))
-        ->paginate(25)
+        ->paginate(35)
         ->appends( $request->query() );
         
         return view('history.index', [

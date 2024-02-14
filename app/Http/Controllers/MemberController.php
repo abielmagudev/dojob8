@@ -12,7 +12,7 @@ class MemberController extends Controller
     {
         $members = Member::filterByParameters( $request->all() )
         ->orderBy('id', $request->get('sort', 'desc'))
-        ->paginate(25);
+        ->paginate(35);
 
         return view('members.index', [
             'members' => $members,

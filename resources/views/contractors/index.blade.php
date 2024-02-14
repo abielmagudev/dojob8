@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $contractors->total() }}">
+<x-card title="{{ $contractors->count() }}">
     <x-slot name="options">
         <a href="{{ route('contractors.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i>
@@ -49,7 +49,4 @@
 </x-card>
 <br>
 
-<div class="px-3">
-    <x-pagination-simple-model :collection="$contractors" />
-</div>
 @endsection

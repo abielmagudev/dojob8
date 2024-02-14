@@ -15,7 +15,7 @@ class UserController extends Controller
         $users = User::with('profile')
         ->filterByParameters( $request->all() )
         ->orderBy('id', $request->get('sort', 'desc'))
-        ->paginate(25)
+        ->paginate(35)
         ->appends( $request->query() );
 
         return view('users.index', [

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasFiltering;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class History extends Model implements Filterable
@@ -18,10 +19,7 @@ class History extends Model implements Filterable
         'model_type',
         'model_id',
         'user_id',
-    ];
-
-    protected $casts = [
-        'created_at' => 'datetime',
+        'created_at'
     ];
 
     public static $topics_classnames = [
@@ -55,12 +53,12 @@ class History extends Model implements Filterable
 
     public function getCreatedDateHumanAttribute()
     {
-        return $this->created_at->format('D d, M Y'); 
+        return Carbon::parse($this->created_at)->format('D d, M Y'); 
     }
 
     public function getCreatedTimeHumanAttribute()
     {
-        return $this->created_at->format('g:i A'); 
+        return Carbon::parse($this->created_at)->format('g:i A'); 
     }
 
 

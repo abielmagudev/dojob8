@@ -73,7 +73,7 @@
             <tr>
                 <td class="text-center">
                     @if(! $inspection->isPending() )    
-                    <input type="checkbox" class="form-check-input" id="checkboxInspection{{ $inspection->id }}" name="inspections[]" value="{{ $inspection->id }}" form="formInspectionStatusUpdate">
+                    <input type="checkbox" class="form-check-input" name="inspections[]" value="{{ $inspection->id }}" form="formInspectionStatusUpdate">
                     @endif
                 </td>
                 <td style="width:1%">
@@ -140,9 +140,11 @@
 
 @include('inspections.index.modal-filtering')
 @include('inspections.index.modal-update-status')
+
 @include('components.scripts.Checker')
 <script>
-const checker = new Checker('checkboxInspection');
+const checker = new Checker('inspections');
 checker.listen()
 </script>
+
 @endsection

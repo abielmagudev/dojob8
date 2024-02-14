@@ -3,22 +3,22 @@ class Checker
 {
     toggle = false;
 
-    checkbox_id_begin = null;
+    checkbox_name_begins = null;
 
-    id_trigger = null;
+    trigger_id = null;
 
-    constructor($checkbox_id_begin, $id_trigger = 'checkerButton')
+    constructor($checkbox_name_begins, $trigger_id = 'checkerButton')
     {
-        this.checkbox_id_begin = $checkbox_id_begin;
-        this.id_trigger = $id_trigger;
+        this.checkbox_name_begins = $checkbox_name_begins;
+        this.trigger_id = $trigger_id;
     }
 
     trigger() {
-        return document.getElementById(this.id_trigger);
+        return document.getElementById(this.trigger_id);
     }
 
     checkboxes() {
-        return document.body.querySelectorAll(`input[type="checkbox"][id^="${this.checkbox_id_begin}"]`)
+        return document.body.querySelectorAll(`input[type="checkbox"][name^="${this.checkbox_name_begins}"]`)
     }
 
     listen()
@@ -32,8 +32,8 @@ class Checker
                 evt.preventDefault()
     
                 self.toggle = ! self.toggle;
-                // self.trigger().classList.toggle('active', self.toggle)
                 self.checkboxes().forEach(item => item.checked = self.toggle)
+                // self.trigger().classList.toggle('active', self.toggle)
             })
         }
     }

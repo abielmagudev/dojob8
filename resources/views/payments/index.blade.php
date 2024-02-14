@@ -15,7 +15,7 @@
     <li>
         <x-modal-trigger modal-id="updatePaymentsModal" class="dropdown-item">
             <i class="bi bi-arrow-counterclockwise"></i>
-            <span class="ms-1">Update checked</span>
+            <span class="ms-1">Update selected</span>
         </x-modal-trigger>
     </li>
     <li>
@@ -33,6 +33,12 @@
     <x-table class="align-top">
         @slot('thead')
         <tr>
+            <th>
+                <button id="checkerButton" class="btn btn-outline-primary btn-sm border-0">
+                    <i class="bi bi-check2-square"></i>
+                </button>
+            </th>
+
             @if( $request->filled('dates') )
             <th>Scheduled</th>
             @endif
@@ -43,16 +49,14 @@
             <th class="text-center">Contractor</th>
             <th class="text-center">Status</th>
             <th></th>
-            <th>
-                <button id="selectAllButton" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-check2-square"></i>
-                </button>
-            </th>
         </tr>
         @endslot
 
         @foreach($work_orders as $work_order)
         <tr>
+            <td class="text-center" style="width:1%">
+                <input class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">
+            </td>
 
             @if( $request->has('dates') )
             <td class="text-nowrap">
@@ -99,10 +103,6 @@
                     <i class="bi bi-eye-fill"></i>    
                 </a>
             </td>
-
-            <td class="text-center" style="width:1%">
-                <input id="workOrder{{ $work_order->id }}Checkbox" class="form-check-input" type="checkbox" form="paymentUpdateForm" name="work_orders[]" value="{{ $work_order->id }}">
-            </td>
         </tr>
         @endforeach
     </x-table>
@@ -114,28 +114,11 @@
     <x-pagination-simple-model :collection="$work_orders" />
 </div>
 
-@push('scripts')
+@include('components.scripts.Checker')
 <script>
-const selectAllButton = {
-    trigger: document.getElementById('selectAllButton'),
-    toggle: false, 
-    checkboxes: function () {
-        return document.body.querySelectorAll('input[type="checkbox"][id^="workOrder"]')
-    },
-    listen: function () {
-        let self = this;
-
-        this.trigger.addEventListener('click', function (evt) {
-            evt.preventDefault()
-            self.toggle = !self.toggle;
-            self.trigger.classList.toggle('active', self.toggle)
-            self.checkboxes().forEach(item => item.checked = self.toggle)
-        })
-    }
-}
-selectAllButton.listen()
+const checker = new Checker('work_orders');
+checker.listen()
 </script>
-@endpush
 
 @include('payments.index.modal-filter')
 @include('payments.index.modal-update')

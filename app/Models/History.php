@@ -29,12 +29,12 @@ class History extends Model implements Filterable
     public static $topics_classnames = [
         'agencies' => Agency::class,
         'clients' => Client::class,
-        'configuration' => Configuration::class,
         'contractor' => Contractor::class,
         'crews' => Crew::class,
         'inspections' => Inspection::class,
         'jobs' => Job::class,
         'members' => Member::class,
+        'settings' => Settings::class,
         'users' => User::class,
         'work orders' => WorkOrder::class,
         // 'extensions' => Extension::class,
@@ -76,9 +76,9 @@ class History extends Model implements Filterable
 
     // Scopes
 
-    public function scopeModelIs($query, string $classname, $id)
+    public function scopeAbout($query, object $model)
     {
-        return $query->where('model_type', $classname)->where('model_id', $id);
+        return $query->where('model_type', get_class($model))->where('model_id', $model->id);
     }
 
     public function scopeCreatedBetween($query, array $values)

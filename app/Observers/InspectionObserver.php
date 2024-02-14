@@ -18,7 +18,7 @@ class InspectionObserver
 
         History::create([
             'description' => sprintf("The <em>{$inspection->id}</em> inspection was created."),
-            'link' => route('inspections.show', $inspection),
+            'link' => route('work-orders.show', $inspection->work_order_id),
             'model_type' => Inspection::class,
             'model_id' => $inspection->id,
             'user_id' => mt_rand(1,10),
@@ -33,7 +33,7 @@ class InspectionObserver
 
         History::create([
             'description' => sprintf("The <em>{$inspection->id}</em> inspection was updated."),
-            'link' => route('inspections.show', $inspection),
+            'link' => route('work-orders.show', $inspection->work_order_id),
             'model_type' => Inspection::class,
             'model_id' => $inspection->id,
             'user_id' => mt_rand(1,10),
@@ -44,6 +44,7 @@ class InspectionObserver
     {
         History::create([
             'description' => sprintf("The <em>{$inspection->id}</em> inspection was deleted."),
+            'link' => route('work-orders.show', $inspection->work_order_id),
             'model_type' => Inspection::class,
             'model_id' => $inspection->id,
             'user_id' => mt_rand(1,10),

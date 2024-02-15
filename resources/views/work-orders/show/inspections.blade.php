@@ -1,6 +1,7 @@
 <x-card>
     @slot('title')
     <div>
+        <span class="me-2">{{ $inspections->count() }}</span>
         @if($work_order->job->requiresApprovedInspections())
         <div class="badge border border-success text-success">{{ $work_order->job->approved_inspections_required_count }} Approved required</div>
         @endif

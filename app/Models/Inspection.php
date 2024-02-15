@@ -182,6 +182,11 @@ class Inspection extends Model implements Filterable
         return $this->belongsToMany(Member::class)->using(InspectionMember::class)->withTimestamps();
     }
 
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
 
     // Statics
 

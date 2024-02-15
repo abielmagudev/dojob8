@@ -19,10 +19,10 @@
         'enabled' => $work_order->qualifiesForRectification(),
         'title' => 'Warranties',
     ],
-    'media' => [
+    'files' => [
         'display' => true,
         'enabled' => true,
-        'title' => 'Photos & files',
+        'title' => 'Photos & Files',
     ],
     'comments' => [
         'display' => true,

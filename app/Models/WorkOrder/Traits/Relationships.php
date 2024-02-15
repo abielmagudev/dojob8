@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Comment;
 use App\Models\Contractor;
 use App\Models\Crew;
+use App\Models\File;
 use App\Models\History;
 use App\Models\Inspection;
 use App\Models\Job;
@@ -57,6 +58,11 @@ trait Relationships
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
     }
 
     public function history()

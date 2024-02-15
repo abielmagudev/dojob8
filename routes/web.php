@@ -15,6 +15,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectionStatusController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SearchController;
@@ -96,3 +97,7 @@ Route::patch('settings', [SettingsController::class, 'update'])->name('settings.
 
 // Search clients and work orders
 Route::get('search', SearchController::class)->name('app.search');
+
+// Files
+Route::post('files/{folder}/{fileable_id}', [FileController::class, 'store'])->name('files.store');
+Route::delete('files/{file}', [FileController::class, 'destroy'])->name('files.destroy');

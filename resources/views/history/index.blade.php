@@ -35,7 +35,7 @@
                 @endif   
             </td>
             <td>
-                <span>{{ $activity->user->profile->authenticated_name }}</span>
+                <span>{{ $activity->user->profile_name }}</span>
                 <span>-</span>
                 <em>{{ $activity->user->name }}</em>
             </td>

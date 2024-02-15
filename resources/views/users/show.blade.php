@@ -21,8 +21,8 @@
     </x-slot>
 
     <x-small-title title="Profile">
-        <span class="d-block">{{ $user->profile->authenticated_name }}</span>
-        <span class="text-capitalize">{{ $user->profiled }}</span>
+        <span class="d-block">{{ $user->profile_name }}</span>
+        <span class="text-capitalize">{{ $user->profile_classnickname }}</span>
     </x-small-title>
 
     <x-small-title title="Email">

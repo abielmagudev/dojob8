@@ -20,7 +20,7 @@ class HistoryController extends Controller
             'history' => $history,
             'request' => $request,
             'topics' => History::getTopics(),
-            'users' => User::with('profile')->withTrashed()->get(),
+            'users' => User::withTrashed()->get(),
         ]);
     }
 }

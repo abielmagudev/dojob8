@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 
 class UserProfiler
 {
-    public static $profiles_classnames = [
+    public static $classnicknames_classnames = [
         'contractor' => Contractor::class,
         'member' => Member::class,
     ];
 
     public static function all()
     {
-        return collect( self::$profiles_classnames );
+        return collect( self::$classnicknames_classnames );
     }
 
-    public static function profiles()
+    public static function classnicknames()
     {
         return self::all()->keys();
     }
@@ -28,22 +28,22 @@ class UserProfiler
         return self::all()->values();
     }
 
-    public static function getProfileByClassname(string $value)
+    public static function getClassnicknameByClassname(string $value)
     {
-        $profile = self::all()->search(function($classname) use ($value) { 
+        $classnickname = self::all()->search(function($classname) use ($value) { 
             return $classname == $value; 
         });
 
-        return $profile ?? null;
+        return $classnickname ?? null;
     }
 
-    public static function getClassnameByProfile(string $value)
+    public static function getClassnameByClassnickname(string $key)
     {
-        return self::all()[$value] ?? null;
+        return self::all()[$key] ?? null;
     }
 
-    public static function find($id, $profile)
+    public static function find($id, $classnickname_key)
     {
-        return ( self::getClassnameByProfile($profile) )::find($id);
+        return ( self::getClassnameByClassnickname($classnickname_key) )::find($id);
     }
 }

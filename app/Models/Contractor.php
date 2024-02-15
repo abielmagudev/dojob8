@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\Interfaces\Authenticable;
+use App\Models\Kernel\Interfaces\Profilable;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasAddress;
 use App\Models\Kernel\Traits\HasContactChannels;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Contractor extends Model implements Authenticable
+class Contractor extends Model implements Profilable
 {
     use HasActiveStatus;
     use HasAddress;
@@ -42,9 +42,9 @@ class Contractor extends Model implements Authenticable
 
     // Interface
 
-    public function getAuthenticatedNameAttribute(): string
+    public function getProfiledNameAttribute(): string
     {
-        return "{$this->name} ($this->alias)";
+        return sprintf('%s (%s)', $this->name, $this->alias);
     }
 
 

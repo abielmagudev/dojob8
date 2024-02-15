@@ -20,6 +20,7 @@ class UserController extends Controller
 
         return view('users.index', [
             'users' => $users,
+            'profiles' => UserProfiler::classnicknames(),
             'request' => $request,
         ]);
     }

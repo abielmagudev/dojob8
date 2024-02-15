@@ -30,11 +30,15 @@
             <td class="text-center" style="width:1%">
                 <x-custom.indicator-active-status :toggle="$user->isActive()" tooltip/>
             </td>
-            <td>{{ $user->name }}</td>
-            <td class="text-capitalize text-nowrap">
-                <span>{{ $user->profile->authenticated_name }}</span>
+            <td>
+                {{ $user->name }}
             </td>
-            <td class="text-capitalize">{{ $user->profiled }}</td>
+            <td class="text-capitalize text-nowrap">
+                <span>{{ $user->profile_name }}</span>
+            </td>
+            <td class="text-capitalize">
+                {{ $user->profile_classnickname }}
+            </td>
             <td class="text-nowrap">
                 <span class="me-1">{{ $user->last_session_date_human }}</span>
                 <span>{{ $user->last_session_time_human }}</span>

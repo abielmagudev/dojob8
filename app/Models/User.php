@@ -49,7 +49,7 @@ class User extends Authenticatable implements Filterable
     public function getParameterFilterSettings(): array
     {
         return [
-            'profile' => 'filterByProfile',
+            'profile' => 'filterByProfileType',
             'status' => 'filterByActive',
         ];
     }
@@ -62,11 +62,6 @@ class User extends Authenticatable implements Filterable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function getProfiledAttribute()
-    {
-        return UserProfiler::getProfileByClassname($this->profile_type);
-    }
-
     public function getLastSessionDateHumanAttribute()
     {
         return $this->getRawOriginal('last_session_at') ? $this->last_session_at->format('D d, M Y') : null; 
@@ -77,12 +72,19 @@ class User extends Authenticatable implements Filterable
         return $this->getRawOriginal('last_session_at') ? $this->last_session_at->format('h:m A') : null; 
     }
 
-
-    // Validators
-
-    public function isProfiled(string $value)
+    public function getProfileClassnameAttribute()
     {
-        return $this->profiled == $value;
+        return $this->profile_type;
+    }
+
+    public function getProfileClassnicknameAttribute()
+    {
+        return UserProfiler::getClassnicknameByClassname($this->profile_type);
+    }
+
+    public function getProfileNameAttribute()
+    {
+        return $this->profile->profiled_name;
     }
 
 
@@ -90,7 +92,7 @@ class User extends Authenticatable implements Filterable
 
     public function scopeFilterByProfile($query, $value)
     {
-        if( empty($value) ||! $classname = UserProfiler::getClassnameByProfile($value) ) {
+        if( empty($value) ||! $classname = UserProfiler::getClassnameByClassnickname($value) ) {
             return $query;
         }
 

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\Interfaces\Authenticable;
 use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Interfaces\Profilable;
 use App\Models\Kernel\Traits\HasAvailableStatus;
 use App\Models\Kernel\Traits\HasContactChannels;
 use App\Models\Kernel\Traits\HasFiltering;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Member extends Model implements Authenticable, Filterable
+class Member extends Model implements Filterable, Profilable
 {
     use HasAvailableStatus;
     use HasContactChannels;
@@ -52,7 +52,7 @@ class Member extends Model implements Authenticable, Filterable
         ];
     }
 
-    public function getAuthenticatedNameAttribute(): string
+    public function getProfiledNameAttribute(): string
     {
         return $this->full_name;
     }

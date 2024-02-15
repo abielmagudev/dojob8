@@ -16,7 +16,7 @@
         @csrf
 
         <x-form-field-horizontal label="Profile">
-            <div class="form-control text-capitalize">{{ $user->profile->authenticated_name }} ({{ $user->profiled }})</div>
+            <div class="form-control text-capitalize">{{ $user->profile_name }} ({{ $user->profile_classnickname }})</div>
         </x-form-field-horizontal>
 
         @include('users._form')

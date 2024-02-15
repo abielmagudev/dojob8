@@ -17,6 +17,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    @yield('head')
+    
     <style>
         .form-label-optional::after {
             color: var(--bs-tertiary-color);
@@ -24,6 +26,8 @@
             margin-left: 0.1rem;
         }
     </style>
+    @yield('style')
+    
 </head>
 <body class="bg-body-secondary">
 

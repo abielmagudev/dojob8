@@ -23,24 +23,28 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            // 
+            // Catalog
             AgencySeeder::class,
             ClientSeeder::class,
-            CommentSeeder::class,
             ContractorSeeder::class,
             CrewSeeder::class,
-            ExtensionSeeder::class,
-            InspectionSeeder::class,
             JobSeeder::class,
             MemberSeeder::class,
             SettingsSeeder::class,
             UserSeeder::class,
+            
+            // Operative
             WorkOrderSeeder::class,
+            InspectionSeeder::class,
+            CommentSeeder::class,
 
-            //
+            // Pivot
             CrewMemberSeeder::class,
             InspectionMemberSeeder::class,
             MemberWorkOrderSeeder::class,
+
+            // Overlast
+            ExtensionSeeder::class,
         ]);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Xapis\Stock\CpsProductMeasures\Controllers;
+namespace App\Xapis\Stock\WeatherizationCps\Controllers;
 
-use App\Xapis\Stock\CpsProductMeasures\Models\Category;
-use App\Xapis\Stock\CpsProductMeasures\Requests\CategorySaveRequest;
+use App\Xapis\Stock\WeatherizationCps\Models\Category;
+use App\Xapis\Stock\WeatherizationCps\Requests\CategorySaveRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index(Extension $extension)
     {
-        return view('CpsProductMeasures/views/categories/index', [
+        return view('WeatherizationCps/views/categories/index', [
             'extension' => $extension,
             'categories' => Category::withCount('products')->get(),
         ]);
@@ -20,7 +20,7 @@ class CategoryController extends Controller
 
     public function create(Extension $extension)
     {
-        return view('CpsProductMeasures/views/categories/create', [
+        return view('WeatherizationCps/views/categories/create', [
             'extension' => $extension,
             'category' => new Category,
         ]);
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($request->category);
 
-        return view('CpsProductMeasures/views/categories/edit', [
+        return view('WeatherizationCps/views/categories/edit', [
             'extension' => $extension,
             'category' => $category,
         ]);

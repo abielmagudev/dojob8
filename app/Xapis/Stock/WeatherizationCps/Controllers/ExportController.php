@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Xapis\Stock\CpsProductMeasures\Controllers;
+namespace App\Xapis\Stock\WeatherizationCps\Controllers;
 
-use App\Xapis\Stock\CpsProductMeasures\Exports\WorkOrderProductMeasuresExport;
-use App\Xapis\Stock\CpsProductMeasures\Models\Category;
-use App\Xapis\Stock\CpsProductMeasures\Models\CpsProductMeasureWorkOrder;
-use App\Xapis\Stock\CpsProductMeasures\Models\Product;
+use App\Xapis\Stock\WeatherizationCps\Exports\WeatherizationCpsWorkOrderExport;
+use App\Xapis\Stock\WeatherizationCps\Models\Category;
+use App\Xapis\Stock\WeatherizationCps\Models\WeatherizationCpsWorkOrder;
+use App\Xapis\Stock\WeatherizationCps\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\WorkOrder;
@@ -16,10 +16,10 @@ class ExportController extends Controller
 {
     public function index(Extension $extension)
     {
-        return view('CpsProductMeasures/views/exports/index', [
+        return view('WeatherizationCps/views/exports/index', [
             'extension' => $extension,
             'categories' => Category::with('products')->get(),
-            'work_orders' => CpsProductMeasureWorkOrder::with('work_order')->get(),
+            'work_orders' => WeatherizationCpsWorkOrder::with('work_order')->get(),
         ]);
     }
 
@@ -27,7 +27,7 @@ class ExportController extends Controller
     {
         $work_orders_table = (new WorkOrder)->getTable();
 
-        $query = CpsProductMeasureWorkOrder::with(['product', 'work_order']);
+        $query = WeatherizationCpsWorkOrder::with(['product', 'work_order']);
         
         if(! is_null($request->from) ||! is_null($request->to) )
         {
@@ -49,7 +49,7 @@ class ExportController extends Controller
         $measures = $request->product ? $query->where('product_id', $request->product)->get() : $query->get();
 
         return Excel::download(
-            new WorkOrderProductMeasuresExport([
+            new WeatherizationCpsWorkOrderExport([
                 'measures' => $measures,
                 'product_name' => is_null($request->product) ? 'All' : (Product::find($request->product)->name),
                 'from_at' => is_null($request->from) ? 'Any' : $request->from,

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Xapis\Stock\CpsProductMeasures\Controllers;
+namespace App\Xapis\Stock\WeatherizationCps\Controllers;
 
-use App\Xapis\Stock\CpsProductMeasures\Models\Category;
-use App\Xapis\Stock\CpsProductMeasures\Models\Product;
-use App\Xapis\Stock\CpsProductMeasures\Requests\ProductSaveRequest;
+use App\Xapis\Stock\WeatherizationCps\Models\Category;
+use App\Xapis\Stock\WeatherizationCps\Models\Product;
+use App\Xapis\Stock\WeatherizationCps\Requests\ProductSaveRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function index(Extension $extension)
     {
-        return view('CpsProductMeasures/views/products/index', [
+        return view('WeatherizationCps/views/products/index', [
             'extension' => $extension,
             'products' => Product::with('category')->get(),
         ]);
@@ -21,7 +21,7 @@ class ProductController extends Controller
 
     public function create(Extension $extension)
     {
-        return view('CpsProductMeasures/views/products/create', [
+        return view('WeatherizationCps/views/products/create', [
             'extension' => $extension,
             'categories' => Category::all(),
             'product' => new Product,
@@ -47,7 +47,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($request->product);
 
-        return view('CpsProductMeasures/views/products/edit', [
+        return view('WeatherizationCps/views/products/edit', [
             'extension' => $extension,
             'categories' => Category::all(),
             'product' => $product,

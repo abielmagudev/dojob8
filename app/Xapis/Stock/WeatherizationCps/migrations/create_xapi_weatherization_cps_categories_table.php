@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('xapi_cpspm_categories', function (Blueprint $table) {
+        Schema::create('xapi_weatherization_cps_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique('name_unique');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xapi_cpspm_categories');
+        Schema::dropIfExists('xapi_weatherization_cps_categories');
     }
 };

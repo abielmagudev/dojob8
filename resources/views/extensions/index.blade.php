@@ -22,7 +22,9 @@
                     <td>{{ $extension->name }}</td>
                     <td>{{ $extension->description }}</td>
                     <td class='text-end'>
-                        <a class="btn btn-outline-primary btn-sm" href="{{ route('extensions.show', $extension) }}">Configuration</a>
+                        <a class="btn btn-outline-primary btn-sm" href="{{ route('extensions.show', $extension) }}">
+                            <i class="bi bi-eye-fill"></i>
+                        </a>
                     </td>
                 </tr>
                 @endforeach

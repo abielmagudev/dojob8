@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Xapis\Stock\CpsProductMeasures\Models;
+namespace App\Xapis\Stock\WeatherizationCps\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {    
-    protected $table = 'xapi_cpspm_products';
+    protected $table = 'xapi_weatherization_cps_products';
 
     protected $fillable = [
         'name',

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Xapis\Stock\CpsProductMeasures\Models;
+namespace App\Xapis\Stock\WeatherizationCps\Models;
 
 use App\Models\WorkOrder;
 use Illuminate\Database\Eloquent\Model;
 
-class CpsProductMeasureWorkOrder extends Model
+class WeatherizationCpsWorkOrder extends Model
 {
-    protected $table = 'xapi_cpspm_work_orders';
+    protected $table = 'xapi_weatherization_cps_work_orders';
 
     public $timestamps = false;
 

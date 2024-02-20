@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Xapis\Stock\CpsProductMeasures\Exports;
+namespace App\Xapis\Stock\WeatherizationCps\Exports;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class WorkOrderProductMeasuresExport implements FromView
+class WeatherizationCpsWorkOrderExport implements FromView
 {
     public $data;
 

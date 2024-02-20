@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('xapi_weatherization_products_cps_work_orders', function (Blueprint $table) {
+        Schema::create('xapi_weatherization_cps_work_orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('quantity');
-            $table->foreignId('measure_id');
+            $table->foreignId('product_id');
             $table->foreignId('work_order_id');
             $table->dateTime('created_at');
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xapi_weatherization_products_cps_work_orders');
+        Schema::dropIfExists('xapi_weatherization_cps_work_orders');
     }
 };

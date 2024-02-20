@@ -13,16 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('xapi_cpspm_products', function (Blueprint $table) {
+        Schema::create('xapi_weatherization_cps_products', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique('name_unique');
-            $table->unsignedTinyInteger('item_price_id');
-            $table->decimal('material_price', 8, 2, true);
-            $table->decimal('labor_price', 8, 2, true);
+            $table->string('name')->unique();
+            $table->string('item_price_id')->nullable();
+            $table->decimal('material_price', 8, 2, true)->nullable();
+            $table->decimal('labor_price', 8, 2, true)->nullable();
             $table->text('notes')->nullable();
             $table->boolean('is_available')->default(true);
             $table->foreignId('category_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xapi_cpspm_products');
+        Schema::dropIfExists('xapi_weatherization_cps_products');
     }
 };

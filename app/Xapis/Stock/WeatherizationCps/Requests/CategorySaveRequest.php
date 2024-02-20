@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Xapis\Stock\CpsProductMeasures\Requests;
+namespace App\Xapis\Stock\WeatherizationCps\Requests;
 
-use App\Xapis\Stock\CpsProductMeasures\Models\Category;
+use App\Xapis\Stock\WeatherizationCps\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CategorySaveRequest extends FormRequest

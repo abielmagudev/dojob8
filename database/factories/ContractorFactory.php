@@ -24,8 +24,8 @@ class ContractorFactory extends Factory
         $country = CountryManager::get('US');
 
         return [
-            'name' => $company_name . mt_rand(0,10),
-            'alias' => wordInitials($company_name),
+            'name' => $company_name,
+            'alias' => wordInitials($company_name) . mt_rand(0,10),
             'contact_name' => $this->faker->name,
             'phone_number' => $this->faker->phoneNumber(),
             'mobile_number' => $this->faker->optional()->phoneNumber(),

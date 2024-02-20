@@ -19,19 +19,19 @@ class CreateApixTables extends Migration
 
         foreach(Stocker::all() as $apix => $setup_path)
         {
-            $this->console->writeln("<comment> {$apix}... </comment>");
+            $this->console->writeln("<comment> {$apix}...</comment>");
             
             $setup = include($setup_path);
 
             foreach($setup->migrations() as $table_name => $migration_path)
             {
-                $this->console->writeln("<comment>Migrating {$table_name}</comment>");
+                $this->console->writeln("<comment> Migrating {$table_name}</comment>");
 
                 $migration = include($migration_path);
                 
                 $migration->up();
                 
-                $this->console->writeln("<info>Migrated {$table_name}</info>");
+                $this->console->writeln("<info> Migrated {$table_name}</info>");
             }
         }
     }

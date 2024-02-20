@@ -8,7 +8,7 @@ interface SetupInterface
 
     public function description(): string;
 
-    public function classname(): string;
+    public function spacename(): string;
 
     public function migrations(): array;
 }

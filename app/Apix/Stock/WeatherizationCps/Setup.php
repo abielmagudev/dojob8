@@ -17,7 +17,7 @@ return new class implements SetupInterface
         return 'Installation of weatherization products cataloged by the CPS company.';
     }
 
-    public function classname(): string
+    public function spacename(): string
     {
         return 'WeatherizationCps';
     }

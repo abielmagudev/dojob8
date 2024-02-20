@@ -29,7 +29,7 @@ class ExtensionSeeder extends Seeder
             Extension::create([
                 'name' => $setup->name(),
                 'description' => $setup->description(),
-                'classname' => $setup->classname(),
+                'spacename' => $setup->spacename(),
             ]);
 
             $this->console->writeln("<info> Seeded {$apix} </info>");

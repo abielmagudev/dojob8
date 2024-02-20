@@ -17,7 +17,7 @@ return new class implements SetupInterface
         return 'Description CPS Product Measurements';
     }
 
-    public function classname(): string
+    public function spacename(): string
     {
         return 'CpsProductMeasures';
     }

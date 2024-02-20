@@ -17,7 +17,7 @@ return new class implements SetupInterface
         return 'Description Weatherization Measures for CPS';
     }
 
-    public function classname(): string
+    public function spacename(): string
     {
         return 'WeatherizationMeasureCps';
     }

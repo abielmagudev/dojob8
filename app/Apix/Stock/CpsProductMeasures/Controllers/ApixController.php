@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use Illuminate\Http\Request;
 
-class CpsProductMeasuresController extends Controller
+class ApixController extends Controller
 {
     use CallSubcontrollersTrait;
 

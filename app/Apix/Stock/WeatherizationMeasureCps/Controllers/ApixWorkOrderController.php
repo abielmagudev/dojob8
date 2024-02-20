@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Apix\Stock\CpsProductMeasures\Controllers;
+namespace App\Apix\Stock\WeatherizationMeasureCps\Controllers;
 
-use App\Apix\Stock\CpsProductMeasures\Models\Category;
-use App\Apix\Stock\CpsProductMeasures\Models\CpsProductMeasureWorkOrder;
-use App\Apix\Stock\CpsProductMeasures\Models\Product;
-use App\Apix\Stock\CpsProductMeasures\Requests\ProductWorkOrderSaveRequest;
+use App\Apix\Stock\WeatherizationMeasureCps\Models\WeatherizationMeasureCps;
+use App\Apix\Stock\WeatherizationMeasureCps\Models\WeatherizationProductCpsWorkOrder;
+use App\Apix\Stock\WeatherizationMeasureCps\Requests\ProductWorkOrderSaveRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
-class CpsProductMeasuresWorkOrderController extends Controller
+class ApixWorkOrderController extends Controller
 {
     private function save(Request $request, WorkOrder $work_order)
     {
@@ -23,21 +22,20 @@ class CpsProductMeasuresWorkOrderController extends Controller
         {
             array_push($data, [
                 'quantity' => $request->quantities[$i] ?? 0,
-                'product_id' => $request->products[$i],
+                'measure_id' => $request->products[$i],
                 'work_order_id' => $work_order->id,
                 'created_at' => now(),
             ]);
         }
 
-        return CpsProductMeasureWorkOrder::insert($data);
+        return WeatherizationProductCpsWorkOrder::insert($data);
     }
 
     public function create(Extension $extension)
     {
-        return view('CpsProductMeasures/views/work-orders/create', [
+        return view('WeatherizationMeasureCps/resources/views/work-orders/create', [
             'extension' => $extension,
-            'categories' => Category::with('products')->get(),
-            'products' => Product::available()->get(['id', 'name']),
+            'products' => WeatherizationMeasureCps::available()->get(['id', 'name']),
         ]);
     }
 
@@ -51,25 +49,27 @@ class CpsProductMeasuresWorkOrderController extends Controller
     }
 
     public function edit(Extension $extension, WorkOrder $work_order)
-    {        
-        return view('CpsProductMeasures/views/work-orders/edit', [
+    {
+        return view('WeatherizationMeasureCps/resources/views/work-orders/edit', [
             'extension' => $extension,
-            'categories' => Category::with('products')->get(),
-            'products' => Product::available()->get(['id', 'name']),
-            'work_order_products' => CpsProductMeasureWorkOrder::with('product')
-                                                                ->whereWorkOrder($work_order->id)
-                                                                ->get(),
+            'products' => WeatherizationMeasureCps::available()->get(['id', 'name']),
+            'work_order_products' => WeatherizationProductCpsWorkOrder::with('measure')->whereWorkOrder($work_order->id)->get(),
         ]); 
     }
 
     public function update(ProductWorkOrderSaveRequest $request, WorkOrder $work_order)
     {
-        CpsProductMeasureWorkOrder::whereWorkOrder($work_order->id)->delete();
+        WeatherizationProductCpsWorkOrder::whereWorkOrder($work_order->id)->delete();
 
         if( is_null($request->products) ) {
             return true;
         }
 
         return $this->save($request, $work_order);
+    }
+
+    public function destroy(WeatherizationProductCpsWorkOrder $product)
+    {
+        //   
     }
 }

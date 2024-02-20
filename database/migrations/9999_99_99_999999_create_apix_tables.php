@@ -48,13 +48,13 @@ class CreateApixTables extends Migration
 
             foreach($setup->migrations() as $table_name => $migration_path)
             {
-                $this->console->writeln("<comment>Downing {$table_name}</comment>");
+                $this->console->writeln("<comment> Downing {$table_name}</comment>");
 
                 $migration = include($migration_path);
                 
                 $migration->down();
                 
-                $this->console->writeln("<info>Downed {$table_name}</info>");
+                $this->console->writeln("<info> Downed {$table_name}</info>");
             }
         }
     }

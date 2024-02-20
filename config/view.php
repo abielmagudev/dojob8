@@ -14,10 +14,11 @@ return [
     */
 
     'paths' => [
+        // Default
         resource_path('views'),
 
-        // Apix Views
-        app_path('Apix/Stock'),
+        // XAPI: eXtension API
+        app_path('Xapis/Stock'),
     ],
 
     /*

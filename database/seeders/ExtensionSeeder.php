@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Apix\Stocker;
 use App\Models\Extension;
+use App\Xapis\Stocker;
 use Illuminate\Database\Seeder;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -18,13 +18,13 @@ class ExtensionSeeder extends Seeder
 
     public function run()
     {
-        $this->console->writeln("<question> APIX (Api-eXtensions) seeders </question>");
+        $this->console->writeln("<question> XAPI: eXtension API Seeders </question>");
 
-        foreach(Stocker::all() as $apix => $setup_path)
+        foreach(Stocker::all() as $xapi => $setup_path)
         {
             $setup = include($setup_path);
             
-            $this->console->writeln("<comment> Seeding {$apix} </comment>");
+            $this->console->writeln("<comment> Seeding {$xapi} </comment>");
 
             Extension::create([
                 'name' => $setup->name(),
@@ -32,7 +32,7 @@ class ExtensionSeeder extends Seeder
                 'spacename' => $setup->spacename(),
             ]);
 
-            $this->console->writeln("<info> Seeded {$apix} </info>");
+            $this->console->writeln("<info> Seeded {$xapi} </info>");
         }
     }
 }

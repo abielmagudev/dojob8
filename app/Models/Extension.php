@@ -18,19 +18,19 @@ class Extension extends Model
     
     // Attributes
 
-    public function getNamespaceAttribute()
+    public function getXapiNamespaceAttribute()
     {
-        return sprintf('App\Apix\Stock\%s', $this->spacename);
+        return sprintf('App\Xapis\Stock\%s', $this->spacename);
     }
     
-    public function getControllerAttribute()
+    public function getXapiControllerAttribute()
     {
-        return sprintf('%s\Controllers\ApixController', $this->namespace);
+        return sprintf('%s\Controllers\XapiController', $this->xapi_namespace);
     }
 
-    public function getWorkOrderControllerAttribute()
+    public function getXapiWorkOrderControllerAttribute()
     {
-        return sprintf('%s\Controllers\ApixWorkOrderController', $this->namespace);
+        return sprintf('%s\Controllers\XapiWorkOrderController', $this->xapi_namespace);
     }
 
 

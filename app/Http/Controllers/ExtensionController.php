@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Apix\Register;
 use App\Http\Controllers\Kernel\ControllerFormRequestResolver;
 use App\Models\Extension;
 use Illuminate\Http\Request;
@@ -14,9 +13,9 @@ class ExtensionController extends Controller
 
         $method = request()->route()->getActionMethod();
 
-        $requests = ControllerFormRequestResolver::make($extension->controller, $method);
+        $requests = ControllerFormRequestResolver::make($extension->xapi_controller, $method);
 
-        return app($extension->controller)->callAction($method, [...$requests, $extension]);
+        return app($extension->xapi_controller)->callAction($method, [...$requests, $extension]);
     }
 
     public function index(Request $request)

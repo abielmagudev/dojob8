@@ -6,7 +6,7 @@
     'Configuration'
 ]" />
 <x-page-title>{{ $extension->name }}</x-page-title>
-@include('CpsProductMeasures/views/partials/subnavbar')
+@include('WeatherizationCps/views/partials/subnavbar')
 @endsection
 
 @section('content')

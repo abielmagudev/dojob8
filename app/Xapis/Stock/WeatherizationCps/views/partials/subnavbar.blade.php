@@ -1,4 +1,4 @@
-<?php use App\Xapis\Stock\CpsProductMeasures\Controllers\XapiController; ?>
+<?php use App\Xapis\Stock\WeatherizationCps\Controllers\XapiController; ?>
 
 <div class="text-center">
     <div class="btn-group btn-group-sm mb-3" role="group" aria-label="Subnavbar of extension">

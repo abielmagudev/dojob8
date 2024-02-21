@@ -31,7 +31,7 @@
             <td>{{ $category->name }}</td>
             <td>{{ $category->products_count }}</td>
             <td class="text-end">
-                <a href="{{ route('extensions.edit', [$extension, 'sub' => 'categories', 'category' => $category->id]) }}" class="btn btn-outline-warning">
+                <a href="{{ route('extensions.edit', [$extension, 'sub' => 'categories', 'category' => $category->id]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>

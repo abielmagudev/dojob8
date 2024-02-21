@@ -36,7 +36,7 @@
             <td>${{ $product->labor_price }}</td>
             <td>${{ $product->unit_price }}</td>
             <td class="text-end">
-                <a href="{{ route('extensions.edit', [$extension, 'sub' => 'products', 'product' => $product->id]) }}" class="btn btn-outline-warning">
+                <a href="{{ route('extensions.edit', [$extension, 'sub' => 'products', 'product' => $product->id]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>

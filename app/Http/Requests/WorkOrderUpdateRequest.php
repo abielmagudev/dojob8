@@ -26,7 +26,7 @@ class WorkOrderUpdateRequest extends FormRequest
     {
         return [
             'scheduled_date' => [
-                'required',
+                'nullable',
                 'date',
             ],
             'type' => [
@@ -120,6 +120,7 @@ class WorkOrderUpdateRequest extends FormRequest
             'working_at' => collect($this->only(['working_date', 'working_time']))->filter()->implode(' '), // Mutator
             'done_at' => collect($this->only(['done_date', 'done_time']))->filter()->implode(' '), // Mutator
             'completed_at' => $this->get('status'), // Mutator
+            'status' => WorkOrder::qualifyForPendingStatus($this->all()) ? 'pending' : ($this->status == 'pending' ? 'pause' : $this->status),
         ]);
     }
 }

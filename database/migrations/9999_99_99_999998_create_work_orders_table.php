@@ -21,7 +21,7 @@ class CreateWorkOrdersTable extends Migration
             $table->string('payment_status')->nullable()->index();
             $table->string('inspection_status')->nullable()->index();
 
-            $table->date('scheduled_date')->index();
+            $table->date('scheduled_date')->nullable()->index();
             $table->dateTime('working_at')->nullable();
             $table->dateTime('done_at')->nullable();
             $table->dateTime('completed_at')->nullable();

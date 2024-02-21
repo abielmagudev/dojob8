@@ -14,17 +14,19 @@ class WorkOrderFactory extends Factory
      */
     public function definition()
     {
-        $status = $this->faker->randomElement( WorkOrder::getAllStatuses() );
+        $status = $this->faker->randomElement( WorkOrder::getAllFormStatuses() );
+        
+        $scheduled_date = $this->faker->optional()->dateTimeBetween('-2 years');
         
         $rework_id = $this->faker->optional()->numberBetween(1, 500);
-
+            
         return [
             'ordered' => $this->faker->optional()->numberBetween(1, 5),
-            'status' => $status,
+            'status' => is_null($scheduled_date) ? 'pending' : $status,
             'payment_status' => WorkOrder::inStatusesForPayment($status) ? $this->faker->randomElement( WorkOrder::getPaymentStatuses() ) : WorkOrder::initialPaymentStatus(),
             'inspection_status' => WorkOrder::initialInspectionStatus(),
 
-            'scheduled_date' => $this->faker->dateTimeBetween('-2 years'),
+            'scheduled_date' => $scheduled_date,
             'working_at' => in_array($status, ['working','done','completed']) ? $this->faker->dateTimeBetween('-2 years') : null,
             'done_at' => in_array($status, ['done','completed']) ? $this->faker->dateTimeBetween('-2 years') : null,
             'completed_at' => $status,

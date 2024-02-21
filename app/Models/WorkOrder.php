@@ -13,6 +13,7 @@ use App\Models\WorkOrder\Traits\Filters;
 use App\Models\WorkOrder\Traits\InspectionStatus;
 use App\Models\WorkOrder\Traits\Mutators;
 use App\Models\WorkOrder\Traits\PaymentStatus;
+use App\Models\WorkOrder\Traits\PendingStatus;
 use App\Models\WorkOrder\Traits\Relationships;
 use App\Models\WorkOrder\Traits\Scopes;
 use App\Models\WorkOrder\Traits\Validators;
@@ -27,6 +28,7 @@ class WorkOrder extends Model implements Filterable
     use InspectionStatus;
     use Mutators;
     use PaymentStatus;
+    use PendingStatus;
     use Relationships;
     use Scopes;
     use Validators;
@@ -71,6 +73,17 @@ class WorkOrder extends Model implements Filterable
     ];
 
     public static $all_statuses = [
+        'pending',
+        'pause',
+        'new',
+        'working',
+        'done',
+        'completed',
+        'canceled',
+        'denialed',
+    ];
+
+    public static $all_form_statuses = [
         'pause',
         'new',
         'working',
@@ -81,6 +94,7 @@ class WorkOrder extends Model implements Filterable
     ];
 
     public static $incomplete_statuses = [ 
+        'pending',
         'pause',
         'new',
         'working',
@@ -104,6 +118,11 @@ class WorkOrder extends Model implements Filterable
     public static function getAllStatuses()
     {
         return collect( self::$all_statuses );
+    }
+
+    public static function getAllFormStatuses()
+    {
+        return collect( self::$all_form_statuses );
     }
 
     public static function getIncompleteStatuses()

@@ -105,7 +105,9 @@
             @endif
 
             <td class="text-center" style="width:1%">
+                @if(! $work_order->qualifiesForPendingStatus() )
                 <input class="form-check-input" type="checkbox" form="formUpdateStatus" name="work_orders[]" value="{{ $work_order->id }}">
+                @endif
             </td>
 
             @if( $request->filled('dates') )

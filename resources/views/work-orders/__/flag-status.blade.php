@@ -1,6 +1,9 @@
 <?php $settings = [
+    'pending' => [
+        'class' => 'text-bg-warning animate__animated animate__pulse animate__infinite fst-italic',
+    ],
     'pause' => [
-        'class' => 'text-bg-warning animate__animated animate__tada animate__infinite fst-italic',
+        'class' => 'text-primary border border-primary fst-italic',
     ],
     'new' => [
         'class' => 'text-bg-primary',
@@ -23,8 +26,11 @@
     ],
 ]; ?>
 <span 
-    class="badge text-uppercase {{ $settings[$status]['class'] ?? '' }} {{ $class ?? '' }}" 
-    style="{{ $settings[$status]['style'] ?? '' }}"
+    class="badge text-uppercase {{ $settings[$status]['class'] ?? '' }} {{ $class ?? '' }}"
+    
+    @isset($settings[$status]['style'])   
+    style="<?= $settings[$status]['style'] ?>"
+    @endisset
 >
     {{ $status }}
 </span>

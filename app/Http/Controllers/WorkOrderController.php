@@ -115,7 +115,7 @@ class WorkOrderController extends Controller
         $work_order->client->load('work_orders.job');
 
         return view('work-orders.edit', [
-            'all_statuses' => WorkOrder::getAllStatuses(),
+            'all_form_statuses' => WorkOrder::getAllFormStatuses(),
             'all_types' => WorkOrder::getAllTypes(),
             'client' => $work_order->client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),

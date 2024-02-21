@@ -29,7 +29,7 @@ class WorkOrderStoreRequest extends FormRequest
                 sprintf('exists:%s,id', Client::class),
             ],
             'scheduled_date' => [
-                'required',
+                'nullable',
                 'date',
             ],
             'type' => [
@@ -104,7 +104,7 @@ class WorkOrderStoreRequest extends FormRequest
             'contractor_id' => $this->get('contractor'),
             'job_id' => $this->get('job'),
             'crew_id' => $this->get('crew'),
-            'status' => WorkOrder::INITIAL_STATUS,
+            'status' => WorkOrder::qualifyForPendingStatus($this->all()) ? 'pending' : WorkOrder::INITIAL_STATUS,
         ]);
     }
 }

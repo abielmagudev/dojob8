@@ -2,10 +2,13 @@
 
 namespace App\Xapis\Stock\WeatherizationCps\Models;
 
+use App\Models\Kernel\Traits\HasAvailableStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {    
+    use HasAvailableStatus;
+
     protected $table = 'xapi_weatherization_cps_products';
 
     protected $fillable = [
@@ -18,20 +21,24 @@ class Product extends Model
         'category_id',
     ];
     
+
+    // Attributes
+
     public function getUnitPriceAttribute()
     {
         return ($this->material_price + $this->labor_price);
     }
 
-    public function isAvailable()
+
+    // Validators
+
+    public function hasCategory()
     {
-        return (bool) $this->is_available;
+        return ! empty($this->category_id) && is_a($this->category, Category::class);
     }
 
-    public function scopeAvailable($query)
-    {
-        return $query->where('is_available', 1);
-    }
+
+    // Relationships
 
     public function category()
     {

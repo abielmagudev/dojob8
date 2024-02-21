@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('xapi_weatherization_cps_products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('item_price_id')->nullable();
+            $table->string('item_price_id');
             $table->decimal('material_price', 8, 2, true)->nullable();
             $table->decimal('labor_price', 8, 2, true)->nullable();
             $table->text('notes')->nullable();
             $table->boolean('is_available')->default(true);
-            $table->foreignId('category_id');
+            $table->foreignId('category_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

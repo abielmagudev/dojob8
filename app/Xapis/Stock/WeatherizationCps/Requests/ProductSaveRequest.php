@@ -8,6 +8,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductSaveRequest extends FormRequest
 {
+    public $product_id;
+    
     public function authorize()
     {
         return true;
@@ -16,17 +18,17 @@ class ProductSaveRequest extends FormRequest
     public function rules()
     {
         return [
-            'category' => [
+            'name' => [
                 'required',
+                sprintf('unique:%s,name,%s', Product::class, $this->cache['product']->id),
+            ],
+            'category' => [
+                'nullable',
                 sprintf('exists:%s,id', Category::class),
             ],
             'item_price_id' => [
                 'required',
-                'integer',
-            ],
-            'name' => [
-                'required',
-                sprintf('unique:%s,name,%s', Product::class, $this->cache['product']->id),
+                'string',
             ],
             'material_price' => [
                 'required',
@@ -34,7 +36,7 @@ class ProductSaveRequest extends FormRequest
             ],
             'labor_price' => [
                 'required',
-                'numeric'
+                'numeric',
             ],
             'notes' => [
                 'nullable',
@@ -66,7 +68,7 @@ class ProductSaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'category_id' => $this->category,
+            'category_id' => $this->get('category'),
         ]);
     }
 }

@@ -57,10 +57,6 @@ Route::get('inspections/create/{work_order}', [InspectionController::class, 'cre
 Route::resource('inspections', InspectionController::class)->except('create');
 Route::resource('agencies', AgencyController::class);
 
-Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
-Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
-Route::resource('extensions', ExtensionController::class)->except(['create','store']);
-
 Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
 Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
 Route::resource('jobs', JobController::class);
@@ -74,15 +70,6 @@ Route::resource('contractors', ContractorController::class);
 Route::resource('users', UserController::class);
 
 Route::get('history', HistoryController::class)->name('history.index');
-
-Route::patch('work-orders/order', WorkOrderOrderedController::class)->name('work-orders.update.ordered');
-Route::patch('work-orders/status', WorkOrderStatusController::class)->name('work-orders.update.status');
-Route::patch('work-orders/workers', WorkOrderMemberController::class)->name('work-orders.update.workers');
-Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
-Route::resource('work-orders', WorkOrderController::class)->except('create');
-
-Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
-Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
 
 // Comments
 Route::post('comments/{work_order}', CommentController::class)->name('comments.create');
@@ -101,3 +88,19 @@ Route::get('search', SearchController::class)->name('app.search');
 // Files
 Route::post('files/{folder}/{fileable_id}', [FileController::class, 'store'])->name('files.store');
 Route::delete('files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
+
+// Extensions
+Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
+Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
+Route::resource('extensions', ExtensionController::class)->except(['create','store']);
+
+// Work orders
+Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
+Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
+Route::get('work-orders/ajax/show/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'show'])->name('work-orders.ajax.show');
+
+Route::patch('work-orders/order', WorkOrderOrderedController::class)->name('work-orders.update.ordered');
+Route::patch('work-orders/status', WorkOrderStatusController::class)->name('work-orders.update.status');
+Route::patch('work-orders/workers', WorkOrderMemberController::class)->name('work-orders.update.workers');
+Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
+Route::resource('work-orders', WorkOrderController::class)->except('create');

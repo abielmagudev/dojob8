@@ -50,6 +50,16 @@ class XapiWorkOrderController extends Controller
         return $this->save($request, $work_order);
     }
 
+    public function show(Extension $extension, WorkOrder $work_order)
+    {        
+        return view('WeatherizationCps/views/work-orders/show', [
+            'extension' => $extension,
+            'work_order_products' => WeatherizationCpsWorkOrder::with('product')
+                                                                ->whereWorkOrder($work_order->id)
+                                                                ->get(),
+        ]); 
+    }
+
     public function edit(Extension $extension, WorkOrder $work_order)
     {        
         return view('WeatherizationCps/views/work-orders/edit', [

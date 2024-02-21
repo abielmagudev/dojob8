@@ -1,8 +1,8 @@
-if( typeof CpsPMComponent == 'undefined' )
+if( typeof wcpsComponent == 'undefined' )
 {
-    const CpsPMComponent = {
-        element: document.getElementById('cpspmProductComponent'),
-        container: document.getElementById('cpspmProductsWorkOrder'),
+    const wcpsComponent = {
+        element: document.getElementById('wcpsProductComponent'),
+        container: document.getElementById('wcpsProductsWorkOrder'),
         template: function (setup) {
             let clone = this.element.querySelector('template').content.cloneNode(true);
 
@@ -59,5 +59,5 @@ if( typeof CpsPMComponent == 'undefined' )
             })
         }
     }
-    CpsPMComponent.listen()
+    wcpsComponent.listen()
 }

@@ -18,7 +18,7 @@ class ExtensionController extends Controller
         return app($extension->xapi_controller)->callAction($method, [...$requests, $extension]);
     }
 
-    public function index(Request $request)
+    public function index()
     {
         return view('extensions.index')->with('extensions', Extension::all());
     }

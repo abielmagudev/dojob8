@@ -1,4 +1,5 @@
 <x-breadcrumb :items="[
     'Extensions' => route('extensions.index'),
-    'Configuration'
+    'Extension'
 ]" />
+<x-page-title>{{ $extension->name }}</x-page-title>

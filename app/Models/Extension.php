@@ -12,7 +12,7 @@ class Extension extends Model
     protected $fillable = [
         'name',
         'description',
-        'classname',
+        'spacename',
     ];
 
     
@@ -34,7 +34,20 @@ class Extension extends Model
     }
 
 
-    // Relations
+    // Actions
+
+    public function xapiController()
+    {
+        return new $this->xapi_controller;
+    }
+
+    public function xapiWorkOrderController()
+    {
+        return new $this->xapi_work_order_controller;
+    }
+
+
+    // Relationships
 
     public function jobs()
     {

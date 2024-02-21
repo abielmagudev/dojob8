@@ -1,13 +1,13 @@
 <p class="h5">{{ $extension->name }}</p>
 
-@include('CpsProductMeasures/views/work-orders/_product-component')
+@include('WeatherizationCps/views/work-orders/_product-component')
 
-<div id="cpspmProductsWorkOrder">
+<div id="wcpsProductsWorkOrder">
     @if( $products_count = count( old('products', []) ) )
     @for($i = 0; $i < $products_count; $i++)
         
     @if($product = $products->find( old('products')[$i] ) )   
-    @include('CpsProductMeasures/views/work-orders/_product-template', [
+    @include('WeatherizationCps/views/work-orders/_product-template', [
         'product' => [
             'text' => $product->name,
             'value' => $product->id,
@@ -28,4 +28,4 @@
 <x-form-feedback error="quantities" />
 <x-form-feedback error="quantities.*" />
 
-<script src="{{ asset('x-js/cpspm.js') }}" fake></script>
+<script src="{{ asset('x-js/wcps.js') }}" fake></script>

@@ -15,7 +15,18 @@ class WorkOrderJobExtensionsAjaxController extends Controller
             'job' => $job,
             'status' => 200,
             'templates' => $job->extensions->map(function ($extension) {
-                return (app($extension->work_order_controller)->callAction('create', [$extension]))->render();
+                return (app($extension->xapi_work_order_controller)->callAction('create', [$extension]))->render();
+            }),
+        ], 200);
+    }
+
+    public function show(Request $request, WorkOrder $work_order)
+    {
+        return response()->json([
+            'work_order' => $work_order,
+            'status' => 200,
+            'templates' => $work_order->job->extensions->map(function ($extension) use ($work_order) {
+                return (app($extension->xapi_work_order_controller)->callAction('show', [$extension, $work_order]))->render();
             }),
         ], 200);
     }
@@ -26,7 +37,7 @@ class WorkOrderJobExtensionsAjaxController extends Controller
             'work_order' => $work_order,
             'status' => 200,
             'templates' => $work_order->job->extensions->map(function ($extension) use ($work_order) {
-                return (app($extension->work_order_controller)->callAction('edit', [$extension, $work_order]))->render();
+                return (app($extension->xapi_work_order_controller)->callAction('edit', [$extension, $work_order]))->render();
             }),
         ], 200);
     }

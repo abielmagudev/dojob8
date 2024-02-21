@@ -13,7 +13,7 @@ trait ResolveExtensionRequestsTrait
 
         foreach($extensions as $extension)
         {
-            $resolved[$extension->id] = ControllerFormRequestResolver::make($extension->work_order_controller, $method);
+            $resolved[$extension->id] = ControllerFormRequestResolver::make($extension->xapi_work_order_controller, $method);
         }
 
         return $resolved;

@@ -1,4 +1,4 @@
-<div id="cpspmProductComponent">
+<div id="wcpsProductComponent">
     <div class="row align-items-end mb-3">
         <div class="col">
             <label for="selectProduct" class="form-label">Product</label>
@@ -25,6 +25,6 @@
         </div>
     </div>
     <template>
-        @include('CpsProductMeasures/views/work-orders/_product-template')
+        @include('WeatherizationCps/views/work-orders/_product-template')
     </template>
 </div>

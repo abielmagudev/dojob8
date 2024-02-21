@@ -163,7 +163,7 @@ class WorkOrderController extends Controller
     {
         foreach($extensions as $extension)
         {
-            app($extension->work_order_controller)->callAction($method, [...$requests[$extension->id], $work_order]);
+            app($extension->xapi_work_order_controller)->callAction($method, [...$requests[$extension->id], $work_order]);
         }
     }
 }

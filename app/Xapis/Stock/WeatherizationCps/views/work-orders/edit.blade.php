@@ -1,10 +1,10 @@
 <p class="h5">{{ $extension->name }}</p>
 
-@include('CpsProductMeasures/views/work-orders/_product-component')
+@include('WeatherizationCps/views/work-orders/_product-component')
 
-<div id="cpspmProductsWorkOrder">
+<div id="wcpsProductsWorkOrder">
     @foreach($work_order_products as $work_order_product)
-        @include('CpsProductMeasures/views/work-orders/_product-template', [
+        @include('WeatherizationCps/views/work-orders/_product-template', [
             'product' => [
                 'text' => $work_order_product->product->name,
                 'value' => $work_order_product->product_id,
@@ -25,7 +25,7 @@
         @endif
 
         @if( $product = $products->find( old('products')[$i] ) )   
-            @include('CpsProductMeasures/views/orders/_product-template', [
+            @include('WeatherizationCps/views/orders/_product-template', [
                 'product' => [
                     'text' => $product->name,
                     'value' => $product->id,
@@ -45,4 +45,4 @@
 <x-form-feedback error="quantities" />
 <x-form-feedback error="quantities.*" />
 
-<script src="{{ asset('x-js/cpspm.js') }}" fake></script>
+<script src="{{ asset('x-js/wcps.js') }}" fake></script>

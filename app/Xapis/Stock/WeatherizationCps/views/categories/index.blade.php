@@ -13,7 +13,7 @@
 <x-card title="Categories">
     <x-slot name="options">
         <a href="{{ route('extensions.create', [$extension, 'sub' => 'categories']) }}" class="btn btn-primary">
-            <b>+</b>
+            <i class="bi bi-plus-lg"></i>
         </a>
     </x-slot>
 

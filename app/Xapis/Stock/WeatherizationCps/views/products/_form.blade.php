@@ -1,38 +1,41 @@
-<div class="mb-3">
-    <label for="categorySelect" class="form-label">Category</label>
-    <select name="category" id="categorySelect" class="form-select" required>
-        <option disabled selected label="Choose..."></option>
+<x-form-field-horizontal for="inputName" label="Name">
+    <input type="text" name="name" value="{{ old('name', $product->name) }}" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" id="inputName" autofocus required>
+    <x-form-feedback error="name" />
+</x-form-field-horizontal>
+
+<x-form-field-horizontal for="categorySelect" label="Category">
+    <select name="category" id="categorySelect" class="form-select">
+        <option selected label="Without category"></option>
         @foreach($categories as $category)
         <option value="{{ $category->id }}" {{ isSelected( old('category', $product->category_id) == $category->id ) }}>{{ $category->name }}</option>
         @endforeach
     </select>
-</div>
-<div class="mb-3">
-    <label for="numberItemPrice" class="form-label">Item price ID</label>
-    <input type="number" name="item_price_id" value="{{ old('item_price_id', $next_item_price_id) }}" class="form-control {{ bsInputInvalid( $errors->has('item_price_id') ) }}" id="numberItemPrice" min="1" step="1" required>
+    <div class="d-flex justify-content-between">
+        <div>
+            <x-form-feedback error="category" />
+        </div>
+        <div>
+            <a href="{{ route('extensions.create', [$extension, 'sub' => 'categories']) }}" class="small">New category</a>
+        </div>
+    </div>
+</x-form-field-horizontal>
+
+<x-form-field-horizontal for="inputItemPriceId" label="Item price ID">
+    <input id="inputItemPriceId" type="text" name="item_price_id" value="{{ old('item_price_id', $product->item_price_id) }}" class="form-control {{ bsInputInvalid( $errors->has('item_price_id') ) }}" required>
     <x-form-feedback error="item_price_id" />
-</div>
-<div class="mb-3">
-    <label for="inputName" class="form-label">Name</label>
-    <input type="text" name="name" value="{{ old('name', $product->name) }}" class="form-control {{ bsInputInvalid( $errors->has('name') ) }}" id="inputName" placeholder="Product or service" required>
-    <x-form-feedback error="name" />
-</div>
-<div class="mb-3">
-    <label for="numberMaterialPrice" class="form-label">Material price</label>
+</x-form-field-horizontal>
+
+<x-form-field-horizontal for="inputItnumberMaterialPriceemPriceId" label="Material price">
     <input type="number" name="material_price" value="{{ old('material_price', $product->material_price) }}" class="form-control {{ bsInputInvalid( $errors->has('material_price') ) }}" id="numberMaterialPrice" min="0.01" max="999999.99" step="0.01" placeholder="0.00" required>
     <x-form-feedback error="material_price" />
-</div>
-<div class="mb-3">
-    <label for="numberLaborPrice" class="form-label">Labor price</label>
+</x-form-field-horizontal>
+
+<x-form-field-horizontal for="numberLaborPrice" label="Labor price">
     <input type="number" name="labor_price" value="{{ old('labor_price', $product->labor_price) }}" class="form-control {{ bsInputInvalid( $errors->has('labor_price') ) }}" id="numberLaborPrice" min="0.01" max="999999.99" step="0.01" placeholder="0.00" required>
     <x-form-feedback error="labor_price" />
-</div>
-<div class="mb-3">
-    <label for="textareaNotes" class="form-label">
-        <span>Notes</span>
-        <small class="text-secondary">(Optional)</small>
-    </label>
+</x-form-field-horizontal>
+
+<x-form-field-horizontal for="textareaNotes" label="Notes" label-class="form-label-optional">
     <textarea id="textareaNotes" class="form-control {{ bsInputInvalid( $errors->has('notes') ) }}" rows="3" name="notes">{{ old('notes', $product->notes) }}</textarea>
     <x-form-feedback error="notes" />
-</div>
-@csrf
+</x-form-field-horizontal>

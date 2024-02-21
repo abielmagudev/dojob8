@@ -25,7 +25,6 @@ class ProductController extends Controller
             'extension' => $extension,
             'categories' => Category::all(),
             'product' => new Product,
-            'next_item_price_id' => (Product::all())->max('item_price_id') + 1,
         ]);
     }
 
@@ -51,7 +50,6 @@ class ProductController extends Controller
             'extension' => $extension,
             'categories' => Category::all(),
             'product' => $product,
-            'next_item_price_id' => $product->item_price_id,
         ]);
     }
 

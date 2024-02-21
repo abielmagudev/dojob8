@@ -32,7 +32,7 @@ class CategoryController extends Controller
             return back()->with('danger', 'Error saving category, try again please');
         }
 
-        return redirect()->route('extensions.show', [$extension, 'sub' => 'categories'])->with('success', "Category <b>{$category->name}</b> saved");
+        return redirect()->route('extensions.create', [$extension, 'sub' => 'products'])->with('success', "Category <b>{$category->name}</b> saved");
     }
 
     public function edit(Request $request, Extension $extension)

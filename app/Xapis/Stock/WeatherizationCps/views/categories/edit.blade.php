@@ -12,8 +12,9 @@
 @section('content')
 <x-card title="Edit category">
     <form action="{{ route('extensions.update', [$extension, 'sub' => 'categories', 'category' => $category->id]) }}" method="post" autocomplete="off">
-        @include('CpsProductMeasures/views/categories/_form')
         @method('put')
+        @csrf
+        @include('WeatherizationCps/views/categories/_form')
         <br>
 
         <div class="text-end">

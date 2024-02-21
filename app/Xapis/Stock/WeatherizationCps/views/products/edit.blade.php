@@ -11,8 +11,10 @@
 @section('content')
 <x-card title="Edit product">
     <form action="{{ route('extensions.update', [$extension, 'sub' => 'products', 'product' => $product->id]) }}" method="post" autocomplete="off">
+        @csrf
         @method('put')
         @include('CpsProductMeasures/views/products/_form')
+
         <div class="mb-3">
             <label for="" class="form-label">Available</label>
             <div class="form-control">
@@ -33,8 +35,8 @@
         <br>
 
         <div class="text-end">
+            <a href="{{ route('extensions.show', $extension) }}" class="btn btn-outline-primary">Back</a>
             <button class="btn btn-warning" type="submit">Update product</button>
-            <a href="{{ route('extensions.show', $extension) }}" class="btn btn-primary">Back</a>
         </div>
     </form>
 </x-card>

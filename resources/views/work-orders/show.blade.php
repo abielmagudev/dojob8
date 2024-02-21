@@ -10,7 +10,7 @@
 <x-page-title>
     <span>#{{ $work_order->id }}</span>
     @if( $work_order->isNonstandard() )
-    <span class="text-secondary text-capitalize fw-normal ">({{ $work_order->type }})</span>
+    <span class="text-secondary text-capitalize fw-normal ">({{ $work_order->type }}: {{ $work_order->type_id }})</span>
     @endif
 
     @slot('subtitle')

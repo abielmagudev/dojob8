@@ -16,6 +16,6 @@ class WeatherizationCpsWorkOrderExport implements FromView
 
     public function view(): View
     {
-        return view('CpsProductMeasures/views/exports/excel', $this->data);
+        return view('WeatherizationCps/views/exports/excel', $this->data);
     }
 }

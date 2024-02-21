@@ -55,7 +55,7 @@ class ExportController extends Controller
                 'from_at' => is_null($request->from) ? 'Any' : $request->from,
                 'to_at' => is_null($request->to) ? 'Any' : $request->to,
             ]), 
-            sprintf('cps-product-measurements-%s.xlsx', now())
+            sprintf('weatherization-products-cps-%s.xlsx', now())
         );
     }
 }

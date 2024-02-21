@@ -66,7 +66,7 @@
             </td>
 
             <td class="text-end w-1">
-                <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm w-100">
+                <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
             </td>

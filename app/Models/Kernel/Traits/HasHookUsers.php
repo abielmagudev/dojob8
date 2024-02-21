@@ -7,6 +7,24 @@ use Illuminate\Support\Facades\DB;
 
 trait HasHookUsers
 {
+    // Validators
+
+    public function hasCreator()
+    {
+        return ! empty($this->created_by) && is_a($this->creator, User::class);
+    }
+
+    public function hasUpdater()
+    {
+        return ! empty($this->updated_by) && is_a($this->updater, User::class);
+    }
+
+    public function hasDeleter()
+    {
+        return ! empty($this->deleted_by) && is_a($this->deleter, User::class);
+    }
+
+
     // Relationships
 
     public function creator()

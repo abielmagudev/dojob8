@@ -112,8 +112,6 @@ class WorkOrderController extends Controller
     {
         $this->reflashInputErrors();
 
-        $work_order->client->load('work_orders.job');
-
         return view('work-orders.edit', [
             'all_form_statuses' => WorkOrder::getAllFormStatuses(),
             'all_types' => WorkOrder::getAllTypes(),

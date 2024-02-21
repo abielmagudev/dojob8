@@ -53,14 +53,7 @@
 
         <li>
           <a class="dropdown-item" href="#">
-              <i class="bi bi-sliders"></i>
-              <span class="ms-2">Preferences</span>
-          </a>
-        </li>
-
-        <li>
-          <a class="dropdown-item" href="#">
-              <i class="bi bi-person"></i>
+          <i class="bi bi-person-vcard"></i>
               <span class="ms-2">My account</span>
           </a>
         </li>

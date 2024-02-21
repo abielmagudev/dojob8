@@ -1,5 +1,5 @@
-<div class="alert border rounded">
-    <h6 class="text-secondary">Participants</h6>
+<h6 class="text-secondary">Participants</h6>
+<div class="alert border rounded mb-3">
     <div class="row">
         <div class="col-sm">
             <x-small-title title="Contractor">

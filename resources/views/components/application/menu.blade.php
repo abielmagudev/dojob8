@@ -16,6 +16,12 @@ return [
             'permission' => true,
             'route' => route('work-orders.index'),
         ],
+        'Clients' => [
+            'active' => request()->routeIs('clients.*'),
+            'icon' => '<i class="bi bi-book"></i>',
+            'permission' => true,
+            'route' => route('clients.index'),
+        ],
         'Jobs' => [
             'active' => request()->routeIs('jobs.*'),
             'icon' => '<i class="bi bi-nut"></i>',
@@ -27,6 +33,12 @@ return [
             'icon' => '<i class="bi bi-plug"></i>',
             'permission' => true,
             'route' => route('extensions.index')
+        ],
+        'Payments' => [
+            'active' => request()->routeIs('payments.*'),
+            'icon' => '<i class="bi bi-cash-coin"></i>',
+            'route' => route('payments.index'),
+            'permission' => true,
         ],
     ],
     'Inspections' => [
@@ -56,31 +68,17 @@ return [
             'permission' => true,
             'route' => route('crews.index'),
         ],
-        'Users' => [
-            'active' => request()->routeIs('users.*'),
-            'icon' => '<i class="bi bi-person-workspace"></i>',
-            'permission' => true,
-            'route' => route('users.index'),
-        ],
-    ],
-    'Partners' => [
-        'Clients' => [
-            'active' => request()->routeIs('clients.*'),
-            'icon' => '<i class="bi bi-book"></i>',
-            'permission' => true,
-            'route' => route('clients.index'),
-        ],
         'Contractors' => [
             'active' => request()->routeIs('contractors.*'),
             'icon' => '<i class="bi bi-bookmark-star"></i>',
             'permission' => true,
             'route' => route('contractors.index'),
         ],
-        'Payments' => [
-            'active' => request()->routeIs('payments.*'),
-            'icon' => '<i class="bi bi-cash-coin"></i>',
-            'route' => route('payments.index'),
+        'Users' => [
+            'active' => request()->routeIs('users.*'),
+            'icon' => '<i class="bi bi-person-workspace"></i>',
             'permission' => true,
+            'route' => route('users.index'),
         ],
     ],
     'Application' => [

@@ -11,7 +11,7 @@ class History extends ResponseConstructor
     {
         return [
             'show' => 'history',
-            'history' => HistoryModel::with('user')->about($this->work_order)->paginate(35),
+            'history' => HistoryModel::with('user')->about($this->work_order)->orderBy('id', 'desc')->paginate(35),
         ];
     }
 }

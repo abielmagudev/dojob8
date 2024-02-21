@@ -37,14 +37,14 @@
 </x-custom.modal-confirm-delete>
 
 @if( $work_order->job->hasExtensions() )
+
 @push('scripts') 
 @include('work-orders.scripts.extensionsLoader')
-
 <script>
 extensionsLoader.get("<?= route('work-orders.ajax.edit', $work_order) ?>")
 </script>
-
 @endpush
+
 @endif
 
 @endsection

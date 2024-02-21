@@ -19,6 +19,8 @@ class Settings extends Model
         'updated_by',
     ];
 
+    private static $singleton;
+
     
     // Attributes
 
@@ -37,5 +39,17 @@ class Settings extends Model
         }
 
         return array_key_exists($key, $this->data_array) ? $this->data_array[$key] : $default;
+    }
+
+
+    // Statics
+
+    public static function singleton()
+    {
+        if( is_null(self::$singleton) ) {
+            self::$singleton = self::first();
+        }
+
+        return self::$singleton;
     }
 }

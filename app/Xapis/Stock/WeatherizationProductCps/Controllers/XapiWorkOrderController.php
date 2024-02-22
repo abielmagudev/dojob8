@@ -3,7 +3,7 @@
 namespace App\Xapis\Stock\WeatherizationProductCps\Controllers;
 
 use App\Xapis\Stock\WeatherizationProductCps\Models\Category;
-use App\Xapis\Stock\WeatherizationProductCps\Models\XapiWorkOrder;
+use App\Xapis\Stock\WeatherizationProductCps\Models\WpCpsWorkOrder;
 use App\Xapis\Stock\WeatherizationProductCps\Models\Product;
 use App\Xapis\Stock\WeatherizationProductCps\Requests\ProductWorkOrderSaveRequest;
 use App\Http\Controllers\Controller;
@@ -29,7 +29,7 @@ class XapiWorkOrderController extends Controller
             ]);
         }
 
-        return XapiWorkOrder::insert($data);
+        return WpCpsWorkOrder::insert($data);
     }
 
     public function create(Extension $extension)
@@ -54,7 +54,7 @@ class XapiWorkOrderController extends Controller
     {        
         return view('WeatherizationProductCps/views/work-orders/show', [
             'extension' => $extension,
-            'work_order_products' => XapiWorkOrder::with('product')
+            'work_order_products' => WpCpsWorkOrder::with('product')
                                                                 ->whereWorkOrder($work_order->id)
                                                                 ->get(),
         ]); 
@@ -66,7 +66,7 @@ class XapiWorkOrderController extends Controller
             'extension' => $extension,
             'categories' => Category::with('products')->get(),
             'products' => Product::available()->get(['id', 'name']),
-            'work_order_products' => XapiWorkOrder::with('product')
+            'work_order_products' => WpCpsWorkOrder::with('product')
                                                                 ->whereWorkOrder($work_order->id)
                                                                 ->get(),
         ]); 
@@ -74,7 +74,7 @@ class XapiWorkOrderController extends Controller
 
     public function update(ProductWorkOrderSaveRequest $request, WorkOrder $work_order)
     {
-        XapiWorkOrder::whereWorkOrder($work_order->id)->delete();
+        WpCpsWorkOrder::whereWorkOrder($work_order->id)->delete();
 
         if( is_null($request->products) ) {
             return true;

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {    
-    protected $table = 'xapi_weatherization_product_cps_categories';
+    protected $table = 'xapi_wpcps_categories';
 
     protected $fillable = [
         'name',

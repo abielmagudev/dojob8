@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WpCpsWorkOrder extends Model
 {
-    protected $table = 'xapi_weatherization_product_cps_work_orders';
+    protected $table = 'xapi_wpcps_work_orders';
 
     public $timestamps = false;
 

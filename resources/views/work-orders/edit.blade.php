@@ -34,6 +34,7 @@
 
 <x-custom.modal-confirm-delete :route="route('work-orders.destroy', $work_order)" concept="work order">
     <p>¿Do you want to continue to delete the work order <br> <b>#<?= $work_order->id ?> <?= $work_order->job->name ?></b>?</p>
+    <div class="small">All related information like inspections, etc. will be deleted. <br><b class="text-danger">Cannot be recovered</b></div>
 </x-custom.modal-confirm-delete>
 
 @if( $work_order->job->hasExtensions() )

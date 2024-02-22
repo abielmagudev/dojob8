@@ -14,10 +14,9 @@ class CreateCrewMemberTable extends Migration
     public function up()
     {
         Schema::create('crew_member', function (Blueprint $table) {
-            $table->foreignId('crew_id')->on('crews')->onDelete('cascade');
-            $table->foreignId('member_id')->on('members')->onDelete('cascade');
+            $table->foreignId('crew_id');
+            $table->foreignId('member_id');
             $table->timestamps();
-            // $table->dateTime('created_at')->nullable();
         });
     }
 

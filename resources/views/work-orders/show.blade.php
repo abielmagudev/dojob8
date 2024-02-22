@@ -7,10 +7,12 @@
     'Work order',
 ]" />
 
-<x-page-title>
+<x-page-title subtitle="asd">
     <span>#{{ $work_order->id }}</span>
     @if( $work_order->isNonstandard() )
-    <span class="text-secondary text-capitalize fw-normal ">({{ $work_order->type }}: {{ $work_order->type_id }})</span>
+    <span class="text-secondary text-capitalize fw-normal my-3">
+        {{ $work_order->type }}: {{ $work_order->type_id }}
+    </span>
     @endif
 
     @slot('subtitle')

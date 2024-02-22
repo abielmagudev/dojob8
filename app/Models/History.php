@@ -72,7 +72,7 @@ class History extends Model implements Filterable
 
     // Scopes
 
-    public function scopeAbout($query, object $model)
+    public function scopeAbout($query, Model $model)
     {
         return $query->where('model_type', get_class($model))->where('model_id', $model->id);
     }

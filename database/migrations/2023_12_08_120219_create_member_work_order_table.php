@@ -14,8 +14,8 @@ class CreateMemberWorkOrderTable extends Migration
     public function up()
     {
         Schema::create('member_work_order', function (Blueprint $table) {
-            $table->foreignId('member_id')->on('members')->onDelete('cascade');
-            $table->foreignId('work_order_id')->on('work_orders')->onDelete('cascade');
+            $table->foreignId('member_id');
+            $table->foreignId('work_order_id')->references('id')->on('work_orders')->onDelete('cascade');
             $table->timestamps();
         });
     }

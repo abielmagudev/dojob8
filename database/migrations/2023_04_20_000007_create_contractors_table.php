@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCrewsTable extends Migration
+class CreateContractorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,20 @@ class CreateCrewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('crews', function (Blueprint $table) {
+        Schema::create('contractors', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->text('description')->nullable();
-            $table->string('tasks_json')->index()->nullable();
-            $table->string('background_color_hex', 24);
-            $table->string('text_color_hex', 24);
-            $table->foreignId('lead_member_id')->nullable();
+            $table->string('alias')->unique();
+            $table->string('contact_name');
+            $table->string('phone_number');
+            $table->string('mobile_number')->nullable();
+            $table->string('email')->nullable();
+            $table->string('street');
+            $table->string('city_name');
+            $table->string('state_code');
+            $table->string('country_code');
+            $table->string('zip_code');
+            $table->text('notes')->nullable();
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
@@ -37,6 +43,6 @@ class CreateCrewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('crews');
+        Schema::dropIfExists('contractors');
     }
 }

@@ -26,11 +26,11 @@ class CreateClientsTable extends Migration
             $table->string('state_code');
             $table->string('country_code');
             $table->string('zip_code')->index();
-            $table->string('district_code')->nullable();
+            $table->string('district_code')->nullable()->index();
             $table->text('notes')->nullable();
-            $table->foreignId('created_by')->nullable()->index();
-            $table->foreignId('updated_by')->nullable()->index();
-            $table->foreignId('deleted_by')->nullable()->index();
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
+            $table->foreignId('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

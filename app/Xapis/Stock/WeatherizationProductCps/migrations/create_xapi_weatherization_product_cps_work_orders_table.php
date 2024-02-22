@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('xapi_weatherization_product_cps_work_orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('quantity');
-            $table->foreignId('product_id');
-            $table->foreignId('work_order_id');
+            $table->foreignId('product_id')->references('id')->on('xapi_weatherization_product_cps_products')->onDelete('cascade');
+            $table->foreignId('work_order_id')->references('id')->on('work_orders')->onDelete('cascade')->index('xapi_wpcps_work_order_foreign');
             $table->dateTime('created_at');
         });
     }

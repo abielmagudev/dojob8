@@ -33,6 +33,17 @@ class File extends Model
     ];
 
 
+    // Scopes
+
+    public function scopeAbout($query, Model $model)
+    {
+        return $query->where([
+            'fileable_type' => get_class($model),
+            'fileable_id' => $model->id
+        ]);
+    }
+
+
     // Relationships
 
     public function fileable()

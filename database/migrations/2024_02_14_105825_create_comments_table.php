@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->text('content');
             $table->foreignId('user_id');
-            $table->foreignId('work_order_id');
+            $table->foreignId('work_order_id')->references('id')->on('work_orders')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -16,8 +16,8 @@ class CreateExtensionJobTable extends Migration
     public function up()
     {
         Schema::create('extension_job', function (Blueprint $table) {
-            $table->foreignId('extension_id')->references('id')->on('extensions')->onDelete('cascade');
-            $table->foreignId('job_id')->references('id')->on('jobs')->onDelete('cascade');
+            $table->foreignId('extension_id');
+            $table->foreignId('job_id');
             $table->tinyInteger('tidy', false, true);
         });
     }

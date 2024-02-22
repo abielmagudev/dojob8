@@ -17,15 +17,13 @@ class CreateHistoryTable extends Migration
             $table->id();
             $table->text('description');
             $table->string('link')->nullable();
-            $table->string('model_type')->index();
-            $table->unsignedInteger('model_id')->index();
-            $table->foreignId('user_id')->index();
+            $table->morphs('model');
             $table->string('ip')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('device')->nullable();
+            $table->foreignId('user_id');
             $table->timestamps();
-            // $table->timestamp('created_at');
         });
     }
 

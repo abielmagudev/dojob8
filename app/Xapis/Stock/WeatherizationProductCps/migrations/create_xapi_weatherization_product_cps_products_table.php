@@ -21,9 +21,8 @@ return new class extends Migration
             $table->decimal('labor_price', 8, 2, true)->nullable();
             $table->text('notes')->nullable();
             $table->boolean('is_available')->default(true);
-            $table->foreignId('category_id')->nullable();
+            $table->foreignId('category_id')->nullable()->references('id')->on('xapi_weatherization_product_cps_categories')->onDelete('set null');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

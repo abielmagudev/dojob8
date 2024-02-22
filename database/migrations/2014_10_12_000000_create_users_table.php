@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->morphs('profile');
-            $table->dateTime('last_session_at')->nullable();
+            $table->dateTime('last_session_at')->nullable()->index();
             $table->string('last_session_device')->nullable();
-            $table->string('last_session_ip')->nullable();
+            $table->string('last_session_ip')->nullable()->index();
             $table->rememberToken()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_active')->default(true);

@@ -10,5 +10,7 @@ interface SetupInterface
 
     public function spacename(): string;
 
+    public function abbr(): string;
+
     public function migrations(): array;
 }

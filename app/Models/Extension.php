@@ -13,6 +13,7 @@ class Extension extends Model
         'name',
         'description',
         'spacename',
+        'abbr',
     ];
 
     

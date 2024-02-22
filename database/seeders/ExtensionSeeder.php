@@ -30,6 +30,7 @@ class ExtensionSeeder extends Seeder
                 'name' => $setup->name(),
                 'description' => $setup->description(),
                 'spacename' => $setup->spacename(),
+                'abbr' => $setup->abbr(),
             ]);
 
             $this->console->writeln("<info> Seeded {$xapi} </info>");

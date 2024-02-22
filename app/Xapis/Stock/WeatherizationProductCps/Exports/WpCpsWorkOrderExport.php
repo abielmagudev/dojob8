@@ -5,7 +5,7 @@ namespace App\Xapis\Stock\WeatherizationProductCps\Exports;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class WeatherizationProductCpsWorkOrderExport implements FromView
+class WpCpsWorkOrderExport implements FromView
 {
     public $data;
 

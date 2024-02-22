@@ -5,7 +5,7 @@ namespace App\Xapis\Stock\WeatherizationProductCps\Models;
 use App\Models\WorkOrder;
 use Illuminate\Database\Eloquent\Model;
 
-class XapiWorkOrder extends Model
+class WpCpsWorkOrder extends Model
 {
     protected $table = 'xapi_weatherization_product_cps_work_orders';
 

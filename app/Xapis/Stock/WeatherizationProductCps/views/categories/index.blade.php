@@ -17,6 +17,7 @@
         </a>
     </x-slot>
 
+    @if( $categories->count() )
     <x-table>
         <x-slot name="thead">
             <tr>
@@ -39,5 +40,6 @@
         @endforeach
 
     </x-table>
+    @endif
 </x-card>
 @endsection

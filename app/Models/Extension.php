@@ -26,12 +26,12 @@ class Extension extends Model
     
     public function getXapiControllerAttribute()
     {
-        return sprintf('%s\Controllers\XapiController', $this->xapi_namespace);
+        return sprintf('%s\Controllers\%sController', $this->xapi_namespace, $this->abbr);
     }
 
     public function getXapiWorkOrderControllerAttribute()
     {
-        return sprintf('%s\Controllers\XapiWorkOrderController', $this->xapi_namespace);
+        return sprintf('%s\Controllers\%sWorkOrderController', $this->xapi_namespace, $this->abbr);
     }
 
 

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use Illuminate\Http\Request;
 
-class XapiController extends Controller
+class WpCpsController extends Controller
 {
     use CallSubcontrollersTrait;
 

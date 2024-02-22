@@ -11,7 +11,7 @@ use App\Models\Extension;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
-class XapiWorkOrderController extends Controller
+class WpCpsWorkOrderController extends Controller
 {
     private function save(Request $request, WorkOrder $work_order)
     {
@@ -55,8 +55,8 @@ class XapiWorkOrderController extends Controller
         return view('WeatherizationProductCps/views/work-orders/show', [
             'extension' => $extension,
             'work_order_products' => WpCpsWorkOrder::with('product')
-                                                                ->whereWorkOrder($work_order->id)
-                                                                ->get(),
+                                                    ->whereWorkOrder($work_order->id)
+                                                    ->get(),
         ]); 
     }
 

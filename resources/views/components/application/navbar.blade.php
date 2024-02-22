@@ -34,17 +34,11 @@
         </li>
         
         <li>
-          <button id="themeModeButton" class="dropdown-item" type="button" data-mode="light">
-              <i class="bi bi-sun"></i>
-              <span class="ms-2">Light mode</span>
-          </button>
+          <x-application.button-theme-mode class="dropdown-item" text="on"/>
         </li>
 
         <li class="d-none d-md-block">
-          <button id="buttonCollapseExpand" class="dropdown-item" type="button">
-            <i class="bi bi-arrows-collapse-vertical"></i>
-            <span class="ms-2">Collapse</span>
-          </button>
+          <x-application.button-collapse class="dropdown-item" />
         </li>
 
         <li>
@@ -63,10 +57,13 @@
         </li>
 
         <li>
-          <a class="dropdown-item text-danger" href="#">
+          <form action="{{ route('logout') }}" method="post">
+            @csrf
+            <button class="dropdown-item text-danger" type="submit">
               <i class="bi bi-box-arrow-right"></i>
               <span class="ms-2">Logout</span>
-          </a>
+            </button>
+          </form>
         </li>
 
       </x-dropdown>
@@ -74,56 +71,3 @@
   </div>
 </div>
 <br>
-
-@push('scripts')
-<script>
-const htmlTag = document.querySelector('html')
-const themeModeButton = {
-  element: document.getElementById('themeModeButton'),
-  listen: function () {
-    
-    this.element.addEventListener('click', function (evt) {
-      let button = evt.target.closest('button')
-
-      if( button.dataset.mode == 'light' )
-      {
-        htmlTag.dataset.bsTheme = 'light'
-        button.querySelector('i').classList.replace('bi-sun', 'bi-moon')
-        button.querySelector('span').textContent = 'Dark mode'
-        button.dataset.mode = 'dark'
-      }
-      else
-      {
-        htmlTag.dataset.bsTheme = 'dark'
-        button.querySelector('i').classList.replace('bi-moon', 'bi-sun')
-        button.querySelector('span').textContent = 'Light mode'
-        button.dataset.mode = 'light'
-      }
-    })
-
-  }
-}
-themeModeButton.listen()
-</script>
-
-<script>
-  const mainContainer = document.getElementById('main');
-  
-  document.getElementById('buttonCollapseExpand').addEventListener('click', function (evt) {
-      let button = evt.target.closest('button')
-
-      if( mainContainer.classList.contains('container') )
-      {
-        mainContainer.classList.replace('container', 'container-fluid')
-        button.querySelector('i').classList.replace('bi-arrows-expand-vertical', 'bi-arrows-collapse-vertical')
-        button.querySelector('span').textContent = 'Collapse'
-      } 
-      else
-      {
-        mainContainer.classList.replace('container-fluid', 'container')
-        button.querySelector('i').classList.replace('bi-arrows-collapse-vertical', 'bi-arrows-expand-vertical')
-        button.querySelector('span').textContent = 'Expand'
-      }
-  })
-  </script>
-@endpush

@@ -22,29 +22,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            // Catalog
-            AgencySeeder::class,
-            ClientSeeder::class,
-            ContractorSeeder::class,
-            CrewSeeder::class,
-            JobSeeder::class,
-            MemberSeeder::class,
-            SettingsSeeder::class,
-            UserSeeder::class,
-            
-            // Operative
-            WorkOrderSeeder::class,
-            InspectionSeeder::class,
-            CommentSeeder::class,
-
-            // Pivot
-            CrewMemberSeeder::class,
-            InspectionMemberSeeder::class,
-            MemberWorkOrderSeeder::class,
-
-            // Overlast
-            ExtensionSeeder::class,
-        ]);
+        if( app()->environment('production') )
+        {
+            $this->call(SetupSeeder::class);
+        } 
+        else
+        {
+            $this->call([
+                // Catalog
+                AgencySeeder::class,
+                ClientSeeder::class,
+                ContractorSeeder::class,
+                CrewSeeder::class,
+                JobSeeder::class,
+                MemberSeeder::class,
+                SettingsSeeder::class,
+                UserSeeder::class,
+                
+                // Operative
+                WorkOrderSeeder::class,
+                InspectionSeeder::class,
+                CommentSeeder::class,
+    
+                // Pivot
+                CrewMemberSeeder::class,
+                InspectionMemberSeeder::class,
+                MemberWorkOrderSeeder::class,
+    
+                // Overlast
+                ExtensionSeeder::class,
+            ]);
+        }
     }
 }

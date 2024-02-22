@@ -39,68 +39,70 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', fn() => redirect()->route('orders.index') );
-
-// Dasboards
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-
-// Members
-Route::resource('members', MemberController::class);
-
-// Clients
-Route::get('clients/ajax', ClientAjaxController::class)->name('clients.ajax.search');
-Route::resource('clients', ClientController::class);
-
-// Inspections
-Route::patch('inspections/status', InspectionStatusController::class)->name('inspections.update.status');
-Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
-Route::resource('inspections', InspectionController::class)->except('create');
-Route::resource('agencies', AgencyController::class);
-
-Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
-Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
-Route::resource('jobs', JobController::class);
-
-Route::put('crews/members', CrewMemberController::class)->name('crews.update.members');
-Route::patch('crews/status', CrewStatusController::class)->name('crews.update.status');
-Route::resource('crews', CrewController::class);
-
-Route::resource('contractors', ContractorController::class);
-
-Route::resource('users', UserController::class);
-
-Route::get('history', HistoryController::class)->name('history.index');
-
-// Comments
-Route::post('comments/{work_order}', CommentController::class)->name('comments.create');
-
-// Payments
-Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
-Route::patch('payments', [PaymentController::class, 'update'])->name('payments.update');
-
-// Settings
-Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
-Route::patch('settings', [SettingsController::class, 'update'])->name('settings.update');
-
-// Search clients and work orders
-Route::get('search', SearchController::class)->name('app.search');
-
-// Files
-Route::post('files/{folder}/{fileable_id}', [FileController::class, 'store'])->name('files.store');
-Route::delete('files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
-
-// Extensions
-Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
-Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
-Route::resource('extensions', ExtensionController::class)->except(['create','store']);
-
-// Work orders
-Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
-Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
-Route::get('work-orders/ajax/show/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'show'])->name('work-orders.ajax.show');
-
-Route::patch('work-orders/order', WorkOrderOrderedController::class)->name('work-orders.update.ordered');
-Route::patch('work-orders/status', WorkOrderStatusController::class)->name('work-orders.update.status');
-Route::patch('work-orders/workers', WorkOrderMemberController::class)->name('work-orders.update.workers');
-Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
-Route::resource('work-orders', WorkOrderController::class)->except('create');
+Route::middleware(['auth'])->group(function () {
+    // Route::get('/', fn() => redirect()->route('orders.index') );
+    
+    // Dasboards
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    
+    // Members
+    Route::resource('members', MemberController::class);
+    
+    // Clients
+    Route::get('clients/ajax', ClientAjaxController::class)->name('clients.ajax.search');
+    Route::resource('clients', ClientController::class);
+    
+    // Inspections
+    Route::patch('inspections/status', InspectionStatusController::class)->name('inspections.update.status');
+    Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
+    Route::resource('inspections', InspectionController::class)->except('create');
+    Route::resource('agencies', AgencyController::class);
+    
+    Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
+    Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
+    Route::resource('jobs', JobController::class);
+    
+    Route::put('crews/members', CrewMemberController::class)->name('crews.update.members');
+    Route::patch('crews/status', CrewStatusController::class)->name('crews.update.status');
+    Route::resource('crews', CrewController::class);
+    
+    Route::resource('contractors', ContractorController::class);
+    
+    Route::resource('users', UserController::class);
+    
+    Route::get('history', HistoryController::class)->name('history.index');
+    
+    // Comments
+    Route::post('comments/{work_order}', CommentController::class)->name('comments.create');
+    
+    // Payments
+    Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::patch('payments', [PaymentController::class, 'update'])->name('payments.update');
+    
+    // Settings
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::patch('settings', [SettingsController::class, 'update'])->name('settings.update');
+    
+    // Search clients and work orders
+    Route::get('search', SearchController::class)->name('app.search');
+    
+    // Files
+    Route::post('files/{folder}/{fileable_id}', [FileController::class, 'store'])->name('files.store');
+    Route::delete('files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
+    
+    // Extensions
+    Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
+    Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
+    Route::resource('extensions', ExtensionController::class)->except(['create','store']);
+    
+    // Work orders
+    Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
+    Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
+    Route::get('work-orders/ajax/show/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'show'])->name('work-orders.ajax.show');
+    
+    Route::patch('work-orders/order', WorkOrderOrderedController::class)->name('work-orders.update.ordered');
+    Route::patch('work-orders/status', WorkOrderStatusController::class)->name('work-orders.update.status');
+    Route::patch('work-orders/workers', WorkOrderMemberController::class)->name('work-orders.update.workers');
+    Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
+    Route::resource('work-orders', WorkOrderController::class)->except('create');
+});

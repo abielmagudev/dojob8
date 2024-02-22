@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Member;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -13,6 +15,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
+        User::create([
+            'name' => 'test',
+            'email' => 'test@mail.com',
+            'password' => 'password',
+            'profile_type' => Member::class,
+            'profile_id' => 1,
+        ]);
+
+        User::factory(10)->create();
     }
 }

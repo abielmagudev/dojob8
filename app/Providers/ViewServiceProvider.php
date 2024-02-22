@@ -26,16 +26,14 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $settings = Settings::first();
-
         View::composer([
             'components.application.navbar',
             'components.application.sidebar-canvas',
             'components.custom.input-city-name-data',
             'components.custom.select-state-code-data',
             'components.custom.select-country-code-data',
-        ], function($view) use ($settings) {
-            $view->with('settings', $settings);
+        ], function($view) {
+            $view->with('settings', Settings::singleton());
         });
 
         View::composer([

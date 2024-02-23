@@ -174,9 +174,17 @@ class History extends Model implements Filterable
         parent::boot();
 
         static::creating(function ($model) {
-            if (Auth::check()) {
+
+            // Authenticated
+            if( Auth::check() ) {
                 $model->user_id = Auth::id();
             }
+
+            // Seeding
+            if( app()->runningInConsole() ) {
+                $model->user_id = mt_rand(1,10);
+            }
+
         });
     }
 }

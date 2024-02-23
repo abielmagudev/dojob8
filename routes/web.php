@@ -40,7 +40,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn() => redirect()->route('login') );
+// Route::get('/', fn() => redirect()->route('login') );
+Route::fallback(fn() => redirect()->route('login'));
 
 Route::middleware(['auth'])->group(function () {
     // Route::get('/', fn() => redirect()->route('orders.index') );

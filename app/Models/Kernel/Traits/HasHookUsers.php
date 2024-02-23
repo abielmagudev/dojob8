@@ -3,6 +3,7 @@
 namespace App\Models\Kernel\Traits;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 trait HasHookUsers
@@ -48,29 +49,29 @@ trait HasHookUsers
     public function updateCreator()
     {
         self::where('id', $this->id)->update([
-            'created_by' => mt_rand(1,10),
+            'created_by' => Auth::id(),
         ]);
     }
 
     public function updateUpdater()
     {
         return self::where('id', $this->id)->update([
-            'updated_by' => mt_rand(1,10),
+            'updated_by' => Auth::id(),
         ]);
     }
 
     public function updateDeleter()
     {
         return self::where('id', $this->id)->update([
-            'deleted_by' => mt_rand(1,10),
+            'deleted_by' => Auth::id(),
         ]);
     }
 
     public function updateCreatorUpdater()
     {
         return self::where('id', $this->id)->update([
-            'created_by' => mt_rand(1,10),
-            'updated_by' => mt_rand(1,10),
+            'created_by' => Auth::id(),
+            'updated_by' => Auth::id(),
         ]);
     }
 }

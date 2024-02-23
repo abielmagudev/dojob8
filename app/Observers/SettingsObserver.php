@@ -21,7 +21,6 @@ class SettingsObserver
             'link' => route('settings.index'),
             'model_type' => Settings::class,
             'model_id' => $settings->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -36,7 +35,6 @@ class SettingsObserver
             'link' => route('settings.index'),
             'model_type' => Settings::class,
             'model_id' => $settings->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 }

@@ -21,7 +21,6 @@ class AgencyObserver
             'link' => route('agencies.show', $agency),
             'model_type' => Agency::class,
             'model_id' => $agency->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -36,7 +35,6 @@ class AgencyObserver
             'link' => route('agencies.show', $agency),
             'model_type' => Agency::class,
             'model_id' => $agency->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -53,7 +51,6 @@ class AgencyObserver
             'description' => sprintf("The <em>{$agency->name}</em> agency was deleted."),
             'model_type' => Agency::class,
             'model_id' => $agency->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 }

@@ -22,7 +22,6 @@ class UserObserver
             'link' => route('users.show', $user),
             'model_type' => User::class,
             'model_id' => $user->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -37,7 +36,6 @@ class UserObserver
             'link' => route('users.show', $user),
             'model_type' => User::class,
             'model_id' => $user->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -54,7 +52,6 @@ class UserObserver
             'description' => sprintf("The <em>{$user->name}</em> user was deleted."),
             'model_type' => User::class,
             'model_id' => $user->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 

@@ -21,7 +21,6 @@ class ClientObserver
             'link' => route('clients.show', $client),
             'model_type' => Client::class,
             'model_id' => $client->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -36,7 +35,6 @@ class ClientObserver
             'link' => route('clients.show', $client),
             'model_type' => Client::class,
             'model_id' => $client->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -53,7 +51,6 @@ class ClientObserver
             'description' => sprintf("<em>{$client->full_name}</em> client was deleted."),
             'model_type' => Client::class,
             'model_id' => $client->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 

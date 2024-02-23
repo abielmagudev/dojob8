@@ -21,7 +21,6 @@ class MemberObserver
             'link' => route('members.show', $member),
             'model_type' => Member::class,
             'model_id' => $member->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -36,7 +35,6 @@ class MemberObserver
             'link' => route('members.show', $member),
             'model_type' => Member::class,
             'model_id' => $member->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -54,7 +52,6 @@ class MemberObserver
             'link' => route('members.index'),
             'model_type' => Member::class,
             'model_id' => $member->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -65,7 +62,6 @@ class MemberObserver
             'link' => route('members.show', $member),
             'model_type' => Member::class,
             'model_id' => $member->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -76,7 +72,6 @@ class MemberObserver
             'link' => route('members.show', $member),
             'model_type' => Member::class,
             'model_id' => $member->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 }

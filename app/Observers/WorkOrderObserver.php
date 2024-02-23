@@ -22,7 +22,6 @@ class WorkOrderObserver
             'link' => route('work-orders.show', $work_order),
             'model_type' => WorkOrder::class,
             'model_id' => $work_order->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -37,7 +36,6 @@ class WorkOrderObserver
             'link' => route('work-orders.show', $work_order),
             'model_type' => WorkOrder::class,
             'model_id' => $work_order->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -51,7 +49,6 @@ class WorkOrderObserver
             'description' => sprintf("The work order <em>{$work_order->id} - {$work_order->job->name}</em> was deleted."),
             'model_type' => WorkOrder::class,
             'model_id' => $work_order->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 }

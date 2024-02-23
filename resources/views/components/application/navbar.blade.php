@@ -26,11 +26,11 @@
       <x-dropdown button="Username">
         <x-slot name="button">
           <i class="bi bi-person-circle"></i>
-          <span class="d-none d-md-inline-block ms-1">Username</span>
+          <span class="d-none d-md-inline-block ms-1">{{ auth()->user()->profile_name }}</span>
         </x-slot>
 
         <li class="d-block d-md-none">
-          <h6 class="dropdown-header">Username</h6>
+          <h6 class="dropdown-header">{{ auth()->user()->profile_name }}</h6>
         </li>
         
         <li>          

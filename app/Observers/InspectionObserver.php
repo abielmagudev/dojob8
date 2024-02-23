@@ -21,7 +21,6 @@ class InspectionObserver
             'link' => route('work-orders.show', $inspection->work_order_id),
             'model_type' => Inspection::class,
             'model_id' => $inspection->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -36,7 +35,6 @@ class InspectionObserver
             'link' => route('work-orders.show', $inspection->work_order_id),
             'model_type' => Inspection::class,
             'model_id' => $inspection->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -47,7 +45,6 @@ class InspectionObserver
             'link' => route('work-orders.show', $inspection->work_order_id),
             'model_type' => Inspection::class,
             'model_id' => $inspection->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 }

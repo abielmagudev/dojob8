@@ -21,7 +21,6 @@ class JobObserver
             'link' => route('jobs.show', $job),
             'model_type' => Job::class,
             'model_id' => $job->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -36,7 +35,6 @@ class JobObserver
             'link' => route('jobs.show', $job),
             'model_type' => Job::class,
             'model_id' => $job->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -53,7 +51,6 @@ class JobObserver
             'description' => sprintf("The <em>{$job->name}</em> job was deleted."),
             'model_type' => Job::class,
             'model_id' => $job->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 }

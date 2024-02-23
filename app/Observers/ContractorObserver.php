@@ -21,7 +21,6 @@ class ContractorObserver
             'link' => route('contractors.show', $contractor),
             'model_type' => Contractor::class,
             'model_id' => $contractor->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -36,7 +35,6 @@ class ContractorObserver
             'link' => route('contractors.show', $contractor),
             'model_type' => Contractor::class,
             'model_id' => $contractor->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -53,7 +51,6 @@ class ContractorObserver
             'description' => sprintf("The <em>{$contractor->name}</em> contractor was deleted."),
             'model_type' => Contractor::class,
             'model_id' => $contractor->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 }

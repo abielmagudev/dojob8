@@ -6,6 +6,7 @@ use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasFiltering;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class History extends Model implements Filterable
 {
@@ -163,5 +164,19 @@ class History extends Model implements Filterable
     public static function getClassnameByTopic($topic)
     {
         return self::existsTopic($topic) ? self::getTopicsClassnames()[$topic] : null;
+    }
+
+
+    // Hooks
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (Auth::check()) {
+                $model->user_id = Auth::id();
+            }
+        });
     }
 }

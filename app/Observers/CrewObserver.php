@@ -21,7 +21,6 @@ class CrewObserver
             'link' => route('crews.show', $crew),
             'model_type' => Crew::class,
             'model_id' => $crew->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -36,7 +35,6 @@ class CrewObserver
             'link' => route('crews.show', $crew),
             'model_type' => Crew::class,
             'model_id' => $crew->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 
@@ -53,7 +51,6 @@ class CrewObserver
             'description' => sprintf("<em>{$crew->name}</em> crew was deleted."),
             'model_type' => Crew::class,
             'model_id' => $crew->id,
-            'user_id' => mt_rand(1,10),
         ]);
     }
 }

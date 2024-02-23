@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Production\SetupSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,33 +26,32 @@ class DatabaseSeeder extends Seeder
         if( app()->environment('production') )
         {
             $this->call(SetupSeeder::class);
+            return;
         } 
-        else
-        {
-            $this->call([
-                // Catalog
-                AgencySeeder::class,
-                ClientSeeder::class,
-                ContractorSeeder::class,
-                CrewSeeder::class,
-                JobSeeder::class,
-                MemberSeeder::class,
-                SettingsSeeder::class,
-                UserSeeder::class,
-                
-                // Operative
-                WorkOrderSeeder::class,
-                InspectionSeeder::class,
-                CommentSeeder::class,
-    
-                // Pivot
-                CrewMemberSeeder::class,
-                InspectionMemberSeeder::class,
-                MemberWorkOrderSeeder::class,
-    
-                // Overlast
-                ExtensionSeeder::class,
-            ]);
-        }
+
+        $this->call([
+            // Catalog
+            AgencySeeder::class,
+            ClientSeeder::class,
+            ContractorSeeder::class,
+            CrewSeeder::class,
+            JobSeeder::class,
+            MemberSeeder::class,
+            SettingsSeeder::class,
+            UserSeeder::class,
+            
+            // Operative
+            WorkOrderSeeder::class,
+            InspectionSeeder::class,
+            CommentSeeder::class,
+
+            // Pivot
+            CrewMemberSeeder::class,
+            InspectionMemberSeeder::class,
+            MemberWorkOrderSeeder::class,
+
+            // Overlast
+            ExtensionSeeder::class,
+        ]);
     }
 }

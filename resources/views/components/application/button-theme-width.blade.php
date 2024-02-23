@@ -27,7 +27,7 @@ const themeWidthMain = {
     return Cookies.get('theme-width');
   },
   isExpanded: function () {
-    return this.getCookie() == this.expandWidth;
+    return this.getCookie() == undefined || this.getCookie() == this.expandWidth;
   },
   toggle: function () {
     let change_width = this.isExpanded() ? this.collapseWidth : this.expandWidth;

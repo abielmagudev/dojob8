@@ -94,6 +94,13 @@ class ContractorSaveRequest extends FormRequest
 
     public function prepareForValidation()
     {
+        if( $this->filled('name') &&! $this->filled('alias') )
+        {
+            $this->merge([
+                'alias' => initials( $this->get('name') )
+            ]);
+        }
+
         $this->contractor_id = $this->route('contractor')->id ?? 0;
 
         $this->country_codes = CountryManager::default()->get('code');

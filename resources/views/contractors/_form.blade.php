@@ -4,7 +4,7 @@
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="aliasInput" label="Alias">
-    <input id="aliasInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('alias') ) }}" name="alias" value="{{ old('alias', $contractor->alias) }}" required>
+    <input id="aliasInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('alias') ) }}" name="alias" value="{{ old('alias', $contractor->alias) }}" placeholder="Enter custom alias or let it be generated automatically">
     <x-form-feedback error="alias" />
 </x-form-field-horizontal>
 
@@ -49,7 +49,7 @@
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="zipCodeInput" label="Zip code">
-    <input id="zipCodeInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('zip_code') ) }}" name="zip_code" value="{{ old('zip_code', $contractor->zip_code) }}">
+    <input id="zipCodeInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('zip_code') ) }}" name="zip_code" value="{{ old('zip_code', $contractor->zip_code) }}" required>
     <x-form-feedback error="zip_code" />
 </x-form-field-horizontal>
 

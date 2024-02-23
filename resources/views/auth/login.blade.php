@@ -3,7 +3,7 @@
 <div class="row justify-content-center align-items-center vh-100" data-bs-theme="light">
     <div class="col-sm col-sm-4">
         <div class="shadow rounded text-bg-light">
-            <div class="text-bg-primary rounded-top py-4 px-3">
+            <div class="text-bg-primary text-center text-uppercase rounded-top py-4 px-3">
                 <b class="fs-3">Welcome</b>
             </div>
             <div class="p-5">
@@ -18,7 +18,7 @@
                         <label for="inputPassword" class="form-label">Password</label>
                         <input id="inputPassword" class="form-control" type="password" name="password">
                     </div>
-                    <button class="btn btn-primary" type="submit">Login</button>
+                    <button class="btn btn-primary w-100" type="submit">Login</button>
                 </form>
             </div>
         </div>

@@ -40,7 +40,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', fn() => redirect()->route('login') );
 Route::fallback(fn() => redirect()->route('login'));
 
 Route::middleware(['auth'])->group(function () {

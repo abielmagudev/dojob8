@@ -32,7 +32,7 @@
                 <div class="is-sortable d-flex flex-column flex-md-row flex-wrap" data-crew="{{ $crew->id }}">
                 @if( $crew->members->count() )
                     @foreach($crew->members as $member)
-                    @include('crews.index.is-sortable-item',['class' => 'badge border mb-1 mb-md-0 me-md-2'])
+                    @include('crews.index.is-sortable-item', ['class' => 'small border rounded py-1 px-2 mb-1 mb-md-0 me-md-2'])
                     @endforeach
                 @endif
                 </div>

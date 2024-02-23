@@ -88,6 +88,14 @@ if(! function_exists('humanDateFormat') )
     }
 }
 
+if(! function_exists('requestCookieRaw') )
+{
+    function requestCookieRaw(string $name, $default = null)
+    {
+        return array_key_exists($name, $_COOKIE) ? $_COOKIE[$name] : $default;
+    }
+}
+
 
 // Bootstrap
 

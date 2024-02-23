@@ -33,12 +33,12 @@
           <h6 class="dropdown-header">Username</h6>
         </li>
         
-        <li>
-          <x-application.button-theme-mode class="dropdown-item" text="on"/>
+        <li>          
+          <x-application.button-theme-mode class="dropdown-item" />
         </li>
 
         <li class="d-none d-md-block">
-          <x-application.button-collapse class="dropdown-item" />
+          <x-application.button-theme-width class="dropdown-item" />
         </li>
 
         <li>

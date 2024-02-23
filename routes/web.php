@@ -18,6 +18,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
@@ -79,10 +80,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::patch('payments', [PaymentController::class, 'update'])->name('payments.update');
     
-    // Settings
-    Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
-    Route::patch('settings', [SettingsController::class, 'update'])->name('settings.update');
-    
     // Search clients and work orders
     Route::get('search', SearchController::class)->name('app.search');
     
@@ -105,4 +102,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('work-orders/workers', WorkOrderMemberController::class)->name('work-orders.update.workers');
     Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
     Route::resource('work-orders', WorkOrderController::class)->except('create');
+
+    // Settings
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::patch('settings', [SettingsController::class, 'update'])->name('settings.update');
 });

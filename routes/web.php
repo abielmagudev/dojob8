@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/', fn() => redirect()->route('orders.index') );
     
     // Dasboards
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     
     // Members
     Route::resource('members', MemberController::class);

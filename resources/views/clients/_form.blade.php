@@ -1,4 +1,3 @@
-@csrf
 <x-form-field-horizontal for="nameInput" label="Name">
     <div class="row">
         <div class="col-md mb-3 mb-md-0">
@@ -12,9 +11,9 @@
     </div>
 </x-form-field-horizontal>
 
-<x-form-field-horizontal for="phoneNumberInput" label="Phone">
-    <input id="phoneNumberInput" type="text" class="form-control {{ bsInputInvalid($errors->has('phone_number')) }}" name="phone_number" value="{{ old('phone_number', $client->phone_number) }}" required>
-    <x-form-feedback error="phone_number" />
+<x-form-field-horizontal for="emailInput" label="Email" label-class="form-label-optional">
+    <input id="emailInput" type="text" class="form-control {{ bsInputInvalid($errors->has('email')) }}" name="email" value="{{ old('email', $client->email) }}">
+    <x-form-feedback error="email" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="mobileNumberInput" label="Mobile" label-class="form-label-optional">    
@@ -22,9 +21,9 @@
     <x-form-feedback error="mobile_number" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal for="emailInput" label="Email" label-class="form-label-optional">
-    <input id="emailInput" type="text" class="form-control {{ bsInputInvalid($errors->has('email')) }}" name="email" value="{{ old('email', $client->email) }}">
-    <x-form-feedback error="email" />
+<x-form-field-horizontal for="phoneNumberInput" label="Phone" label-class="form-label-optional">
+    <input id="phoneNumberInput" type="text" class="form-control {{ bsInputInvalid($errors->has('phone_number')) }}" name="phone_number" value="{{ old('phone_number', $client->phone_number) }}">
+    <x-form-feedback error="phone_number" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="streetInput" label="Street">

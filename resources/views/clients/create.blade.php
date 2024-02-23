@@ -11,6 +11,7 @@
 @section('content')
 <x-card title="New client">
     <form action="{{ route('clients.store') }}" method="POST" autocomplete="off">
+        @csrf
         @include('clients._form')
         <br>
 

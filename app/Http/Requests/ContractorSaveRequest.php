@@ -40,17 +40,17 @@ class ContractorSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'phone_number' => [
-                'required',
-                'string',
+            'email' => [
+                'nullable',
+                'email',
             ],
             'mobile_number' => [
                 'nullable',
                 'string',
             ],
-            'email' => [
+            'phone_number' => [
                 'nullable',
-                'email',
+                'string',
             ],
             'street' => [
                 'required',

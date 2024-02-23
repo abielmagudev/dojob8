@@ -18,9 +18,9 @@ class CreateContractorsTable extends Migration
             $table->string('name')->unique();
             $table->string('alias')->unique();
             $table->string('contact_name');
-            $table->string('phone_number');
-            $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
+            $table->string('mobile_number')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('street');
             $table->string('city_name');
             $table->string('state_code');

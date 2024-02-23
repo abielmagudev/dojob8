@@ -19,9 +19,9 @@ class CreateMembersTable extends Migration
             $table->string('last_name')->index();
             $table->string('full_name')->index();
             $table->date('birthdate')->nullable();
+            $table->string('email')->nullable()->index();
+            $table->string('mobile_number')->nullable()->index();
             $table->string('phone_number')->nullable();
-            $table->string('mobile_number')->nullable();
-            $table->string('email')->nullable();
             $table->string('position')->nullable();
             $table->boolean('is_available')->default(true);
             $table->boolean('is_crew_member')->default(false);

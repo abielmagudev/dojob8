@@ -16,9 +16,9 @@
     <x-form-feedback error="birthdate" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal for="phoneNumberInput" label="Phone number" label-class="form-label-optional">
-    <input id="phoneNumberInput" type="text" class="form-control" name="phone_number" value="{{ old('phone_number', $member->phone_number) }}">
-    <x-form-feedback error="phone_number" />
+<x-form-field-horizontal for="emailInput" label="Email" label-class="form-label-optional">
+    <input id="emailInput" type="email" class="form-control" name="email" value="{{ old('email', $member->email) }}">
+    <x-form-feedback error="email" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="mobileNumberInput" label="Mobile number" label-class="form-label-optional">
@@ -26,9 +26,9 @@
     <x-form-feedback error="mobile_number" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal for="emailInput" label="Email" label-class="form-label-optional">
-    <input id="emailInput" type="email" class="form-control" name="email" value="{{ old('email', $member->email) }}">
-    <x-form-feedback error="email" />
+<x-form-field-horizontal for="phoneNumberInput" label="Phone number" label-class="form-label-optional">
+    <input id="phoneNumberInput" type="text" class="form-control" name="phone_number" value="{{ old('phone_number', $member->phone_number) }}">
+    <x-form-feedback error="phone_number" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="positionInput" label="Position" label-class="form-label-optional">

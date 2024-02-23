@@ -36,17 +36,17 @@ class MemberSaveRequest extends FormRequest
                 'nullable',
                 'date',
             ],
-            'phone_number' => [
+            'email' => [
                 'nullable',
-                'string',
+                'email',
             ],
             'mobile_number' => [
                 'nullable',
                 'string',
             ],
-            'email' => [
+            'phone_number' => [
                 'nullable',
-                'email',
+                'string',
             ],
             'position' => [
                 'nullable',

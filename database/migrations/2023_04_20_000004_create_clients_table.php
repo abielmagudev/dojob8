@@ -18,9 +18,9 @@ class CreateClientsTable extends Migration
             $table->string('name')->index();
             $table->string('last_name')->index();
             $table->string('full_name')->index();
-            $table->string('phone_number')->index();
-            $table->string('mobile_number')->nullable()->index();
             $table->string('email')->nullable()->index();
+            $table->string('mobile_number')->nullable()->index();
+            $table->string('phone_number')->nullable()->index();
             $table->string('street')->index();
             $table->string('city_name');
             $table->string('state_code');

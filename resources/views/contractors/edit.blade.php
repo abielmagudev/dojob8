@@ -12,8 +12,8 @@
 @section('content')
 <x-card title="Edit contractor">
     <form action="{{ route('contractors.update', $contractor) }}" method="post" autocomplete="off">
-        @method('put')
         @csrf
+        @method('put')
         @include('contractors._form')
         <x-form-field-horizontal>
             <x-custom.switch-active-status :toggle="$contractor->isActive()">

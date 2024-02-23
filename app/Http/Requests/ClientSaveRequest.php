@@ -27,15 +27,17 @@ class ClientSaveRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'phone_number' => [
-                'required',
-            ],
-            'mobile_number' => [
-                'nullable',
-            ],
             'email' => [
                 'nullable',
                 'email',
+            ],
+            'mobile_number' => [
+                'nullable',
+                'string',
+            ],
+            'phone_number' => [
+                'nullable',
+                'string',
             ],
             'street' => [
                 'required',

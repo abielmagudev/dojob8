@@ -46,9 +46,9 @@ if(! function_exists('isJson') )
     }
 }
 
-if(! function_exists('wordInitials') )
+if(! function_exists('initials') )
 {
-    function wordInitials(string $string, $to_uppercase = true)
+    function initials(string $string, $to_uppercase = true)
     {
         preg_match_all('/(?<=\b)\w/iu', $string, $matches);
 

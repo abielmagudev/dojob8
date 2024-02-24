@@ -22,5 +22,7 @@ class LoginResponse implements FortifyLoginResponse
         ])->save();
 
         $user->timestaps = $timestamps;
+
+        return redirect()->route('dashboard.index');
     }
 }

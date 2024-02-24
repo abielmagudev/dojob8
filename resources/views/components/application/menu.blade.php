@@ -16,12 +16,6 @@ return [
             'permission' => true,
             'route' => route('work-orders.index'),
         ],
-        'Clients' => [
-            'active' => request()->routeIs('clients.*'),
-            'icon' => '<i class="bi bi-book"></i>',
-            'permission' => true,
-            'route' => route('clients.index'),
-        ],
         'Jobs' => [
             'active' => request()->routeIs('jobs.*'),
             'icon' => '<i class="bi bi-nut"></i>',
@@ -33,6 +27,12 @@ return [
             'icon' => '<i class="bi bi-plug"></i>',
             'permission' => true,
             'route' => route('extensions.index')
+        ],
+        'Clients' => [
+            'active' => request()->routeIs('clients.*'),
+            'icon' => '<i class="bi bi-book"></i>',
+            'permission' => true,
+            'route' => route('clients.index'),
         ],
         'Payments' => [
             'active' => request()->routeIs('payments.*'),

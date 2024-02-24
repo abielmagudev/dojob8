@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->dateTime('last_session_at')->nullable()->index();
             $table->string('last_session_device')->nullable();
             $table->string('last_session_ip')->nullable()->index();
+            $table->text('last_session_geo')->nullable();
             $table->rememberToken()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_active')->default(true);

@@ -33,6 +33,7 @@ class User extends Authenticatable implements Filterable
         'last_session_at',
         'last_session_device',
         'last_session_ip',
+        'last_session_geo',
         'is_active',
     ];
 

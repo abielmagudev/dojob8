@@ -31,6 +31,7 @@ class ExtensionSeeder extends Seeder
                 'description' => $setup->description(),
                 'spacename' => $setup->spacename(),
                 'abbr' => $setup->abbr(),
+                'has_settings' => $setup->hasSettings(),
             ]);
 
             $this->console->writeln("<info> Seeded {$xapi} </info>");

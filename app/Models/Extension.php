@@ -14,6 +14,7 @@ class Extension extends Model
         'description',
         'spacename',
         'abbr',
+        'has_settings',
     ];
 
     
@@ -32,6 +33,14 @@ class Extension extends Model
     public function getXapiWorkOrderControllerAttribute()
     {
         return sprintf('%s\Controllers\%sWorkOrderController', $this->xapi_namespace, $this->abbr);
+    }
+
+
+    // Validators 
+
+    public function hasSettings()
+    {
+        return (bool) $this->has_settings;
     }
 
 

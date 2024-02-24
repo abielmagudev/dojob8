@@ -13,4 +13,6 @@ interface SetupInterface
     public function abbr(): string;
 
     public function migrations(): array;
+    
+    public function hasSettings(): bool;
 }

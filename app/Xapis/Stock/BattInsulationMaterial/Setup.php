@@ -33,4 +33,9 @@ return new class implements SetupInterface
             'xapi_battinsmat_work_orders' => Stocker::path('BattInsulationMaterial/migrations/create_xapi_battinsmat_work_orders_table.php'),
         ]; 
     }
+
+    public function hasSettings(): bool
+    {
+        return false;
+    }
 };

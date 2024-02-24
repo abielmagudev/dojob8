@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('spacename')->unique();
             $table->string('abbr')->unique();
+            $table->boolean('has_settings')->default(true);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();

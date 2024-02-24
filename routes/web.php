@@ -43,7 +43,6 @@ use Illuminate\Support\Facades\Route;
 Route::fallback(fn() => redirect()->route('login'));
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/', fn() => redirect()->route('orders.index') );
     
     // Dasboards
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

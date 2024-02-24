@@ -21,8 +21,6 @@ class BattMaterialRequirements
             'R-11',
             'R-13',
             'R-19',
-            'R-30',
-            'R-38',
             'R-60',
         ],
     ];

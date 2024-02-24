@@ -30,6 +30,9 @@ class User extends Authenticatable implements Filterable
         'password',
         'profile_type',
         'profile_id',
+        'last_session_at',
+        'last_session_device',
+        'last_session_ip',
         'is_active',
     ];
 

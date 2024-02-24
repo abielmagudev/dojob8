@@ -1,4 +1,6 @@
-<h5>{{ $extension->name }}</h5>
+<p>
+    <b>{{ $extension->name }}</b>
+</p>
 <x-table>
     @slot('thead')
     <tr>
@@ -16,3 +18,4 @@
     </tr>
     @endforeach
 </x-table>
+<br>

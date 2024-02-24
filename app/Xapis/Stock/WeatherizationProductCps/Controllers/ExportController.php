@@ -5,10 +5,10 @@ namespace App\Xapis\Stock\WeatherizationProductCps\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\WorkOrder;
-use App\Xapis\Stock\WeatherizationProductCps\Exports\WpCpsWorkOrderExport;
+use App\Xapis\Stock\WeatherizationProductCps\Exports\WzProdCpsWorkOrderExport;
 use App\Xapis\Stock\WeatherizationProductCps\Models\Category;
 use App\Xapis\Stock\WeatherizationProductCps\Models\Product;
-use App\Xapis\Stock\WeatherizationProductCps\Models\WpCpsWorkOrder;
+use App\Xapis\Stock\WeatherizationProductCps\Models\WzProdCpsWorkOrder;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -19,7 +19,7 @@ class ExportController extends Controller
         return view('WeatherizationProductCps/views/exports/index', [
             'extension' => $extension,
             'categories' => Category::with('products')->get(),
-            'work_orders' => WpCpsWorkOrder::with('work_order')->get(),
+            'work_orders' => WzProdCpsWorkOrder::with('work_order')->get(),
         ]);
     }
 
@@ -27,7 +27,7 @@ class ExportController extends Controller
     {
         $work_orders_table = (new WorkOrder)->getTable();
 
-        $query = WpCpsWorkOrder::with(['product', 'work_order']);
+        $query = WzProdCpsWorkOrder::with(['product', 'work_order']);
         
         if(! is_null($request->from) ||! is_null($request->to) )
         {
@@ -49,7 +49,7 @@ class ExportController extends Controller
         $measures = $request->product ? $query->where('product_id', $request->product)->get() : $query->get();
 
         return Excel::download(
-            new WpCpsWorkOrderExport([
+            new WzProdCpsWorkOrderExport([
                 'measures' => $measures,
                 'product_name' => is_null($request->product) ? 'All' : (Product::find($request->product)->name),
                 'from_at' => is_null($request->from) ? 'Any' : $request->from,

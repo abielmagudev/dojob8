@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('xapi_wpcps_work_orders', function (Blueprint $table) {
+        Schema::create('xapi_wzprodcps_work_orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('quantity');
-            $table->foreignId('product_id')->references('id')->on('xapi_wpcps_products')->onDelete('cascade');
-            $table->foreignId('work_order_id')->references('id')->on('work_orders')->onDelete('cascade')->index('xapi_wpcps_work_order_foreign');
+            $table->foreignId('product_id')->references('id')->on('xapi_wzprodcps_products')->onDelete('cascade');
+            $table->foreignId('work_order_id')->references('id')->on('work_orders')->onDelete('cascade')->index('xapi_wzprodcps_work_order_foreign');
             $table->dateTime('created_at');
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xapi_wpcps_work_orders');
+        Schema::dropIfExists('xapi_wzprodcps_work_orders');
     }
 };

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use Illuminate\Http\Request;
 
-class WpCpsController extends Controller
+class WzProdCpsController extends Controller
 {
     use CallSubcontrollersTrait;
 

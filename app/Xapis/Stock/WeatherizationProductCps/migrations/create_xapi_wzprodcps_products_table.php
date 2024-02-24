@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('xapi_wpcps_products', function (Blueprint $table) {
+        Schema::create('xapi_wzprodcps_products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('item_price_id');
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xapi_wpcps_products');
+        Schema::dropIfExists('xapi_wzprodcps_products');
     }
 };

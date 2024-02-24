@@ -9,7 +9,7 @@ class Product extends Model
 {    
     use HasAvailableStatus;
 
-    protected $table = 'xapi_wpcps_products';
+    protected $table = 'xapi_wzprodcps_products';
 
     protected $fillable = [
         'name',

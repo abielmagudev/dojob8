@@ -3,7 +3,7 @@
 namespace App\Xapis\Stock\WeatherizationProductCps\Controllers;
 
 use App\Xapis\Stock\WeatherizationProductCps\Models\Category;
-use App\Xapis\Stock\WeatherizationProductCps\Models\WpCpsWorkOrder;
+use App\Xapis\Stock\WeatherizationProductCps\Models\WzProdCpsWorkOrder;
 use App\Xapis\Stock\WeatherizationProductCps\Models\Product;
 use App\Xapis\Stock\WeatherizationProductCps\Requests\ProductWorkOrderSaveRequest;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ use App\Models\Extension;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
-class WpCpsWorkOrderController extends Controller
+class WzProdCpsWorkOrderController extends Controller
 {
     private function save(Request $request, WorkOrder $work_order)
     {
@@ -29,7 +29,7 @@ class WpCpsWorkOrderController extends Controller
             ]);
         }
 
-        return WpCpsWorkOrder::insert($data);
+        return WzProdCpsWorkOrder::insert($data);
     }
 
     public function create(Extension $extension)
@@ -54,9 +54,7 @@ class WpCpsWorkOrderController extends Controller
     {        
         return view('WeatherizationProductCps/views/work-orders/show', [
             'extension' => $extension,
-            'work_order_products' => WpCpsWorkOrder::with('product')
-                                                    ->whereWorkOrder($work_order->id)
-                                                    ->get(),
+            'work_order_products' => WzProdCpsWorkOrder::with('product')->whereWorkOrder($work_order->id)->get(),
         ]); 
     }
 
@@ -66,15 +64,13 @@ class WpCpsWorkOrderController extends Controller
             'extension' => $extension,
             'categories' => Category::with('products')->get(),
             'products' => Product::available()->get(['id', 'name']),
-            'work_order_products' => WpCpsWorkOrder::with('product')
-                                                                ->whereWorkOrder($work_order->id)
-                                                                ->get(),
+            'work_order_products' => WzProdCpsWorkOrder::with('product')->whereWorkOrder($work_order->id)->get(),
         ]); 
     }
 
     public function update(ProductWorkOrderSaveRequest $request, WorkOrder $work_order)
     {
-        WpCpsWorkOrder::whereWorkOrder($work_order->id)->delete();
+        WzProdCpsWorkOrder::whereWorkOrder($work_order->id)->delete();
 
         if( is_null($request->products) ) {
             return true;

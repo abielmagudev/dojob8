@@ -5,9 +5,9 @@ namespace App\Xapis\Stock\WeatherizationProductCps\Models;
 use App\Models\WorkOrder;
 use Illuminate\Database\Eloquent\Model;
 
-class WpCpsWorkOrder extends Model
+class WzProdCpsWorkOrder extends Model
 {
-    protected $table = 'xapi_wpcps_work_orders';
+    protected $table = 'xapi_wzprodcps_work_orders';
 
     public $timestamps = false;
 

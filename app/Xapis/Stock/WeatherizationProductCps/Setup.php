@@ -24,15 +24,15 @@ return new class implements SetupInterface
 
     public function abbr(): string
     {
-        return 'WpCps';
+        return 'WzProdCps';
     }
 
     public function migrations(): array
     {
         return [
-            'xapi_wpcps_categories' => Stocker::path('WeatherizationProductCps/migrations/create_xapi_wpcps_categories_table.php'),
-            'xapi_wpcps_products' => Stocker::path('WeatherizationProductCps/migrations/create_xapi_wpcps_products_table.php'),
-            'xapi_wpcps_work_orders' => Stocker::path('WeatherizationProductCps/migrations/create_xapi_wpcps_work_orders_table.php'),
+            'xapi_wzprodcps_categories' => Stocker::path('WeatherizationProductCps/migrations/create_xapi_wzprodcps_categories_table.php'),
+            'xapi_wzprodcps_products' => Stocker::path('WeatherizationProductCps/migrations/create_xapi_wzprodcps_products_table.php'),
+            'xapi_wzprodcps_work_orders' => Stocker::path('WeatherizationProductCps/migrations/create_xapi_wzprodcps_work_orders_table.php'),
         ]; 
     }
 

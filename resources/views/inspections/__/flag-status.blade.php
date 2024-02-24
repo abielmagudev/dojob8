@@ -11,7 +11,7 @@
     'pending' => [
         'class' => 'text-bg-warning animate__animated animate__pulse animate__infinite fst-italic',
         // 'style' => 'background-color:#f15025', // Orange: f15025, Purple: 712f79
-        'text' => 'Pending!',
+        // 'text' => 'Pending!',
     ],
 ] ?>
 <span 

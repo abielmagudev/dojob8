@@ -114,7 +114,13 @@
 
             @if( $request->filled('dates') )
             <td class="text-nowrap">
-                {{ ! $work_order->isToday() ? $work_order->scheduled_date_human : 'Today' }}
+                @if(! is_null($work_order->scheduled_date_human) )
+                <span>{{ $work_order->isToday() ? 'Today' : $work_order->scheduled_date_human }}</span>
+                
+                @else
+                <span class="d-block text-center text-secondary">?</span>
+
+                @endif
             </td>
             @endif
 

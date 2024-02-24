@@ -1,7 +1,7 @@
 <?php $settings = [
     'pending' => [
         'class' => 'text-dark bg-warning animate__animated animate__pulse animate__infinite fst-italic',
-        'text' => 'Pending!',
+        // 'text' => 'Pending!',
     ],
     'pause' => [
         'class' => 'text-bg-primary fst-italic',

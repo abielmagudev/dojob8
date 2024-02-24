@@ -17,15 +17,6 @@
         {{-- DROPOPTIONS --}}
         @slot('dropoptions')
         <li>
-            <x-modal-trigger modal-id="modalModifyStatus" class="dropdown-item">
-                <i class="bi bi-pencil-square"></i>
-                <span class="ms-1">Modify selected status</span>
-            </x-modal-trigger>
-        </li>
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-        <li>
             <a href="{{ $pending_inspections['url'] }}" class="dropdown-item d-flex">
                 <div class="me-3">
                     <i class="bi bi-exclamation-triangle"></i>
@@ -51,6 +42,17 @@
             <x-modal-trigger modal-id="modalFiltering" class="dropdown-item" link>
                 <i class="bi bi-filter"></i>
                 <span class="ms-1">More filters</span>
+            </x-modal-trigger>
+        </li>
+
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+
+        <li>
+            <x-modal-trigger modal-id="modalModifyStatus" class="dropdown-item">
+                <i class="bi bi-pencil-square"></i>
+                <span class="ms-1">Modify status</span>
             </x-modal-trigger>
         </li>
         @endslot

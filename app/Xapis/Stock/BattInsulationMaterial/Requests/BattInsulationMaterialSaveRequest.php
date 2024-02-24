@@ -2,7 +2,9 @@
 
 namespace App\Xapis\Stock\BattInsulationMaterial\Requests;
 
-use App\Xapis\Stock\BattInsulationMaterial\Kernel\BattMaterialRequirements;
+use App\Xapis\Stock\BattInsulationMaterial\Kernel\Rvalue;
+use App\Xapis\Stock\BattInsulationMaterial\Kernel\Size;
+use App\Xapis\Stock\BattInsulationMaterial\Kernel\Type;
 use Illuminate\Foundation\Http\FormRequest;
 
 use function PHPSTORM_META\map;
@@ -21,7 +23,7 @@ class BattInsulationMaterialSaveRequest extends FormRequest
         return [
             'battinsmat_space' => [
                 'required',
-                sprintf('in:%s', BattMaterialRequirements::getSpaces()->implode(',')),
+                sprintf('in:%s', Rvalue::spaces()->implode(',')),
             ],
             'battinsmat_rvalue_name' => [
                 'required',
@@ -29,11 +31,11 @@ class BattInsulationMaterialSaveRequest extends FormRequest
             ],
             'battinsmat_size' => [
                 'required',
-                sprintf('in:%s', BattMaterialRequirements::allSizes()->implode(',')),
+                sprintf('in:%s', Size::all()->implode(',')),
             ],
             'battinsmat_type' => [
                 'required',
-                sprintf('in:%s', BattMaterialRequirements::allTypes()->implode(',')),
+                sprintf('in:%s', Type::all()->implode(',')),
             ],
             'battinsmat_square_footage' => [
                 'required',
@@ -54,7 +56,7 @@ class BattInsulationMaterialSaveRequest extends FormRequest
             'battinsmat_space.required' => __('Space is required'),
             'battinsmat_space.in' => __('Space is invalid'),
             'battinsmat_rvalue_name.required' => __('R-Value is required'),
-            'battinsmat_rvalue_name.in' => __('R-Value is invalid'),
+            'battinsmat_rvalue_name.in' => __('R-Value is invalid or doesn\'t belong in space'),
             'battinsmat_size.required' => __('Size is required'),
             'battinsmat_size.in' => __('Size is invalid'),
             'battinsmat_type.required' => __('Type is required'),
@@ -69,8 +71,8 @@ class BattInsulationMaterialSaveRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if( BattMaterialRequirements::existsSpace($this->get('battinsmat_space')) ) {
-            $this->rvalue_names_by_space = BattMaterialRequirements::getRvaluesBySpace( $this->get('battinsmat_space') )->implode(',');
+        if( Rvalue::spaceExists( $this->get('battinsmat_space') ) ) {
+            $this->rvalue_names_by_space = Rvalue::allBySpace( $this->get('battinsmat_space') )->implode(',');
         }
     }
 

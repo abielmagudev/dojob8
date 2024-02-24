@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\WorkOrder;
 use App\Xapis\Stock\BattInsulationMaterial\Kernel\BattMaterialRequirements;
+use App\Xapis\Stock\BattInsulationMaterial\Kernel\Rvalue;
+use App\Xapis\Stock\BattInsulationMaterial\Kernel\Size;
+use App\Xapis\Stock\BattInsulationMaterial\Kernel\Type;
 use App\Xapis\Stock\BattInsulationMaterial\Models\BattInsMatWorkOrder;
 use App\Xapis\Stock\BattInsulationMaterial\Requests\BattInsulationMaterialSaveRequest;
 use Illuminate\Http\Request;
@@ -16,9 +19,9 @@ class BattInsMatWorkOrderController extends Controller
     {
         return view('BattInsulationMaterial.views.work-orders.form', [
             'extension' => $extension,
-            'spaces_rvalues' => BattMaterialRequirements::allSpacesRvalues(),
-            'sizes' => BattMaterialRequirements::allSizes(),
-            'types' => BattMaterialRequirements::allTypes(),
+            'spaces_rvalues' => Rvalue::collection(),
+            'sizes' => Size::all(),
+            'types' => Type::all(),
             'battInsMat' => new BattInsMatWorkOrder,
         ]);
     }
@@ -44,9 +47,9 @@ class BattInsMatWorkOrderController extends Controller
     {
         return view('BattInsulationMaterial.views.work-orders.form', [
             'extension' => $extension,
-            'spaces_rvalues' => BattMaterialRequirements::allSpacesRvalues(),
-            'sizes' => BattMaterialRequirements::allSizes(),
-            'types' => BattMaterialRequirements::allTypes(),
+            'spaces_rvalues' => Rvalue::collection(),
+            'sizes' => Size::all(),
+            'types' => Type::all(),
             'battInsMat' => BattInsMatWorkOrder::where('work_order_id', $work_order->id)->first(),
         ]);
     }

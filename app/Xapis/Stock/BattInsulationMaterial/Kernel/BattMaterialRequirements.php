@@ -18,10 +18,7 @@ class BattMaterialRequirements
         ],
 
         'underbelly' => [
-            'R-11',
-            'R-13',
             'R-19',
-            'R-60',
         ],
     ];
 

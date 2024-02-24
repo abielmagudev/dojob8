@@ -57,11 +57,12 @@
                 </button>
             </th>
 
+            <th>Payment</th>
+
             @if( $request->filled('dates') )
             <th>Scheduled</th>
             @endif
 
-            <th>Payment</th>
             <th>Job</th>
             <th>Client</th>
             <th class="text-center">Contractor</th>
@@ -76,25 +77,30 @@
             <td class="text-center" style="width:1%">
                 <input class="form-check-input" type="checkbox" form="formUpdatePaymentStatus" name="work_orders[]" value="{{ $work_order->id }}">
             </td>
-            @if( $request->has('dates') )
-            <td class="text-nowrap">
-                <span>{{ $work_order->scheduled_date_human }}</span>
-            </td>
-            @endif
+
             <td class="text-center" style="width:1%">
                 @include('work-orders.__.flag-payment-status', [
                     'status' => $work_order->payment_status,
                     'class' => 'w-100',
                 ])
             </td>
+
+            @if( $request->has('dates') )
+            <td class="text-nowrap">
+                <span>{{ $work_order->scheduled_date_human }}</span>
+            </td>
+            @endif
+
             <td class="text-nowrap">
                 @include('work-orders.__.summary-job')
             </td>
+
             <td class="text-nowrap">
                 @include('clients.__.inline-address-contact', [
                     'client' => $work_order->client
                 ])
             </td>
+
             <td class="text-center">
             @if( $work_order->hasContractor() )
                 @include('contractors.__.flag', [
@@ -104,12 +110,14 @@
                 ])
             @endif
             </td>
+
             <td class="text-center">
                 @include('work-orders.__.flag-status', [
                     'status' => $work_order->status,
                     'class' => 'w-100'
                 ])
             </td>
+            
             <td class="text-end">
                 <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>    

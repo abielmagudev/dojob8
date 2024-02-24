@@ -1,12 +1,13 @@
 <?php $settings = [
     'pending' => [
-        'class' => 'text-bg-warning animate__animated animate__pulse animate__infinite fst-italic',
+        'class' => 'text-dark bg-warning animate__animated animate__pulse animate__infinite fst-italic',
+        'text' => 'Pending!',
     ],
     'pause' => [
-        'class' => 'text-primary border border-primary fst-italic',
+        'class' => 'text-bg-primary fst-italic',
     ],
     'new' => [
-        'class' => 'text-bg-primary',
+        'class' => 'text-primary border border-primary',
     ],
     'working' => [
         'class' => 'text-warning border border-warning',
@@ -26,11 +27,8 @@
     ],
 ]; ?>
 <span 
-    class="badge text-uppercase {{ $settings[$status]['class'] ?? '' }} {{ $class ?? '' }}"
-    
-    @isset($settings[$status]['style'])   
-    style="<?= $settings[$status]['style'] ?>"
-    @endisset
+class="badge text-uppercase <?= $settings[$status]['class'] ?? '' ?> <?= $class ?? '' ?>"
+style="<?= $settings[$status]['style'] ?? '' ?>"
 >
-    {{ $status }}
+    <?= $settings[$status]['text'] ?? $status ?>
 </span>

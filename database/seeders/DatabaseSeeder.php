@@ -19,17 +19,20 @@ class DatabaseSeeder extends Seeder
      * Example 3
      * $this->call([NameSeeder::class, ...]);
      * 
-     * @return void
      */
+
     public function run()
     {
-        if( app()->environment('production') )
-        {
-            $this->call(SetupSeeder::class);
-            return;
-        } 
+        if(! app()->environment('production') ) {
+            $this->toDevelopment();
+        } else {
+            $this->toProduction();
+        }
+    }
 
-        $this->call([
+    public function toDevelopment()
+    {
+        return $this->call([
             // Catalog
             AgencySeeder::class,
             ClientSeeder::class,
@@ -51,6 +54,14 @@ class DatabaseSeeder extends Seeder
             MemberWorkOrderSeeder::class,
 
             // Overlast
+            ExtensionSeeder::class,
+        ]);
+    }
+
+    public function toProduction()
+    {
+        return $this->call([
+            SetupSeeder::class,
             ExtensionSeeder::class,
         ]);
     }

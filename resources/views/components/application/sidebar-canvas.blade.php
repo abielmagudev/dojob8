@@ -14,7 +14,7 @@
             @include('components.application.search')
         </div>
         
-        @foreach($content as $header => $menu)
+        @foreach(config('app.menu') as $header => $menu)
         <div class="mb-3">
 
             @if( is_string($header) )
@@ -22,9 +22,9 @@
             @endif
             
             <div class="list-group list-group-flush">
-                @foreach($menu as $title => $item)               
-                <a href="{{ $item['route'] }}" class="list-group-item list-group-item-action rounded border-0 {{ $item['active'] ? 'active' : '' }}">
-                    {!! $item['icon'] !!}
+                @foreach($menu as $title => $link)               
+                <a href="{{ route($link['route']) }}" class="list-group-item list-group-item-action rounded border-0 {{ request()->routeIs($link['active']) ? 'active' : '' }}">
+                    {!! $link['icon'] !!}
                     <span class="ms-2">{{ $title }}</span>
                 </a>
                 @endforeach

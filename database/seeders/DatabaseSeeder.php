@@ -23,9 +23,12 @@ class DatabaseSeeder extends Seeder
 
     public function run()
     {
-        if(! app()->environment('production') ) {
+        if(! app()->environment('production') )
+        {
             $this->toDevelopment();
-        } else {
+        } 
+        else
+        {
             $this->toProduction();
         }
     }
@@ -33,6 +36,10 @@ class DatabaseSeeder extends Seeder
     public function toDevelopment()
     {
         return $this->call([
+            // Overlast
+            RolePermissionSeeder::class,
+            ExtensionSeeder::class,
+
             // Catalog
             AgencySeeder::class,
             ClientSeeder::class,
@@ -52,17 +59,15 @@ class DatabaseSeeder extends Seeder
             CrewMemberSeeder::class,
             InspectionMemberSeeder::class,
             MemberWorkOrderSeeder::class,
-
-            // Overlast
-            ExtensionSeeder::class,
         ]);
     }
 
     public function toProduction()
     {
         return $this->call([
-            SetupSeeder::class,
+            RolePermissionSeeder::class,
             ExtensionSeeder::class,
+            SetupSeeder::class,
         ]);
     }
 }

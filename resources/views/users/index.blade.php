@@ -20,6 +20,7 @@
                 <th>Username</th>
                 <th>Name</th>
                 <th>Profile</th>
+                <th>Roles</th>
                 <th class="text-nowrap">Last session</th>
                 <th></th>
             </tr>
@@ -38,6 +39,9 @@
             </td>
             <td class="text-capitalize">
                 {{ $user->profile_classnickname }}
+            </td>
+            <td class="text-capitalize">
+                {{ $user->getRoleNames()->implode(',') }}
             </td>
             <td class="text-nowrap">
                 <span class="me-1">{{ $user->last_session_date_human }}</span>

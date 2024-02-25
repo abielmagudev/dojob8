@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Agency;
 use App\Models\Contractor;
 use App\Models\Member;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 class UserProfiler
 {
     public static $classnicknames_classnames = [
+        'agency' => Agency::class,
         'contractor' => Contractor::class,
         'member' => Member::class,
     ];

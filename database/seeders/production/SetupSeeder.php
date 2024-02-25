@@ -11,7 +11,16 @@ class SetupSeeder extends Seeder
 {
     public function run()
     {
-        $member = Member::create([
+        $member = $this->createMember();
+        
+        $user = $this->createUser($member);
+
+        $user->assignRole('SuperAdmin');
+    }
+
+    protected function createMember()
+    {
+        return Member::create([
             'name' => 'Name',
             'last_name' => 'Lastname',
             'full_name' => 'Full name',
@@ -24,8 +33,11 @@ class SetupSeeder extends Seeder
             'notes' => null,
             'is_available' => true,
         ]);
+    }
 
-        User::create([
+    protected function createUser(Member $member)
+    {
+        return User::create([
             'name' => 'username',
             'email' => 'user@mail.com',
             'email_verified_at' => now(),

@@ -96,7 +96,7 @@ class User extends Authenticatable implements Filterable
 
     // Filters
 
-    public function scopeFilterByProfile($query, $value)
+    public function scopeFilterByProfileType($query, $value)
     {
         if( empty($value) ||! $classname = UserProfiler::getClassnameByClassnickname($value) ) {
             return $query;

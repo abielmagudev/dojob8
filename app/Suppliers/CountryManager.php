@@ -12,7 +12,7 @@ class CountryManager
 
     private function __construct()
     {
-        $this->countries = collect( config('countries') )->map(function ($country) {
+        $this->countries = collect( config('application.countries') )->map(function ($country) {
             return collect($country);
         });
     }

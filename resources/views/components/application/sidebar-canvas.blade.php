@@ -1,5 +1,3 @@
-<?php $content = include( resource_path('views/components/application/menu.blade.php') ) ?>
-
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebarMenu" aria-labelledby="offcanvasSidebarMenuLabel">
     <div class="offcanvas-header">
         <div class="lh-1">
@@ -14,7 +12,7 @@
             @include('components.application.search')
         </div>
         
-        @foreach(config('app.menu') as $header => $menu)
+        @foreach(config('application.menu') as $header => $menu)
         <div class="mb-3">
 
             @if( is_string($header) )

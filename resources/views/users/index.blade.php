@@ -18,6 +18,7 @@
             <tr>
                 <th></th>
                 <th>Username</th>
+                <th>Email</th>
                 <th>Name</th>
                 <th>Profile</th>
                 <th>Roles</th>
@@ -33,6 +34,9 @@
             </td>
             <td>
                 {{ $user->name }}
+            </td>
+            <td>
+                {{ $user->email }}
             </td>
             <td class="text-capitalize text-nowrap">
                 <span>{{ $user->profile_name }}</span>

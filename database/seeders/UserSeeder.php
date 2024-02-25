@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
             'password' => 'password',
             'profile_type' => Member::class,
             'profile_id' => 1,
+            'last_session_at' => now(),
         ])->assignRole('SuperAdmin');
 
 

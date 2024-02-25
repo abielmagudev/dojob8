@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements Filterable
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable implements Filterable
     use HasActiveStatus;
     use HasFiltering;
     use HasHookUsers;
+    use HasRoles;
     use SoftDeletes;
 
     const NAME_PATTERN = "/^[a-zA-Z0-9_.]+$/";

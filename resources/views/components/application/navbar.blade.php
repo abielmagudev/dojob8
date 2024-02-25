@@ -29,10 +29,11 @@
           <span class="d-none d-md-inline-block ms-1">{{ auth()->user()->profile_name }}</span>
         </x-slot>
 
-        <li class="d-block d-md-none">
-          <h6 class="dropdown-header">{{ auth()->user()->profile_name }}</h6>
+        <li class="d-block d-md-none text-center">
+          <b class="dropdown-header">{{ auth()->user()->profile_name }}</b>
+          <hr class="dropdown-divider">
         </li>
-        
+
         <li>          
           <x-application.button-theme-mode class="dropdown-item" />
         </li>
@@ -50,10 +51,6 @@
           <i class="bi bi-person-vcard"></i>
               <span class="ms-2">My account</span>
           </a>
-        </li>
-
-        <li>
-          <hr class="dropdown-divider">
         </li>
 
         <li>

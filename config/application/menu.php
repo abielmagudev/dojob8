@@ -2,97 +2,131 @@
 
 return [
     'Home' => [
-        'Dashboard' => [
-            'active' => 'dashboard.*',
-            'icon' => '<i class="bi bi-bar-chart-line"></i>',
-            'permission' => true,
-            'route' => 'dashboard.index',
+        'permissions' => [
+            'see-dashboard',
+        ],
+        'menu' => [
+            'Dashboard' => [
+                'active' => 'dashboard.*',
+                'icon' => '<i class="bi bi-bar-chart-line"></i>',
+                'permission' => 'see-dashboard',
+                'route' => 'dashboard.index',
+            ],
         ],
     ],
     'Work orders' => [
-        'Work orders' => [
-            'active' => 'work-orders.*',
-            'icon' => '<i class="bi bi-clipboard"></i>',
-            'permission' => true,
-            'route' => 'work-orders.index',
+        'permissions' => [
+            'see-work-orders',
+            'see-jobs',
+            'see-extensions',
+            'see-clients',
+            'see-payments',
         ],
-        'Jobs' => [
-            'active' => 'jobs.*',
-            'icon' => '<i class="bi bi-nut"></i>',
-            'permission' => true,
-            'route' => 'jobs.index',
-        ],
-        'Extensions' => [
-            'active' => 'extensions.*',
-            'icon' => '<i class="bi bi-plug"></i>',
-            'permission' => true,
-            'route' => 'extensions.index',
-        ],
-        'Clients' => [
-            'active' => 'clients.*',
-            'icon' => '<i class="bi bi-book"></i>',
-            'permission' => true,
-            'route' => 'clients.index',
-        ],
-        'Payments' => [
-            'active' => 'payments.*',
-            'icon' => '<i class="bi bi-cash-coin"></i>',
-            'permission' => true,
-            'route' => 'payments.index',
+        'menu' => [
+            'Work orders' => [
+                'active' => 'work-orders.*',
+                'icon' => '<i class="bi bi-clipboard"></i>',
+                'permission' => 'see-work-orders',
+                'route' => 'work-orders.index',
+            ],
+            'Jobs' => [
+                'active' => 'jobs.*',
+                'icon' => '<i class="bi bi-nut"></i>',
+                'permission' => 'see-jobs',
+                'route' => 'jobs.index',
+            ],
+            'Extensions' => [
+                'active' => 'extensions.*',
+                'icon' => '<i class="bi bi-plug"></i>',
+                'permission' => 'see-extensions',
+                'route' => 'extensions.index',
+            ],
+            'Clients' => [
+                'active' => 'clients.*',
+                'icon' => '<i class="bi bi-book"></i>',
+                'permission' => 'see-clients',
+                'route' => 'clients.index',
+            ],
+            'Payments' => [
+                'active' => 'payments.*',
+                'icon' => '<i class="bi bi-cash-coin"></i>',
+                'permission' => 'see-payments',
+                'route' => 'payments.index',
+            ],
         ],
     ],
     'Inspections' => [
-        'Inspections' => [
-            'active' => 'inspections.*',
-            'icon' => '<i class="bi bi-clipboard-check"></i>',
-            'permission' => true,
-            'route' => 'inspections.index',
-        ], 
-        'Agencies' => [
-            'active' => 'agencies.*',
-            'icon' => '<i class="bi bi-award"></i>',
-            'permission' => true,
-            'route' => 'agencies.index',
+        'permissions' => [
+            'see-inspections',
+            'see-agencies',
+        ],
+        'menu' => [
+            'Inspections' => [
+                'active' => 'inspections.*',
+                'icon' => '<i class="bi bi-clipboard-check"></i>',
+                'permission' => 'see-inspections',
+                'route' => 'inspections.index',
+            ], 
+            'Agencies' => [
+                'active' => 'agencies.*',
+                'icon' => '<i class="bi bi-award"></i>',
+                'permission' => 'see-agencies',
+                'route' => 'agencies.index',
+            ],
         ],
     ],
     'Staff' => [
-        'Members' => [
-            'active' => 'members.*',
-            'icon' => '<i class="bi bi-person"></i>',
-            'permission' => true,
-            'route' => 'members.index',
+        'permissions' => [
+            'see-members',
+            'see-crews',
+            'see-contractors',
+            'see-users',
         ],
-        'Crews' => [
-            'active' => 'crews.*',
-            'icon' => '<i class="bi bi-people"></i>',
-            'permission' => true,
-            'route' => 'crews.index',
-        ],
-        'Contractors' => [
-            'active' => 'contractors.*',
-            'icon' => '<i class="bi bi-bookmark-star"></i>',
-            'permission' => true,
-            'route' => 'contractors.index',
-        ],
-        'Users' => [
-            'active' => 'users.*',
-            'icon' => '<i class="bi bi-person-workspace"></i>',
-            'permission' => true,
-            'route' => 'users.index',
+        'menu' => [
+            'Members' => [
+                'active' => 'members.*',
+                'icon' => '<i class="bi bi-person"></i>',
+                'permission' => 'see-members',
+                'route' => 'members.index',
+            ],
+            'Crews' => [
+                'active' => 'crews.*',
+                'icon' => '<i class="bi bi-people"></i>',
+                'permission' => 'see-crews',
+                'route' => 'crews.index',
+            ],
+            'Contractors' => [
+                'active' => 'contractors.*',
+                'icon' => '<i class="bi bi-bookmark-star"></i>',
+                'permission' => 'see-contractors',
+                'route' => 'contractors.index',
+            ],
+            'Users' => [
+                'active' => 'users.*',
+                'icon' => '<i class="bi bi-person-workspace"></i>',
+                'permission' => 'see-users',
+                'route' => 'users.index',
+            ],
         ],
     ],
     'Application' => [
-        'History' => [
-            'active' => 'history.*',
-            'icon' => '<i class="bi bi-clock-history"></i>',
-            'permission' => true,
-            'route' => 'history.index',
+        'permissions' => [
+            'see-history',
+            'edit-settings',
         ],
-        'Settings' => [
-            'active' => 'settings.*',
-            'icon' => '<i class="bi bi-gear"></i>',
-            'permission' => true,
-            'route' => 'settings.index',
-        ],
+        'menu' => [        
+            'History' => [
+                'active' => 'history.*',
+                'icon' => '<i class="bi bi-clock-history"></i>',
+                'permission' => 'see-history',
+                'route' => 'history.index',
+            ],
+            'Settings' => [
+                'active' => 'settings.*',
+                'icon' => '<i class="bi bi-gear"></i>',
+                'permission' => 'see-settings',
+                'route' => 'settings.index',
+            ],
+        ]
     ],
 ];

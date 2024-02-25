@@ -12,23 +12,27 @@
             @include('components.application.search')
         </div>
         
-        @foreach(config('application.menu') as $header => $menu)
-        <div class="mb-3">
+        @foreach(config('application.menu') as $header => $item)
+            @if( auth()->user()->canAny($item['permissions']) )    
+            <div class="mb-3">
 
-            @if( is_string($header) )
-            <small class="text-uppercase text-secondary fw-light">{{ $header }}</small>
-            @endif
-            
-            <div class="list-group list-group-flush">
-                @foreach($menu as $title => $link)               
-                <a href="{{ route($link['route']) }}" class="list-group-item list-group-item-action rounded border-0 {{ request()->routeIs($link['active']) ? 'active' : '' }}">
-                    {!! $link['icon'] !!}
-                    <span class="ms-2">{{ $title }}</span>
-                </a>
-                @endforeach
+                @if( is_string($header) )
+                <small class="text-uppercase text-secondary fw-light">{{ $header }}</small>
+                @endif
+                
+                <div class="list-group list-group-flush">
+                    @foreach($item['menu'] as $title => $link)
+                    @can($link['permission'])                  
+                    <a href="{{ route($link['route']) }}" class="list-group-item list-group-item-action rounded border-0 {{ request()->routeIs($link['active']) ? 'active' : '' }}">
+                        {!! $link['icon'] !!}
+                        <span class="ms-2">{{ $title }}</span>
+                    </a>
+                    @endcan      
+                    @endforeach
+                </div>
+
             </div>
-
-        </div>
+            @endif
         @endforeach
         <br>
         

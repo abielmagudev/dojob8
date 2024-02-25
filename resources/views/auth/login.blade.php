@@ -1,12 +1,12 @@
 @extends('application')
 @section('content')
 <div class="row justify-content-center align-items-center vh-100" data-bs-theme="light">
-    <div class="col-sm col-sm-4">
+    <div class="col-md col-md-6 col-xl-3">
         <div class="shadow rounded text-bg-light">
             <div class="text-bg-primary text-center text-uppercase rounded-top py-4 px-3">
-                <b class="fs-3">Welcome</b>
+                <b class="fs-3">¡Welcome!</b>
             </div>
-            <div class="p-5">
+            <div class="p-4 p-xl-5">
                 <form action="{{ route('login') }}" method="post" autocomplete="off">
                     @csrf
                     <div class="mb-3">

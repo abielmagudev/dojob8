@@ -31,6 +31,7 @@ class RolePermissionSeeder extends Seeder
         $this->createPermissionsForWorkOrders($roles);
         $this->createPermissionsForPayments($roles);
         $this->createPermissionsForInspections($roles);
+        $this->createPermissionsForComments($roles);
         
         // DEFAULT
         $this->createPermissionsForExtensions($roles);
@@ -368,6 +369,40 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         Permission::create(['name' => 'delete-inspections'])->syncRoles([
+            $roles['administrator'],
+        ]);
+    }
+
+    /**
+     * Comments
+     */
+    protected function createPermissionsForComments($roles)
+    {
+        Permission::create(['name' => 'see-comments'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+            $roles['worker'],
+        ]);
+
+        Permission::create(['name' => 'create-comments'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+            $roles['worker'],
+        ]);
+
+        Permission::create(['name' => 'edit-comments'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+            $roles['worker'],
+        ]);
+
+        Permission::create(['name' => 'delete-comments'])->syncRoles([
             $roles['administrator'],
         ]);
     }

@@ -96,6 +96,18 @@ if(! function_exists('requestCookieRaw') )
     }
 }
 
+if(! function_exists('isRequestAjax') )
+{
+    function isRequestAjax(\Illuminate\Http\Request $request)
+    {
+        return $request->ajax() || 
+               $request->wantsJson() || 
+               $request->expectsJson() || 
+               $request->header('X-Requested-With') == 'XMLHttpRequest';
+    }
+}
+
+
 
 // Bootstrap
 

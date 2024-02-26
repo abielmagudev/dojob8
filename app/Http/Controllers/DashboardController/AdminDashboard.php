@@ -1,12 +1,12 @@
 <?php 
 
-namespace App\Http\Controllers\DashboardController\Roles;
+namespace App\Http\Controllers\DashboardController;
 
-use App\Http\Controllers\DashboardController\Roles\AdminRole\StatisticalDataGenerator;
+use App\Http\Controllers\DashboardController\AdminDashboard\StatisticalDataGenerator;
 use App\Http\Controllers\Kernel\ScheduleRange;
 use Illuminate\Http\Request;
 
-class AdminRole
+class AdminDashboard
 {
     public static function response(Request $request)
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\DashboardController\Roles;
+namespace App\Http\Controllers\DashboardController;
 
 use Illuminate\Http\Request;
 
-class AgencyRole
+class AgencyDashboard
 {
     public static function response(Request $request)
     {

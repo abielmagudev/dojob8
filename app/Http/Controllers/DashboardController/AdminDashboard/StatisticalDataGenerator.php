@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Http\Controllers\DashboardController\Roles\AdminRole;
+namespace App\Http\Controllers\DashboardController\AdminDashboard;
 
 use App\Models\Agency;
 use App\Models\Contractor;

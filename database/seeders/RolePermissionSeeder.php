@@ -241,7 +241,6 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
         ]);
 
         Permission::create(['name' => 'create-clients'])->syncRoles([

@@ -1,8 +1,8 @@
 <div class="row">
     @foreach($active_crews as $crew)
-    <div class="col-md col-md-6 col-lg-3 mb-4">
-
-        <x-card class="h-100" style="border-top:0.5rem solid {{ $crew->isActive() ? $crew->background_color : $crew->background_color_inactive }} !important">
+    <div class="col-sm col-sm-6 col-md-4 col-xl-3 mb-4">
+        <?php $border_color = $crew->isActive() ? $crew->background_color : $crew->background_color_inactive ?>
+        <x-card class="h-100" style="border-top:0.5rem solid {{ $border_color }} !important">
             @slot('title')
                 @include('crews.__.flag')
             @endslot

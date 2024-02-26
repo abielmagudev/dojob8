@@ -1,10 +1,10 @@
 <?php 
 
-namespace App\Http\Controllers\DashboardController;
+namespace App\Http\Controllers\DashboardController\Responses;
 
 use Illuminate\Http\Request;
 
-class ContractorDashboard
+class ContractorResponse
 {
     public static function response(Request $request)
     {

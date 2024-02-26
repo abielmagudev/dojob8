@@ -1,13 +1,13 @@
 <?php 
 
-namespace App\Http\Controllers\DashboardController;
+namespace App\Http\Controllers\DashboardController\Responses;
 
 use App\Models\Inspection;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
-class WorkerDashboard
+class WorkerResponse
 {
     public static function response(Request $request)
     {

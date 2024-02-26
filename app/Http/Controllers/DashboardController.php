@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\DashboardController\AdminDashboard;
-use App\Http\Controllers\DashboardController\AgencyDashboard;
-use App\Http\Controllers\DashboardController\AssessorDashboard;
-use App\Http\Controllers\DashboardController\ContractorDashboard;
-use App\Http\Controllers\DashboardController\WorkerDashboard;
+use App\Http\Controllers\DashboardController\Responses\AdminResponse;
+use App\Http\Controllers\DashboardController\Responses\AgencyResponse;
+use App\Http\Controllers\DashboardController\Responses\AssessorResponse;
+use App\Http\Controllers\DashboardController\Responses\ContractorResponse;
+use App\Http\Controllers\DashboardController\Responses\WorkerResponse;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -22,23 +22,23 @@ class DashboardController extends Controller
 
     private function dashboardByRole($role)
     {
-        abort_if(! $this->collectionRolesDashboards()->has($role), 500);
+        abort_if(! $this->collectionRoleResponses()->has($role), 500);
 
-        return $this->collectionRolesDashboards()->get($role);
+        return $this->collectionRoleResponses()->get($role);
     }
 
-    private function collectionRolesDashboards()
+    private function collectionRoleResponses()
     {
         return collect([
-            'SuperAdmin' => AdminDashboard::class,
-            'administrator' => AdminDashboard::class,
-            'manager' => AdminDashboard::class,
-            'coordinator' => AdminDashboard::class,
-            'payments' => AdminDashboard::class,
-            'assessor' => AssessorDashboard::class,
-            'worker' => WorkerDashboard::class,
-            'contractor' => ContractorDashboard::class,
-            'agency' => AgencyDashboard::class,
+            'SuperAdmin' => AdminResponse::class,
+            'administrator' => AdminResponse::class,
+            'manager' => AdminResponse::class,
+            'coordinator' => AdminResponse::class,
+            'payments' => AdminResponse::class,
+            'assessor' => AssessorResponse::class,
+            'worker' => WorkerResponse::class,
+            'contractor' => ContractorResponse::class,
+            'agency' => AgencyResponse::class,
         ]);
     }
 }

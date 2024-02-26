@@ -324,10 +324,6 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-work-orders'])->syncRoles([
             $roles['administrator'],
         ]);
-
-        Permission::create(['name' => 'restore-work-orders']);
-
-        Permission::create(['name' => 'force-delete-work-orders']);
     }
 
     /**
@@ -374,10 +370,6 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-inspections'])->syncRoles([
             $roles['administrator'],
         ]);
-
-        Permission::create(['name' => 'restore-inspections']);
-
-        Permission::create(['name' => 'force-delete-inspections']);
     }
 
 
@@ -439,10 +431,6 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'edit-history']);
 
         Permission::create(['name' => 'delete-history']);
-
-        Permission::create(['name' => 'restore-history']);
-
-        Permission::create(['name' => 'force-delete-history']);
     }
 
     /**

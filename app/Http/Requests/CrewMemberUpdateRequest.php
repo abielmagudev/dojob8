@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Crew;
 use App\Models\Member;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -15,7 +16,16 @@ class CrewMemberUpdateRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('edit-crew-members');
+    }
+
+    protected function failedAuthorization()
+    {
+        if( isRequestAjax($this) ) {
+            return response()->json(['error' => 'This action is unauthorized.'], 403);
+        }
+        
+        throw new AuthorizationException('This action is unauthorized.');
     }
 
     public function rules()
@@ -62,7 +72,7 @@ class CrewMemberUpdateRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        if( $this->header('X-Requested-With') == 'XMLHttpRequest' || $this->ajax() || $this->wantsJson() || $this->expectsJson() )
+        if( isRequestAjax($this) )
         {
             $response = new JsonResponse(['errors' => $validator->errors()], 422);
             throw new HttpResponseException($response); 

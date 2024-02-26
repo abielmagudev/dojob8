@@ -96,9 +96,9 @@ if(! function_exists('requestCookieRaw') )
     }
 }
 
-if(! function_exists('isRequestAjax') )
+if(! function_exists('isAjaxRequest') )
 {
-    function isRequestAjax(\Illuminate\Http\Request $request)
+    function isAjaxRequest(\Illuminate\Http\Request $request)
     {
         return $request->ajax() || 
                $request->wantsJson() || 

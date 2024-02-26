@@ -21,7 +21,7 @@ class CrewMemberUpdateRequest extends FormRequest
 
     protected function failedAuthorization()
     {
-        if( isRequestAjax($this) ) {
+        if( isAjaxRequest($this) ) {
             return response()->json(['error' => 'This action is unauthorized.'], 403);
         }
         
@@ -72,7 +72,7 @@ class CrewMemberUpdateRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        if( isRequestAjax($this) )
+        if( isAjaxRequest($this) )
         {
             $response = new JsonResponse(['errors' => $validator->errors()], 422);
             throw new HttpResponseException($response); 

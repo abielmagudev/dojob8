@@ -14,7 +14,7 @@ class CrewMemberController extends Controller
 
         $result = $this->syncCrewMembers($request, $crew);
         
-        return isRequestAjax($request) ? $this->responseAjax($crew, $result) : $this->responseHttp($crew, $result);
+        return isAjaxRequest($request) ? $this->responseAjax($crew, $result) : $this->responseHttp($crew, $result);
     }
 
     protected function syncCrewMembers(Request $request, Crew $crew)

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         $role = (auth()->user())->getRoleNames()[0];
 

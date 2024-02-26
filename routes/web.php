@@ -44,8 +44,8 @@ Route::fallback(fn() => redirect()->route('login'));
 
 Route::middleware(['auth'])->group(function () {
     
-    // Dasboards
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    // Dasboard
+    Route::get('dashboard', DashboardController::class)->name('dashboard.index');
     
     // Members
     Route::resource('members', MemberController::class);

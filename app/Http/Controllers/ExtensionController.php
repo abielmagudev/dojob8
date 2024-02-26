@@ -7,6 +7,11 @@ use App\Models\Extension;
 use Illuminate\Http\Request;
 class ExtensionController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Extension::class, 'extension');
+    }
+
     public function __call($method, $parameters)
     {
         $extension = Extension::findOrFail($parameters[0]);

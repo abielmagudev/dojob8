@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(WorkOrder::class, 'payment');
+    }
+
     public function index(Request $request)
     {
         if( empty($request->all()) )

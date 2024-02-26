@@ -21,6 +21,11 @@ class WorkOrderController extends Controller
 {
     use ReflashInputErrorsTrait;
 
+    public function __construct()
+    {
+        $this->authorizeResource(WorkOrder::class, 'workOrder');
+    }
+
     public function index(Request $request)
     {
         if( empty($request->except('page')) ) {

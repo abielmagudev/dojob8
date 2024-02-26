@@ -12,7 +12,7 @@ class CrewStatusUpdateRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('edit-crews');
     }
 
     public function rules()

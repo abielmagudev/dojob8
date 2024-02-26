@@ -10,6 +10,8 @@ class HistoryController extends Controller
 {
     public function __invoke(Request $request)
     {
+        $this->authorize('viewAny', History::class);
+
         $history = History::with('user.profile')
         ->filterByParameters( $request->all() )
         ->orderBy('id', $request->get('sort', 'desc'))

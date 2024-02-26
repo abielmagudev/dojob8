@@ -17,7 +17,7 @@ class ContractorSaveRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->canAny(['create-contractors', 'edit-contractors']);
     }
 
     public function rules()

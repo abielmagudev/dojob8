@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 
 class InspectionController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Inspection::class, 'inspection');
+    }
+
     public function index(Request $request)
     {
         if( empty($request->all()) )

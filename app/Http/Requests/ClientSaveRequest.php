@@ -13,7 +13,7 @@ class ClientSaveRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->canAny(['create-clients', 'edit-clients']);
     }
 
     public function rules()

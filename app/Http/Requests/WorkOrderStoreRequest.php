@@ -18,7 +18,7 @@ class WorkOrderStoreRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create-work-orders');
     }
 
     public function rules()

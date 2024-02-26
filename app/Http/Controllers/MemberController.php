@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Member::class, 'member');
+    }
+
     public function index(Request $request)
     {
         $members = Member::filterByParameters( $request->all() )

@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ContractorController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Contractor::class, 'contractor');
+    }
+
     public function index()
     {
         return view('contractors.index', [

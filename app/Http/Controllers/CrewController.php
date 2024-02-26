@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class CrewController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Crew::class, 'crew');
+    }
+
     public function index(Request $request)
     {
         $crews = Crew::with('members')

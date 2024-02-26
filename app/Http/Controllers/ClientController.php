@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Client::class, 'client');
+    }
+
     public function index(Request $request)
     {
         $clients = Client::withCount('incomplete_work_orders')

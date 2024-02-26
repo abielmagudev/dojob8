@@ -11,6 +11,8 @@ class WorkOrderStatusController extends Controller
 {
     public function __invoke(WorkOrderStatusUpdateRequest $request)
     {
+        $this->authorize('update', WorkOrder::class);
+
         $status_uppercase = strtoupper($request->get('status'));
 
         $result = WorkOrder::whereIn('id', $request->get('work_orders'))->noPendingStatus()->update(['status' => $request->get('status')]);

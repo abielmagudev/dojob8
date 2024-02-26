@@ -14,7 +14,7 @@ class SettingsSaveRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->hasRole('SuperAdmin');
     }
 
     public function rules()

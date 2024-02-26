@@ -9,6 +9,8 @@ class WorkOrderOrderedController extends Controller
 {
     public function __invoke(WorkOrderOrderedUpdateRequest $request)
     {
+        $this->authorize('update', WorkOrder::class);
+
         $result = collect([]);
 
         foreach($request->get('ordered') as $work_order_id => $order)

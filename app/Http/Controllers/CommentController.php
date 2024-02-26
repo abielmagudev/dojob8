@@ -16,10 +16,10 @@ class CommentController extends Controller
             'work_order_id' => $work_order->id,
         ]);
 
-        if( $comment === false ) {
-            return redirect()->route('work-orders.show', [$work_order, 'tab' => 'comments'])->with('danger', 'Error saving comment, try again...');
-        }
+        $response = $comment === false 
+                  ? ['danger', 'Error saving comment, try again...'] 
+                  : ['success', "Comment <em>\"{$request->get('comment')}\"</em> saved"];
 
-        return redirect()->route('work-orders.show', [$work_order, 'tab' => 'comments'])->with('success', "Comment <em>\"{$request->get('comment')}\"</em> saved");
+        return redirect()->route('work-orders.show', [$work_order, 'tab' => 'comments'])->with($response[0], $response[1]);
     }
 }

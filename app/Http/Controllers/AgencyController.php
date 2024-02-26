@@ -7,6 +7,11 @@ use App\Models\Agency;
 
 class AgencyController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Agency::class, 'agency');
+    }
+
     public function index()
     {
         return view('agencies.index', [

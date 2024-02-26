@@ -9,7 +9,7 @@ class CommentSaveRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create-comments');
     }
 
     public function rules()

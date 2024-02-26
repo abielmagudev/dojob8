@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Settings::class, 'settings');        
+    }
+
     public function index(Request $request)
     {
         return view('settings.index')->with('settings', Settings::first());

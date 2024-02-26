@@ -12,7 +12,7 @@ class MemberSaveRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->canAny(['create-members', 'edit-members']);
     }
 
     public function rules()

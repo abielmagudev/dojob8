@@ -10,6 +10,11 @@ use App\Models\Job;
 
 class JobController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Job::class, 'job');
+    }
+
     public function index()
     {
         $jobs = Job::withCount(['incomplete_work_orders', 'extensions'])

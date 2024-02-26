@@ -13,6 +13,10 @@ class SearchController extends Controller
 
     public function __invoke(Request $request)
     {        
+        if(! auth()->user()->can('see-search') ) {
+            abort(404);
+        }   
+
         if(! self::existsController( $request->get('topic') ) ) {
             return back();
         }

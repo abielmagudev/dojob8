@@ -11,7 +11,7 @@ class AgencySaveRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->canAny(['create-agencies', 'edit-agencies']);
     }
 
     public function rules()

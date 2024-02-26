@@ -12,7 +12,7 @@ class JobSaveRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->canAny(['create-jobs', 'edit-jobs']);
     }
 
     public function rules()

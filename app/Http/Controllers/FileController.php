@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(File::class, 'file');    
+    }
+
     public function store(FileSaveRequest $request)
     {
         return response()->json(['message' => 'File uploaded successfully.']);

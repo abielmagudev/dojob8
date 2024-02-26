@@ -10,7 +10,7 @@ class ExtensionJobRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('edit-job-extensions');
     }
 
     public function rules()

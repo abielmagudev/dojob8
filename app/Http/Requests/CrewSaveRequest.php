@@ -11,7 +11,7 @@ class CrewSaveRequest extends FormRequest
 
     public function authorize()
     {
-        return true;
+        return auth()->user()->canAny(['create-crews', 'edit-crews']);
     }
 
     public function rules()

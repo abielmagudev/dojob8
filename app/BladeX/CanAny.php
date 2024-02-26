@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BladeExtended;
+namespace App\BladeX;
 
 use Illuminate\Support\Facades\Blade;
 

@@ -6,7 +6,7 @@
             <div class="text-bg-primary text-center text-uppercase rounded-top py-4 px-3">
                 <b class="fs-3">¡Welcome!</b>
             </div>
-            <div class="p-3 px-md-4 px-xl-5">
+            <div class="py-4 py-xl-5 px-3 px-md-4 px-xl-5">
                 <form action="{{ route('login') }}" method="post" autocomplete="off">
                     @csrf
                     <div class="mb-3">

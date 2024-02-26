@@ -12,8 +12,8 @@
             @include('components.application.search')
         </div>
         
-        @foreach(config('application.menu') as $header => $item)
-            @if( auth()->user()->canAny($item['permissions']) )    
+        @foreach(config('application.menu') as $header => $content)
+            @canAny( $content['permissions'] )    
             <div class="mb-3">
 
                 @if( is_string($header) )
@@ -21,7 +21,7 @@
                 @endif
                 
                 <div class="list-group list-group-flush">
-                    @foreach($item['menu'] as $title => $link)
+                    @foreach($content['menu'] as $title => $link)
                     @can($link['permission'])                  
                     <a href="{{ route($link['route']) }}" class="list-group-item list-group-item-action rounded border-0 {{ request()->routeIs($link['active']) ? 'active' : '' }}">
                         {!! $link['icon'] !!}
@@ -32,11 +32,11 @@
                 </div>
 
             </div>
-            @endif
+            @endcanAny
         @endforeach
         <br>
         
-        <p class="text-end text-secondary text-uppercase small">
+        <p class="text-center text-secondary text-uppercase small">
             <small>{{ config('app.name') }} {{ date('Y') }}</small>
         </p>
     </div>

@@ -2,14 +2,12 @@
 
 return [
     'Home' => [
-        'permissions' => [
-            'see-dashboard',
-        ],
+        'permissions' => null,
         'menu' => [
             'Dashboard' => [
                 'active' => 'dashboard.*',
                 'icon' => '<i class="bi bi-bar-chart-line"></i>',
-                'permission' => 'see-dashboard',
+                'permission' => null,
                 'route' => 'dashboard.index',
             ],
         ],

@@ -168,6 +168,11 @@ class Member extends Model implements Filterable, Profilable
         return $this->belongsToMany(WorkOrder::class)->using(MemberWorkOrder::class);
     }
 
+    public function inspections()
+    {
+        return $this->belongsToMany(Inspection::class)->using(InspectionMember::class);
+    }
+
     public function users()
     {
         return $this->morphMany(User::class, 'profile'); // Old: morphOne(User::class, 'profile')

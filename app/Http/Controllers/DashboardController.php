@@ -2,34 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\DashboardController\DashboardManager;
 use App\Http\Controllers\DashboardController\StatisticalDataGenerator;
+use App\Http\Controllers\Kernel\ScheduleRange;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        if(! $request->filled('from') )
-        {
-            $request->merge([
-                'from' => date('Y-01-01'),
-            ]);
-        }
+        $user = auth()->user();
 
-        if(! $request->has('to') )
-        {
-            $request->merge([
-                'to' => date('Y-m-d'),
-            ]);
-        }
+        $role = $user->getRoleNames()[0];
 
-
-        $generator = new StatisticalDataGenerator($request);
-
-        return view('dashboard.index', array_merge(
-            $generator->dataByDefault(),
-            $generator->dataByRequest(),
-            ['request' => $request]
-        ));
+        return DashboardManager::responseByRole($role, $request);
     }
 }

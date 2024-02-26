@@ -17,14 +17,14 @@
 @endsection
 
 @section('content')
-@include('dashboard.index.quantities')
+@include('dashboard.admin.index.quantities')
 <br>
-@include('dashboard.index.statuses')
+@include('dashboard.admin.index.statuses')
 <br>
-@include('dashboard.index.inspections')
+@include('dashboard.admin.index.inspections')
 <br>
-@include('dashboard.index.jobs')
+@include('dashboard.admin.index.jobs')
 <br>
 
-@include('dashboard.index.modal-scheduled-dates')
+@include('dashboard.admin.index.modal-scheduled-dates')
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Development;
 
 use App\Models\Agency;
 use App\Models\Contractor;
@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'name' => 'test',
             'email' => 'test@mail.com',
             'password' => 'password',
+            // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'profile_type' => Member::class,
             'profile_id' => 1,
             'last_session_at' => now(),

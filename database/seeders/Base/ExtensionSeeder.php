@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Base;
 
 use App\Models\Extension;
 use App\Xapis\Stocker;

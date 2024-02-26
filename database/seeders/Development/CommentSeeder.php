@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Development;
 
-use App\Models\CrewMember;
+use App\Models\Comment;
 use Illuminate\Database\Seeder;
 
-class CrewMemberSeeder extends Seeder
+class CommentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class CrewMemberSeeder extends Seeder
      */
     public function run()
     {
-        CrewMember::factory(25)->create();
+        Comment::factory(500)->create();
     }
 }

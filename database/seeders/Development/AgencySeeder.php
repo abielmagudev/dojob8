@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Development;
 
-use App\Models\Member;
+use App\Models\Agency;
 use Illuminate\Database\Seeder;
 
-class MemberSeeder extends Seeder
+class AgencySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class MemberSeeder extends Seeder
      */
     public function run()
     {
-        Member::factory(35)->create();
+        Agency::factory(3)->create();
     }
 }

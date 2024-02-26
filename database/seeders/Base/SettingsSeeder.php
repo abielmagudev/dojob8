@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Base;
 
-use App\Models\Inspection;
+use App\Models\Settings;
 use Illuminate\Database\Seeder;
 
-class InspectionSeeder extends Seeder
+class SettingsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class InspectionSeeder extends Seeder
      */
     public function run()
     {
-        Inspection::factory(332)->create();
+        Settings::factory(1)->create();
     }
 }

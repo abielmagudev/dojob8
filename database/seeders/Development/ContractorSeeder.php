@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Development;
 
-use App\Models\Job;
+use App\Models\Contractor;
 use Illuminate\Database\Seeder;
 
-class JobSeeder extends Seeder
+class ContractorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class JobSeeder extends Seeder
      */
     public function run()
     {
-        Job::factory(10)->create();
+        Contractor::factory(10)->create();
     }
 }

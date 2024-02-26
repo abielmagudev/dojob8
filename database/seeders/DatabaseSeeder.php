@@ -2,72 +2,80 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\Production\SetupSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     * 
-     * Examples 1
-     * \App\Models\User::factory(10)->create();
-     * 
-     * Example 2
-     * \App\Models\User::factory()->create(['attribute' => 'value']);
-     * 
-     * Example 3
-     * $this->call([NameSeeder::class, ...]);
-     * 
-     */
-
     public function run()
     {
-        if(! app()->environment('production') )
-        {
-            $this->toDevelopment();
-        } 
-        else
-        {
-            $this->toProduction();
-        }
+        $this->call( $this->baseSeeders() );
+
+        $this->call( $this->enviromentSeeders() );
     }
 
-    public function toDevelopment()
+    public function baseSeeders(): array
     {
-        return $this->call([
-            // Overlast
-            RolePermissionSeeder::class,
-            ExtensionSeeder::class,
+        return [
+            \Database\Seeders\Base\ExtensionSeeder::class,
+            \Database\Seeders\Base\RolePermissionSeeder::class,
+            \Database\Seeders\Base\SettingsSeeder::class,
 
-            // Catalog
-            AgencySeeder::class,
-            ClientSeeder::class,
-            ContractorSeeder::class,
-            CrewSeeder::class,
-            JobSeeder::class,
-            MemberSeeder::class,
-            SettingsSeeder::class,
-            UserSeeder::class,
             
-            // Operative
-            WorkOrderSeeder::class,
-            InspectionSeeder::class,
-            CommentSeeder::class,
-
-            // Pivot
-            CrewMemberSeeder::class,
-            InspectionMemberSeeder::class,
-            MemberWorkOrderSeeder::class,
-        ]);
+        ];
     }
 
-    public function toProduction()
+    public function enviromentSeeders(): array
     {
-        return $this->call([
-            RolePermissionSeeder::class,
-            ExtensionSeeder::class,
-            SetupSeeder::class,
-        ]);
+        return app()->environment('production') ? $this->productionSeeders() : $this->developmentSeeders();
+    }
+
+    public function developmentSeeders(): array
+    {
+        return [
+            \Database\Seeders\Development\AgencySeeder::class,
+            \Database\Seeders\Development\ClientSeeder::class,
+            \Database\Seeders\Development\ContractorSeeder::class,
+            \Database\Seeders\Development\CrewSeeder::class,
+            \Database\Seeders\Development\JobSeeder::class,
+            \Database\Seeders\Development\MemberSeeder::class,
+            \Database\Seeders\Development\UserSeeder::class,
+            \Database\Seeders\Development\WorkOrderSeeder::class,
+            
+
+            // Belongs to a work order
+            \Database\Seeders\Development\CommentSeeder::class,
+            \Database\Seeders\Development\InspectionSeeder::class,
+            
+
+            // Pivot tables
+            \Database\Seeders\Development\CrewMemberSeeder::class,
+            \Database\Seeders\Development\InspectionMemberSeeder::class,
+            \Database\Seeders\Development\MemberWorkOrderSeeder::class,
+            
+        ];
+    }
+
+    public function productionSeeders(): array
+    {
+        return [
+            \Database\Seeders\Production\MemberSeeder::class,
+            \Database\Seeders\Production\UserSeeder::class,
+
+
+        ];
     }
 }
+
+/**
+ * Seed the application's database.
+ * 
+ * Examples 1
+ * \App\Models\User::factory(10)->create();
+ * 
+ * Example 2
+ * \App\Models\User::factory()->create(['attribute' => 'value']);
+ * 
+ * Example 3
+ * $this->call([NameSeeder::class, ...]);
+ * 
+ */

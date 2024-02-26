@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Development;
 
-use App\Models\Agency;
+use App\Models\Client;
 use Illuminate\Database\Seeder;
 
-class AgencySeeder extends Seeder
+class ClientSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class AgencySeeder extends Seeder
      */
     public function run()
     {
-        Agency::factory(3)->create();
+        Client::factory(500)->create();
     }
 }

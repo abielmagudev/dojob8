@@ -33,7 +33,6 @@ class RolePermissionSeeder extends Seeder
         $this->createPermissionsForInspections($roles);
         
         // DEFAULT
-        $this->createPermissionsForDashboard($roles);
         $this->createPermissionsForExtensions($roles);
         $this->createPermissionsForHistory($roles);
         $this->createPermissionsForSettings($roles);
@@ -47,8 +46,8 @@ class RolePermissionSeeder extends Seeder
     {
         return [
             'SuperAdmin' => Role::create(['name' => 'SuperAdmin']),
-            'admin' => Role::create(['name' => 'admin']),
-            'director' => Role::create(['name' => 'director']),
+            'administrator' => Role::create(['name' => 'administrator']),
+            'manager' => Role::create(['name' => 'manager']),
             'coordinator' => Role::create(['name' => 'coordinator']),
             'assessor' => Role::create(['name' => 'assessor']),
             'worker' => Role::create(['name' => 'worker']),
@@ -67,19 +66,19 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForUsers(array $roles)
     {
         Permission::create(['name' => 'see-users'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'create-users'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'edit-users'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'delete-users'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'everything-admin']); // CRUD for admin users
@@ -93,24 +92,24 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForMembers(array $roles)
     {
         Permission::create(['name' => 'see-members'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'create-members'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'edit-members'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'delete-members'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
     }
 
@@ -120,24 +119,24 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForCrews(array $roles)
     {
         Permission::create(['name' => 'see-crews'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'create-crews'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'edit-crews'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'delete-crews'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
     }
 
@@ -147,13 +146,13 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForCrewMembers(array $roles)
     {
         Permission::create(['name' => 'edit-crew-members'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'delete-crew-members'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
     }
 
@@ -163,20 +162,20 @@ class RolePermissionSeeder extends Seeder
     public function createPermissionsForJobs(array $roles)
     {
         Permission::create(['name' => 'see-jobs'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'create-jobs'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'edit-jobs'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'delete-jobs'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
     }
 
@@ -186,23 +185,23 @@ class RolePermissionSeeder extends Seeder
     public function createPermissionsForContractors(array $roles)
     {
         Permission::create(['name' => 'see-contractors'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'create-contractors'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'contractors.edit'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'contractors.delete'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
     }
 
@@ -212,23 +211,23 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForAgencies(array $roles)
     {
         Permission::create(['name' => 'see-agencies'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'create-agencies'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'edit-agencies'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
         ]);
 
         Permission::create(['name' => 'delete-agencies'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
     }
 
@@ -238,29 +237,29 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForClients(array $roles)
     {
         Permission::create(['name' => 'see-clients'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
             $roles['worker'],
         ]);
 
         Permission::create(['name' => 'create-clients'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
         ]);
 
         Permission::create(['name' => 'edit-clients'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
         ]);
 
         Permission::create(['name' => 'delete-clients'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
     }
 
@@ -274,8 +273,8 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForWorkOrders(array $roles)
     {
         Permission::create(['name' => 'see-work-orders'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
             $roles['worker'],
@@ -284,21 +283,21 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         Permission::create(['name' => 'create-work-orders'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
         ]);
 
         Permission::create(['name' => 'edit-work-orders'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
         ]);
 
         Permission::create(['name' => 'delete-work-orders'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
     }
 
@@ -308,12 +307,12 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForPayments(array $roles)
     {
         Permission::create(['name' => 'see-payments'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
             $roles['payments'],
         ]);
 
         Permission::create(['name' => 'edit-payments'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
             $roles['payments'],
         ]);
     }
@@ -324,27 +323,27 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForInspections(array $roles)
     {
         Permission::create(['name' => 'see-inspections'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
             $roles['worker'],
             $roles['agency'],
         ]);
 
         Permission::create(['name' => 'create-inspections'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'edit-inspections'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
+            $roles['administrator'],
+            $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'delete-inspections'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
     }
 
@@ -353,27 +352,12 @@ class RolePermissionSeeder extends Seeder
     // DEFAULT -------------------------------------------------------------------
 
     /**
-     * Dashboard
-     */
-    public function createPermissionsForDashboard(array $roles)
-    {
-        Permission::create(['name' => 'see-dashboard'])->syncRoles([
-            $roles['admin'],
-            $roles['director'],
-            $roles['coordinator'],
-            $roles['contractor'],
-            $roles['agency'],
-            $roles['payments'],
-        ]);
-    }
-
-    /**
      * Extensions
      */
     public function createPermissionsForExtensions(array $roles)
     {
         Permission::create(['name' => 'see-extensions'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
             $roles['payments'],
         ]);
     }
@@ -384,24 +368,24 @@ class RolePermissionSeeder extends Seeder
     public function createPermissionsForXapi(array $roles)
     {
         Permission::create(['name' => 'see-xapi'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
             $roles['payments'],
         ]);
 
         Permission::create(['name' => 'create-xapi'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'edit-xapi'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'delete-xapi'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
 
         Permission::create(['name' => 'export-xapi'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
             $roles['payments'],
         ]);
     }
@@ -412,7 +396,7 @@ class RolePermissionSeeder extends Seeder
     protected function createPermissionsForHistory(array $roles)
     {
         Permission::create(['name' => 'see-history'])->syncRoles([
-            $roles['admin'],
+            $roles['administrator'],
         ]);
     }
 

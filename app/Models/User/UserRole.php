@@ -17,8 +17,8 @@ class UserRole
             'contractor'
         ],
         Member::class => [
-            'admin',
-            'director',
+            'administrator',
+            'manager',
             'coordinator',
             'assessor',
             'worker',

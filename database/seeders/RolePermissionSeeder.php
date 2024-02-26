@@ -81,6 +81,10 @@ class RolePermissionSeeder extends Seeder
             $roles['administrator'],
         ]);
 
+        Permission::create(['name' => 'restore-users']);
+
+        Permission::create(['name' => 'force-delete-users']);
+
         Permission::create(['name' => 'everything-admin']); // CRUD for admin users
 
         Permission::create(['name' => 'everything-SuperAdmin']); // CRUD for super admin users
@@ -109,8 +113,11 @@ class RolePermissionSeeder extends Seeder
 
         Permission::create(['name' => 'delete-members'])->syncRoles([
             $roles['administrator'],
-            $roles['manager'],
         ]);
+
+        Permission::create(['name' => 'restore-members']);
+
+        Permission::create(['name' => 'force-delete-members']);
     }
 
     /**
@@ -136,8 +143,11 @@ class RolePermissionSeeder extends Seeder
 
         Permission::create(['name' => 'delete-crews'])->syncRoles([
             $roles['administrator'],
-            $roles['manager'],
         ]);
+
+        Permission::create(['name' => 'restore-crews']);
+
+        Permission::create(['name' => 'force-delete-crews']);
     }
 
     /**
@@ -177,6 +187,10 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-jobs'])->syncRoles([
             $roles['administrator'],
         ]);
+
+        Permission::create(['name' => 'restore-jobs']);
+
+        Permission::create(['name' => 'force-delete-jobs']);
     }
 
     /**
@@ -195,14 +209,18 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
         ]);
 
-        Permission::create(['name' => 'contractors.edit'])->syncRoles([
+        Permission::create(['name' => 'edit-contractors'])->syncRoles([
             $roles['administrator'],
             $roles['manager'],
         ]);
 
-        Permission::create(['name' => 'contractors.delete'])->syncRoles([
+        Permission::create(['name' => 'delete-contractors'])->syncRoles([
             $roles['administrator'],
         ]);
+
+        Permission::create(['name' => 'restore-contractors']);
+
+        Permission::create(['name' => 'force-delete-contractors']);
     }
 
     /**
@@ -229,6 +247,10 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-agencies'])->syncRoles([
             $roles['administrator'],
         ]);
+
+        Permission::create(['name' => 'restore-agencies']);
+
+        Permission::create(['name' => 'force-delete-agencies']);
     }
 
     /**
@@ -260,6 +282,10 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-clients'])->syncRoles([
             $roles['administrator'],
         ]);
+
+        Permission::create(['name' => 'restore-clients']);
+
+        Permission::create(['name' => 'force-delete-clients']);
     }
 
 
@@ -298,6 +324,10 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-work-orders'])->syncRoles([
             $roles['administrator'],
         ]);
+
+        Permission::create(['name' => 'restore-work-orders']);
+
+        Permission::create(['name' => 'force-delete-work-orders']);
     }
 
     /**
@@ -344,6 +374,10 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-inspections'])->syncRoles([
             $roles['administrator'],
         ]);
+
+        Permission::create(['name' => 'restore-inspections']);
+
+        Permission::create(['name' => 'force-delete-inspections']);
     }
 
 
@@ -379,14 +413,18 @@ class RolePermissionSeeder extends Seeder
             $roles['administrator'],
         ]);
 
-        Permission::create(['name' => 'delete-xapi'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
         Permission::create(['name' => 'export-xapi'])->syncRoles([
             $roles['administrator'],
             $roles['payments'],
         ]);
+
+        Permission::create(['name' => 'delete-xapi'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'restore-xapi']);
+
+        Permission::create(['name' => 'force-delete-xapi']);
     }
 
     /**
@@ -397,6 +435,14 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'see-history'])->syncRoles([
             $roles['administrator'],
         ]);
+
+        Permission::create(['name' => 'edit-history']);
+
+        Permission::create(['name' => 'delete-history']);
+
+        Permission::create(['name' => 'restore-history']);
+
+        Permission::create(['name' => 'force-delete-history']);
     }
 
     /**
@@ -404,6 +450,8 @@ class RolePermissionSeeder extends Seeder
      */
     protected function createPermissionsForSettings(array $roles)
     {
+        Permission::create(['name' => 'see-settings']);
+
         Permission::create(['name' => 'edit-settings']);
     }
 }

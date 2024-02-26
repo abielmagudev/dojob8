@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-sm">
+    <div class="col-sm mb-3">
         <div class="border rounded p-3 text-center">
 
             <p class="text-uppercase">Work Orders</p>
@@ -23,7 +23,7 @@
 
         </div>
     </div>
-    <div class="col-sm">
+    <div class="col-sm mb-3">
         <div class="border rounded p-3 text-center">
 
             <p class="text-uppercase">Inspections</p>

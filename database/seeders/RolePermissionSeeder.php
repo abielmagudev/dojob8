@@ -18,25 +18,26 @@ class RolePermissionSeeder extends Seeder
         $roles = $this->createRoles();
 
         // CATALOG
-        $this->createPermissionsForUsers($roles);
-        $this->createPermissionsForMembers($roles);
-        $this->createPermissionsForCrews($roles);
-        $this->createPermissionsForCrewMembers($roles);
-        $this->createPermissionsForJobs($roles);
-        $this->createPermissionsForContractors($roles);
         $this->createPermissionsForAgencies($roles);
         $this->createPermissionsForClients($roles);
+        $this->createPermissionsForContractors($roles);
+        $this->createPermissionsForCrewMembers($roles);
+        $this->createPermissionsForCrews($roles);
+        $this->createPermissionsForJobs($roles);
+        $this->createPermissionsForMembers($roles);
+        $this->createPermissionsForUsers($roles);
 
         // OPERATIVE
-        $this->createPermissionsForWorkOrders($roles);
-        $this->createPermissionsForPayments($roles);
-        $this->createPermissionsForInspections($roles);
         $this->createPermissionsForComments($roles);
+        $this->createPermissionsForInspections($roles);
+        $this->createPermissionsForPayments($roles);
+        $this->createPermissionsForWorkOrders($roles);
         
         // DEFAULT
         $this->createPermissionsForExtensions($roles);
         $this->createPermissionsForHistory($roles);
         $this->createPermissionsForSettings($roles);
+        $this->createPermissionsForXapi($roles);
     }
 
 
@@ -59,170 +60,8 @@ class RolePermissionSeeder extends Seeder
     }
 
 
+
     // CATALOG -------------------------------------------------------------------
-
-    /**
-     *  Users
-     */
-    protected function createPermissionsForUsers(array $roles)
-    {
-        Permission::create(['name' => 'see-users'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'create-users'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'edit-users'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'delete-users'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'restore-users']);
-
-        Permission::create(['name' => 'force-delete-users']);
-
-        Permission::create(['name' => 'everything-admin']); // CRUD for admin users
-
-        Permission::create(['name' => 'everything-SuperAdmin']); // CRUD for super admin users
-    }
-
-    /**
-     * Members
-     */
-    protected function createPermissionsForMembers(array $roles)
-    {
-        Permission::create(['name' => 'see-members'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-        ]);
-
-        Permission::create(['name' => 'create-members'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-
-        Permission::create(['name' => 'edit-members'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-
-        Permission::create(['name' => 'delete-members'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'restore-members']);
-
-        Permission::create(['name' => 'force-delete-members']);
-    }
-
-    /**
-     * Crews
-     */
-    protected function createPermissionsForCrews(array $roles)
-    {
-        Permission::create(['name' => 'see-crews'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-        ]);
-
-        Permission::create(['name' => 'create-crews'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-
-        Permission::create(['name' => 'edit-crews'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-
-        Permission::create(['name' => 'delete-crews'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'restore-crews']);
-
-        Permission::create(['name' => 'force-delete-crews']);
-    }
-
-    /**
-     * Crew Members
-     */
-    protected function createPermissionsForCrewMembers(array $roles)
-    {
-        Permission::create(['name' => 'edit-crew-members'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-
-        Permission::create(['name' => 'delete-crew-members'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-    }
-
-    /**
-     * Jobs
-     */
-    public function createPermissionsForJobs(array $roles)
-    {
-        Permission::create(['name' => 'see-jobs'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-
-        Permission::create(['name' => 'create-jobs'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'edit-jobs'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'delete-jobs'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'restore-jobs']);
-
-        Permission::create(['name' => 'force-delete-jobs']);
-    }
-
-    /**
-     * Contractors
-     */
-    public function createPermissionsForContractors(array $roles)
-    {
-        Permission::create(['name' => 'see-contractors'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-        ]);
-
-        Permission::create(['name' => 'create-contractors'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-
-        Permission::create(['name' => 'edit-contractors'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-        ]);
-
-        Permission::create(['name' => 'delete-contractors'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'restore-contractors']);
-
-        Permission::create(['name' => 'force-delete-contractors']);
-    }
 
     /**
      * Agencies
@@ -289,89 +128,168 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'force-delete-clients']);
     }
 
+    /**
+     * Contractors
+     */
+    public function createPermissionsForContractors(array $roles)
+    {
+        Permission::create(['name' => 'see-contractors'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+        ]);
+
+        Permission::create(['name' => 'create-contractors'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+
+        Permission::create(['name' => 'edit-contractors'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+
+        Permission::create(['name' => 'delete-contractors'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'restore-contractors']);
+
+        Permission::create(['name' => 'force-delete-contractors']);
+    }
+
+    /**
+     * Crew Members
+     */
+    protected function createPermissionsForCrewMembers(array $roles)
+    {
+        Permission::create(['name' => 'edit-crew-members'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+    }
+
+    /**
+     * Crews
+     */
+    protected function createPermissionsForCrews(array $roles)
+    {
+        Permission::create(['name' => 'see-crews'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+        ]);
+
+        Permission::create(['name' => 'create-crews'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+
+        Permission::create(['name' => 'edit-crews'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+
+        Permission::create(['name' => 'delete-crews'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'restore-crews']);
+
+        Permission::create(['name' => 'force-delete-crews']);
+    }
+
+    /**
+     * Jobs
+     */
+    public function createPermissionsForJobs(array $roles)
+    {
+        Permission::create(['name' => 'see-jobs'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+
+        Permission::create(['name' => 'create-jobs'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'edit-jobs'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'delete-jobs'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'restore-jobs']);
+
+        Permission::create(['name' => 'force-delete-jobs']);
+    }
+
+    /**
+     * Members
+     */
+    protected function createPermissionsForMembers(array $roles)
+    {
+        Permission::create(['name' => 'see-members'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+        ]);
+
+        Permission::create(['name' => 'create-members'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+
+        Permission::create(['name' => 'edit-members'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+
+        Permission::create(['name' => 'delete-members'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'restore-members']);
+
+        Permission::create(['name' => 'force-delete-members']);
+    }
+
+    /**
+     *  Users
+     */
+    protected function createPermissionsForUsers(array $roles)
+    {
+        Permission::create(['name' => 'see-users'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'create-users'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'edit-users'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'delete-users'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'restore-users']);
+
+        Permission::create(['name' => 'force-delete-users']);
+
+        Permission::create(['name' => 'everything-admin']); // CRUD for admin users
+
+        Permission::create(['name' => 'everything-SuperAdmin']); // CRUD for super admin users
+    }
+
+
 
 
     // OPERATIVE -------------------------------------------------------------------
-
-    /**
-     * Work Orders
-     */
-    protected function createPermissionsForWorkOrders(array $roles)
-    {
-        Permission::create(['name' => 'see-work-orders'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-            $roles['assessor'],
-            $roles['worker'],
-            $roles['contractor'],
-            $roles['payments'],
-        ]);
-
-        Permission::create(['name' => 'create-work-orders'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-            $roles['assessor'],
-        ]);
-
-        Permission::create(['name' => 'edit-work-orders'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-            $roles['assessor'],
-        ]);
-
-        Permission::create(['name' => 'delete-work-orders'])->syncRoles([
-            $roles['administrator'],
-        ]);
-    }
-
-    /**
-     * Payments
-     */
-    protected function createPermissionsForPayments(array $roles)
-    {
-        Permission::create(['name' => 'see-payments'])->syncRoles([
-            $roles['administrator'],
-            $roles['payments'],
-        ]);
-
-        Permission::create(['name' => 'edit-payments'])->syncRoles([
-            $roles['administrator'],
-            $roles['payments'],
-        ]);
-    }
-
-    /**
-     * Inspections
-     */
-    protected function createPermissionsForInspections(array $roles)
-    {
-        Permission::create(['name' => 'see-inspections'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-            $roles['worker'],
-            $roles['agency'],
-        ]);
-
-        Permission::create(['name' => 'create-inspections'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-        ]);
-
-        Permission::create(['name' => 'edit-inspections'])->syncRoles([
-            $roles['administrator'],
-            $roles['manager'],
-            $roles['coordinator'],
-        ]);
-
-        Permission::create(['name' => 'delete-inspections'])->syncRoles([
-            $roles['administrator'],
-        ]);
-    }
 
     /**
      * Comments
@@ -407,6 +325,86 @@ class RolePermissionSeeder extends Seeder
         ]);
     }
 
+    /**
+     * Inspections
+     */
+    protected function createPermissionsForInspections(array $roles)
+    {
+        Permission::create(['name' => 'see-inspections'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['worker'],
+            $roles['agency'],
+        ]);
+
+        Permission::create(['name' => 'create-inspections'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+        ]);
+
+        Permission::create(['name' => 'edit-inspections'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+        ]);
+
+        Permission::create(['name' => 'delete-inspections'])->syncRoles([
+            $roles['administrator'],
+        ]);
+    }
+
+    /**
+     * Payments
+     */
+    protected function createPermissionsForPayments(array $roles)
+    {
+        Permission::create(['name' => 'see-payments'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'edit-payments'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+    }
+
+    /**
+     * Work Orders
+     */
+    protected function createPermissionsForWorkOrders(array $roles)
+    {
+        Permission::create(['name' => 'see-work-orders'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+            $roles['worker'],
+            $roles['contractor'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'create-work-orders'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+        ]);
+
+        Permission::create(['name' => 'edit-work-orders'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+        ]);
+
+        Permission::create(['name' => 'delete-work-orders'])->syncRoles([
+            $roles['administrator'],
+        ]);
+    }
+
 
 
     // DEFAULT -------------------------------------------------------------------
@@ -420,6 +418,28 @@ class RolePermissionSeeder extends Seeder
             $roles['administrator'],
             $roles['payments'],
         ]);
+    }
+
+    /**
+     * History
+     */
+    protected function createPermissionsForHistory(array $roles)
+    {
+        Permission::create(['name' => 'see-history'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'delete-history']);
+    }
+
+    /**
+     * Settings
+     */
+    protected function createPermissionsForSettings(array $roles)
+    {
+        Permission::create(['name' => 'see-settings']);
+
+        Permission::create(['name' => 'edit-settings']);
     }
 
     /**
@@ -452,29 +472,5 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'restore-xapi']);
 
         Permission::create(['name' => 'force-delete-xapi']);
-    }
-
-    /**
-     * History
-     */
-    protected function createPermissionsForHistory(array $roles)
-    {
-        Permission::create(['name' => 'see-history'])->syncRoles([
-            $roles['administrator'],
-        ]);
-
-        Permission::create(['name' => 'edit-history']);
-
-        Permission::create(['name' => 'delete-history']);
-    }
-
-    /**
-     * Settings
-     */
-    protected function createPermissionsForSettings(array $roles)
-    {
-        Permission::create(['name' => 'see-settings']);
-
-        Permission::create(['name' => 'edit-settings']);
     }
 }

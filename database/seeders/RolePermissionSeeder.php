@@ -42,7 +42,9 @@ class RolePermissionSeeder extends Seeder
 
         // PIVOT
         $this->createPermissionsForCrewMembers($roles);
+        $this->createPermissionsForInspectionMembers($roles);
         $this->createPermissionsForJobExtensions($roles);
+        $this->createPermissionsForWorkOrderMembers($roles);
     }
 
 
@@ -533,12 +535,34 @@ class RolePermissionSeeder extends Seeder
     }
 
     /**
+     * Inspection Members
+     */
+    protected function createPermissionsForInspectionMembers(array $roles)
+    {
+        Permission::create(['name' => 'edit-inspection-members'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+        ]);
+    }
+
+    /**
      * Job Extensions
      */
     public function createPermissionsForJobExtensions(array $roles)
     {
         Permission::create(['name' => 'edit-job-extensions'])->syncRoles([
             $roles['administrator'],
+        ]);
+    }
+
+    /**
+     * Work Order Members
+     */
+    protected function createPermissionsForWorkOrderMembers(array $roles)
+    {
+        Permission::create(['name' => 'edit-work-order-members'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
         ]);
     }
 }

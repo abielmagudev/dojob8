@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
+use App\Models\User\HasRoleClassifier;
 use App\Models\User\UserProfiler;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,9 +19,11 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements Filterable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
     use HasActiveStatus;
     use HasFiltering;
     use HasHookUsers;
+    use HasRoleClassifier;
     use HasRoles;
     use SoftDeletes;
 
@@ -91,6 +94,11 @@ class User extends Authenticatable implements Filterable
     public function getProfileNameAttribute()
     {
         return $this->profile->profiled_name;
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->getRoleNames()->first() ?? null;
     }
 
 

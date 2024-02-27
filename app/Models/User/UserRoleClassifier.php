@@ -15,6 +15,13 @@ class UserRoleClassifier
         'payments',
     ];
 
+    protected static $non_admin_roles = [
+        'agency',
+        'assessor',
+        'contractor',
+        'worker',  
+    ];
+
     protected static $field_roles = [
         'assessor',
         'worker',
@@ -39,6 +46,11 @@ class UserRoleClassifier
     public static function collectionAdminRoles()
     {
         return self::cache('admin_roles', self::$admin_roles);
+    }
+
+    public static function collectionNonAdminRoles()
+    {
+        return self::cache('non_admin_roles', self::$non_admin_roles);
     }
 
     public static function collectionFieldRoles()

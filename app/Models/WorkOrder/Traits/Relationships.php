@@ -27,22 +27,22 @@ trait Relationships
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class)->withTrashed();
     }
 
     public function job()
     {
-        return $this->belongsTo(Job::class);
+        return $this->belongsTo(Job::class)->withTrashed();
     }
 
     public function crew()
     {
-        return $this->belongsTo(Crew::class);
+        return $this->belongsTo(Crew::class)->withTrashed();
     }
 
     public function contractor()
     {
-        return $this->belongsTo(Contractor::class);
+        return $this->belongsTo(Contractor::class)->withTrashed();
     }
 
     public function members()

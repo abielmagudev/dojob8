@@ -490,6 +490,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
+            $roles['worker'],
             $roles['contractor'],
             $roles['payments'],
         ]);
@@ -506,6 +507,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
+            $roles['worker'],
         ]);
 
         Permission::create(['name' => 'delete-work-orders'])->syncRoles([
@@ -596,6 +598,8 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
+            $roles['worker'],
+            $roles['payments'],
         ]);
     }
 

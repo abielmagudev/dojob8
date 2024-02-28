@@ -19,9 +19,13 @@ class WorkOrderPolicy
         return true;
     }
 
-    public function view(User $user, WorkOrder $workOrder)
+    public function view(User $user, WorkOrder $work_order)
     {
         if(! $user->can('see-work-orders') ) {
+            abort(404);
+        }
+
+        if(! $work_order->members->contains( auth()->user()->profile_id ) ) {
             abort(404);
         }
 
@@ -33,22 +37,30 @@ class WorkOrderPolicy
         return $user->can('create-work-orders');
     }
 
-    public function update(User $user, WorkOrder $workOrder)
+    public function update(User $user, WorkOrder $work_order)
     {
-        return $user->can('edit-work-orders');
+        if(! $user->can('edit-work-orders') ) {
+            abort(404);
+        }
+
+        if(! $work_order->members->contains( auth()->user()->profile_id ) ) {
+            abort(404);
+        }
+        
+        return true;
     }
 
-    public function delete(User $user, WorkOrder $workOrder)
+    public function delete(User $user, WorkOrder $work_order)
     {
         return $user->hasRole('SuperAdmin');
     }
 
-    public function restore(User $user, WorkOrder $workOrder)
+    public function restore(User $user, WorkOrder $work_order)
     {
         return $user->hasRole('SuperAdmin');
     }
 
-    public function forceDelete(User $user, WorkOrder $workOrder)
+    public function forceDelete(User $user, WorkOrder $work_order)
     {
         return $user->hasRole('SuperAdmin');
     }

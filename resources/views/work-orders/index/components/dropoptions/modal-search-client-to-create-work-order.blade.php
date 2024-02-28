@@ -1,5 +1,12 @@
-<x-modal id="modalSearchClientToCreateWorkOrder" title="Create work order" header-close>
-    
+<!-- Trigger -->
+<x-modal-trigger modal-id="modalSearchClientToCreateWorkOrder" class="dropdown-item">
+    <i class="bi bi-plus-lg"></i>
+    <span class="ms-1">Create</span>
+</x-modal-trigger>
+
+<!-- Modal -->
+@push('end')
+<x-modal id="modalSearchClientToCreateWorkOrder" title="Create work order" header-close>  
     {{-- Input --}}
     <form action="#!" autocomplete="off">
         <input id="inputSearchClient" class="form-control rounded-pill px-3" type="search" name="client" placeholder="By full name, address, phone..." minlength="3" required>
@@ -30,6 +37,7 @@
         <a href="{{ route('clients.create') }}">create new client</a>
     </div>
 </x-modal>
+@endpush
 
 @push('scripts')
 <script>

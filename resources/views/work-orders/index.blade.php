@@ -5,65 +5,89 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $work_orders->total() }}" subtitle="{{ $request->has('search') ? sprintf('Searching: %s', $request->get('search')) : '' }}">
-    
-    {{-- OPTIONS --}}
-    @slot('options')
-    <div class="d-inline-block align-middle ">
-        @include('components.custom.form-scheduled-date', [
-            'url' => route('work-orders.index')
-        ])
-    </div>
+<x-card>
+    @slot('title')
+    <span class="badge text-bg-dark">{{ $work_orders->total() }}</span>
     @endslot
+
+    @slot('subtitle')
+        @if( $request->has('dates') )
+        <div class="d-flex">
+            @if( $request->filled('dates.from') )
+            <div>
+                @if(! $request->filled('dates.to') )
+                <span class="text-secondary">Since</span>
+                @endif
+                <span>{{ humanDateFormat( $request->input('dates.from') ) }} </span>
+            </div>
+            @endif
+
+            @if( $request->filled('dates.from') && $request->filled('dates.to') )
+            <span class="text-secondary mx-1">to</span>
+            @endif
+
+            @if( $request->filled('dates.to') )
+            <div>
+                @if(! $request->filled('dates.from') )
+                <span class="text-secondary">Until</span>
+                @endif
+                <span>{{ humanDateFormat($request->input('dates.to')) }}</span> 
+            </div>
+            @endif
+        </div>
+        @endif
+
+        @if( $request->has('search') )
+        <div>
+            <em>
+                <span class="text-secondary">Searching:</span>
+                {{ $request->get('search') }}
+            </em>
+        </div>
+        @endif
+    @endslot
+
+
+    {{-- OPTIONS --}}
+    @can('filter-work-orders')     
+        @slot('options')
+        <div class="d-inline-block align-middle">
+            <x-custom.form-scheduled-date :url="route('work-orders.index')" />
+        </div>
+        @endslot
+    @endcan
 
     {{-- DROPOPTIONS --}}
     @slot('dropoptions')
-    <li>
-        <x-modal-trigger modal-id="modalSearchClientToCreateWorkOrder" class="dropdown-item">
-            <i class="bi bi-plus-lg"></i>
-            <span class="ms-1">Create</span>
-        </x-modal-trigger>
-    </li>
+        @can('create-work-orders')       
+        <li>
+            @include('work-orders.index.components.dropoptions.modal-search-client-to-create-work-order')
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        @endcan
 
-    <li>
-        <hr class="dropdown-divider">
-    </li>
-    <li>
-        <x-modal-trigger modal-id="modalModifyStatus" class="dropdown-item">
-            <i class="bi bi-pencil-square"></i>
-            <span class="ms-1">Modify status</span>
-        </x-modal-trigger>
-        <form action="{{ route('work-orders.update.ordered') }}" method="post" id="formWorkOrderOrdered">
-            @method('patch')
-            @csrf
-            <input type="hidden" name="url_back" value="{{ $request->fullUrl() }}">
-            <button class="dropdown-item">
-                <i class="bi bi-floppy"></i>
-                <span class="ms-1">Update order</span>
-            </button>
-        </form>
-    </li>
-
-    <li>
-        <hr class="dropdown-divider">
-    </li>
-    <li>
-        <a href="<?= $incomplete_work_orders['url'] ?>" class="dropdown-item d-flex">
-            <div class="me-3">
-                <i class="bi bi-alarm"></i>
-                <span class="ms-1">Incomplete</span>
-            </div>
-            <div>
-                <span class="badge border border-warning text-warning">{{ $incomplete_work_orders['count'] }}</span>
-            </div>
-        </a>
-    </li>
-    <li>
-        <x-modal-trigger modal-id="modalWorkOrdersFilter" class="dropdown-item">
-            <i class="bi bi-filter"></i>
-            <span class="ms-1">More filters</span>
-        </x-modal-trigger>
-    </li>
+        @if( auth()->user()->can('edit-work-orders') && auth()->user()->hasAdminRole() )         
+        <li>
+            @include('work-orders.index.components.dropoptions.modal-modify-status')
+        </li>
+        <li>
+            @include('work-orders.index.components.dropoptions.form-update-ordered')
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        @endif
+        
+        @isset( $filtering )       
+        <li>
+            @include('work-orders.index.components.dropoptions.button-incomplete')
+        </li>
+        <li>
+            @include('work-orders.index.components.dropoptions.modal-filtering')
+        </li>
+        @endisset
     @endslot
 
     {{-- BODY --}}
@@ -77,22 +101,22 @@
             <th></th>
             @endif
 
+            @if( auth()->user()->hasAdminRole() )               
             <th>
-                <button id="checkerButton" class="btn btn-outline-primary btn-sm border-0">
-                    <i class="bi bi-check2-square"></i>
-                </button>
+                @include('work-orders.index.components.button-checker')
             </th>
+            @endif
 
             @if( $request->has('dates') )
             <th>Scheduled</th>
             @endif
 
-            <th class="text-center">Order</th>
-            <th class="text-center">Crew</th>
+            <th>Order</th>
+            <th>Crew</th>
             <th>Job</th>
             <th>Client</th>
-            <th class="text-center">Contractor</th>
-            <th class="text-center">Status</th>
+            <th>Contractor</th>
+            <th>Status</th>
             <th></th>
         </tr>
         @endslot
@@ -106,16 +130,18 @@
             </td>
             @endif
 
+            @if( auth()->user()->hasAdminRole() )               
             <td class="text-center" style="width:1%">
                 @if(! $work_order->qualifiesForPendingStatus() )
                 <input class="form-check-input" type="checkbox" form="formUpdateStatus" name="work_orders[]" value="{{ $work_order->id }}">
                 @endif
             </td>
+            @endif
 
             @if( $request->filled('dates') )
             <td class="text-nowrap">
                 @if(! is_null($work_order->scheduled_date_human) )
-                <span>{{ $work_order->isToday() ? 'Today' : $work_order->scheduled_date_human }}</span>
+                {{ $work_order->isToday() ? 'Today' : $work_order->scheduled_date_human }}
                 
                 @else
                 <span class="d-block text-center text-secondary">?</span>
@@ -124,8 +150,14 @@
             </td>
             @endif
 
-            <td style="width:1%">
+            <td class="text-center" style="width:1%">
+                @if( auth()->user()->hasAdminRole() )
                 <input type="number" class="form-control form-control-sm" style="width:56px" min="1" step="1" name="ordered[{{ $work_order->id }}]" value="{{ $work_order->ordered }}" form="formWorkOrderOrdered">
+                
+                @else
+                <span class="text-secondary">{{ $work_order->ordered }}</span>
+
+                @endif
             </td>
 
             <td class="text-nowrap">
@@ -166,30 +198,21 @@
                 <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
+                @can('edit-work-orders')                
                 <a href="{{ route('work-orders.edit', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
+                @endcan
             </td>
         </tr>
         @endforeach
 
     </x-table>
     @endif
-
 </x-card>
 <br>
 
 <div class="px-3">
     <x-pagination-simple-model :collection="$work_orders" />
 </div>
-
-@include('components.scripts.Checker')
-<script>
-const checker = new Checker('work_orders');
-checker.listen()
-</script>
-
-@include('work-orders.index.modal-modify-status')
-@include('work-orders.index.modal-filtering')
-@include('work-orders.index.modal-search-client-to-create-work-order')
 @endsection

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
+use App\Http\Controllers\WorkOrderController\Index\AuthDataRetriever;
+use App\Http\Controllers\WorkOrderController\Index\RequestManipulator;
 use App\Http\Controllers\WorkOrderController\ShowAction;
 use App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator;
 use App\Http\Requests\WorkOrderStoreRequest;
@@ -13,7 +15,6 @@ use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\WorkOrder;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -23,38 +24,16 @@ class WorkOrderController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(WorkOrder::class, 'workOrder');
+        $this->authorizeResource(WorkOrder::class, 'work_order');
     }
 
     public function index(Request $request)
     {
-        if( empty($request->except('page')) ) {
-            $request->merge([
-                'scheduled_date' => Carbon::today()->format('Y-m-d'),
-            ]);
-        }
+        $request = RequestManipulator::manipulate($request);
+        
+        $data = AuthDataRetriever::get($request);
 
-        $work_orders = WorkOrder::withRelationshipsForIndex()
-        ->filterByParameters( $request->all() )
-        ->orderBy('crew_id')
-        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
-        ->orderByRaw('ordered IS NULL, ordered asc')
-        ->paginate(35)
-        ->appends( $request->query() );
-
-        return view('work-orders.index', [
-            'all_statuses' => WorkOrder::getAllStatuses(),
-            'all_types' => WorkOrder::getAllTypes(),
-            'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
-            'contractors' => Contractor::all(),
-            'jobs' => Job::all(),
-            'request' => $request,
-            'incomplete_work_orders' => [
-                'url' => WorkOrderUrlGenerator::incomplete(),
-                'count' => WorkOrder::incomplete()->count(),
-            ],
-            'work_orders' => $work_orders,
-        ]);
+        return view('work-orders.index', $data);
     }
 
     public function create(Client $client)

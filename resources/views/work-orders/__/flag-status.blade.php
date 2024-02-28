@@ -4,7 +4,7 @@
         // 'text' => 'Pending!',
     ],
     'pause' => [
-        'class' => 'text-bg-primary fst-italic',
+        'class' => 'text-bg-info fst-italic animate__animated animate__flash animate__infinite ',
     ],
     'new' => [
         'class' => 'text-primary border border-primary',

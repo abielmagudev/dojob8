@@ -22,6 +22,15 @@ class WorkOrderUrlGenerator
         ]));
     }
 
+    public static function notDone(array $parameters = [])
+    {
+        return route('work-orders.index', array_merge($parameters, [
+            'status_group' => WorkOrder::getNotDoneStatuses()->all(),
+            'sort' => 'asc',
+            'dates' => 'any',
+        ]));
+    }
+
     public static function closed(array $parameters = [])
     {
         return route('work-orders.index', array_merge($parameters, [

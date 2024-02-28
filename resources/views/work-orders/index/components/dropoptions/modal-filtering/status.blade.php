@@ -1,9 +1,8 @@
-{{-- Status --}}
 <div class="mb-3">
     <label for="filterStatusSelect" class="form-label">Status</label>
     <div class="border rounded overflow-hidden">
         <div class="list-group list-group-flush overflow-y-scroll" style="height:148px">
-            @foreach($all_statuses as $status)
+            @foreach(\App\Models\WorkOrder::getAllStatuses() as $status)
             <?php $checkbox_id = 'checkboxStatus' . ucfirst($status) ?>
             <div class="list-group-item list-group-item-action">
                 <div class="form-check">

@@ -96,6 +96,27 @@ if(! function_exists('requestCookieRaw') )
 
 
 
+// Controllers
+
+if(! function_exists('workOrderUrlGenerator') )
+{
+    function workOrderUrlGenerator(string $method, array $parameters = [])
+    {
+        return call_user_func_array([\App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator::class, $method], $parameters);
+    }
+} 
+
+if(! function_exists('inspectionUrlGenerator') )
+{
+    function inspectionUrlGenerator(string $method, array $parameters = [])
+    {
+        return call_user_func_array([\App\Http\Controllers\InspectionController\InspectionUrlGenerator::class, $method], $parameters);
+    }
+} 
+
+
+
+
 // Bootstrap 
 
 /**

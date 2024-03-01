@@ -25,6 +25,11 @@
             content: "(Optional)";
             margin-left: 0.1rem;
         }
+        .form-label-pending::after {
+            color: var(--bs-warning-text-emphasis);
+            content: "(Pending)";
+            margin-left: 0.1rem;
+        }
     </style>
     @yield('style')
     

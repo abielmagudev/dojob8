@@ -9,15 +9,23 @@ trait Scopes
         return $query->where($column, 'like', "%{$value}%")->orderBy('id','asc');
     }
 
-    public function scopeIncomplete($query, $attach_pending = true)
+    public function scopePending($query)
     {
-        $statuses = self::getIncompleteStatuses();
-         
-        if(! $attach_pending ) {
-            $statuses = $statuses->reject(fn($status) => $status == 'pending');
-        }
+        return $query->whereNull('scheduled_date')->orWhereNull('crew_id');
+    }
 
-        return $query->whereIn('status', $statuses->toArray());
+    public function scopeNotPending($query)
+    {
+        return $query->whereNotNull('scheduled_date')->WhereNotNull('crew_id');
+    }
+
+    public function scopeIncomplete($query, array $except = [])
+    {         
+        $incomplete_statuses = self::collectionIncompleteStatuses()->reject(function($status) use ($except) {
+            return in_array($status, $except);
+        })->toArray();
+
+        return $query->whereIn('status', $incomplete_statuses);
     }
 
     public function scopeHasMembers($query, array $members_id)
@@ -37,13 +45,26 @@ trait Scopes
     public function scopeWithAllRelationships($query)
     {
         return $query->with([
+            // Catalog
             'client',
             'contractor',
             'crew',
             'job',
-            'members',
+            'done_updater',
+            'working_updater',
+            
+            // Operative
+            'comments',
+            'inspections',
             'reworks',
             'warranties',
+
+            // Morph
+            'files',
+            'history',
+            
+            // Pivot
+            'members',
         ]);
     }
 

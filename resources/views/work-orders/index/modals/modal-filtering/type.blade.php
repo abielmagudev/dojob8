@@ -3,7 +3,7 @@
     <label for="filterTypeSelect" class="form-label">Type</label>
     <div class="border rounded overflow-hidden">
         <div class="list-group list-group-flush">
-            @foreach(\App\Models\WorkOrder::getAllTypes() as $type)
+            @foreach($all_types as $type)
             <?php $checkbox_id = 'checkboxType' . ucfirst($type) ?>
             <div class="list-group-item list-group-item-action">
                 <div class="form-check">

@@ -34,7 +34,7 @@ class WorkOrderStoreRequest extends FormRequest
             ],
             'type' => [
                 'required',
-                sprintf('in:%s', WorkOrder::getAllTypes()->implode(',')),
+                sprintf('in:%s', WorkOrder::collectionAllTypes()->implode(',')),
             ],
             'type_id' => [
                 'required_if:type,rework,warranty',
@@ -45,7 +45,7 @@ class WorkOrderStoreRequest extends FormRequest
                 sprintf('exists:%s,id', Job::class),
             ],
             'crew' => [
-                'required', 
+                'nullable', 
                 sprintf('in:%s', Crew::taskWorkOrders()->get()->pluck('id')->implode(',')),
             ],
             'contractor' => [
@@ -69,7 +69,7 @@ class WorkOrderStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if(! WorkOrder::getAllTypes()->contains( $this->get('type') ) ) {
+        if(! WorkOrder::collectionAllTypes()->contains( $this->get('type') ) ) {
             return;
         }
 
@@ -96,15 +96,15 @@ class WorkOrderStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'payment_status' => WorkOrder::initialPaymentStatus(),
-            'inspection_status' => WorkOrder::initialInspectionStatus(),
+            'payment_status' => WorkOrder::INITIAL_PAYMENT_STATUS,
+            'inspection_status' => WorkOrder::INITIAL_INSPECTION_STATUS,
             'rework_id' => $this->get('type') == 'rework' ? $this->get('type_id') : null,
             'warranty_id' => $this->get('type') == 'warranty' ? $this->get('type_id') : null,
             'client_id' => $this->get('client'),
             'contractor_id' => $this->get('contractor'),
             'job_id' => $this->get('job'),
             'crew_id' => $this->get('crew'),
-            'status' => WorkOrder::qualifyForPendingStatus($this->all()) ? 'pending' : WorkOrder::INITIAL_STATUS,
+            'status' => WorkOrder::INITIAL_STATUS,
         ]);
     }
 }

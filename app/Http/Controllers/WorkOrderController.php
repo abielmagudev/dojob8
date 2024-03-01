@@ -43,8 +43,8 @@ class WorkOrderController extends Controller
         $client->load('work_orders.job');
 
         return view('work-orders.create', [
-            'all_statuses' => WorkOrder::getAllStatuses(),
-            'all_types' => WorkOrder::getAllTypes(),
+            'all_statuses' => WorkOrder::collectionAllStatuses(),
+            'all_types' => WorkOrder::collectionAllTypes(),
             'client' => $client,
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
@@ -60,8 +60,12 @@ class WorkOrderController extends Controller
             return back()->with('danger', "Error saving work order, try again please");
         }
         
-        $work_order->attachWorkers();
+        //?
+        if( $work_order->hasCrew() ) {
+            $work_order->attachWorkers();
+        }
 
+        //?
         if( $work_order->job->requiresApprovedInspections() ) {
             $work_order->updateInspectionStatus();
         }
@@ -97,8 +101,8 @@ class WorkOrderController extends Controller
         $this->reflashInputErrors();
 
         return view('work-orders.edit', [
-            'all_form_statuses' => WorkOrder::getAllFormStatuses(),
-            'all_types' => WorkOrder::getAllTypes(),
+            'all_form_statuses' => WorkOrder::collectionAllStatuses(),
+            'all_types' => WorkOrder::collectionAllTypes(),
             'client' => $work_order->client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),

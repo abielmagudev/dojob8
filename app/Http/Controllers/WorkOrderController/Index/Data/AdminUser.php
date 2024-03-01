@@ -8,12 +8,13 @@ use App\Models\Crew;
 use App\Models\Job;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
+use Illuminate\Queue\Worker;
 
 class AdminUser
 {
     public static function data(Request $request)
     {
-        $work_orders = WorkOrder::withAllRelationships()
+        $work_orders = WorkOrder::withEssentialRelationships()
         ->filterByParameters( $request->all() )
         ->orderBy('crew_id')
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
@@ -26,13 +27,17 @@ class AdminUser
                 'contractors' => Contractor::orderBy('name', 'desc')->get(),
                 'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
                 'jobs' => Job::orderBy('name', 'desc')->get(),
+                'pending' => [
+                    'url' => WorkOrderUrlGenerator::pending(),
+                    'count' => WorkOrder::pending()->count(),
+                ],
                 'incomplete' => [
                     'url' => WorkOrderUrlGenerator::incomplete(),
-                    'count' => WorkOrder::incomplete(false)->count(),
+                    'count' => WorkOrder::incomplete()->count(),
                 ],
             ], 
-            'all_statuses' => WorkOrder::getAllStatuses(),
-            'all_types' => WorkOrder::getAllTypes(),
+            'all_statuses' => WorkOrder::collectionAllStatuses(),
+            'all_types' => WorkOrder::collectionAllTypes(),
             'request' => $request,
             'work_orders' => $work_orders,
         ];

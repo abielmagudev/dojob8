@@ -25,13 +25,13 @@
         'title' => 'Photos & Files',
     ],
     'comments' => [
-        'display' => true,
-        'enabled' => true,
+        'display' => ! auth()->user()->hasPartnerRole(),
+        'enabled' => ! auth()->user()->hasPartnerRole(),
         'title' => 'Comments',
     ],
     'history' => [
-        'display' => true,
-        'enabled' => true,
+        'display' => auth()->user()->hasAdminRole(),
+        'enabled' => auth()->user()->hasAdminRole(),
         'title' => 'History',
     ],
 ]; ?>

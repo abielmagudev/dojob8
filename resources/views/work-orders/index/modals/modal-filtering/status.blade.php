@@ -1,8 +1,8 @@
 <div class="mb-3">
     <label for="filterStatusSelect" class="form-label">Status</label>
-    <div class="border rounded overflow-hidden">
-        <div class="list-group list-group-flush overflow-y-scroll" style="height:148px">
-            @foreach(\App\Models\WorkOrder::getAllStatuses() as $status)
+    <div class="border rounded">
+        <div class="list-group list-group-flush rounded">
+            @foreach($all_statuses as $status)
             <?php $checkbox_id = 'checkboxStatus' . ucfirst($status) ?>
             <div class="list-group-item list-group-item-action">
                 <div class="form-check">
@@ -13,5 +13,4 @@
             @endforeach
         </div>
     </div>
-    <small class="text-secondary">Scroll up or down to see all statuses.</small>
 </div>

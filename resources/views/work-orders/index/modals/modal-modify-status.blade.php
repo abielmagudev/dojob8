@@ -13,7 +13,7 @@
         <div>
             <label for="statusSelect" class="form-label">Status</label>
             <select id="statusSelect" class="form-select" name="status">
-                @foreach(\App\Models\WorkOrder::getAllStatuses() as $status)
+                @foreach($all_statuses as $status)
                 <option value="{{ $status }}">{{ strtoupper($status) }}</option>
                 @endforeach
             </select>

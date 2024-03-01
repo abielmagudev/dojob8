@@ -2,16 +2,49 @@
 
 namespace App\Models\WorkOrder\Traits;
 
+use App\Models\Contractor;
+use App\Models\Crew;
+
 trait Validators
 {
     public function hasContractor()
     {
-        return is_int($this->contractor_id);
+        return ! is_null($this->contractor_id);
+    }
+
+    public function hasContractorVerified()
+    {
+        return ! is_null($this->contractor_id) && is_a($this->contractor, Contractor::class);
+    }
+
+    public function hasCrew()
+    {
+        return ! is_null($this->crew_id);
+    }
+
+    public function hasCrewVerified()
+    {
+        return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
+    }
+
+    public function hasPending()
+    {
+        return is_null($this->scheduled_date) || is_null($this->crew_id);
     }
 
     public function hasIncompleteStatus()
     {
-        return self::inIncompleteStatuses($this->status);
+        return self::collectionIncompleteStatuses()->contains($this->status);
+    }
+
+    public function hasWorkingAt()
+    {
+        return ! empty( $this->working_at );
+    }
+
+    public function hasDoneAt()
+    {
+        return ! empty( $this->done_at );
     }
 
     public function hasCompletedAt()
@@ -21,7 +54,7 @@ trait Validators
     
     public function isCompleted()
     {
-        return $this->status == 'completed';
+        return $this->status == 'completed' && $this->hasCompletedAt();
     }
 
     public function isRework()

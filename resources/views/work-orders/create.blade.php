@@ -18,11 +18,11 @@
         @csrf
         @include('work-orders._form')
         <input type="hidden" name="client" value="{{ $client->id }}">  
-        <x-form-field-horizontal>
-            <div class="alert alert-warning">
+        <x-form-field-horizontal for="afterCreatingSelect" label="After saving">
+            <div class="alert alert-warning p-2">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="afterSavingCheckbox" name="after_saving" value="1" checked>
-                    <label class="form-check-label" for="afterSavingCheckbox">After creating a work order, return to create a new work order for this client.</label>
+                    <label class="form-check-label" for="afterSavingCheckbox">Creating another new work order for this client.</label>
                 </div>
             </div>
         </x-form-field-horizontal>
@@ -30,7 +30,7 @@
 
         <div class="text-end">
             <a href="{{ route('work-orders.index') }}" class="btn btn-outline-primary">Cancel</a>
-            <button class="btn btn-success" type="submit">Create work order</button>
+            <button class="btn btn-success" type="submit">Save work order</button>
         </div>
     </form>
 

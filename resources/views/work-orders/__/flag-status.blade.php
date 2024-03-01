@@ -1,10 +1,6 @@
 <?php $settings = [
-    'pending' => [
-        'class' => 'text-dark bg-warning animate__animated animate__pulse animate__infinite fst-italic',
-        // 'text' => 'Pending!',
-    ],
     'pause' => [
-        'class' => 'text-bg-info fst-italic animate__animated animate__flash animate__infinite ',
+        'class' => 'text-bg-info fst-italic animate__animated animate__flash animate__infinite',
     ],
     'new' => [
         'class' => 'text-primary border border-primary',
@@ -26,9 +22,13 @@
         'class' => 'text-bg-danger',
     ],
 ]; ?>
-<span 
-class="badge text-uppercase <?= $settings[$status]['class'] ?? '' ?> <?= $class ?? '' ?>"
-style="<?= $settings[$status]['style'] ?? '' ?>"
->
-    <?= $settings[$status]['text'] ?? $status ?>
-</span>
+
+<div class="position-relative {{ $display ?? 'd-inline-block' }}">
+    <span class="badge text-uppercase <?= $settings[$status]['class'] ?? '' ?> <?= $class ?? '' ?>"  style="<?= $settings[$status]['style'] ?? '' ?>">
+        <?= $status ?>
+    </span>
+    @if( isset($pending) && $pending == true )
+    <span class="position-absolute top-0 start-100 translate-middle bg-warning border border-white rounded-circle" style="padding:6px">
+    @endif
+  </span>
+</div>

@@ -12,6 +12,7 @@ use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\Member;
 use App\Models\MemberWorkOrder;
+use App\Models\User;
 
 trait Relationships
 {
@@ -68,5 +69,15 @@ trait Relationships
     public function history()
     {
         return $this->morphMany(History::class, 'model');
+    }
+
+    public function working_updater()
+    {
+        return $this->belongsTo(User::class, 'working_by')->withTrashed();
+    }
+
+    public function done_updater()
+    {
+        return $this->belongsTo(User::class, 'done_by')->withTrashed();
     }
 }

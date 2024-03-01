@@ -27,12 +27,4 @@ trait InspectionStatus
             $this->save();
         });
     }
-
-
-    // Statics
-
-    public static function initialInspectionStatus()
-    {
-        return 'non-inspectable';
-    }
 }

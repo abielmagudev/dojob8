@@ -1,7 +1,7 @@
 <!-- Trigger -->
 <x-modal-trigger modal-id="modalSearchClientToCreateWorkOrder" class="dropdown-item">
     <i class="bi bi-plus-lg"></i>
-    <span class="ms-1">Create</span>
+    <span class="ms-1">Create new</span>
 </x-modal-trigger>
 
 <!-- Modal -->

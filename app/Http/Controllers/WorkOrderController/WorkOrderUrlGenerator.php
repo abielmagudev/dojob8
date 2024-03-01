@@ -13,19 +13,19 @@ class WorkOrderUrlGenerator
         ]));
     }
 
-    public static function incomplete(array $parameters = [])
+    public static function pending(array $parameters = [])
     {
         return route('work-orders.index', array_merge($parameters, [
-            'status_group' => WorkOrder::getIncompleteStatuses()->all(),
+            'pending' => 1,
             'sort' => 'asc',
             'dates' => 'any',
         ]));
     }
 
-    public static function notDone(array $parameters = [])
+    public static function incomplete(array $parameters = [])
     {
         return route('work-orders.index', array_merge($parameters, [
-            'status_group' => WorkOrder::getNotDoneStatuses()->all(),
+            'status_group' => WorkOrder::collectionIncompleteStatuses()->toArray(),
             'sort' => 'asc',
             'dates' => 'any',
         ]));

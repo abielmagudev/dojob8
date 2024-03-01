@@ -23,7 +23,7 @@ class StatisticalDataGenerator
     public function dataByDefault(): array
     {
         return [
-            'all_statuses_work_order' => WorkOrder::getAllStatuses(),
+            'all_statuses_work_order' => WorkOrder::collectionAllStatuses(),
             'all_statuses_inspection' => Inspection::allStatuses(),
             'agencies' => Agency::all(),
             'contractors' => Contractor::all(),

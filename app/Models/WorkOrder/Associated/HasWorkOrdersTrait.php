@@ -70,7 +70,7 @@ trait HasWorkOrdersTrait
 
     public function incomplete_work_orders()
     {
-        return $this->hasMany(WorkOrder::class)->whereIn('status', WorkOrder::getIncompleteStatuses()->toArray());
+        return $this->hasMany(WorkOrder::class)->whereIn('status', WorkOrder::collectionIncompleteStatuses()->toArray());
     }
 }
 

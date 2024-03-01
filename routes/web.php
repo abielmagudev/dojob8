@@ -18,7 +18,6 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;

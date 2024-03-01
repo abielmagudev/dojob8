@@ -15,6 +15,7 @@ trait Filters
             'dates' => 'filterByScheduledDateBetween',
             'job' => 'filterByJob',
             'payment_status_group' => 'filterByPaymentStatusGroup',
+            'pending' => 'filterByPendingAttributes',
             'scheduled_date' => 'filterByScheduledDate',
             'search' => 'filterBySearch',
             'status_group' => 'filterByStatusGroup',
@@ -86,5 +87,18 @@ trait Filters
         }
 
         return $query->whereNull('rework_id')->whereNull('warranty_id');
+    }
+
+    public function scopeFilterByPendingAttributes($query, $value)
+    {
+        if( is_null($value) ) {
+            return $query;
+        }
+
+        if( $value == 0 ) {
+            return $query->notPending();
+        }
+
+        return $query->pending();
     }
 }

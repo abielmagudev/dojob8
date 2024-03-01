@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Traits\HasCacheStaticCollections;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
@@ -13,7 +14,6 @@ use App\Models\WorkOrder\Traits\Filters;
 use App\Models\WorkOrder\Traits\InspectionStatus;
 use App\Models\WorkOrder\Traits\Mutators;
 use App\Models\WorkOrder\Traits\PaymentStatus;
-use App\Models\WorkOrder\Traits\PendingStatus;
 use App\Models\WorkOrder\Traits\Relationships;
 use App\Models\WorkOrder\Traits\Scopes;
 use App\Models\WorkOrder\Traits\Validators;
@@ -22,23 +22,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkOrder extends Model implements Filterable
 {
-    use Actions;
-    use Attributes;
-    use Filters;
-    use InspectionStatus;
-    use Mutators;
-    use PaymentStatus;
-    use PendingStatus;
-    use Relationships;
-    use Scopes;
-    use Validators;
+    // Framework
     use HasFactory;
+
+    // Kernel
+    use HasCacheStaticCollections;
     use HasFiltering;
     use HasHookUsers;
     use HasScheduledDate;
     use HasStatus;
 
+    // Owner
+    use Actions;
+    use Attributes;
+    use Filters;
+    use Mutators;
+    use Relationships;
+    use Scopes;
+    use Validators;
+    use InspectionStatus;
+    use PaymentStatus;
+
     const INITIAL_STATUS = 'new';
+
+    const INITIAL_PAYMENT_STATUS = 'unpaid';
+
+    const INITIAL_INSPECTION_STATUS = 'uninspected';
 
     protected $fillable = [
         'ordered',
@@ -50,6 +59,9 @@ class WorkOrder extends Model implements Filterable
         'working_at',
         'done_at',
         'completed_at',
+        'working_by',
+        'done_by',
+        'completed_by',
 
         'rework_id',
         'warranty_id',
@@ -66,14 +78,13 @@ class WorkOrder extends Model implements Filterable
         'scheduled_date' => 'date',
     ];
 
-    public static $all_types = [
+    protected static $all_types = [
         'standard',
         'rework',
         'warranty',
     ];
 
-    public static $all_statuses = [
-        'pending',
+    protected static $all_statuses = [
         'pause',
         'new',
         'working',
@@ -83,65 +94,45 @@ class WorkOrder extends Model implements Filterable
         'denialed',
     ];
 
-    public static $all_form_statuses = [
-        'pause',
-        'new',
-        'working',
-        'done',
-        'completed',
-        'canceled',
-        'denialed',
-    ];
-
-    public static $incomplete_statuses = [ 
-        'pending',
+    protected static $incomplete_statuses = [
         'pause',
         'new',
         'working',
         'done',
     ];
 
-    public static $closed_statuses = [ 
+    protected static $closed_statuses = [ 
         'completed',
         'canceled',
         'denialed',
     ];
 
-    
+
     // Statics
 
-    public static function getAllTypes()
+    public static function collectionAllTypes()
     {
-        return collect( self::$all_types );
+        return self::collectionCache('all_types', self::$all_types);
     }
 
-    public static function getAllStatuses()
+    public static function collectionAllStatuses($except = [])
     {
-        return collect( self::$all_statuses );
+        return self::collectionCache('all_statuses', self::$all_statuses)->reject(function($status) use ($except) {
+            return in_array($status, $except);
+        });
     }
 
-    public static function getAllFormStatuses()
+    public static function collectionIncompleteStatuses($except = [])
     {
-        return collect( self::$all_form_statuses );
+        return self::collectionCache('incomplete_statuses', self::$incomplete_statuses)->reject(function($status) use ($except) {
+            return in_array($status, $except);
+        });
     }
 
-    public static function getIncompleteStatuses()
+    public static function collectionClosedStatus($except = [])
     {
-        return collect( self::$incomplete_statuses );
-    }
-
-    public static function inIncompleteStatuses($value)
-    {
-        return self::getIncompleteStatuses()->contains($value);
-    }
-
-    public static function getClosedStatuses()
-    {
-        return collect( self::$closed_statuses );
-    }
-
-    public static function inClosedStatuses($value)
-    {
-        return self::getClosedStatuses()->contains($value);
+        return self::collectionCache('closed_statuses', self::$closed_statuses)->reject(function($status) use ($except) {
+            return in_array($status, $except);
+        });
     }
 }

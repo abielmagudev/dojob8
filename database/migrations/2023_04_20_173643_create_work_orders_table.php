@@ -33,7 +33,7 @@ class CreateWorkOrdersTable extends Migration
             $table->foreignId('warranty_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');
             $table->foreignId('contractor_id')->nullable();
             $table->foreignId('client_id');
-            $table->foreignId('crew_id');
+            $table->foreignId('crew_id')->nullable();
             $table->foreignId('job_id');
 
             $table->string('permit_code')->nullable();

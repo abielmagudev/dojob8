@@ -61,7 +61,7 @@
     @slot('dropoptions')
         @can('create-work-orders')       
         <li>
-            @include('work-orders.index.components.dropoptions.modal-search-client-to-create-work-order')
+            @include('work-orders.index.modals.modal-search-client-to-create-work-order')
         </li>
         <li>
             <hr class="dropdown-divider">
@@ -70,10 +70,10 @@
 
         @if( auth()->user()->can('edit-work-orders') && auth()->user()->hasAdminRole() )         
         <li>
-            @include('work-orders.index.components.dropoptions.modal-modify-status')
+            @include('work-orders.index.modals.modal-modify-status')
         </li>
         <li>
-            @include('work-orders.index.components.dropoptions.form-update-ordered')
+            @include('work-orders.index.dropoptions.form-update-ordered')
         </li>
         <li>
             <hr class="dropdown-divider">
@@ -82,10 +82,13 @@
         
         @isset( $filtering )       
         <li>
-            @include('work-orders.index.components.dropoptions.button-incomplete')
+            @includeWhen(auth()->user()->hasAdminRole(), 'work-orders.index.dropoptions.button-pending')
         </li>
         <li>
-            @include('work-orders.index.components.dropoptions.modal-filtering')
+            @include('work-orders.index.dropoptions.button-incomplete')
+        </li>
+        <li>
+            @include('work-orders.index.modals.modal-filtering')
         </li>
         @endisset
     @endslot
@@ -132,7 +135,7 @@
 
             @if( auth()->user()->hasAdminRole() )               
             <td class="text-center" style="width:1%">
-                @if(! $work_order->qualifiesForPendingStatus() )
+                @if(! $work_order->hasPending() )
                 <input class="form-check-input" type="checkbox" form="formUpdateStatus" name="work_orders[]" value="{{ $work_order->id }}">
                 @endif
             </td>
@@ -142,10 +145,6 @@
             <td class="text-nowrap">
                 @if(! is_null($work_order->scheduled_date_human) )
                 {{ $work_order->isToday() ? 'Today' : $work_order->scheduled_date_human }}
-                
-                @else
-                <span class="d-block text-center text-secondary">?</span>
-
                 @endif
             </td>
             @endif
@@ -161,7 +160,7 @@
             </td>
 
             <td class="text-nowrap">
-                @include('crews.__.flag', [
+                @includeWhen($work_order->hasCrew(), 'crews.__.flag', [
                     'crew' => $work_order->crew,
                     'class' => 'w-100',
                 ])
@@ -189,8 +188,10 @@
 
             <td>
                 @include('work-orders.__.flag-status', [
-                    'status' => $work_order->status,
                     'class' => 'w-100',
+                    'pending' =>$work_order->hasPending(),
+                    'status' => $work_order->status,
+                    'display' => 'd-block',
                 ])
             </td>
 

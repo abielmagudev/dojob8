@@ -64,11 +64,6 @@ trait PaymentStatus
 
     // Statics
 
-    public static function initialPaymentStatus()
-    {
-        return 'unpaid';
-    }
-
     public static function getPaymentStatuses()
     {
         return collect( self::$payment_statuses );

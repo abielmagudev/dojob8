@@ -3,19 +3,28 @@
     <div class="row">
         <div class="col-sm">
             <x-small-title title="Schedule">
-                {{ $work_order->scheduled_date_human }}
+                @if( $work_order->hasScheduledDate() )
+                <div>{{ $work_order->scheduled_date_human }}</div>
+                <div>{{ $work_order->creator->name }}</div>
+                @endif
             </x-small-title>
         </div>
 
         <div class="col-sm">
             <x-small-title title="Working">
-                {{ $work_order->working_at }}
+                @if( $work_order->hasWorkingat() )
+                <div>{{ $work_order->working_at }}</div>
+                <div>{{ $work_order->working_updater->name ?? '?' }}</div>    
+                @endif
             </x-small-title>
         </div>
 
         <div class="col-sm">
             <x-small-title title="Done">
-                {{ $work_order->done_at }}
+                @if( $work_order->hasDoneAt() )
+                <div>{{ $work_order->done_at }}</div>
+                <div>{{ $work_order->done_updater->name ?? '?' }}</div>    
+                @endif
             </x-small-title>
         </div>
 

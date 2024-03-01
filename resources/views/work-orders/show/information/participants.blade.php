@@ -18,9 +18,9 @@
 
         <div class="col-sm">
             <x-small-title title="Crew">
-                @include('crews.__.flag', ['crew' => $work_order->crew])
+                @includeWhen($work_order->hasCrew(), 'crews.__.flag', ['crew' => $work_order->crew])
                 <br>
-                <small>{{ $work_order->crew->description }}</small>
+                <small>{{ $work_order->crew->description ?? '' }}</small>
             </x-small-title>
         </div>
 

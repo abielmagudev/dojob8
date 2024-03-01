@@ -22,7 +22,8 @@ class UserSeeder extends Seeder
 
         $member_roles = UserRoleClassifier::getRolesBelongModel(Member::class);
 
-        User::factory(30)->create()->each(function ($user) use ($member_roles) {
+        User::factory(30)->create()->forget(1)->each(function ($user) use ($member_roles) {
+
             if( $user->profile_type == Contractor::class ) {
                 $user->assignRole('contractor');
             }
@@ -36,6 +37,7 @@ class UserSeeder extends Seeder
                 $role = ! $user->profile->isCrewMember() ? $member_roles->except('worker')->random() : 'worker';
                 $user->assignRole($role);
             }
+
         });
     }
 

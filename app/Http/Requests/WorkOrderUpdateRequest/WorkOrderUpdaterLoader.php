@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\WorkOrderRequest\Update;
+namespace App\Http\Requests\WorkOrderUpdateRequest;
 
-use App\Http\Requests\WorkOrderRequest\Update\Updaters\AdminUser;
-use App\Http\Requests\WorkOrderRequest\Update\Updaters\WorkerUser;
+use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\AdminUser;
+use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\WorkerUser;
 use Illuminate\Http\Request;
 
-class Loader
+class WorkOrderUpdaterLoader
 {
     public $updaters = [
         'admin' => AdminUser::class,

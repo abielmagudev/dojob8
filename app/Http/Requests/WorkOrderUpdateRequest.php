@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\WorkOrderRequest\ResolveExtensionRequestsTrait;
-use App\Http\Requests\WorkOrderRequest\Update\Loader;
+use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaterLoader;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
@@ -20,7 +20,7 @@ class WorkOrderUpdateRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $this->loader = new Loader($this);
+        $this->loader = new WorkOrderUpdaterLoader($this);
         $this->loader->prepareForValidation();
     }
 

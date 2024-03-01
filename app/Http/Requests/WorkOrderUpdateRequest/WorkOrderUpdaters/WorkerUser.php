@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Requests\WorkOrderRequest\Update\Updaters;
+namespace App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters;
+
+use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\Kernel\Updater;
 
 class WorkerUser extends Updater
 {

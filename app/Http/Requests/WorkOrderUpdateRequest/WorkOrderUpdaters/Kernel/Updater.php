@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\WorkOrderRequest\Update\Updaters;
+namespace App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\Kernel;
 
 use Illuminate\Http\Request;
 
@@ -11,6 +11,11 @@ class Updater
     public function __construct(Request $request)
     {
         $this->request = $request;
+    }
+
+    public function prepareForValidation()
+    {
+        return;
     }
 
     public function rules()

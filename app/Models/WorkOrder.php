@@ -9,14 +9,8 @@ use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\Payment\Traits\HasPayment;
-use App\Models\WorkOrder\Traits\Actions;
-use App\Models\WorkOrder\Traits\Attributes;
-use App\Models\WorkOrder\Traits\Filters;
 use App\Models\WorkOrder\Traits\InspectionStatus;
-use App\Models\WorkOrder\Traits\Mutators;
-use App\Models\WorkOrder\Traits\Relationships;
-use App\Models\WorkOrder\Traits\Scopes;
-use App\Models\WorkOrder\Traits\Validators;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,21 +20,13 @@ class WorkOrder extends Model implements Filterable
     use HasFactory;
 
     // Kernel
+    use HasCrew;
     use HasFiltering;
     use HasHookUsers;
+    use HasPayment;
     use HasScheduledDate;
     use HasStatus;
-    use HasPayment;
-    use HasCrew;
 
-    // Owner
-    use Actions;
-    use Attributes;
-    use Filters;
-    use Mutators;
-    use Relationships;
-    use Scopes;
-    use Validators;
     use InspectionStatus;
 
     const INITIAL_STATUS = 'new';
@@ -103,6 +89,427 @@ class WorkOrder extends Model implements Filterable
         'canceled',
         'denialed',
     ];
+
+
+
+    // Interface: App\Models\Kernel\Interfaces\Filterable;
+
+    public function getParameterFilterSettings(): array
+    {
+        return [
+            'client' => 'filterByClient',
+            'contractor' => 'filterByContractor',
+            'crew' => 'filterByCrew', 
+            'dates' => 'filterByScheduledDateBetween',
+            'job' => 'filterByJob',
+            'pending' => 'filterByPendingAttributes',
+            'scheduled_date' => 'filterByScheduledDate',
+            'search' => 'filterBySearch',
+            'status_group' => 'filterByStatusGroup',
+            'status' => 'filterByStatus',
+            'type_group' => 'filterByTypeGroup',
+        ];
+    }
+
+
+
+    // Mutators
+
+    public function setWorkingAtAttribute($values)
+    {
+        if( is_array($values) ) {
+            $values = trim( implode(' ', $values) );
+        }
+
+        if(! empty($values) && $values <> $this->working_at ) {
+            $this->attributes['working_at'] = $values;
+            $this->attributes['working_by'] = auth()->id();
+        }
+        
+        if( empty($values) ) {
+            $this->attributes['working_at'] = null;
+            $this->attributes['working_by'] = null;
+        }
+    }
+
+    public function setDoneAtAttribute($values)
+    {
+        if( is_array($values) ) {
+            $values = trim( implode(' ', $values) );
+        }
+
+        if(! empty($values) && $values <> $this->done_at ) {
+            $this->attributes['done_at'] = $values;
+            $this->attributes['done_by'] = auth()->id();
+        }
+        
+        if( empty($values) ) {
+            $this->attributes['done_at'] = null;
+            $this->attributes['done_by'] = null;
+        }
+    }
+
+    public function setCompletedAtAttribute($status)
+    {        
+        if( $status == 'completed' && is_null($this->completed_at) ) {
+            $this->attributes['completed_at'] = now();
+            $this->attributes['completed_by'] = auth()->id();
+        }
+    }
+
+
+
+    // Accessors
+
+    public function getWorkingDateInputAttribute()
+    {
+        return ! is_null($this->working_at) ? Carbon::parse($this->working_at)->format('Y-m-d') : null;
+    }
+
+    public function getWorkingTimeInputAttribute()
+    {
+        return ! is_null($this->working_at) ? Carbon::parse($this->working_at)->format('H:i') : null;
+    }
+
+    public function getDoneDateInputAttribute()
+    {
+        return ! is_null($this->done_at) ? Carbon::parse($this->done_at)->format('Y-m-d') : null;
+    }
+
+    public function getDoneTimeInputAttribute()
+    {
+        return ! is_null($this->done_at) ? Carbon::parse($this->done_at)->format('H:i') : null;
+    }
+
+    public function getCompletedDateHumanAttribute()
+    {
+        return ! is_null($this->completed_at) ? Carbon::parse($this->completed_at)->format('d M, Y') : null;
+    }
+
+    public function getCompletedTimeHumanAttribute()
+    {
+        return ! is_null($this->completed_at) ? Carbon::parse($this->completed_at)->format('g:i A') : null;
+    }
+
+    public function getTypeAttribute()
+    {
+        if( $this->isRework() ) {
+            return 'rework';
+        }
+
+        if( $this->isWarranty() ) {
+            return 'warranty';
+        }
+
+        return 'standard';
+    }
+
+    public function getTypeIdAttribute()
+    {
+        return $this->rework_id ?? $this->warranty_id;
+    }
+
+
+
+    // Relationships
+
+    public function reworks()
+    {
+        return $this->hasMany(self::class, 'rework_id');
+    }
+
+    public function warranties()
+    {
+        return $this->hasMany(self::class, 'warranty_id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class)->withTrashed();
+    }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class)->withTrashed();
+    }
+
+    public function contractor()
+    {
+        return $this->belongsTo(Contractor::class)->withTrashed();
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class)->withTimestamps();
+    }
+
+    public function inspections()
+    {
+        return $this->hasMany(Inspection::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function history()
+    {
+        return $this->morphMany(History::class, 'model');
+    }
+
+    public function working_updater()
+    {
+        return $this->belongsTo(User::class, 'working_by')->withTrashed();
+    }
+
+    public function done_updater()
+    {
+        return $this->belongsTo(User::class, 'done_by')->withTrashed();
+    }
+
+
+
+    // Actions
+
+    public function attachWorkers()
+    {
+        $this->members()->attach( 
+            $this->crew->members->pluck('id')
+        );
+    }
+
+
+
+    // Scopes
+
+    public function scopeSearch($query, $value, string $column = 'id')
+    {
+        return $query->where($column, 'like', "%{$value}%")->orderBy('id','asc');
+    }
+
+    public function scopePending($query)
+    {
+        return $query->whereNull('scheduled_date')->orWhereNull('crew_id');
+    }
+
+    public function scopeNotPending($query)
+    {
+        return $query->whereNotNull('scheduled_date')->WhereNotNull('crew_id');
+    }
+
+    public function scopeIncomplete($query, array $except = [])
+    {         
+        $incomplete_statuses = self::collectionIncompleteStatuses()->reject(function($status) use ($except) {
+            return in_array($status, $except);
+        })->toArray();
+
+        return $query->whereIn('status', $incomplete_statuses);
+    }
+
+    public function scopeHasMembers($query, array $members_id)
+    {
+        return $query->whereHas('members', function($query) use ($members_id){
+            $query->whereIn('member_id', $members_id);
+        });
+    }
+
+    public function scopeHasMember($query, $member_id)
+    {
+        return $query->whereHas('members', function($query) use ($member_id){
+            $query->where('member_id', $member_id);
+        });
+    }
+
+    public function scopeWithAllRelationships($query)
+    {
+        return $query->with([
+            // Catalog
+            'client',
+            'contractor',
+            'crew',
+            'job',
+            'done_updater',
+            'working_updater',
+            
+            // Operative
+            'comments',
+            'inspections',
+            'reworks',
+            'warranties',
+
+            // Morph
+            'files',
+            'history',
+            
+            // Pivot
+            'members',
+        ]);
+    }
+
+    public function scopeWithEssentialRelationships($query)
+    {
+        return $query->with([
+            'client',
+            'contractor',
+            'crew',
+            'job',
+        ]);
+    }
+
+
+
+    // Filters
+
+    public function scopeFilterBySearch($query, $value)
+    {
+        return ! is_null($value) ? $query->search($value)->orderBy('id', 'asc') : $query;
+    }
+
+    public function scopeFilterByClient($query, $value)
+    {
+        return ! is_null($value) ? $query->where('client_id', $value) : $query;
+    }
+
+    public function scopeFilterByJob($query, $value)
+    {
+        return ! is_null($value) ? $query->where('job_id', $value) : $query;
+    }
+
+    public function scopeFilterByContractor($query, $value)
+    {
+        if( is_null($value) ) {
+            return $query;
+        }
+
+        if( $value == 0 ) {
+            return $query->whereNull('contractor_id');
+        }
+
+        return $query->where('contractor_id', $value);
+    }
+
+    public function scopeFilterByTypeGroup($query, $type_group)
+    {
+        if( empty($type_group) || count($type_group) == 3 ) {
+            return $query;
+        }
+
+        if( count($type_group) == 2 && in_array('rework', $type_group) && in_array('warranty', $type_group) ) {
+            return $query->whereNotNull('rework_id')->whereNotNull('warranty_id');
+        }
+
+        if( count($type_group) == 2 && in_array('rework', $type_group) &&! in_array('warranty', $type_group) ) {
+            return $query->whereNull('warranty_id');
+        }
+
+        if( count($type_group) == 2 && in_array('warranty', $type_group) &&! in_array('rework', $type_group) ) {
+            return $query->whereNull('rework_id');
+        }
+
+        if( count($type_group) == 1 && in_array('rework', $type_group) ) {
+            return $query->whereNotNull('rework_id');
+        }
+
+        if( count($type_group) == 1 && in_array('warranty', $type_group) ) {
+            return $query->whereNotNull('warranty_id');
+        }
+
+        return $query->whereNull('rework_id')->whereNull('warranty_id');
+    }
+
+    public function scopeFilterByPendingAttributes($query, $value)
+    {
+        if( is_null($value) ) {
+            return $query;
+        }
+
+        if( $value == 0 ) {
+            return $query->notPending();
+        }
+
+        return $query->pending();
+    }
+
+
+
+    // Validators
+
+    public function hasContractor()
+    {
+        return ! is_null($this->contractor_id);
+    }
+
+    public function hasContractorVerified()
+    {
+        return ! is_null($this->contractor_id) && is_a($this->contractor, Contractor::class);
+    }
+
+    public function hasPending()
+    {
+        return is_null($this->scheduled_date) || is_null($this->crew_id);
+    }
+
+    public function hasIncompleteStatus()
+    {
+        return self::collectionIncompleteStatuses()->contains($this->status);
+    }
+
+    public function hasWorkingAt()
+    {
+        return ! empty( $this->working_at );
+    }
+
+    public function hasDoneAt()
+    {
+        return ! empty( $this->done_at );
+    }
+
+    public function hasCompletedAt()
+    {
+        return ! empty( $this->completed_at );
+    }
+    
+    public function isCompleted()
+    {
+        return $this->status == 'completed' && $this->hasCompletedAt();
+    }
+
+    public function isRework()
+    {
+        return is_int($this->rework_id);
+    }
+
+    public function isWarranty()
+    {
+        return is_int($this->warranty_id);
+    }
+
+    public function isStandard()
+    {
+        return ! $this->isRework() && ! $this->isWarranty();
+    }
+
+    public function isNonstandard()
+    {
+        return $this->isRework() || $this->isWarranty();
+    }
+
+    public function qualifiesForRectification()
+    {
+        return $this->isStandard() && $this->isCompleted();
+    }
+
+    public function qualifiesForInspection()
+    {
+        return $this->isCompleted();
+    }
+
 
 
     // Statics

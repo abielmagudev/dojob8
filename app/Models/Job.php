@@ -21,7 +21,7 @@ class Job extends Model
     protected $fillable = [
         'name',
         'description',
-        'approved_inspections_required_count',
+        'success_inspections_required_count',
         'inspections_setup_json',
         'is_active',
     ];
@@ -70,9 +70,9 @@ class Job extends Model
 
     // Validators
 
-    public function requiresApprovedInspections(): bool
+    public function requiresSuccessInspections(): bool
     {
-        return (bool) $this->approved_inspections_required_count;
+        return (bool) $this->success_inspections_required_count;
     }
 
     public function hasInspectionsSetup(): bool

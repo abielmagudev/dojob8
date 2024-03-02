@@ -8,12 +8,12 @@
     <x-form-feedback error="description" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal for="approvedInspectionsRequiredCountInput" label="Approved inspections required">
-    <input id="approvedInspectionsRequiredCountInput" class="form-control {{ bsInputInvalid( $errors->has('approved_inspections_required_count') ) }}" type="number" min="0" max="10" name="approved_inspections_required_count" value="{{ old('approved_inspections_required_count', $job->approved_inspections_required_count ?? 0) }}" required>
-    <x-form-feedback error="approved_inspections_required_count" />
+<x-form-field-horizontal for="successInspectionsRequiredCountInput" label="Success inspections required">
+    <input id="successInspectionsRequiredCountInput" class="form-control {{ bsInputInvalid( $errors->has('success_inspections_required_count') ) }}" type="number" min="0" max="10" name="success_inspections_required_count" value="{{ old('success_inspections_required_count', $job->success_inspections_required_count ?? 0) }}" required>
+    <x-form-feedback error="success_inspections_required_count" />
 </x-form-field-horizontal>
 
-<x-form-field-horizontal label="Configure to generate inspections after creating a work order with this job." label-class="form-label-optional">    
+<x-form-field-horizontal label="Configure to create inspections after creating a work order with this job." label-class="form-label-optional">    
     <div class="list-group list-group-flush rounded border {{ $errors->has('agencies') || $errors->has('agencies.*') ? 'border-danger' : '' }}">
         @foreach($agencies as $agency)
         <?php $checked = $job->inspections_setup->hasAgency($agency->id) ?>

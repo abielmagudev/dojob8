@@ -25,8 +25,8 @@
         {{ $job->description }}
     </x-small-title>
 
-    <x-small-title title="Approved inspections required">
-        {{ $job->approved_inspections_required_count }}
+    <x-small-title title="Success inspections required">
+        {{ $job->success_inspections_required_count }}
     </x-small-title>
 
     <x-small-title title="Configuration to generate inspections">

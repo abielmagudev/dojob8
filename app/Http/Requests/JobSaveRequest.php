@@ -26,7 +26,7 @@ class JobSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'approved_inspections_required_count' => [
+            'success_inspections_required_count' => [
                 'required',
                 'integer',
                 'min:0',
@@ -46,9 +46,9 @@ class JobSaveRequest extends FormRequest
         return [
             'agencies.array' => __('Choose one agency of the list'),
             'agencies.*.in' => __('Choose a valid agency'),
-            'approved_inspections_required_count.required' => __('Enter the number of approved inspections required'),
-            'approved_inspections_required_count.integer' => __('Enter the valid number of approved inspections required'),
-            'approved_inspections_required_count.min' => __('If it does not require approved inspections, enter zero(0'),
+            'success_inspections_required_count.required' => __('Enter the number of success inspections required'),
+            'success_inspections_required_count.integer' => __('Enter the valid number of success inspections required'),
+            'success_inspections_required_count.min' => __('If it does not require success inspections, enter zero(0'),
         ];
     }
 

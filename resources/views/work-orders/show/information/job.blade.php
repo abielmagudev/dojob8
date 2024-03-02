@@ -22,7 +22,7 @@
     
         <div class="col-sm">
             <x-small-title title="Approved inspections required">
-                {{ $work_order->job->requiresApprovedInspections() ? $work_order->job->approved_inspections_required_count : 0 }}
+                {{ $work_order->job->requiresSuccessInspections() ? $work_order->job->success_inspections_required_count : 0 }}
             </x-small-title>
         </div>
     </div>

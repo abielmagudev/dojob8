@@ -15,22 +15,18 @@
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
-                <th></th>
                 <th>Name</th>
                 <th>Description</th>
-                <th class="text-nowrap">Approved inspections</th>
+                <th class="text-nowrap text-center">Success inspections required</th>
                 <th>Extensions</th>
                 <th></th>
             </tr>
         </x-slot>
         @foreach($jobs as $job)               
         <tr>
-            <td style="width:1%">
-                <x-custom.indicator-active-status :toggle="$job->isActive()" tooltip />
-            </td>
-            <td>{{ $job->name }}</td>
+            <td class="{{ $job->isInactive() ? 'text-secondary' : '' }}">{{ $job->name }}</td>
             <td>{{ $job->description }}</td>
-            <td>{{ $job->approved_inspections_required_count }}</td>
+            <td class="text-center">{{ $job->success_inspections_required_count }}</td>
             <td>{{ $job->extensions_count }}</td>
             <td class="text-nowrap text-end">
                 @includeWhen($job->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [

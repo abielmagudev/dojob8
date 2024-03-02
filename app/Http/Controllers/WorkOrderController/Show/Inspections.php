@@ -9,7 +9,7 @@ class Inspections extends ResponseConstructor
 {
     public function forData(): array
     {
-        if(! $this->work_order->job->requiresApprovedInspections() ) {
+        if(! $this->work_order->job->requiresSuccessInspections() ) {
             return [
                 'show' => 'information'
             ];

@@ -23,7 +23,7 @@ trait InspectionStatus
 
         self::withoutEvents(function() use ($wo) {
             $approved_count = $wo->inspections->filter(fn($i) => $i->isApproved())->count();      
-            $this->inspection_status = $approved_count >= $wo->job->approved_inspections_required_count ? 'inspected' : 'uninspected';
+            $this->inspection_status = $approved_count >= $wo->job->success_inspections_required_count ? 'inspected' : 'uninspected';
             $this->save();
         });
     }

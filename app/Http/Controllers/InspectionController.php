@@ -107,7 +107,7 @@ class InspectionController extends Controller
             return back()->with('danger', 'Error updating inspection, try again please');
         }
 
-        if( $inspection->work_order->job->requiresApprovedInspections() ) {
+        if( $inspection->work_order->job->requiresSuccessInspections() ) {
             $inspection->work_order->updateInspectionStatus();
         }
 

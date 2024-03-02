@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Crew\Traits\HasCrew;
 use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
@@ -30,6 +31,7 @@ class WorkOrder extends Model implements Filterable
     use HasScheduledDate;
     use HasStatus;
     use HasPayment;
+    use HasCrew;
 
     // Owner
     use Actions;

@@ -17,16 +17,6 @@ trait Validators
         return ! is_null($this->contractor_id) && is_a($this->contractor, Contractor::class);
     }
 
-    public function hasCrew()
-    {
-        return ! is_null($this->crew_id);
-    }
-
-    public function hasCrewVerified()
-    {
-        return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
-    }
-
     public function hasPending()
     {
         return is_null($this->scheduled_date) || is_null($this->crew_id);

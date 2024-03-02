@@ -14,7 +14,6 @@ trait Filters
             'crew' => 'filterByCrew', 
             'dates' => 'filterByScheduledDateBetween',
             'job' => 'filterByJob',
-            'payment_status_group' => 'filterByPaymentStatusGroup',
             'pending' => 'filterByPendingAttributes',
             'scheduled_date' => 'filterByScheduledDate',
             'search' => 'filterBySearch',
@@ -40,11 +39,6 @@ trait Filters
     public function scopeFilterByJob($query, $value)
     {
         return ! is_null($value) ? $query->where('job_id', $value) : $query;
-    }
-    
-    public function scopeFilterByCrew($query, $value)
-    {
-        return ! is_null($value) ? $query->where('crew_id', $value) : $query;
     }
 
     public function scopeFilterByContractor($query, $value)

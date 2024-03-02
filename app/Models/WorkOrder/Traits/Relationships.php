@@ -36,11 +36,6 @@ trait Relationships
         return $this->belongsTo(Job::class)->withTrashed();
     }
 
-    public function crew()
-    {
-        return $this->belongsTo(Crew::class)->withTrashed();
-    }
-
     public function contractor()
     {
         return $this->belongsTo(Contractor::class)->withTrashed();

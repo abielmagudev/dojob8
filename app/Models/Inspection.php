@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Crew\Traits\hasCrew;
 use App\Models\Kernel\Interfaces\Filterable;
-use App\Models\Crew\Associated\hasCrew;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasPendingAttributes;

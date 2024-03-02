@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Crew\Associated;
+namespace App\Models\Crew\Traits;
 
 use App\Models\Crew;
 
-trait hasCrew
+trait HasCrew
 {
     // Validators
 

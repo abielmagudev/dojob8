@@ -26,7 +26,8 @@ class InspectionController extends Controller
             ]);
         }
 
-        $inspections = Inspection::withRelationshipsForIndex()
+        $inspections = Inspection::withEssentialRelationships()
+        ->withNestedRelationships()
         ->filterByParameters( $request->all() )
         ->orderByRaw("scheduled_date IS NULL, scheduled_date {$request->get('sort', 'DESC')}")
         ->orderBy('agency_id', 'ASC')
@@ -34,17 +35,17 @@ class InspectionController extends Controller
         ->appends( $request->all() );
 
         return view('inspections.index', [
-            'all_statuses_form' => Inspection::allStatusesForm(),
+            'all_statuses' => Inspection::collectionAllStatuses(),
             'agencies' => Agency::all(),
             'inspections' => $inspections,
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'request' => $request,
             'pending_inspections' => [
-                'count' => Inspection::pendingStatusCount(),
+                'count' => Inspection::pendingAttributesCount()->first()->pending_attributes_count,
                 'url' => InspectionUrlGenerator::pending(),
             ],
             'awaiting_inspections' => [
-                'count' => Inspection::awaitingStatusCount(),
+                'count' => Inspection::awaitingStatusCount()->noPendingAttributes()->first()->awaiting_status_count,
                 'url' => InspectionUrlGenerator::awaiting(),
             ],
         ]);
@@ -54,10 +55,10 @@ class InspectionController extends Controller
     {
         return view('inspections.create', [
             'agencies' => Agency::all(),
-            'all_statuses_form' => Inspection::allStatusesForm(),
+            'all_statuses' => Inspection::collectionAllStatuses(),
             'crews' => Crew::taskInspections()->active()->get(),
             'inspection' => new Inspection,
-            'inspector_names' => Inspection::onlyInspectorNames(),
+            'inspector_names' => Inspection::inspectorNames()->get(),
             'work_order' => $work_order,
             'url_back' => route('work-orders.show', [$work_order, 'tab' => 'inspections']),
         ]);
@@ -90,10 +91,10 @@ class InspectionController extends Controller
 
         return view('inspections.edit', [
             'agencies' => Agency::all(),
-            'all_statuses_form' => Inspection::allStatusesForm(),
+            'all_statuses' => Inspection::collectionAllStatuses(),
             'crews' => Crew::taskInspections()->active()->get(),
             'inspection' => $inspection,
-            'inspector_names' => Inspection::onlyInspectorNames(),
+            'inspector_names' => Inspection::inspectorNames()->get()->pluck('inspector_name'),
             'url_back' => $url_back,
         ]);
     }

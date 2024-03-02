@@ -14,7 +14,7 @@ class InspectionSaveRequest extends FormRequest
 {
     public function authorize()
     {
-        return auth()->check();
+        return auth()->user()->can('edit-inspections');
     }
 
     public function rules()
@@ -42,11 +42,11 @@ class InspectionSaveRequest extends FormRequest
                 'bail',
                 'nullable',
                 'integer',
-                sprintf('in:%s', Crew::taskInspections()->get()->pluck('id')->implode(',')),
+                sprintf('in:%s', Crew::taskInspections()->active()->get()->pluck('id')->implode(',')),
             ],
             'status' => [
                 'required',
-                sprintf('in:%s', Inspection::allStatuses()->implode(',')),
+                sprintf('in:%s', Inspection::collectionAllStatuses()->implode(',')),
             ],
             'work_order' => [
                 'bail', 
@@ -68,25 +68,6 @@ class InspectionSaveRequest extends FormRequest
         return [
             'work_order.*' => __('Do not try to manipulate the data outside of the application methods.'),
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        if(! Inspection::qualifyPendingStatus( $this->all() ) )
-        {
-            if( $this->get('status') == 'pending' ) 
-            {
-                $this->merge([
-                    'status' => 'awaiting'
-                ]);
-            }
-        }
-        else
-        {
-            $this->merge([
-                'status' => 'pending'
-            ]);         
-        }
     }
 
     protected function failedValidation(Validator $validator)

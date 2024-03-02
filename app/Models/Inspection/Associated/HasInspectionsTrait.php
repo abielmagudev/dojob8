@@ -6,16 +6,11 @@ use App\Models\Inspection;
 
 trait HasInspectionsTrait
 {
-    // Attributes
+    // Accessors
 
     public function getInspectionsCounterAttribute()
     {
         return $this->inspections_count ?? $this->inspections->count();
-    }
-
-    public function getInspectionsWithPendingStatusCounterAttribute()
-    {
-        return $this->onlyPendingInspections()->count();
     }
 
     public function getInspectionsWithAwaitingStatusCounterAttribute()

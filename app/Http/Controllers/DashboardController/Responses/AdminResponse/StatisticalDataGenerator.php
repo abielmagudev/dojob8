@@ -24,7 +24,7 @@ class StatisticalDataGenerator
     {
         return [
             'all_statuses_work_order' => WorkOrder::collectionAllStatuses(),
-            'all_statuses_inspection' => Inspection::allStatuses(),
+            'all_statuses_inspection' => Inspection::collectionAllStatuses(),
             'agencies' => Agency::all(),
             'contractors' => Contractor::all(),
             'jobs' => Job::withTrashed()->get(),

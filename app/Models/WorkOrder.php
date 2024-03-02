@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Kernel\Interfaces\Filterable;
-use App\Models\Kernel\Traits\HasCacheStaticCollections;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
@@ -26,7 +25,6 @@ class WorkOrder extends Model implements Filterable
     use HasFactory;
 
     // Kernel
-    use HasCacheStaticCollections;
     use HasFiltering;
     use HasHookUsers;
     use HasScheduledDate;
@@ -112,26 +110,26 @@ class WorkOrder extends Model implements Filterable
 
     public static function collectionAllTypes()
     {
-        return self::collectionCache('all_types', self::$all_types);
+        return collect( self::$all_types );
     }
 
     public static function collectionAllStatuses($except = [])
     {
-        return self::collectionCache('all_statuses', self::$all_statuses)->reject(function($status) use ($except) {
+        return collect( self::$all_statuses )->reject(function($status) use ($except) {
             return in_array($status, $except);
         });
     }
 
     public static function collectionIncompleteStatuses($except = [])
     {
-        return self::collectionCache('incomplete_statuses', self::$incomplete_statuses)->reject(function($status) use ($except) {
+        return collect( self::$incomplete_statuses )->reject(function($status) use ($except) {
             return in_array($status, $except);
         });
     }
 
-    public static function collectionClosedStatus($except = [])
+    public static function collectionClosedStatuses($except = [])
     {
-        return self::collectionCache('closed_statuses', self::$closed_statuses)->reject(function($status) use ($except) {
+        return collect( self::$closed_statuses )->reject(function($status) use ($except) {
             return in_array($status, $except);
         });
     }

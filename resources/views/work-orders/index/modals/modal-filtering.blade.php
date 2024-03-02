@@ -11,7 +11,7 @@
         @include('components.custom.input-between-dates')
         @includeWhen(auth()->user()->hasAdminRole(), 'work-orders.index.modals.modal-filtering.type')
         @include('work-orders.index.modals.modal-filtering.status')
-        @includeWhen(auth()->user()->hasAdminRole(), 'work-orders.index.modals.modal-filtering.pending')
+        @includeWhen(auth()->user()->hasAdminRole(), 'components.custom.select-pending')
         @include('work-orders.index.modals.modal-filtering.job')
         @include('work-orders.index.modals.modal-filtering.crew')
         @include('work-orders.index.modals.modal-filtering.contractor')

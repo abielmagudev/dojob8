@@ -5,7 +5,7 @@
             <span class="d-block text-uppercase small">Total</span>
         </div>
         <div class="col-sm mb-3 mb-md-0">
-            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isPending())->count() }}</span>
+            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->HasPendingAttributes())->count() }}</span>
             <span class="d-block text-uppercase small">Pending</span>
         </div>
         <div class="col-sm mb-3 mb-md-0">

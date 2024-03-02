@@ -35,7 +35,8 @@
                 {{ $inspection->scheduled_date_human }}
             </td>
             <td style="width:1%">
-                @include('inspections.__.flag-status', ['status' => $inspection->status])
+                @includeWhen($inspection->hasNoPendingAttributes(), 'inspections.__.flag-status', ['status' => $inspection->status])
+                @includeWhen($inspection->hasPendingAttributes(), 'components.custom.flag-pending')
             </td>
             <td class="text-nowrap">
                 {{ $inspection->agency->name }}

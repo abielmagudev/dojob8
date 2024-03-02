@@ -11,7 +11,11 @@ class InspectionStatusController extends Controller
 {
     public function __invoke(InspectionStatusUpdateRequest $request)
     {
-        $result = Inspection::whereIn('id', $request->get('inspections'))->noPendingStatus()->update(['status' => $request->get('status')]);
+        $result = Inspection::whereIn('id', $request->get('inspections'))
+        ->noPendingAttributes()
+        ->update([
+            'status' => $request->get('status')
+        ]);
 
         $status_uppercase = strtoupper($request->get('status'));
 
@@ -28,7 +32,7 @@ class InspectionStatusController extends Controller
 
     private function history(Request $request)
     {
-        $inspections = Inspection::whereIn('id', $request->get('inspections'))->noPendingStatus()->get();
+        $inspections = Inspection::whereIn('id', $request->get('inspections'))->noPendingAttributes()->get();
 
         $data = $inspections->map(function($i) use ($request) {
             return [

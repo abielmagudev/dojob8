@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Crew\Associated\hasCrew;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
+use App\Models\Kernel\Traits\HasPendingAttributes;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\WorkOrder\Associated\BelongWorkOrderTrait;
@@ -15,10 +17,13 @@ use Illuminate\Support\Str;
 
 class Inspection extends Model implements Filterable
 {
-    use BelongWorkOrderTrait;
     use HasFactory;
+    
+    use BelongWorkOrderTrait;
+    use hasCrew;
     use HasFiltering;
     use HasHookUsers;
+    use HasPendingAttributes;
     use HasScheduledDate;
     use HasStatus;
 
@@ -40,15 +45,15 @@ class Inspection extends Model implements Filterable
         'awaiting',
         'approved',
         'failed',
-        'pending',
     ];
 
-    public static $attributes_for_pending_statuses = [
+    public static $pending_attributes = [
         'scheduled_date',
     ];
 
-    
-    // Interface
+
+
+    // Interface 
 
     public function getParameterFilterSettings(): array
     {
@@ -56,11 +61,13 @@ class Inspection extends Model implements Filterable
             'agency' => 'filterByAgency',
             'crew' => 'filterByCrew',
             'dates' => 'filterByScheduledDateBetween',
+            'pending' => 'filterByPendingAttributes',
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
             'status' => 'filterByStatus', 
         ];
     }
+
 
 
     // Mutators
@@ -71,21 +78,31 @@ class Inspection extends Model implements Filterable
     }
 
 
-    // Validators
 
-    public function hasCrew()
+    // Relationships
+
+    public function agency()
     {
-        return ! is_null($this->crew_id) && is_a($this->crew, Crew::class);
+        return $this->belongsTo(Agency::class)->withTrashed();
     }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(Member::class)->using(InspectionMember::class)->withTimestamps();
+    }
+ 
+
+
+    // Validators
 
     public function hasInspector()
     {
         return ! empty($this->inspector_name);
-    }
-
-    public function isPending()
-    {
-        return $this->status == 'pending';
     }
 
     public function isAwaiting()
@@ -102,128 +119,57 @@ class Inspection extends Model implements Filterable
     {
         return $this->status == 'failed';
     }
-
-    public function qualifiesPendingStatus()
-    {
-        return self::qualifyPendingStatus( $this->getAttributes() );
-    }
+    
 
 
     // Scopes
 
-    public function scopeWithRelationshipsForIndex($query)
+    public function scopeWithEssentialRelationships($query)
     {
         return $query->with([
             'agency', 
             'crew',
-            'work_order.client',
-            'work_order.job', 
+            'work_order',
         ]);
     }
 
-    public function scopeOnlyInspectorNames($query)
+    public function scopeWithNestedRelationships($query)
     {
-        return $query->select('inspector_name')
-                     ->distinct()
-                     ->get()
-                     ->pluck('inspector_name')
-                     ->filter();
-    }
-
-    public function scopeNoPendingStatus($query)
-    {
-        return $query->where('status', '!=', 'pending');
-    }
-
-    public function scopePendingStatusCount($query)
-    {
-        return $query->select( DB::raw('COUNT(*) as count') )
-                     ->where('status', 'pending')
-                     ->first()
-                     ->count;
+        return $query->with([
+            'work_order.client',
+            'work_order.job',
+        ]);
     }
 
     public function scopeAwaitingStatusCount($query)
     {
-        return $query->select( DB::raw('COUNT(*) as count') )
-                     ->where('status', 'awaiting')
-                     ->first()
-                     ->count;
+        return $query->select( DB::raw('COUNT(*) as awaiting_status_count') )->where('status', 'awaiting');
     }
+
+    public function scopeInspectorNames($query)
+    {
+        return $query->select('inspector_name')->distinct()->whereNotNull('inspector_name');
+    }
+
 
 
     // Filters
 
-    public function scopeFilterByCrew($query, $crew_id)
+    public function scopeFilterByAgency($query, $value)
     {
-        return ! is_null($crew_id) ? $query->where('crew_id', $crew_id) : $query;
+        if( empty($value) ) {
+            return $query;
+        }
+
+        return $query->where('agency_id', $value);
     }
 
-    public function scopeFilterByAgency($query, $agency_id)
-    {
-        return ! is_null($agency_id) ? $query->where('agency_id', $agency_id) : $query;
-    }
-
-
-    // Relationships
-
-    public function crew()
-    {
-        return $this->belongsTo(Crew::class);
-    }
-
-    public function agency()
-    {
-        return $this->belongsTo(Agency::class)->withTrashed();
-    }
-
-    public function members()
-    {
-        return $this->belongsToMany(Member::class)->using(InspectionMember::class)->withTimestamps();
-    }
-
-    public function files()
-    {
-        return $this->morphMany(File::class, 'fileable');
-    }
 
 
     // Statics
 
-    public static function allStatuses()
+    public static function collectionAllStatuses()
     {
-        return collect( self::$all_statuses );
-    }
-
-    public static function allStatusesForm()
-    {
-        return self::allStatuses()->reject(fn($status) => $status == 'pending');
-    }
-
-    public static function qualifyPendingStatus(array $values)
-    {
-        $result = array_filter($values, function ($value, $key) {
-            return in_array($key, self::$attributes_for_pending_statuses) && empty($value);
-        }, ARRAY_FILTER_USE_BOTH);
-
-        return count($result) > 0;
-    }
-
-    public static function generateByWorkOrderSetup(WorkOrder $work_order)
-    {
-        $created = [];
-
-        foreach($work_order->job->inspections_setup->all() as $setting)
-        {
-            $inspection = self::create([
-                'agency_id' => $setting['agency'],
-                'work_order_id' => $work_order->id,
-                'status' => 'pending',
-            ]);
-
-            array_push($created, $inspection);
-        }
-        
-        return $created;
+        return collect(self::$all_statuses);
     }
 }

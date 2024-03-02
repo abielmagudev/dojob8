@@ -5,56 +5,52 @@
 @endsection
 
 @section('content')
-    <x-card title="{{ $inspections->total() }} inspections">
+    <x-card>
+
+        @slot('title')
+        <span class="badge text-bg-dark">{{ $inspections->total() }}</span>
+        @endslot
 
         {{-- OPTIONS --}}
         @slot('options')
-            @include('components.custom.form-scheduled-date', [
-                'url' => route('inspections.index')
-            ])
+            <x-custom.form-scheduled-date :url="route('inspections.index')" />
         @endslot
 
         {{-- DROPOPTIONS --}}
         @slot('dropoptions')
-        <li>
-            <a href="{{ $pending_inspections['url'] }}" class="dropdown-item d-flex">
-                <div class="me-3">
-                    <i class="bi bi-exclamation-triangle"></i>
-                    <span class="ms-1">Pending</span>
-                </div>
-                <div>
-                    <span class="badge border border-warning text-warning">{{ $pending_inspections['count'] }}</span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a href="{{ $awaiting_inspections['url'] }}" class="dropdown-item d-flex">
-                <div class="me-3">
-                    <i class="bi bi-alarm"></i>
-                    <span class=" mx-1">Awaiting</span>
-                </div>
-                <div>
-                    <span class="badge border border-primary text-primary">{{ $awaiting_inspections['count'] }}</span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <x-modal-trigger modal-id="modalFiltering" class="dropdown-item" link>
-                <i class="bi bi-filter"></i>
-                <span class="ms-1">More filters</span>
-            </x-modal-trigger>
-        </li>
+            <li>
+                @include('inspections.index.modal-edit-quickly')
+            </li>
 
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-
-        <li>
-            <x-modal-trigger modal-id="modalModifyStatus" class="dropdown-item">
-                <i class="bi bi-pencil-square"></i>
-                <span class="ms-1">Modify status</span>
-            </x-modal-trigger>
-        </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            
+            <li>
+                <a href="{{ $pending_inspections['url'] }}" class="dropdown-item d-flex justify-content-between">
+                    <div class="me-3">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <span class="ms-1">Pending</span>
+                    </div>
+                    <div>
+                        <span class="badge border border-warning text-warning">{{ $pending_inspections['count'] }}</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="{{ $awaiting_inspections['url'] }}" class="dropdown-item d-flex justify-content-between">
+                    <div class="me-3">
+                        <i class="bi bi-alarm"></i>
+                        <span class=" mx-1">Awaiting</span>
+                    </div>
+                    <div>
+                        <span class="badge border border-primary text-primary">{{ $awaiting_inspections['count'] }}</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                @include('inspections.index.modal-filtering')
+            </li>
         @endslot
 
         {{-- BODY --}}
@@ -69,7 +65,7 @@
                             <i class="bi bi-check2-square"></i>
                         </button>
                     </th>
-                    <th class="text-center">Status</th>
+                    <th>Status</th>
 
                     @if( $request->has('dates') )
                     <th>Scheduled</th>
@@ -79,7 +75,7 @@
                     <th>Inspector</th>
                     <th>Client</th>
                     <th>Job</th>
-                    <th class="text-center">Crew</th>
+                    <th>Crew</th>
                     <th></th>
                 </tr>
             </x-slot>
@@ -88,28 +84,24 @@
             @foreach($inspections as $inspection)
             <tr>
                 <td class="text-center">
-                    @if(! $inspection->isPending() )    
+                    @if(! $inspection->hasPendingAttributes() )    
                     <input type="checkbox" class="form-check-input" name="inspections[]" value="{{ $inspection->id }}" form="formUpdateStatus">
                     @endif
                 </td>
 
                 <td style="width:1%">
-                    @include('inspections.__.flag-status', [
+                    @includewhen($inspection->hasNoPendingAttributes(), 'inspections.__.flag-status', [
                         'status' => $inspection->status,
                         'class' => 'w-100',
                     ])
+
+                    @includeWhen($inspection->hasPendingAttributes(), 'components.custom.flag-pending')
                 </td>
 
                 @if( $request->has('dates') )
                 <td class="text-nowrap">
                     @if( $inspection->hasScheduledDate() )
                     {{ $inspection->isToday() ? 'Today' : $inspection->scheduled_date_human }}
-                        
-                    @else
-                    <div class="text-center text-secondary">
-                        <b>?</b>
-                    </div>
-
                     @endif
                 </td>
                 @endif
@@ -154,9 +146,6 @@
     <div class="px-3">
         <x-pagination-simple-model :collection="$inspections" />
     </div>
-
-@include('inspections.index.modal-filtering')
-@include('inspections.index.modal-modify-status')
 
 @include('components.scripts.Checker')
 <script>

@@ -13,8 +13,8 @@
             <span class="d-block text-uppercase small">Awaiting</span>
         </div>
         <div class="col-sm mb-3 mb-md-0">
-            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isApproved())->count() }}</span>
-            <span class="d-block text-uppercase small">Approved</span>
+            <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isSuccess())->count() }}</span>
+            <span class="d-block text-uppercase small">Success</span>
         </div>
         <div class="col-sm mb-3 mb-md-0">
             <span class="fs-3">{{ $inspections->filter(fn($inspection) => $inspection->isFailed())->count() }}</span>

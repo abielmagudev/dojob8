@@ -1,11 +1,11 @@
 <?php $settings = [
-    'failed' => [
-        'class' => 'text-bg-danger',
-    ],
     'awaiting' => [
         'class' => 'text-primary border border-primary',
     ],
-    'approved' => [
+    'failed' => [
+        'class' => 'text-bg-danger',
+    ],
+    'success' => [
         'class' => 'text-bg-success',
     ],
 ] ?>

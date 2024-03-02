@@ -43,8 +43,8 @@ class Inspection extends Model implements Filterable
 
     public static $all_statuses = [
         'awaiting',
-        'approved',
         'failed',
+        'success',
     ];
 
     public static $pending_attributes = [
@@ -110,16 +110,15 @@ class Inspection extends Model implements Filterable
         return $this->status == 'awaiting';
     }
 
-    public function isApproved()
-    {
-        return $this->status == 'approved';
-    }
-
     public function isFailed()
     {
         return $this->status == 'failed';
     }
     
+    public function isSuccess()
+    {
+        return $this->status == 'success';
+    }
 
 
     // Scopes

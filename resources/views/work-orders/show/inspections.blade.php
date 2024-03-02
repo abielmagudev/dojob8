@@ -3,7 +3,7 @@
     <div>
         <span class="me-2">{{ $inspections->count() }}</span>
         @if($work_order->job->requiresSuccessInspections())
-        <div class="badge border border-success text-success">{{ $work_order->job->success_inspections_required_count }} Approved required</div>
+        <div class="badge border border-success text-success">{{ $work_order->job->success_inspections_required_count }} Success required</div>
         @endif
     </div>
     @endslot

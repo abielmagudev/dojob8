@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Crew\Traits\hasCrew;
+use App\Models\Crew\Traits\HasCrew;
 use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
@@ -20,7 +20,7 @@ class Inspection extends Model implements Filterable
     use HasFactory;
     
     use BelongWorkOrderTrait;
-    use hasCrew;
+    use HasCrew;
     use HasFiltering;
     use HasHookUsers;
     use HasPendingAttributes;

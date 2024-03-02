@@ -23,7 +23,7 @@
     ],
 ]; ?>
 
-<div class="position-relative {{ $display ?? 'd-inline-block' }}">
+<div class="position-relative {{ $display ?? 'd-block' }}">
     <span class="badge text-uppercase <?= $settings[$status]['class'] ?? '' ?> <?= $class ?? '' ?>"  style="<?= $settings[$status]['style'] ?? '' ?>">
         <?= $status ?>
     </span>

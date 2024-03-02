@@ -1,4 +1,14 @@
 <x-card>
+    @slot('title')
+    @include('work-orders.__.flag-status', [
+        'status' => $work_order->status,
+        'display' => 'd-inline-block',
+    ])
+    @includeWhen(auth()->user()->can('see-payments'),'payments.__.flag-status', [
+        'status' => $work_order->payment->status
+    ])
+    @endslot
+
     @slot('options')
     <a href="{{ route('work-orders.edit', $work_order) }}" class="btn btn-warning ms-3">
         <i class="bi bi-pencil-fill"></i>

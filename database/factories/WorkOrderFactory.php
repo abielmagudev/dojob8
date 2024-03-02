@@ -31,7 +31,6 @@ class WorkOrderFactory extends Factory
         return [
             'ordered' => $this->faker->optional()->numberBetween(1, 5),
             'status' => $status,
-            'payment_status' => WorkOrder::inStatusesForPayment($status) ? $this->faker->randomElement( WorkOrder::getPaymentStatuses() ) : WorkOrder::INITIAL_PAYMENT_STATUS,
             'inspection_status' => WorkOrder::INITIAL_INSPECTION_STATUS,
 
             'scheduled_date' => $this->faker->optional()->dateTimeBetween('-2 years'),

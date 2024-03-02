@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
+use App\Models\Payment;
 use App\Models\User;
-use App\Models\WorkOrder;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PaymentPolicy
@@ -19,8 +19,8 @@ class PaymentPolicy
         return true;
     }
 
-    public function update(User $user, WorkOrder $workOrder)
+    public function update(User $user, Payment $payment)
     {
-        return $user->can('edit-members');
+        return $user->can('edit-payments');
     }
 }

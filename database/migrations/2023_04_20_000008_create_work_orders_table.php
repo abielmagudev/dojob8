@@ -18,7 +18,6 @@ class CreateWorkOrdersTable extends Migration
             $table->id();
             $table->tinyInteger('ordered', false, true)->nullable();
             $table->string('status');
-            $table->string('payment_status')->nullable();
             $table->string('inspection_status')->nullable();
 
             $table->date('scheduled_date')->nullable()->index();

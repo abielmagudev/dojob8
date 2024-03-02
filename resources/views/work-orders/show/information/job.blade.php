@@ -4,6 +4,7 @@
         <div class="col-sm"/>
             <x-small-title title="Job">
                 <b>{{ $work_order->job->name }}</b>
+                <br>
                 <small>{{ $work_order->job->description }}</small>
             </x-small-title>
         </div>

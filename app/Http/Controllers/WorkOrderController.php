@@ -14,6 +14,7 @@ use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\Inspection;
 use App\Models\Job;
+use App\Models\Payment\Services\WorkOrderPaymentFactory;
 use App\Models\WorkOrder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -73,6 +74,8 @@ class WorkOrderController extends Controller
         if( $work_order->job->hasInspectionsSetup() ) {
             Inspection::generateByWorkOrderSetup($work_order);
         }
+
+        WorkOrderPaymentFactory::create($work_order);
 
         $this->saveOrderByExtensions(
             $request->cache['extensions'],

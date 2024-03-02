@@ -40,8 +40,9 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\Development\UserSeeder::class,
 
             // Belongs to a work order
-            \Database\Seeders\Development\CommentSeeder::class,
+            \Database\Seeders\Development\PaymentSeeder::class,
             \Database\Seeders\Development\InspectionSeeder::class,
+            \Database\Seeders\Development\CommentSeeder::class,
 
             // Pivot tables
             \Database\Seeders\Development\CrewMemberSeeder::class,

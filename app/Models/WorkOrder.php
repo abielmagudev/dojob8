@@ -7,12 +7,12 @@ use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
+use App\Models\Payment\Traits\HasPayment;
 use App\Models\WorkOrder\Traits\Actions;
 use App\Models\WorkOrder\Traits\Attributes;
 use App\Models\WorkOrder\Traits\Filters;
 use App\Models\WorkOrder\Traits\InspectionStatus;
 use App\Models\WorkOrder\Traits\Mutators;
-use App\Models\WorkOrder\Traits\PaymentStatus;
 use App\Models\WorkOrder\Traits\Relationships;
 use App\Models\WorkOrder\Traits\Scopes;
 use App\Models\WorkOrder\Traits\Validators;
@@ -29,6 +29,7 @@ class WorkOrder extends Model implements Filterable
     use HasHookUsers;
     use HasScheduledDate;
     use HasStatus;
+    use HasPayment;
 
     // Owner
     use Actions;
@@ -39,18 +40,14 @@ class WorkOrder extends Model implements Filterable
     use Scopes;
     use Validators;
     use InspectionStatus;
-    use PaymentStatus;
 
     const INITIAL_STATUS = 'new';
-
-    const INITIAL_PAYMENT_STATUS = 'unpaid';
 
     const INITIAL_INSPECTION_STATUS = 'uninspected';
 
     protected $fillable = [
         'ordered',
         'status',
-        'payment_status',
         'inspection_status',
 
         'scheduled_date',

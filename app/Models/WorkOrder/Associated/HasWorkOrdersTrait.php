@@ -6,7 +6,7 @@ use App\Models\WorkOrder;
 
 trait HasWorkOrdersTrait
 {
-    // Attributes
+    // Accessors
 
     public function getWorkOrdersCounterAttribute()
     {
@@ -22,6 +22,23 @@ trait HasWorkOrdersTrait
     {
         return ($this->incomplete_work_orders_count ?? $this->incomplete_work_orders->count());
     }
+
+
+
+
+    // Relationships
+
+    public function work_orders()
+    {
+        return $this->hasMany(WorkOrder::class);
+    }
+
+    public function incomplete_work_orders()
+    {
+        return $this->hasMany(WorkOrder::class)->whereIn('status', WorkOrder::collectionIncompleteStatuses()->toArray());
+    }
+
+
 
 
     // Validators
@@ -41,6 +58,7 @@ trait HasWorkOrdersTrait
         return (bool) $this->incomplete_work_orders_counter;
     }
 
+    
 
     // Actions
 
@@ -61,16 +79,39 @@ trait HasWorkOrdersTrait
     }
 
 
-    // Relationships
 
-    public function work_orders()
+    // Filters
+
+    public function scopeFilterByWorkOrderDates($query, $values)
     {
-        return $this->hasMany(WorkOrder::class);
+        if(! isset($values['from']) &&! isset($values['to']) ) {
+            return $query;
+        }
+
+        if( isset($values['from']) &&! isset($values['to']) )
+        {
+            return $query->whereHas('work_order', function ($query) use ($values) {
+                return $query->where('scheduled_date', '>=', $values['from']);
+            });
+        }
+        
+        if(! isset($values['from']) && isset($values['to']) )
+        {
+            return $query->whereHas('work_order', function ($query) use ($values) {
+                return $query->where('scheduled_date', '<=', $values['to']);
+            });
+        }
+
+        return $query->whereHas('work_order', function ($query) use ($values) {
+            return $query->whereBetween('scheduled_date', $values);
+        });
     }
 
-    public function incomplete_work_orders()
+    public function scopeFilterByWorkOrderScheduledDate($query, $value)
     {
-        return $this->hasMany(WorkOrder::class)->whereIn('status', WorkOrder::collectionIncompleteStatuses()->toArray());
+        return $query->whereHas('work_order', function($query) use ($value) {
+            return $query->where('scheduled_date', $value);
+        });
     }
 }
 

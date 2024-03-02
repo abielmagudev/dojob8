@@ -5,8 +5,11 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $work_orders->total() }} Work Orders" header-wrap>
-    
+<x-card>
+    @slot('title')
+    <span class="badge text-bg-dark">{{ $payments->total() }}</span>
+    @endslot    
+
     {{-- OPTIONS --}}
     @slot('options')
         @include('components.custom.form-scheduled-date', [
@@ -17,22 +20,22 @@
     {{-- DROPOPTIONS --}}
     @slot('dropoptions')
     <li>
-        <x-modal-trigger modal-id="modalModifyPaymentStatus" class="dropdown-item">
+        <x-modal-trigger modal-id="modalEditQuicklyPayments" class="dropdown-item">
             <i class="bi bi-pencil-square"></i>
-            <span class="ms-1">Modify selected status</span>
+            <span class="ms-1">Edit quickly</span>
         </x-modal-trigger>
     </li>
     <li>
         <hr class="dropdown-divider">
     </li>
     <li>
-        <a href="{{ route('payments.index') }}" class="dropdown-item d-flex">
+        <a href="{{ $filtering['unpaid']['url'] }}" class="dropdown-item d-flex justify-content-between">
             <div class="me-3">
                 <i class="bi bi-alarm"></i>
                 <span class="ms-1">Unpaid</span>
             </div>
             <div>
-                <span class="badge border border-warning text-warning">{{ $payment_status_unpaid_count }}</span>
+                <span class="badge border border-warning text-warning">{{ $filtering['unpaid']['count'] }}</span>
             </div>
         </a>
     </li>
@@ -45,7 +48,7 @@
     @endslot
 
     {{-- BODY --}}
-    @if( $work_orders->count() )
+    @if( $payments->count() )
     <x-table class="align-top">
 
         {{-- THEAD --}}
@@ -72,40 +75,42 @@
         @endslot
 
         {{-- TBODY --}}
-        @foreach($work_orders as $work_order)
+        @foreach($payments as $payment)
         <tr>
             <td class="text-center" style="width:1%">
-                <input class="form-check-input" type="checkbox" form="formUpdatePaymentStatus" name="work_orders[]" value="{{ $work_order->id }}">
+                <input class="form-check-input" type="checkbox" form="formEditQuicklyPayments" name="payments[]" value="{{ $payment->id }}">
             </td>
 
             <td class="text-center" style="width:1%">
-                @include('work-orders.__.flag-payment-status', [
-                    'status' => $work_order->payment_status,
+                @include('payments.__.flag-status', [
+                    'status' => $payment->status,
                     'class' => 'w-100',
                 ])
             </td>
 
             @if( $request->has('dates') )
             <td class="text-nowrap">
-                <span>{{ $work_order->scheduled_date_human }}</span>
+                <span>{{ $payment->work_order->scheduled_date_human }}</span>
             </td>
             @endif
 
             <td class="text-nowrap">
-                @include('work-orders.__.summary-job')
+                @include('work-orders.__.summary-job', [
+                    'work_order' => $payment->work_order
+                ])
             </td>
 
             <td class="text-nowrap">
                 @include('clients.__.inline-address-contact', [
-                    'client' => $work_order->client
+                    'client' => $payment->work_order->client
                 ])
             </td>
 
             <td class="text-center">
-            @if( $work_order->hasContractor() )
+            @if( $payment->work_order->hasContractor() )
                 @include('contractors.__.flag', [
-                    'name' => $work_order->contractor->alias, 
-                    'tooltip' => $work_order->contractor->name,
+                    'name' => $payment->work_order->contractor->alias, 
+                    'tooltip' => $payment->work_order->contractor->name,
                     'class' => 'w-100',
                 ])
             @endif
@@ -113,13 +118,13 @@
 
             <td class="text-center">
                 @include('work-orders.__.flag-status', [
-                    'status' => $work_order->status,
-                    'class' => 'w-100'
+                    'status' => $payment->work_order->status,
+                    'class' => 'w-100',
                 ])
             </td>
             
             <td class="text-end">
-                <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
+                <a href="{{ route('work-orders.show', $payment->work_order) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>    
                 </a>
             </td>
@@ -131,15 +136,15 @@
 <br>
 
 <div class="px-3">
-    <x-pagination-simple-model :collection="$work_orders" />
+    <x-pagination-simple-model :collection="$payments" />
 </div>
 
 @include('components.scripts.Checker')
 <script>
-const checker = new Checker('work_orders');
+const checker = new Checker('payments');
 checker.listen()
 </script>
 
 @include('payments.index.modal-filtering')
-@include('payments.index.modal-modify-payment-status')
+@include('payments.index.modal-edit-quickly')
 @endsection

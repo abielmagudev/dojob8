@@ -18,9 +18,9 @@
                 {!! $slot !!}
 
                 @if( stripos($attributes->get('dialog-class'), 'modal-dialog-scrollable') !== false )                   
-                <div class="position-sticky bg-dark bg-opacity-10 text-center py-1 px-3" style="z-index:8;bottom:-5%">
+                <div class="position-sticky bg-dark bg-opacity-10 text-center py-1 px-3" style="z-index:8;bottom:-1rem">
                     <b class="text-secondary">
-                        <small>Scroll up and down</small>
+                        <small>Scroll up or down</small>
                     </b>
                 </div>
                 @endif

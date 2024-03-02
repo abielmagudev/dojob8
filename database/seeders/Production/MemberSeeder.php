@@ -19,7 +19,7 @@ class MemberSeeder extends Seeder
             'last_name' => 'Lastname',
             'full_name' => 'Full name',
             'birthdate' => null,
-            'mobile_number' => 'mobile number',
+            'mobile_number' => null,
             'phone_number' => null,
             'email' => 'user@mail.com',
             'position' => null,

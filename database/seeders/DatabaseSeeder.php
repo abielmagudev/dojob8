@@ -7,26 +7,24 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     public function run()
-    {
-        $this->call( $this->baseSeeders() );
+    {        
+        $this->call( $this->productionSeeders() );
 
-        $this->call( $this->enviromentSeeders() );
+        if(! app()->environment('production') ) {
+            $this->call( $this->developmentSeeders() );
+        }
     }
 
-    public function baseSeeders(): array
+    public function productionSeeders(): array
     {
         return [
-            \Database\Seeders\Base\ExtensionSeeder::class,
-            \Database\Seeders\Base\RolePermissionSeeder::class,
-            \Database\Seeders\Base\SettingsSeeder::class,
+            \Database\Seeders\Production\RolePermissionSeeder::class,
+            \Database\Seeders\Production\UserSeeder::class,
+            \Database\Seeders\Production\MemberSeeder::class,
+            \Database\Seeders\Production\SettingsSeeder::class,
+            \Database\Seeders\Production\ExtensionSeeder::class,
 
-            
         ];
-    }
-
-    public function enviromentSeeders(): array
-    {
-        return app()->environment('production') ? $this->productionSeeders() : $this->developmentSeeders();
     }
 
     public function developmentSeeders(): array
@@ -38,29 +36,17 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\Development\CrewSeeder::class,
             \Database\Seeders\Development\JobSeeder::class,
             \Database\Seeders\Development\MemberSeeder::class,
-            \Database\Seeders\Development\UserSeeder::class,
             \Database\Seeders\Development\WorkOrderSeeder::class,
-            
+            \Database\Seeders\Development\UserSeeder::class,
 
             // Belongs to a work order
             \Database\Seeders\Development\CommentSeeder::class,
             \Database\Seeders\Development\InspectionSeeder::class,
-            
 
             // Pivot tables
             \Database\Seeders\Development\CrewMemberSeeder::class,
             \Database\Seeders\Development\InspectionMemberSeeder::class,
             \Database\Seeders\Development\MemberWorkOrderSeeder::class,
-            
-        ];
-    }
-
-    public function productionSeeders(): array
-    {
-        return [
-            \Database\Seeders\Production\MemberSeeder::class,
-            \Database\Seeders\Production\UserSeeder::class,
-
 
         ];
     }

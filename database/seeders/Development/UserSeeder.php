@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\User;
 use App\Models\User\UserRoleClassifier;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Auth;
 
 class UserSeeder extends Seeder
 {
@@ -18,8 +19,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $this->createUserSuperAdminRole();
-
         $member_roles = UserRoleClassifier::getRolesBelongModel(Member::class);
 
         User::factory(30)->create()->forget(1)->each(function ($user) use ($member_roles) {
@@ -39,18 +38,5 @@ class UserSeeder extends Seeder
             }
 
         });
-    }
-
-    public function createUserSuperAdminRole()
-    {
-        User::create([
-            'name' => 'test',
-            'email' => 'test@mail.com',
-            'password' => 'password',
-            // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'profile_type' => Member::class,
-            'profile_id' => 1,
-            'last_session_at' => now(),
-        ])->assignRole('SuperAdmin');
     }
 }

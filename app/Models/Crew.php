@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Inspection\Associated\HasInspectionsTrait;
+use App\Models\Inspection\Traits\HasInspections;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
@@ -16,7 +16,7 @@ class Crew extends Model
     use HasFactory;
     use HasHookUsers;
     use HasWorkOrdersTrait;
-    use HasInspectionsTrait;
+    use HasInspections;
     use SoftDeletes;
 
     const COLOR_HEX_PATTERN = '/^#[0-9A-Fa-f]{6}$/';

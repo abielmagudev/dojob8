@@ -4,6 +4,7 @@
         'status' => $work_order->status,
         'display' => 'd-inline-block',
     ])
+    
     @includeWhen(auth()->user()->can('see-payments'),'payments.__.flag-status', [
         'status' => $work_order->payment->status
     ])

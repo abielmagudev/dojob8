@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Models\Crew\Traits\HasCrew;
+use App\Models\Inspection\Traits\HasInspections;
 use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\Payment\Traits\HasPayment;
-use App\Models\WorkOrder\Traits\InspectionStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,12 +26,9 @@ class WorkOrder extends Model implements Filterable
     use HasPayment;
     use HasScheduledDate;
     use HasStatus;
-
-    use InspectionStatus;
+    use HasInspections;
 
     const INITIAL_STATUS = 'new';
-
-    const INITIAL_INSPECTION_STATUS = 'uninspected';
 
     protected $fillable = [
         'ordered',
@@ -92,8 +89,8 @@ class WorkOrder extends Model implements Filterable
 
 
 
-    // Interface: App\Models\Kernel\Interfaces\Filterable;
-
+    // Interfaces
+    
     public function getParameterFilterSettings(): array
     {
         return [
@@ -241,11 +238,6 @@ class WorkOrder extends Model implements Filterable
     public function members()
     {
         return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class)->withTimestamps();
-    }
-
-    public function inspections()
-    {
-        return $this->hasMany(Inspection::class);
     }
 
     public function comments()

@@ -28,15 +28,23 @@
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="crewSelect" label="Crew">
-    <div>
-        <select id="crewSelect" class="form-select {{ bsInputInvalid( $errors->has('crew') ) }}" name="crew">
-            <option disabeld selected label="None"></option>
-            @foreach($crews as $crew)          
-            <option value="{{ $crew->id }}" {{ isSelected($crew->id == $inspection->crew_id) }}>{{ $crew->name }}</option>
-            @endforeach
-        </select>
-        <x-form-feedback error="crew" />
+    <select id="crewSelect" class="form-select {{ bsInputInvalid( $errors->has('crew') ) }}" name="crew">
+        <option disabeld selected label="* NO CREW"></option>
+        @foreach($crews as $crew)          
+        <option value="{{ $crew->id }}" {{ isSelected($crew->id == $inspection->crew_id) }}>{{ $crew->name }}</option>
+        @endforeach
+    </select>
+
+    @if( $inspection->id )     
+    <div class="mt-1">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="replace_crew_members" value="1" id="checkboxReplaceCrewMembers">
+            <label class="form-check-label small" for="checkboxReplaceCrewMembers"><b class="text-danger">WARNING!</b> Remove crew members and add new ones from the selected crew.</label>
+        </div>
     </div>
+    @endif
+
+    <x-form-feedback error="crew" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="statusSelect" label="Status">
@@ -49,6 +57,6 @@
     <x-form-feedback error="status" />
 
     @if( $inspection->hasPendingAttributes() )
-    <div class="alert alert-warning mt-3">If there is any missing information, such as the scheduling date, it will appear as a <b>pending status</b>.</div>
+    <div class="alert alert-warning mt-3">If there is any missing information, such as the schedule, it will appear as a <b>pending status</b>.</div>
     @endif
 </x-form-field-horizontal>

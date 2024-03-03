@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Inspection\Associated\HasInspectionsTrait;
+use App\Models\Inspection\Traits\HasInspections;
 use App\Models\Kernel\Interfaces\Profilable;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasHookUsers;
@@ -15,7 +15,7 @@ class Agency extends Model implements Profilable
     use HasActiveStatus;
     use HasFactory;
     use HasHookUsers;
-    use HasInspectionsTrait;
+    use HasInspections;
     use SoftDeletes;
 
     protected $fillable = [

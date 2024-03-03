@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\InspectionController\InspectionUrlGenerator;
-use App\Http\Requests\InspectionSaveRequest;
+use App\Http\Controllers\InspectionController\Kernel\RequestHandler;
+use App\Http\Requests\InspectionStoreRequest;
+use App\Http\Requests\InspectionUpdateRequest;
 use App\Models\Agency;
 use App\Models\Crew;
 use App\Models\Inspection;
+use App\Models\Inspection\Services\InspectionCrewMemberService;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
@@ -19,12 +22,7 @@ class InspectionController extends Controller
 
     public function index(Request $request)
     {
-        if( empty($request->all()) )
-        {
-            $request->merge([
-                'scheduled_date' => now()->toDateString(),
-            ]);
-        }
+        $request = RequestHandler::index($request);
 
         $inspections = Inspection::withEssentialRelationships()
         ->withNestedRelationships()
@@ -64,25 +62,20 @@ class InspectionController extends Controller
         ]);
     }
 
-    public function store(InspectionSaveRequest $request)
+    public function store(InspectionStoreRequest $request)
     {
         if(! $inspection = Inspection::create( $request->validated() ) ) {
             return back()->with('danger', 'Error creating inspection, try again please');
         }
 
-        if( $inspection->hasCrew() && $inspection->crew->hasMembers() )
-        {
-            $inspection->members()->attach( 
-                $inspection->crew->members->pluck('id')->toArray()
-            );
-        }
+        (new InspectionCrewMemberService($inspection))->attach();
 
         return redirect()->route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections'])->with('success', "You created inspection <b>{$inspection->id}</b>");
     }
 
     public function show(Inspection $inspection)
     {
-        return view('inspections.show')->with('inspection', $inspection);
+        return redirect()->route('work-orders.show', [$inspection->work_order_id, 'tab' => 'inspections']);
     }
 
     public function edit(Request $request, Inspection $inspection)
@@ -99,23 +92,18 @@ class InspectionController extends Controller
         ]);
     }
 
-    public function update(InspectionSaveRequest $request, Inspection $inspection)
+    public function update(InspectionUpdateRequest $request, Inspection $inspection)
     {
-        $old_crew_id = $inspection->crew_id;
-
         if(! $inspection->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating inspection, try again please');
         }
 
-        if( $inspection->work_order->job->requiresSuccessInspections() ) {
-            $inspection->work_order->updateInspectionStatus();
-        }
+        $service = new InspectionCrewMemberService($inspection);
 
-        if( $old_crew_id <> $inspection->crew_id && $inspection->hasCrew() && $inspection->crew->hasMembers() )
-        {
-            $inspection->members()->sync( 
-                $inspection->crew->members->pluck('id')->toArray()
-            );
+        $service->detachForceWhenNoCrew();
+
+        if( $request->get('replace_crew_members') == 1 ) {
+            $service->detachForce()->attach();
         }
 
         return redirect()->route('inspections.edit', $inspection)->with('success', "You updated inspection <b>{$inspection->id}</b>");

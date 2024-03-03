@@ -22,7 +22,7 @@
 @section('content')
 <x-card>  
     @slot('title')
-    @include('inspections.__.status-flag', [
+    @include('inspections.__.flag-status', [
         'status' => $inspection->status,
     ])
     @endslot

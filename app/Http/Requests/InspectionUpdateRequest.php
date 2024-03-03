@@ -5,12 +5,9 @@ namespace App\Http\Requests;
 use App\Models\Agency;
 use App\Models\Crew;
 use App\Models\Inspection;
-use App\Models\WorkOrder;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
-class InspectionSaveRequest extends FormRequest
+class InspectionUpdateRequest extends FormRequest
 {
     public function authorize()
     {
@@ -19,7 +16,7 @@ class InspectionSaveRequest extends FormRequest
 
     public function rules()
     {
-        $rules = [
+        return [
             'scheduled_date' => [
                 'nullable',
                 'date',
@@ -44,42 +41,22 @@ class InspectionSaveRequest extends FormRequest
                 'integer',
                 sprintf('in:%s', Crew::taskInspections()->active()->get()->pluck('id')->implode(',')),
             ],
+            'replace_crew_members' => [
+                'sometimes',
+                'boolean',
+            ],
             'status' => [
                 'required',
                 sprintf('in:%s', Inspection::collectionAllStatuses()->implode(',')),
             ],
-            'work_order' => [
-                'bail', 
-                'required', 
-                'integer', 
-                sprintf('exists:%s,id', WorkOrder::class),
-            ],
         ];
-
-        if(! $this->isMethod('POST') ) {
-            unset($rules['work_order']);
-        }
-
-        return $rules;
     }
 
     public function messages()
     {
         return [
-            'work_order.*' => __('Do not try to manipulate the data outside of the application methods.'),
+            'replace_crew_members.boolean' => __("Choose a valid option for replace crew members."),
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        if( $validator->errors()->has('work_order') )
-        {
-            throw new HttpResponseException(
-                $this->redirector->to( route('work-orders.index') )
-                    ->withErrors($validator)
-                    ->with('danger', $validator->errors()->first('work_order'))
-            );
-        } 
     }
 
     public function validated()
@@ -88,7 +65,6 @@ class InspectionSaveRequest extends FormRequest
             'agency_id' => $this->get('agency'),
             'crew_id' => $this->get('crew'),
             'status' => $this->get('status'),
-            'work_order_id' => $this->isMethod('POST') ? $this->work_order : $this->route('inspection')->work_order_id,
         ]);
     }
 }

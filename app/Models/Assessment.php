@@ -14,5 +14,6 @@ class Assessment extends Model
         'scheduled_date',
         'notes', 
         'client_id',
+        'crew_id',
     ];
 }

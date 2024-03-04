@@ -17,9 +17,8 @@ class CreateCrewsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->string('tasks_json')->nullable();
-            $table->string('background_color_hex', 24);
-            $table->string('text_color_hex', 24);
+            $table->string('colors_json')->nullable();
+            $table->string('purposes_stringify')->nullable();
             $table->foreignId('lead_member_id')->nullable();
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->nullable();

@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\Development\CrewSeeder::class,
             \Database\Seeders\Development\JobSeeder::class,
             \Database\Seeders\Development\MemberSeeder::class,
-            \Database\Seeders\Development\PurposeSeeder::class,
             \Database\Seeders\Development\UserSeeder::class,
             \Database\Seeders\Development\WorkOrderSeeder::class,
             

@@ -5,7 +5,7 @@
 
 <x-form-field-horizontal label="Color">
     <div class="form-control form-control-color w-100 mb-3">
-        <div id="colorSample" class="rounded text-center fw-bold small" style="padding:0.1rem 0;background-color:{{ old('background_color', $crew->background_color) }};color:{{ old('text_color', $crew->text_color) }}">{{ $crew->name ?? 'Sample' }}</div>
+        <div id="colorSample" class="rounded text-center fw-bold small" style="padding:0.1rem 0; background-color:{{ old('background_color', $crew->background_color) }}; color:{{ old('text_color', $crew->text_color) }}">{{ $crew->name ?? 'Sample' }}</div>
     </div>
     <div class="row g-3">
         <div class="col-sm">
@@ -19,24 +19,22 @@
     </div>
 </x-form-field-horizontal>
 
-<x-form-field-horizontal label="Tasks">
-    <div class="form-control">
-        <table class="table table-hover m-0">
-            @foreach($all_tasks as $task)
-            <?php $checkbox_id = "task" . ucwords( str_replace([' ', '-'], '', $task) ) ?>
-            <tr>
-                <td class="{{ $loop->last ? 'border-0' : '' }} bg-transparent">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="tasks[]" value="{{ $task }}" id="{{ $checkbox_id }}" {{ isChecked( $crew->hasTask($task) ) }}>
-                        <label class="form-check-label text-capitalize" for="{{ $checkbox_id }}">{{ $task }}</label>
-                    </div>
-                </td>
-            </tr>
+<x-form-field-horizontal label="Purposes">
+    <div class="form-control p-0">
+        <ul class="list-group list-group-flush rounded">
+            @foreach($all_purposes as $purpose)
+            <li class="list-group-item">
+                <?php $checkbox_id = "purpose" . str_replace(' ', '', ucwords($purpose)) ?>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="purposes[]" value="{{ $purpose }}" id="{{ $checkbox_id }}" {{ isChecked( $crew->hasPurpose($purpose) ) }}>
+                    <label class="form-check-label text-capitalize" for="{{ $checkbox_id }}">{{ $purpose }}</label>
+                </div>
+            </li>
             @endforeach
-        </table>
+        </ul>
     </div>
-    <x-form-feedback error="tasks" />
-    <x-form-feedback error="tasks.*" />
+    <x-form-feedback error="purposes" />
+    <x-form-feedback error="purposes.*" />
 </x-form-field-horizontal>
 
 <x-form-field-horizontal for="" label="Description" label-class="form-label-optional">

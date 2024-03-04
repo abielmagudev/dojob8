@@ -9,21 +9,17 @@ class CrewFactory extends Factory
 {
     public function definition()
     {
-        $crew_tasks = null;
-
-        if( $this->faker->boolean() )
-        {
-            $crew_tasks = $this->faker->boolean() 
-                        ? json_encode( Crew::allTasks()->toArray() ) 
-                        : json_encode([ Crew::allTasks()->random() ]); 
-        }
-
         return [
             'name' => strtoupper($this->faker->domainName()),
             'description' => $this->faker->optional()->sentence(),
-            'tasks_json' => $crew_tasks,
-            'background_color_hex' => $this->faker->hexColor(),
-            'text_color_hex' => $this->faker->hexColor(),
+            'colors_json' => [
+                $this->faker->hexColor(), // background
+                $this->faker->hexColor(), // text
+            ],
+            'purposes_stringify' => $this->faker->randomElements(
+                Crew::collectionAllPurposes()->toArray(),
+                mt_rand(1, Crew::collectionAllPurposes()->count())
+            ),
             'lead_member_id' => $this->faker->optional()->numberBetween(1, 35),
             'is_active' => $this->faker->boolean(),
         ];

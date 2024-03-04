@@ -27,13 +27,13 @@ class CrewSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'tasks' => [
+            'purposes' => [
                 'nullable',
                 'array',
             ],
-            'tasks.*' => [
-                'required_with:tasks',
-                sprintf('in:%s', Crew::allTasks()->implode(',')),
+            'purposes.*' => [
+                'required_with:purposes',
+                sprintf('in:%s', Crew::collectionAllPurposes()->implode(',')),
             ],
             'background_color' => [
                 'required',
@@ -55,9 +55,9 @@ class CrewSaveRequest extends FormRequest
     public function messages()
     {
         return [
-            'tasks.array' => __('Choose one or more tasks'),
-            'tasks.*.in' => __('Choose one or more valid tasks'),
-            'tasks.*.required_with' => __('Choose at least one task from the list'),
+            'purposes.array' => __('Choose one or more purposes'),
+            'purposes.*.in' => __('Choose one or more valid purposes'),
+            'purposes.*.required_with' => __('Choose at least one purpose from the list'),
         ];
     }
 
@@ -69,10 +69,9 @@ class CrewSaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'background_color_hex' => $this->get('background_color'),
-            'tasks_json' => json_encode( $this->get('tasks', []) ),
-            'text_color_hex' => $this->get('text_color'),
-            'is_active' => $this->get('active'),
+            'colors_json' => [$this->get('background_color'), $this->get('text_color')],
+            'purposes_stringify' => $this->get('purposes'),
+            'is_active' => (int) $this->filled('active'),
         ]);
     }
 }

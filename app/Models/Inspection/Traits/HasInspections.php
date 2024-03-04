@@ -22,6 +22,14 @@ trait HasInspections
     }
 
 
+    // Validators
+
+    public function hasInspections()
+    {
+        return (bool) $this->inspections_counter;
+    }
+
+
     // Actions
 
     public function onlyPendingInspections()
@@ -32,13 +40,5 @@ trait HasInspections
     public function onlyAwaitingInspections()
     {
         return $this->inspections->filter(fn($i) => $i->isAwaiting());
-    }
-
-
-    // Validators
-
-    public function hasInspections()
-    {
-        return (bool) $this->inspections_counter;
     }
 }

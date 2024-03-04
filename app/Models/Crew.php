@@ -23,47 +23,93 @@ class Crew extends Model
 
     const BACKGROUND_COLOR_DEFAULT = '#333333';
 
-    const BACKGROUND_COLOR_INACTIVE = '#777777';
-
     const TEXT_COLOR_DEFAULT = '#DDDDDD';
-
-    public static $all_tasks = [
-        'inspections',
-        'work orders',
-    ];
 
     protected $fillable = [
         'name',
         'description',
-        'tasks_json',
-        'background_color_hex',
-        'text_color_hex',
+        'colors_json',
+        'purposes_stringify',
         'lead_member_id',
         'is_active',
     ];
 
+    protected static $all_purposes = [
+        // 'assessments',
+        'inspections',
+        'work orders',
+    ];
 
-    // Attributes
+
+
+    // Mutators
+
+    public function setColorsJsonAttribute($values)
+    {
+        if(! is_array($values) )
+        {
+            $this->attributes['colors_json'] = json_encode([
+                'background' => self::BACKGROUND_COLOR_DEFAULT,
+                'text' => self::TEXT_COLOR_DEFAULT,
+            ]);
+            
+            return;
+        }
+
+        $this->attributes['colors_json'] = json_encode([
+            'background' => $values[0],
+            'text' => $values[1],
+        ]);
+    }
+
+    public function setPurposesStringifyAttribute($values)
+    {
+        if(! is_array($values) || is_array($values) && empty($values) ) {
+            $this->attributes['purposes_stringify'] = null;
+            return;
+        }
+
+        $this->attributes['purposes_stringify'] = implode(',', $values);
+    }
+
+
+
+    // Accessors
+
+    public function getColorsAttribute()
+    {
+        return json_decode($this->colors_json);
+    }
+
+    public function getColorsArrayAttribute()
+    {
+        return json_decode($this->colors_json, true);
+    }
 
     public function getBackgroundColorAttribute()
     {
-        return $this->background_color_hex ?? self::BACKGROUND_COLOR_DEFAULT;
-    }
-
-    public function getBackgroundColorInactiveAttribute()
-    {
-        return self::BACKGROUND_COLOR_INACTIVE;
+        return $this->hasBackgroundColor() ? $this->colors->background : self::BACKGROUND_COLOR_DEFAULT;
     }
 
     public function getTextColorAttribute()
     {
-        return $this->text_color_hex ?? self::TEXT_COLOR_DEFAULT;
+        return $this->hasTextColor() ? $this->colors->text : self::TEXT_COLOR_DEFAULT;
     }
 
-    public function getTasksArrayAttribute()
+    public function getPurposesArrayAttribute()
     {
-        return ! empty($this->tasks_json) ? json_decode($this->tasks_json) : [];
+        return ! empty($this->purposes_stringify) ? explode(',', $this->purposes_stringify) : [];
     }
+
+
+
+    // Relationships
+
+    public function members()
+    {
+        return $this->belongsToMany(Member::class)->using(CrewMember::class)->withTimestamps();
+    }
+
 
 
     // Validators
@@ -73,60 +119,61 @@ class Crew extends Model
         return ! empty($this->description);
     }
 
+    public function hasColors()
+    {
+        return ! empty($this->colors_json) && isJson($this->colors_json);
+    }
+
+    public function hasBackgroundColor()
+    {
+        return $this->hasColors() && property_exists($this->colors, 'background');
+    }
+
+    public function hasTextColor()
+    {
+        return $this->hasColors() && property_exists($this->colors, 'text');
+    }
+
+    public function hasPurposes()
+    {
+        return ! empty($this->purposes_array);
+    }
+
+    public function hasPurpose($purpose)
+    {
+        return in_array($purpose, $this->purposes_array);
+    }
+
     public function hasMembers()
     {
-        return (bool) $this->isActive() && $this->members_count || $this->members->count();
+        return (bool) $this->members_count || $this->members->count();
     }
 
-    public function hasTask(string $task)
-    {
-        return in_array($task, $this->tasks_array);
-    }
-
-
-    // Actions
-
-    public function down()
-    {
-        return $this->members()->detach();
-    }
 
 
     // Scopes
 
-    public function scopeTasksLike($query, string $task)
+    public function scopePurposeAssessments($query)
     {
-        return $query->where('tasks_json', 'like', "%{$task}%");
+        return $query->where('purposes_stringify', 'like', '%assessments%');
     }
 
-    public function scopeTaskInspections($query)
+    public function scopePurposeInspections($query)
     {
-        return $query->tasksLike('inspections');
+        return $query->where('purposes_stringify', 'like', '%inspections%');
     }
 
-    public function scopetaskWorkOrders($query)
+    public function scopePurposeWorkOrders($query)
     {
-        return $query->tasksLike('work orders');
-    }
-
-
-    // Relationships
-
-    public function inspections()
-    {
-        return $this->hasMany(Inspection::class);
-    }
-
-    public function members()
-    {
-        return $this->belongsToMany(Member::class)->using(CrewMember::class)->withTimestamps();
+        return $query->where('purposes_stringify', 'like', '%work orders%');
     }
 
 
-    // Static
 
-    public static function allTasks()
+    // Statics
+
+    public static function collectionAllPurposes()
     {
-        return collect( self::$all_tasks );
+        return collect( self::$all_purposes );
     }
 }

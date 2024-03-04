@@ -15,7 +15,7 @@ class InspectionMemberSeeder extends Seeder
      */
     public function run()
     {
-        $crews = Crew::with('members')->taskInspections()->get();
+        $crews = Crew::with('members')->get();
 
         foreach(Inspection::all() as $inspection)
         {

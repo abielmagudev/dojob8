@@ -17,10 +17,12 @@ class CrewController extends Controller
 
     public function index(Request $request)
     {
-        $crews = Crew::with('members')
-        ->withCount(['incomplete_work_orders', 'pending_inspections'])
-        ->orderBy('name')
-        ->get();
+        // $crews = Crew::with('members')
+        // ->withCount(['incomplete_work_orders', 'pending_inspections'])
+        // ->orderBy('name')
+        // ->get();
+
+        $crews = Crew::with('members')->orderBy('name')->get();
 
         return view('crews.index', [
             'active_crews' => $crews->filter(fn($crew) => $crew->isActive()),
@@ -34,7 +36,7 @@ class CrewController extends Controller
     public function create()
     {        
         return view('crews.create', [
-            'all_tasks' => Crew::allTasks(),
+            'all_purposes' => Crew::collectionAllPurposes(),
             'crew' => new Crew,
         ]);
     }
@@ -56,7 +58,7 @@ class CrewController extends Controller
     public function edit(Crew $crew)
     {
         return view('crews.edit', [
-            'all_tasks' => Crew::allTasks(),
+            'all_purposes' => Crew::collectionAllPurposes(),
             'crew' => $crew,
         ]);
     }
@@ -68,7 +70,7 @@ class CrewController extends Controller
         }
 
         if( $crew->isInactive() ) {
-            $crew->down();
+            $crew->members()->detach();
         }
 
         return redirect()->route('crews.edit', $crew)->with('success', "You updated the crew <b>{$crew->name}</b>");
@@ -80,7 +82,7 @@ class CrewController extends Controller
             return back()->with('danger', "Error deleting crew, try again please");
         }
 
-        $crew->down();
+        $crew->members()->detach();
 
         return redirect()->route('crews.index')->with('success', "You deleted the crew <b>{$crew->name}</b>");
     }

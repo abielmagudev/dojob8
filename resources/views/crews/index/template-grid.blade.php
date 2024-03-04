@@ -1,23 +1,20 @@
 <div class="row">
     @foreach($active_crews as $crew)
     <div class="col-sm col-sm-6 col-md-4 col-xl-3 mb-4">
-        <?php $border_color = $crew->isActive() ? $crew->background_color : $crew->background_color_inactive ?>
-        <x-card class="h-100" style="border-top:0.5rem solid {{ $border_color }} !important">
-            @slot('title')
-                @include('crews.__.flag')
-            @endslot
-
+        <x-card title="{{ $crew->name }}" class="h-100" style="border-top:0.5rem solid {{ $crew->colors->background }} !important">
+        
             @slot('options')
-                @includeWhen($crew->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
+                <!-- 
+                @ includeWhen($crew->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
                     'parameters' => ['crew' => $crew->id],
                     'counter' => $crew->incomplete_work_orders_counter
                 ])
                 
-                @includeWhen($crew->hasPendingInspections(), 'inspections.__.button-counter-pending', [
+                @ includeWhen($crew->hasPendingInspections(), 'inspections.__.button-counter-pending', [
                     'parameters' => ['crew' => $crew->id],
                     'counter' => $crew->pending_inspections_counter
                 ])
-
+                -->
                 <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>

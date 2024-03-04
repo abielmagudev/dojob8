@@ -15,7 +15,7 @@ class InspectionCrewMemberService
 
     public function attach()
     {
-        if( $members = $this->crew_members() ) {
+        if( $members = $this->getCrewMembers() ) {
             $this->inspection->members()->attach( $members );
         }
 
@@ -24,15 +24,6 @@ class InspectionCrewMemberService
 
     public function detach()
     {
-        $members = $this->crew_members();
-
-        $this->inspection->members()->detach( $members );
-
-        return $this;
-    }
-
-    public function detachForce()
-    {
         $this->inspection->members()->detach();
 
         return $this;
@@ -40,31 +31,31 @@ class InspectionCrewMemberService
 
     public function sync()
     {
-        $this->inspection->members()->sync( ($this->crew_members() ?? []) );
+        $this->inspection->members()->sync( ($this->getCrewMembers() ?? []) );
 
         return $this;
     }
 
     public function syncWithoutDetaching()
     {
-        if( $members = $this->crew_members() ) {
+        if( $members = $this->getCrewMembers() ) {
             $this->inspection->members()->syncWithoutDetaching( $members );
         }
 
         return $this;
     }
 
-    public function crew_members()
-    {
-        return $this->inspection->hasCrew() ? $this->inspection->crew->members : null;
-    }
-
-    public function detachForceWhenNoCrew()
+    public function detachWhenNoHasCrew()
     {
         if(! $this->inspection->hasCrew() ) {
-            $this->detachForce();
+            $this->detach();
         }
 
         return $this;
+    }
+
+    public function getCrewMembers()
+    {
+        return $this->inspection->hasCrew() ? $this->inspection->crew->members : null;
     }
 }

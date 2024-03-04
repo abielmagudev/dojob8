@@ -100,10 +100,10 @@ class InspectionController extends Controller
 
         $service = new InspectionCrewMemberService($inspection);
 
-        $service->detachForceWhenNoCrew();
+        $service->detachWhenNoHasCrew();
 
         if( $request->get('replace_crew_members') == 1 ) {
-            $service->detachForce()->attach();
+            $service->detach()->attach();
         }
 
         return redirect()->route('inspections.edit', $inspection)->with('success', "You updated inspection <b>{$inspection->id}</b>");

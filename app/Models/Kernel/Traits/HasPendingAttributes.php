@@ -32,13 +32,9 @@ trait HasPendingAttributes
     {
         $pending_attributes = self::getPendingAttributesDefined();
 
-        foreach($pending_attributes as $attribute)
+        foreach($pending_attributes as $index => $attribute)
         {
-            if(! empty($query->getQuery()->wheres) ) {
-                $query->orWhereNull($attribute);
-            } else {
-                $query->whereNull($attribute);
-            }
+            $query = $index == 0 ? $query->whereNull($attribute) : $query->orWhereNull($attribute);
         }
         
         return $query;

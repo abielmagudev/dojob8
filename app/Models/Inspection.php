@@ -9,7 +9,7 @@ use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasPendingAttributes;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
-use App\Models\WorkOrder\Associated\BelongWorkOrderTrait;
+use App\Models\WorkOrder\Traits\BelongWorkOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +19,7 @@ class Inspection extends Model implements Filterable
 {
     use HasFactory;
     
-    use BelongWorkOrderTrait;
+    use BelongWorkOrder;
     use HasCrew;
     use HasFiltering;
     use HasHookUsers;
@@ -169,6 +169,6 @@ class Inspection extends Model implements Filterable
 
     public static function collectionAllStatuses()
     {
-        return collect(self::$all_statuses);
+        return collect( self::$all_statuses );
     }
 }

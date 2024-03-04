@@ -4,17 +4,16 @@
         <x-card title="{{ $crew->name }}" class="h-100" style="border-top:0.5rem solid {{ $crew->colors->background }} !important">
         
             @slot('options')
-                <!-- 
-                @ includeWhen($crew->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
+                @includeWhen($crew->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
                     'parameters' => ['crew' => $crew->id],
                     'counter' => $crew->incomplete_work_orders_counter
                 ])
-                
-                @ includeWhen($crew->hasPendingInspections(), 'inspections.__.button-counter-pending', [
+
+                @includeWhen($crew->hasAwaitingInspections(), 'inspections.__.button-counter-awaiting', [
                     'parameters' => ['crew' => $crew->id],
-                    'counter' => $crew->pending_inspections_counter
+                    'counter' => $crew->awaiting_inspections_counter
                 ])
-                -->
+
                 <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>

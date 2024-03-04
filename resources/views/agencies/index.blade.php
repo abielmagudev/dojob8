@@ -33,8 +33,9 @@
                     {{ $agency->notes }}
                 </td>
                 <td class="text-end text-nowrap">
-                    @includeWhen($agency->hasInspectionsWithPendingStatus(), 'inspections.__.button-counter-pending', [
-                        'counter' => $agency->inspections_with_pending_status_counter,
+
+                    @includeWhen($agency->hasInspectionsWithPendingAttributes(), 'inspections.__.button-counter-pending', [
+                        'counter' => $agency->inspections_with_pending_attributes_counter,
                         'parameters' => ['agency' => $agency->id],
                     ])
 
@@ -46,6 +47,7 @@
                     <a href="{{ route('agencies.show', $agency) }}" class="btn btn-outline-primary btn-sm">
                         <i class="bi bi-eye-fill"></i>
                     </a>
+                    
                 </td>
             </tr>
             @endforeach

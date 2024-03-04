@@ -7,11 +7,12 @@ use App\Models\Kernel\Traits\HasAddress;
 use App\Models\Kernel\Traits\HasContactChannels;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
-use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
+use App\Models\WorkOrder\Traits\HasWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+
 class Client extends Model implements Filterable
 {
     use HasAddress;
@@ -19,7 +20,7 @@ class Client extends Model implements Filterable
     use HasFactory;
     use HasFiltering;
     use HasHookUsers;
-    use HasWorkOrdersTrait;
+    use HasWorkOrders;
     use SoftDeletes;
 
     protected $fillable = [

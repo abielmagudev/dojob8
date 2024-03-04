@@ -42,7 +42,7 @@ class InspectionStoreRequest extends FormRequest
                 'bail',
                 'nullable',
                 'integer',
-                sprintf('in:%s', Crew::taskInspections()->active()->get()->pluck('id')->implode(',')),
+                sprintf('in:%s', Crew::purposeInspections()->active()->get()->pluck('id')->implode(',')),
             ],
             'status' => [
                 'required',

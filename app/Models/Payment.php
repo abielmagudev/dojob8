@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasStatus;
-use App\Models\WorkOrder\Associated\BelongWorkOrderTrait;
+use App\Models\WorkOrder\Traits\BelongWorkOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +15,7 @@ class Payment extends Model implements Filterable
     use HasFactory;
     use HasFiltering;
     use HasStatus;
-    use BelongWorkOrderTrait;
+    use BelongWorkOrder;
 
     const INITIAL_STATUS = 'unpaid';
 

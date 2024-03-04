@@ -17,7 +17,7 @@ class AdminUser extends Updater
     {
         $work_order = $this->request->route('work_order');
 
-        $this->crews_id = Crew::taskWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
+        $this->crews_id = Crew::purposeWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
 
         if( WorkOrder::collectionAllTypes()->contains( $this->request->get('type') ) && $this->request->get('type') <> 'standard' ) {
             $this->work_orders_id_for_rectification = $work_order->client->onlyWorkOrdersForRectification($work_order)->pluck('id')->implode(',');

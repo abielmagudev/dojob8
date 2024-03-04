@@ -1,10 +1,10 @@
 <?php 
 
-namespace App\Models\WorkOrder\Associated;
+namespace App\Models\WorkOrder\Traits;
 
 use App\Models\WorkOrder;
 
-trait HasWorkOrdersTrait
+trait HasWorkOrders
 {
     // Accessors
 

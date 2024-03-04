@@ -7,7 +7,7 @@ use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasAddress;
 use App\Models\Kernel\Traits\HasContactChannels;
 use App\Models\Kernel\Traits\HasHookUsers;
-use App\Models\WorkOrder\Associated\HasWorkOrdersTrait;
+use App\Models\WorkOrder\Traits\HasWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,7 +20,7 @@ class Contractor extends Model implements Profilable
     use HasContactChannels;
     use HasFactory;
     use HasHookUsers;
-    use HasWorkOrdersTrait;
+    use HasWorkOrders;
     use SoftDeletes;
     
     protected $fillable = [

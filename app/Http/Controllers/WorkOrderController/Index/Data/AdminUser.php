@@ -25,7 +25,7 @@ class AdminUser
         return [
             'filtering' => [
                 'contractors' => Contractor::orderBy('name', 'desc')->get(),
-                'crews' => Crew::taskWorkOrders()->active()->orderBy('name', 'desc')->get(),
+                'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),
                 'jobs' => Job::orderBy('name', 'desc')->get(),
                 'pending' => [
                     'url' => WorkOrderUrlGenerator::pending(),

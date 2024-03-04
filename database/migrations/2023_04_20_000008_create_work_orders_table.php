@@ -29,8 +29,8 @@ class CreateWorkOrdersTable extends Migration
 
             $table->foreignId('rework_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');
             $table->foreignId('warranty_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');
-            $table->foreignId('contractor_id')->nullable();
             $table->foreignId('client_id');
+            $table->foreignId('contractor_id')->nullable();
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('job_id');
 

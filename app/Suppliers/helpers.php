@@ -102,7 +102,7 @@ if(! function_exists('workOrderUrlGenerator') )
 {
     function workOrderUrlGenerator(string $method, array $parameters = [])
     {
-        return call_user_func_array([\App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator::class, $method], $parameters);
+        return call_user_func([\App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator::class, $method], $parameters);
     }
 } 
 
@@ -110,7 +110,7 @@ if(! function_exists('paymentUrlGenerator') )
 {
     function paymentUrlGenerator(string $method, array $parameters = [])
     {
-        return call_user_func_array([\App\Http\Controllers\PaymentController\Services\PaymentUrlGenerator::class, $method], $parameters);
+        return call_user_func([\App\Http\Controllers\PaymentController\Services\PaymentUrlGenerator::class, $method], $parameters);
     }
 } 
 
@@ -118,7 +118,7 @@ if(! function_exists('inspectionUrlGenerator') )
 {
     function inspectionUrlGenerator(string $method, array $parameters = [])
     {
-        return call_user_func_array([\App\Http\Controllers\InspectionController\InspectionUrlGenerator::class, $method], $parameters);
+        return call_user_func([\App\Http\Controllers\InspectionController\InspectionUrlGenerator::class, $method], $parameters);
     }
 } 
 

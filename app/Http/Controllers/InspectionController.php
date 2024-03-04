@@ -28,13 +28,14 @@ class InspectionController extends Controller
         ->withNestedRelationships()
         ->filterByParameters( $request->all() )
         ->orderByRaw("scheduled_date IS NULL, scheduled_date {$request->get('sort', 'DESC')}")
-        ->orderBy('agency_id', 'ASC')
+        ->orderBy('agency_id', 'DESC')
         ->paginate(35)
         ->appends( $request->all() );
 
         return view('inspections.index', [
             'all_statuses' => Inspection::collectionAllStatuses(),
             'agencies' => Agency::all(),
+            'crews' => Crew::purposeInspections()->active()->get(),
             'inspections' => $inspections,
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'request' => $request,
@@ -54,7 +55,7 @@ class InspectionController extends Controller
         return view('inspections.create', [
             'agencies' => Agency::all(),
             'all_statuses' => Inspection::collectionAllStatuses(),
-            'crews' => Crew::taskInspections()->active()->get(),
+            'crews' => Crew::purposeInspections()->active()->get(),
             'inspection' => new Inspection,
             'inspector_names' => Inspection::inspectorNames()->get(),
             'work_order' => $work_order,
@@ -85,7 +86,7 @@ class InspectionController extends Controller
         return view('inspections.edit', [
             'agencies' => Agency::all(),
             'all_statuses' => Inspection::collectionAllStatuses(),
-            'crews' => Crew::taskInspections()->active()->get(),
+            'crews' => Crew::purposeInspections()->active()->get(),
             'inspection' => $inspection,
             'inspector_names' => Inspection::inspectorNames()->get()->pluck('inspector_name'),
             'url_back' => $url_back,

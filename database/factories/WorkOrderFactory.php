@@ -34,10 +34,10 @@ class WorkOrderFactory extends Factory
 
             'scheduled_date' => $this->faker->optional()->dateTimeBetween('-2 years'),
             'working_at' =>  in_array($status, ['working','done','completed']) ? $this->faker->dateTimeBetween('-2 years') : null,
-            'done_at' => in_array($status, ['done','completed']) ? $this->faker->dateTimeBetween('-2 years') : null,
-            'completed_at' => in_array($status, ['completed', 'denialed']) ? $this->faker->dateTimeBetween('-2 years') : null,
             'working_by' => in_array($status, ['working','done','completed']) ? mt_rand(1,100) : null,
+            'done_at' => in_array($status, ['done','completed']) ? $this->faker->dateTimeBetween('-2 years') : null,
             'done_by' => in_array($status, ['done','completed']) ? mt_rand(1,10) : null,
+            'completed_at' => in_array($status, ['completed', 'denialed']) ? $this->faker->dateTimeBetween('-2 years') : null,
             'completed_by' => in_array($status, ['completed', 'denialed']) ? mt_rand(1,10) : null,
 
             'rework_id' => is_null($warranty_id) ? $rework_id : null,

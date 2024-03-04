@@ -19,14 +19,16 @@ class WorkOrder extends Model implements Filterable
     // Framework
     use HasFactory;
 
-    // Kernel
+    // Models
     use HasCrew;
+    use HasInspections;
+    use HasPayment;
+
+    // Kernel
     use HasFiltering;
     use HasHookUsers;
-    use HasPayment;
     use HasScheduledDate;
     use HasStatus;
-    use HasInspections;
 
     const INITIAL_STATUS = 'new';
 

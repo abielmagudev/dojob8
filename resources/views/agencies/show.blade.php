@@ -14,9 +14,9 @@
         </x-slot>
 
         <x-slot name="options">
-            @includeWhen($agency->hasInspectionsWithPendingStatus(), 'inspections.__.button-counter-pending', [
+            @includeWhen($agency->hasInspectionsWithPendingAttributes(), 'inspections.__.button-counter-pending', [
                 'class' => 'btn btn-outline-warning btn-sm',
-                'counter' => $agency->inspections_with_pending_status_counter,
+                'counter' => $agency->inspections_with_pending_attributes_counter,
                 'parameters' => ['agency' => $agency->id],
             ])
 

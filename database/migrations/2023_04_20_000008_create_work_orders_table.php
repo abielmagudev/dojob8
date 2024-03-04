@@ -18,14 +18,13 @@ class CreateWorkOrdersTable extends Migration
             $table->id();
             $table->tinyInteger('ordered', false, true)->nullable();
             $table->string('status');
-            $table->string('inspection_status')->nullable();
 
             $table->date('scheduled_date')->nullable()->index();
             $table->dateTime('working_at')->nullable()->index();
-            $table->dateTime('done_at')->nullable()->index();
-            $table->dateTime('completed_at')->nullable()->index();
             $table->foreignId('working_by')->nullable();
+            $table->dateTime('done_at')->nullable()->index();
             $table->foreignId('done_by')->nullable();
+            $table->dateTime('completed_at')->nullable()->index();
             $table->foreignId('completed_by')->nullable();
 
             $table->foreignId('rework_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');

@@ -33,14 +33,13 @@ class WorkOrder extends Model implements Filterable
     protected $fillable = [
         'ordered',
         'status',
-        'inspection_status',
 
         'scheduled_date',
         'working_at',
-        'done_at',
-        'completed_at',
         'working_by',
+        'done_at',
         'done_by',
+        'completed_at',
         'completed_by',
 
         'rework_id',

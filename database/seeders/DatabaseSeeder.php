@@ -31,21 +31,24 @@ class DatabaseSeeder extends Seeder
     {
         return [
             \Database\Seeders\Development\AgencySeeder::class,
-            \Database\Seeders\Development\PurposeSeeder::class,
+            \Database\Seeders\Development\AssessmentSeeder::class,
             \Database\Seeders\Development\ClientSeeder::class,
             \Database\Seeders\Development\ContractorSeeder::class,
             \Database\Seeders\Development\CrewSeeder::class,
             \Database\Seeders\Development\JobSeeder::class,
             \Database\Seeders\Development\MemberSeeder::class,
-            \Database\Seeders\Development\WorkOrderSeeder::class,
+            \Database\Seeders\Development\PurposeSeeder::class,
             \Database\Seeders\Development\UserSeeder::class,
-
+            \Database\Seeders\Development\WorkOrderSeeder::class,
+            
+            
             // Belongs to a work order
             \Database\Seeders\Development\PaymentSeeder::class,
             \Database\Seeders\Development\InspectionSeeder::class,
             \Database\Seeders\Development\CommentSeeder::class,
-
+            
             // Pivot tables
+            \Database\Seeders\Development\AssessmentJobSeeder::class,
             \Database\Seeders\Development\CrewMemberSeeder::class,
             \Database\Seeders\Development\InspectionMemberSeeder::class,
             \Database\Seeders\Development\MemberWorkOrderSeeder::class,

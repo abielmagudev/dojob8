@@ -27,6 +27,7 @@ class CreateWorkOrdersTable extends Migration
             $table->dateTime('completed_at')->nullable()->index();
             $table->foreignId('completed_by')->nullable();
 
+            $table->foreignId('assessment_id')->nullable()->references('id')->on('assessments')->onDelete('set null');
             $table->foreignId('rework_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');
             $table->foreignId('warranty_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');
             $table->foreignId('client_id');

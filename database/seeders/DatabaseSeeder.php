@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
     {
         return [
             \Database\Seeders\Development\AgencySeeder::class,
+            \Database\Seeders\Development\PurposeSeeder::class,
             \Database\Seeders\Development\ClientSeeder::class,
             \Database\Seeders\Development\ContractorSeeder::class,
             \Database\Seeders\Development\CrewSeeder::class,

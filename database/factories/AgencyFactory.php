@@ -20,9 +20,10 @@ class AgencyFactory extends Factory
         
         return [
             'name' => $agency_name,
+            'email' => $this->faker->optional()->companyEmail(),
+            'mobile_number' => $this->faker->optional()->phoneNumber(),
+            'phone_number' => $this->faker->optional()->phoneNumber(),
             'notes' => $this->faker->optional()->sentence(),
-            'created_by' => mt_rand(1,10),
-            'updated_by' => mt_rand(1,10),
         ];
     }
 }

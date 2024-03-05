@@ -20,6 +20,9 @@ class Agency extends Model implements Profilable
 
     protected $fillable = [
         'name',
+        'email',
+        'mobile_number',
+        'phone_number',
         'notes',
         'is_active',
         'created_by',

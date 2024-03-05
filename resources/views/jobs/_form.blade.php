@@ -16,11 +16,14 @@
 <x-form-field-horizontal label="Configure to create inspections after creating a work order with this job." label-class="form-label-optional">    
     <div class="list-group list-group-flush rounded border {{ $errors->has('agencies') || $errors->has('agencies.*') ? 'border-danger' : '' }}">
         @foreach($agencies as $agency)
-        <?php $checked = $job->inspections_setup->hasAgency($agency->id) ?>
+        <?php $checked = (bool) $job->inspection_setup->filter(function($setup) use ($agency) {
+            return $setup->hasAgency($agency);
+        })->count() ?>
+
         <?php $checkbox_id = "agency{$agency->id}Checkbox" ?>
         <div class="list-group-item list-group-item-action">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="{{ $checkbox_id }}" name="agencies[]" value="{{ $agency->id }}" {{ isChecked( $checked ) }}>
+                <input class="form-check-input" type="checkbox" id="{{ $checkbox_id }}" name="inpsections_setup[][agency]" value="{{ $agency->id }}" {{ isChecked( $checked ) }}>
                 <label class="form-check-label" for="{{ $checkbox_id }}">{{ $agency->name }}</label>
             </div>
         </div>

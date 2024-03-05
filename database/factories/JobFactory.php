@@ -18,7 +18,6 @@ class JobFactory extends Factory
             'name' => $this->faker->jobTitle(),
             'description' => $this->faker->optional()->sentence(),
             'success_inspections_required_count' => $this->faker->numberBetween(0, 2),
-            'inspections_setup_json' => $this->faker->boolean() ? [] : null,
             'is_active' => (int) $this->faker->boolean(),
         ];
     }

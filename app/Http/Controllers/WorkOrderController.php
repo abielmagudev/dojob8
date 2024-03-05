@@ -6,16 +6,15 @@ use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
 use App\Http\Controllers\WorkOrderController\Index\AuthDataRetriever;
 use App\Http\Controllers\WorkOrderController\Index\RequestManipulator;
 use App\Http\Controllers\WorkOrderController\ShowAction;
-use App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator;
 use App\Http\Requests\WorkOrderStoreRequest;
 use App\Http\Requests\WorkOrderUpdateRequest;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
-use App\Models\Inspection;
 use App\Models\Job;
-use App\Models\Payment\Services\WorkOrderPaymentFactory;
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Services\InspectionFactoryService;
+use App\Models\WorkOrder\Services\PaymentFactoryService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -65,17 +64,10 @@ class WorkOrderController extends Controller
         if( $work_order->hasCrew() ) {
             $work_order->attachWorkers();
         }
-
-        //?
-        if( $work_order->job->requiresSuccessInspections() ) {
-            // $work_order->updateInspectionStatus();
-        }
         
-        if( $work_order->job->hasInspectionsSetup() ) {
-            Inspection::generateByWorkOrderSetup($work_order);
-        }
+        InspectionFactoryService::create($work_order);
 
-        WorkOrderPaymentFactory::create($work_order);
+        PaymentFactoryService::create($work_order);
 
         $this->saveOrderByExtensions(
             $request->cache['extensions'],

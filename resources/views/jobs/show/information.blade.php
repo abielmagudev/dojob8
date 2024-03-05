@@ -29,8 +29,8 @@
         {{ $job->success_inspections_required_count }}
     </x-small-title>
 
-    <x-small-title title="Configuration to generate inspections">
-        {{ $job->hasInspectionsSetup() ? 'Yes' : 'No' }}
+    <x-small-title title="Configuration of inspections to create">
+        {{ $job->hasInspectionSetup() ? 'Yes' : 'No' }}
     </x-small-title>
     
     <x-custom.information-hook-users :model="$job" />

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Payment\Services;
+namespace App\Models\WorkOrder\Services;
 
 use App\Models\Payment;
 use App\Models\WorkOrder;
 
-class WorkOrderPaymentFactory
+class PaymentFactoryService
 {
     public static function create(WorkOrder $work_order)
     {

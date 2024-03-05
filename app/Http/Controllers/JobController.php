@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\JobSaveRequest;
 use App\Models\Agency;
-use App\Models\Crew;
 use App\Models\Extension;
 use App\Models\Job;
+use App\Models\Job\Services\InspectionSetupService;
 
 class JobController extends Controller
 {
@@ -30,7 +30,6 @@ class JobController extends Controller
     {
         return view('jobs.create', [
             'agencies' => Agency::active()->orderBy('name')->get(),
-            'crews' => Crew::taskInspections()->active()->get(),
             'job' => new Job,
         ]);
     }
@@ -40,6 +39,8 @@ class JobController extends Controller
         if(! $job = Job::create( $request->validated() ) ) {
             return back()->with('danger', 'Error creating job, please try again');
         }
+
+        InspectionSetupService::create($request, $job);
 
         return redirect()->route('jobs.show', $job)->with('success', "You created job <b>{$job->name}</b>");
     }
@@ -56,7 +57,6 @@ class JobController extends Controller
     {
         return view('jobs.edit', [
             'agencies' => Agency::active()->orderBy('name')->get(),
-            'crews' => Crew::taskInspections()->active()->get(),
             'job' => $job,
         ]);
     }
@@ -67,6 +67,8 @@ class JobController extends Controller
             return back()->with('danger', 'Error updating job, please try again'); 
         }
 
+        InspectionSetupService::sync($request, $job);
+
         return redirect()->route('jobs.edit', $job)->with('success', "You updated job <b>{$job->name}</b>");
     }
 
@@ -75,8 +77,6 @@ class JobController extends Controller
         if(! $job->delete() ) {
             return back()->with('danger', 'Error deleting job, please try again');
         }
-
-        $job->down();
         
         return redirect()->route('jobs.index')->with('success', "You deleted job <b>{$job->name}</b>");
     }

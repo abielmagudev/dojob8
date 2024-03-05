@@ -27,6 +27,8 @@ class Inspection extends Model implements Filterable
     use HasScheduledDate;
     use HasStatus;
 
+    const INITIAL_STATUS = 'awaiting';
+
     protected $fillable = [
         'scheduled_date',
         'observations',

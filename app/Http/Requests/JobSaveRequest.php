@@ -31,12 +31,13 @@ class JobSaveRequest extends FormRequest
                 'integer',
                 'min:0',
             ],
-            'agencies' => [
-                'nullable',
-                'array',
+            'inpsections_setup' => [
+                'sometimes',
+                'array'
             ],
-            'agencies.*' => [
-                sprintf('in:%s', Agency::all()->pluck('id')->implode(','))
+            'inpsections_setup.*.agency' => [
+                'required_with:inpsections_setup',
+                sprintf('in:%s', Agency::all()->pluck('id')->implode(',')),
             ],
         ];
     }
@@ -44,11 +45,11 @@ class JobSaveRequest extends FormRequest
     public function messages()
     {
         return [
-            'agencies.array' => __('Choose one agency of the list'),
-            'agencies.*.in' => __('Choose a valid agency'),
-            'success_inspections_required_count.required' => __('Enter the number of success inspections required'),
             'success_inspections_required_count.integer' => __('Enter the valid number of success inspections required'),
             'success_inspections_required_count.min' => __('If it does not require success inspections, enter zero(0'),
+            'success_inspections_required_count.required' => __('Enter the number of success inspections required'),
+            'inpsections_setup.array' => __('Use default values to configure'),
+            'inpsections_setup.*.agency.in' => __('Choose a valid agency'),
         ];
     }
 
@@ -60,7 +61,6 @@ class JobSaveRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'inspections_setup_json' => $this->only(['agencies']),
             'is_active' => $this->get('active'),
         ]);
     }

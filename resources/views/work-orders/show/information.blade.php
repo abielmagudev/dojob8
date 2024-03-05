@@ -1,13 +1,17 @@
 <x-card>
     @slot('title')
+    
     @include('work-orders.__.flag-status', [
         'status' => $work_order->status,
         'display' => 'd-inline-block',
     ])
     
+    @if($work_order->payment)      
     @includeWhen(auth()->user()->can('see-payments'),'payments.__.flag-status', [
         'status' => $work_order->payment->status
     ])
+    @endif
+
     @endslot
 
     @slot('options')

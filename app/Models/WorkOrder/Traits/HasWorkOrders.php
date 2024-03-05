@@ -74,7 +74,7 @@ trait HasWorkOrders
         }
 
         return $this->work_orders->filter(function($wo) use($except) {
-            return $wo->isStandard() && $wo->isCompleted() &&! in_array($wo->id, $except);
+            return $wo->qualifiesForRectification() &&! in_array($wo->id, $except);
         });
     }
 

@@ -36,7 +36,7 @@ class AdminUser extends Updater
                 sprintf('in:%s', WorkOrder::collectionAllTypes()->implode(',')),
             ],
             'type_id' => [
-                'required_if:type,rework,warranty',
+                sprintf('required_if:type,%s', WorkOrder::collectionAllRectificationTypes()->implode(',')),
                 sprintf('in:%s', $this->work_orders_id_for_rectification),
             ],
             'crew' => [
@@ -93,8 +93,8 @@ class AdminUser extends Updater
     public function validated()
     {
         return [
-            'rework_id' => $this->request->get('type') == 'rework' ? $this->request->get('type_id') : null,
-            'warranty_id' => $this->request->get('type') == 'warranty' ? $this->request->get('type_id') : null,
+            'rectification_type' => $this->request->get('type_id') ? $this->request->get('type') : null,
+            'rectification_id' => $this->request->get('type_id'),
             'contractor_id' => $this->request->get('contractor'),
             'crew_id' => $this->request->get('crew'),
             'working_at' => $this->request->only(['working_date', 'working_time']), // Mutator

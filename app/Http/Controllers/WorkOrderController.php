@@ -68,7 +68,7 @@ class WorkOrderController extends Controller
 
         //?
         if( $work_order->job->requiresSuccessInspections() ) {
-            $work_order->updateInspectionStatus();
+            // $work_order->updateInspectionStatus();
         }
         
         if( $work_order->job->hasInspectionsSetup() ) {

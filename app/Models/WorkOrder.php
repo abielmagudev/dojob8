@@ -43,16 +43,16 @@ class WorkOrder extends Model implements Filterable
         'done_by',
         'completed_at',
         'completed_by',
+        'permit_code',
+        'notes',
 
-        'rework_id',
-        'warranty_id',
+        'rectification_type',
+        'rectification_id',
         'client_id',
         'contractor_id',
         'crew_id',
         'job_id',
-
-        'permit_code',
-        'notes',
+        'assessment_id',
     ];
 
     protected $casts = [
@@ -191,20 +191,16 @@ class WorkOrder extends Model implements Filterable
 
     public function getTypeAttribute()
     {
-        if( $this->isRework() ) {
-            return 'rework';
+        if( empty($this->rectification_type) ) {
+            return 'standard';
         }
 
-        if( $this->isWarranty() ) {
-            return 'warranty';
-        }
-
-        return 'standard';
+        return $this->rectification_type;
     }
 
     public function getTypeIdAttribute()
     {
-        return $this->rework_id ?? $this->warranty_id;
+        return $this->rectification_id;
     }
 
 
@@ -213,12 +209,12 @@ class WorkOrder extends Model implements Filterable
 
     public function reworks()
     {
-        return $this->hasMany(self::class, 'rework_id');
+        return $this->hasMany(self::class, 'rectification_id')->where('rectification_type', 'rework');
     }
 
     public function warranties()
     {
-        return $this->hasMany(self::class, 'warranty_id');
+        return $this->hasMany(self::class, 'rectification_id')->where('rectification_type', 'warranty');
     }
 
     public function client()
@@ -387,33 +383,26 @@ class WorkOrder extends Model implements Filterable
         return $query->where('contractor_id', $value);
     }
 
-    public function scopeFilterByTypeGroup($query, $type_group)
+    public function scopeFilterByTypeGroup($query, $types_group)
     {
-        if( empty($type_group) || count($type_group) == 3 ) {
+        if( empty($types_group) || self::collectionAllTypes()->diff($types_group)->isEmpty() ) {
             return $query;
         }
 
-        if( count($type_group) == 2 && in_array('rework', $type_group) && in_array('warranty', $type_group) ) {
-            return $query->whereNotNull('rework_id')->whereNotNull('warranty_id');
+        if( self::collectionAllRectificationTypes()->diff($types_group)->isEmpty() )
+        {
+            return $query->whereNotNull('rectification_type');
         }
 
-        if( count($type_group) == 2 && in_array('rework', $type_group) &&! in_array('warranty', $type_group) ) {
-            return $query->whereNull('warranty_id');
+        if( in_array('rework', $types_group) ) {
+            return $query->where('rectification_type', 'rework');
         }
 
-        if( count($type_group) == 2 && in_array('warranty', $type_group) &&! in_array('rework', $type_group) ) {
-            return $query->whereNull('rework_id');
+        if( in_array('warranty', $types_group) ) {
+            return $query->where('rectification_type', 'warranty');
         }
 
-        if( count($type_group) == 1 && in_array('rework', $type_group) ) {
-            return $query->whereNotNull('rework_id');
-        }
-
-        if( count($type_group) == 1 && in_array('warranty', $type_group) ) {
-            return $query->whereNotNull('warranty_id');
-        }
-
-        return $query->whereNull('rework_id')->whereNull('warranty_id');
+        return $query->whereNull('rectification_type');
     }
 
     public function scopeFilterByPendingAttributes($query, $value)
@@ -475,22 +464,22 @@ class WorkOrder extends Model implements Filterable
 
     public function isRework()
     {
-        return is_int($this->rework_id);
+        return $this->rectification_type == 'rework' && is_int($this->rectification_id);
     }
 
     public function isWarranty()
     {
-        return is_int($this->warranty_id);
+        return $this->rectification_type == 'warranty' && is_int($this->rectification_id);
     }
 
     public function isStandard()
     {
-        return ! $this->isRework() && ! $this->isWarranty();
+        return is_null($this->rectification_type) && is_null($this->rectification_id);
     }
 
     public function isNonstandard()
     {
-        return $this->isRework() || $this->isWarranty();
+        return ! $this->isStandard();
     }
 
     public function qualifiesForRectification()
@@ -510,6 +499,13 @@ class WorkOrder extends Model implements Filterable
     public static function collectionAllTypes()
     {
         return collect( self::$all_types );
+    }
+
+    public static function collectionAllRectificationTypes()
+    {
+        return self::collectionAllTypes()->reject(function ($type) {
+            return $type == 'standard';
+        });
     }
 
     public static function collectionAllStatuses($except = [])

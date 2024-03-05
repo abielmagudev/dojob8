@@ -26,18 +26,16 @@ class CreateWorkOrdersTable extends Migration
             $table->foreignId('done_by')->nullable();
             $table->dateTime('completed_at')->nullable()->index();
             $table->foreignId('completed_by')->nullable();
+            $table->string('permit_code')->nullable();
+            $table->text('notes')->nullable();
 
-            $table->foreignId('assessment_id')->nullable()->references('id')->on('assessments')->onDelete('set null');
-            $table->foreignId('rework_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');
-            $table->foreignId('warranty_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');
+            $table->string('rectification_type')->nullable();
+            $table->foreignId('rectification_id')->nullable()->references('id')->on('work_orders')->onDelete('cascade');
             $table->foreignId('client_id');
             $table->foreignId('contractor_id')->nullable();
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('job_id');
-
-            $table->string('permit_code')->nullable();
-            $table->text('notes')->nullable();
-
+            $table->foreignId('assessment_id')->nullable()->references('id')->on('assessments')->onDelete('set null');
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->timestamps();

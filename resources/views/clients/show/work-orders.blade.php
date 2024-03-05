@@ -42,7 +42,7 @@
             </td>
 
             <td>
-                @include('crews.__.flag', [
+                @includeWhen($work_order->hasCrew(), 'crews.__.flag', [
                     'crew' => $work_order->crew,
                     'class' => 'w-100',
                 ])

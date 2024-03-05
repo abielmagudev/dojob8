@@ -14,11 +14,22 @@ class WorkOrderStoreRequest extends FormRequest
 {
     use ResolveExtensionRequestsTrait;
 
-    public $work_order_ids_for_rectification = '';
+    public $work_orders_id_for_rectification = '';
 
     public function authorize()
     {
         return auth()->user()->can('create-work-orders');
+    }
+
+    public function prepareForValidation()
+    {
+        if(! WorkOrder::collectionAllTypes()->contains( $this->get('type') ) ) {
+            return;
+        }
+
+        if( $this->get('type') <> 'standard' && $client = Client::find( $this->get('client') ) ) {
+            $this->work_orders_id_for_rectification = $client->onlyWorkOrdersForRectification()->pluck('id')->implode(',');
+        }
     }
 
     public function rules()
@@ -37,8 +48,8 @@ class WorkOrderStoreRequest extends FormRequest
                 sprintf('in:%s', WorkOrder::collectionAllTypes()->implode(',')),
             ],
             'type_id' => [
-                'required_if:type,rework,warranty',
-                sprintf('in:%s', $this->work_order_ids_for_rectification),
+                sprintf('required_if:type,%s', WorkOrder::collectionAllRectificationTypes()->implode(',')),
+                sprintf('in:%s', $this->work_orders_id_for_rectification),
             ],
             'job' => [
                 'required',
@@ -51,6 +62,10 @@ class WorkOrderStoreRequest extends FormRequest
             'contractor' => [
                 'nullable',
                 sprintf('exists:%s,id', Contractor::class),
+            ],
+            'permit_code' => [
+                'nullable',
+                'string',
             ],
             'notes' => [
                 'nullable',
@@ -65,17 +80,6 @@ class WorkOrderStoreRequest extends FormRequest
             'type_id.required_if' => __(sprintf('Choose a work order for %s', $this->get('type'))),
             'type_id.in' => __(sprintf('Choose a valid work order for %s', $this->get('type'))),
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        if(! WorkOrder::collectionAllTypes()->contains( $this->get('type') ) ) {
-            return;
-        }
-
-        if( $this->get('type') <> 'standard' && $client = Client::find( $this->get('client') ) ) {
-            $this->work_order_ids_for_rectification = $client->onlyWorkOrdersForRectification()->pluck('id')->implode(',');
-        }
     }
 
     public function passedValidation()
@@ -96,10 +100,8 @@ class WorkOrderStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'payment_status' => WorkOrder::INITIAL_PAYMENT_STATUS,
-            'inspection_status' => WorkOrder::INITIAL_INSPECTION_STATUS,
-            'rework_id' => $this->get('type') == 'rework' ? $this->get('type_id') : null,
-            'warranty_id' => $this->get('type') == 'warranty' ? $this->get('type_id') : null,
+            'rectification_type' => $this->get('type_id') ? $this->get('type') : null,
+            'rectification_id' => $this->get('type_id'),
             'client_id' => $this->get('client'),
             'contractor_id' => $this->get('contractor'),
             'job_id' => $this->get('job'),

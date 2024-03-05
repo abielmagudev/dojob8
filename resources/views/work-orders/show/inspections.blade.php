@@ -2,7 +2,6 @@
     @slot('title')
     <div>
         <span class="badge text-bg-dark ">{{ $inspections->count() }}</span>
-        @include('work-orders.__.flag-inspection-status', ['status' => $work_order->inspection_status])
         @if($work_order->job->requiresSuccessInspections())
         <div class="badge border border-success text-success text-uppercase">{{ $work_order->job->success_inspections_required_count }} Success required</div>
         @endif

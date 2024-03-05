@@ -19,7 +19,7 @@ class CreateAssessmentsTable extends Migration
             $table->date('scheduled_date');
             $table->text('notes')->nullable();
             $table->foreignId('client_id');
-            $table->foreignId('crew_id');
+            $table->foreignId('crew_id')->nullable();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->timestamps();

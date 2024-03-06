@@ -47,8 +47,8 @@
         </li>
 
         <li>
-          <a class="dropdown-item" href="#">
-          <i class="bi bi-person-vcard"></i>
+          <a class="dropdown-item" href="{{ route('account.edit') }}">
+              <i class="bi bi-person-vcard"></i>
               <span class="ms-2">My account</span>
           </a>
         </li>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
@@ -104,6 +105,10 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('work-orders/workers', WorkOrderMemberController::class)->name('work-orders.update.workers');
     Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
     Route::resource('work-orders', WorkOrderController::class)->except('create');
+
+    // Account
+    Route::get('account', [AccountController::class, 'edit'])->name('account.edit');
+    Route::patch('account', [AccountController::class, 'update'])->name('account.update');
 
     // Settings
     Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');

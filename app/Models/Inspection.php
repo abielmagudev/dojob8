@@ -9,6 +9,7 @@ use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasPendingAttributes;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
+use App\Models\Media\Traits\HasMedia;
 use App\Models\WorkOrder\Traits\BelongWorkOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,15 +18,20 @@ use Illuminate\Support\Str;
 
 class Inspection extends Model implements Filterable
 {
+    // Framework
     use HasFactory;
     
-    use BelongWorkOrder;
-    use HasCrew;
+    // Kernel
     use HasFiltering;
     use HasHookUsers;
     use HasPendingAttributes;
     use HasScheduledDate;
     use HasStatus;
+    
+    // Models
+    use BelongWorkOrder;
+    use HasCrew;
+    use HasMedia;
 
     const INITIAL_STATUS = 'awaiting';
 
@@ -86,11 +92,6 @@ class Inspection extends Model implements Filterable
     public function agency()
     {
         return $this->belongsTo(Agency::class)->withTrashed();
-    }
-
-    public function files()
-    {
-        return $this->morphMany(File::class, 'fileable');
     }
 
     public function members()

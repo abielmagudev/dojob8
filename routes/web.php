@@ -15,7 +15,8 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectionStatusController;
 use App\Http\Controllers\JobController;
-use App\Http\Controllers\FileController;
+use App\Http\Controllers\MediaAjaxController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SearchController;
@@ -83,9 +84,10 @@ Route::middleware(['auth'])->group(function () {
     // Search clients and work orders
     Route::get('search', SearchController::class)->name('app.search');
     
-    // Files
-    Route::post('files/{folder}/{fileable_id}', [FileController::class, 'store'])->name('files.store');
-    Route::delete('files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
+    // Media (Files, photos, videos...)
+    // Route::resource('media/ajax', MediaAjaxController::class)->only(['store', 'destroy']);
+    Route::post('media', [MediaController::class, 'store'])->name('media.store');
+    Route::delete('media', [MediaController::class, 'destroy'])->name('media.destroy');
     
     // Extensions
     Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');

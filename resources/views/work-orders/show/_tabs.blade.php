@@ -19,10 +19,10 @@
         'enabled' => $work_order->qualifiesForRectification(),
         'title' => 'Warranties',
     ],
-    'files' => [
+    'media' => [
         'display' => true,
         'enabled' => true,
-        'title' => 'Photos & Files',
+        'title' => 'Photos & Documents',
     ],
     'comments' => [
         'display' => ! auth()->user()->hasPartnerRole(),

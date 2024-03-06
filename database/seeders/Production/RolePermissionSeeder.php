@@ -28,7 +28,7 @@ class RolePermissionSeeder extends Seeder
 
         // OPERATIVE
         $this->createPermissionsForComments($roles);
-        $this->createPermissionsForFiles($roles);
+        $this->createPermissionsForMedia($roles);
         $this->createPermissionsForInspections($roles);
         $this->createPermissionsForPayments($roles);
         $this->createPermissionsForWorkOrders($roles);
@@ -372,9 +372,9 @@ class RolePermissionSeeder extends Seeder
     /**
      * Files
      */
-    protected function createPermissionsForFiles($roles)
+    protected function createPermissionsForMedia($roles)
     {
-        Permission::create(['name' => 'see-files'])->syncRoles([
+        Permission::create(['name' => 'see-media'])->syncRoles([
             $roles['administrator'],
             $roles['manager'],
             $roles['coordinator'],
@@ -382,7 +382,7 @@ class RolePermissionSeeder extends Seeder
             $roles['worker'],
         ]);
 
-        Permission::create(['name' => 'filter-files'])->syncRoles([
+        Permission::create(['name' => 'filter-media'])->syncRoles([
             $roles['administrator'],
             $roles['manager'],
             $roles['coordinator'],
@@ -390,7 +390,7 @@ class RolePermissionSeeder extends Seeder
             $roles['worker'],
         ]);
 
-        Permission::create(['name' => 'create-files'])->syncRoles([
+        Permission::create(['name' => 'create-media'])->syncRoles([
             $roles['administrator'],
             $roles['manager'],
             $roles['coordinator'],
@@ -398,7 +398,7 @@ class RolePermissionSeeder extends Seeder
             $roles['worker'],
         ]);
 
-        Permission::create(['name' => 'edit-files'])->syncRoles([
+        Permission::create(['name' => 'edit-media'])->syncRoles([
             $roles['administrator'],
             $roles['manager'],
             $roles['coordinator'],
@@ -406,7 +406,7 @@ class RolePermissionSeeder extends Seeder
             $roles['worker'],
         ]);
 
-        Permission::create(['name' => 'delete-files'])->syncRoles([
+        Permission::create(['name' => 'delete-media'])->syncRoles([
             $roles['administrator'],
             $roles['manager'],
         ]);

@@ -2,7 +2,7 @@
 
     <x-slot name="footer">
         <div>
-            <form action="{{ route('files.destroy', 0) }}" method="post">
+            <form action="{{ route('media.destroy', 0) }}" method="post">
                 @method('delete')
                 @csrf
                 <input type="hidden" name="media">

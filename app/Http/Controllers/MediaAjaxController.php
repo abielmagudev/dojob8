@@ -2,22 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FileDestroyRequest;
-use App\Http\Requests\FileSaveRequest;
-use App\Models\File;
+use App\Models\Media;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class FileController extends Controller
+class MediaAjaxController extends Controller
 {
-    public function __construct()
+    public function store(Request $request)
     {
-        $this->authorizeResource(File::class, 'file');    
-    }
-
-    public function store(FileSaveRequest $request)
-    {
-        return response()->json(['message' => 'File uploaded successfully.']);
-
         if( $request->file('file')->isValid() )
         {
             $file = $request->file('file');
@@ -31,11 +23,11 @@ class FileController extends Controller
                 
                 if( Storage::exists($path) )
                 {
-                    File::create([
+                    Media::create([
                         'filename' => $file->getClientOriginalName(),
                         'url' => $path,
                         'disk' => sprintf('app/%s', $folder),
-                        'fileable_type' => File::getFileableClass( $request->get('folder') ),
+                        'fileable_type' => null, // Media::getFileableClass( $request->get('folder') ),
                         'fileable_id' => $request->get('fileable_id'),
                     ]);
 
@@ -54,8 +46,8 @@ class FileController extends Controller
         return response()->json(['error' => 'Invalid file'], 400);
     }
 
-    public function destroy(FileDestroyRequest $request)
+    public function destroy()
     {
-        $request->dd();
+        
     }
 }

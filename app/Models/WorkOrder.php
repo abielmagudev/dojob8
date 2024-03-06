@@ -9,6 +9,7 @@ use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
+use App\Models\Media\Traits\HasMedia;
 use App\Models\Payment\Traits\HasPayment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,16 +20,17 @@ class WorkOrder extends Model implements Filterable
     // Framework
     use HasFactory;
 
-    // Models
-    use HasCrew;
-    use HasInspections;
-    use HasPayment;
-
     // Kernel
     use HasFiltering;
     use HasHookUsers;
     use HasScheduledDate;
     use HasStatus;
+
+    // Models
+    use HasCrew;
+    use HasInspections;
+    use HasPayment;
+    use HasMedia;
 
     const INITIAL_STATUS = 'new';
 
@@ -240,11 +242,6 @@ class WorkOrder extends Model implements Filterable
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-
-    public function files()
-    {
-        return $this->morphMany(File::class, 'fileable');
     }
 
     public function history()

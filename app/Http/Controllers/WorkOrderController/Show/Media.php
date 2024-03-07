@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WorkOrderController\Show;
 
 use App\Http\Controllers\WorkOrderController\Kernel\ResponseConstructor;
+use App\Models\Media\Kernel\FileRestriction;
 
 class Media extends ResponseConstructor
 {
@@ -10,6 +11,7 @@ class Media extends ResponseConstructor
     {
         return [
             'show' => 'media',
+            'accepts' => FileRestriction::accepts(),
         ];
     }
 }

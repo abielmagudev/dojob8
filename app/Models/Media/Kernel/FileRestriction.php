@@ -4,6 +4,21 @@ namespace App\Models\Media\Kernel;
 
 class FileRestriction
 {
+    protected static $accepts = [
+        '.csv',
+        '.jpeg',
+        '.jpg',
+        'application/pdf',
+        // 'application/vnd.ms-excel',
+        // 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'image/gif',
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'text/csv',
+        'text/plain',
+    ];
+
     protected static $mimes = [
         'jpeg',
         'jpg',
@@ -16,6 +31,11 @@ class FileRestriction
 
 
     // Statics
+
+    public static function accepts()
+    {
+        return collect( self::$accepts );
+    }
 
     public static function mimes()
     {

@@ -2,7 +2,7 @@
     <form action="{{ route('media.store') }}" method="post" enctype="multipart/form-data" autocomplete="off" id="mediaUploaderForm">
         @csrf
         <label for="inputMediaFiles" class="border border-secondary rounded w-100 p-5 text-center fs-5" style="border-style:dashed !important">Click to choose files...</label>
-        <input id="inputMediaFiles" class="d-none" type="file" name="media[]" multiple>
+        <input id="inputMediaFiles" class="d-none" type="file" name="media[]" accept="{{ $accepts->implode(',') }}" multiple>
         <input type="hidden" name="model_key" value="work-order">
         <input type="hidden" name="model_id" value="{{ $work_order->id }}">
         

@@ -6,9 +6,8 @@ use App\Models\Agency;
 use App\Models\Contractor;
 use App\Models\Member;
 use App\Models\User;
-use App\Models\User\UserRoleClassifier;
+use App\Models\User\Services\RoleCatalogManager;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Auth;
 
 class UserSeeder extends Seeder
 {
@@ -19,7 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $member_roles = UserRoleClassifier::getRolesBelongModel(Member::class);
+        $member_roles = RoleCatalogManager::byProfile( new Member );
 
         User::factory(30)->create()->forget(1)->each(function ($user) use ($member_roles) {
 

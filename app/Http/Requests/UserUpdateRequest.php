@@ -9,7 +9,7 @@ class UserUpdateRequest extends FormRequest
 {
     public function authorize()
     {
-        return auth()->user()->can('edit-users');
+        return auth()->user()->can('edit-users') && $this->route('user')->id <> auth()->id();
     }
 
     public function rules()
@@ -30,12 +30,12 @@ class UserUpdateRequest extends FormRequest
                 sprintf('unique:%s,email,%s', User::class, $this->route('user')->id),
             ],
             'password' => [
+                'sometimes',
                 'nullable',
+                'confirmed',
+                'string',
                 'min:8',
-            ],
-            'confirm_password' => [
-                'required_with:password',
-                'same:password',
+                // 'regex:/^[A-Za-z0-9_@#%!&*^()-=]+$/',
             ],
         ];
     }

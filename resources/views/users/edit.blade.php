@@ -6,7 +6,7 @@
     $user->name => route('users.show', $user),
     'Edit'
 ]" />
-<x-page-title>{{ $user->name }}</x-page-title>
+<x-page-title subtitle="{{ ucfirst($user->profile_classnickname) }}">{{ $user->name }}</x-page-title>
 @endsection
 
 @section('content')
@@ -14,22 +14,18 @@
     <form action="{{ route('users.update', $user) }}" method="post" autocomplete="off">
         @method('put')
         @csrf
-
-        <x-form-field-horizontal label="Profile">
-            <div class="form-control text-capitalize">{{ $user->profile_name }} ({{ $user->profile_classnickname }})</div>
-        </x-form-field-horizontal>
-
-        @include('users._form')
+        @includeWhen($member_roles->isNotEmpty(), 'users.includes.form-member-roles')
+        @include('users.includes.form')
 
         <x-form-field-horizontal for="confirmPasswordInput">
             <x-custom.switch-active-status :toggle="$user->isActive()">
-                <b class="d-block">Active</b>
-                        <small>If you deactivate this option, this user will not be able to access our application.</small>
+                <b>Active.</b> 
+                <small>If you deactivate this option, this user will not be able to access our application.</small>
             </x-custom.switch-active-status>
         </x-form-field-horizontal>
 
         <br>
-        <div class="text-end">
+        <div class="d-flex gap-2 justify-content-end align-items-center">
             <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">Cancel</a>
             <button class="btn btn-warning" type="submit">Update user</button>
         </div>

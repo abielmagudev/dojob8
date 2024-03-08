@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Models\User\Kernel\ProfileMapper;
 use App\Models\User\UserProfiler;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -15,9 +16,58 @@ class UserStoreRequest extends FormRequest
         return auth()->user()->can('create-users');
     }
 
+    public function prepareForValidation()
+    {
+        if(! $handler = $this->makeProfileInputHandler() ) {
+            return;
+        }
+
+        if(! ProfileMapper::shortExists($handler->profile_short) ) {
+            return;
+        }
+
+        $this->merge([
+            'profile_type' => ProfileMapper::getType($handler->profile_short),
+            'profile_id' => $handler->profile_id,
+            'profile_role' => $handler->profile_short,
+        ]);
+    }
+
+    protected function makeProfileInputHandler()
+    {
+        if(! $this->filled('profile') ||! isJson($this->input('profile')) ) {
+            return;
+        }
+
+        $profile_input = json_decode($this->input('profile'), true);
+        $profile_short = key($profile_input);
+
+        return (object) [
+            'profile_id' => $profile_input[$profile_short],
+            'profile_short' => $profile_short,
+        ];
+    }
+
     public function rules()
     {
         return [
+            'profile' => [
+                'required',
+                'json',
+            ],
+            'profile_type' => [
+                'bail',
+                'required',
+                sprintf('in:%s', ProfileMapper::types()->implode(','))
+            ],
+            'profile_id' => [
+                'bail',
+                'sometimes',
+                'required',
+                'integer',
+                sprintf('not_in:%s', auth()->id()),
+                sprintf('exists:%s,id', $this->profile_type),
+            ],
             'name' => [
                 'bail',
                 'required',
@@ -33,29 +83,13 @@ class UserStoreRequest extends FormRequest
                 sprintf('unique:%s,email', User::class),
             ],
             'password' => [
-                'required',
+                'sometimes',
+                'nullable',
+                'confirmed',
+                'string',
                 'min:8',
-            ],
-            'confirm_password' => [
-                'required_with:password',
-                'same:password',
+                // 'regex:/^[A-Za-z0-9_@#%!&*^()-=]+$/',
             ],
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        if(! $this->profile = UserProfiler::find($this->id, $this->profile) ) {
-            abort(404);
-        }
-    }
-
-    public function validated()
-    {
-        return array_merge(parent::validated(), [
-            'profile_type' => get_class($this->profile),
-            'profile_id' => $this->profile->id,
-            'is_active' => $this->get('active'),
-        ]);
     }
 }

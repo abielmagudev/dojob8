@@ -19,6 +19,7 @@
 @section('content')
 <div class="row">
 
+    <!-- Information -->
     <div class="col-sm">
         <x-card>
             <x-slot name="title">
@@ -45,6 +46,42 @@
         </x-card>
     </div>
 
+    <!-- Accounts -->
+    <div class="col-sm">
+        <x-card title="Accounts">
+            <x-slot name="options">
+                <a href="{{ route('users.create', ['member' => $member->id]) }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-lg"></i>
+                </a>
+            </x-slot>
+            
+            @if( $member->users->count() )
+            <x-table class="align-middle">
+                <x-slot name="thead">
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+                </x-slot>
+                @foreach($member->users as $user)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td class="text-end">
+                        <a href="{{ route('users.edit', $user) }}" class="btn btn-outline-warning btn-sm">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </x-table>
+            @endif
+        </x-card>
+    </div>
+
+
+    <!-- Crews -->
     <div class="col-sm">
         <x-card title="Crews">
         @if( $member->isCrewMember() )

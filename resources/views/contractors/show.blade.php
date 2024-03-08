@@ -19,7 +19,7 @@
     </div>
 
     <div class="col-sm mb-3">
-        @include('contractors.show.user-accounts')
+        @include('contractors.show.accounts')
     </div>
 </div>
 

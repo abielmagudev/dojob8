@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Agency;
 use App\Models\Contractor;
 use App\Models\Member;
-use App\Models\User\UserProfiler;
+use App\Models\User\Kernel\ProfileContainer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,20 +18,9 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $classname_random = $this->faker->randomElement( UserProfiler::classnames() );
-
-        if( $classname_random == Member::class )
-        {
-            $max_profile_id = 35;
-        } 
-        elseif( $classname_random == Contractor::class )
-        {
-            $max_profile_id = 10;
-        }
-        else
-        {
-            $max_profile_id = 3;
-        }
+        $profile_type_random = $this->faker->randomElement( ProfileContainer::types() );
+        
+        $max_profile_id = $this->getMaxProfileId($profile_type_random);
 
         return [
             'name' => $this->faker->userName(),
@@ -38,7 +28,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => 'password', // Mutator
             // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'profile_type' => $classname_random,
+            'profile_type' => $profile_type_random,
             'profile_id' => $this->faker->numberBetween(1, $max_profile_id),
             'last_session_at' => $this->faker->dateTime(),
             'last_session_device' => $this->faker->optional()->randomElement(['desktop','mobile','tablet']),
@@ -46,6 +36,20 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'is_active' => (int) $this->faker->boolean(),
         ];
+    }
+
+    protected function getMaxProfileId(string $profile_type_random)
+    {   
+        if( $profile_type_random == Agency::class ) { 
+            return 3;
+        }
+
+        if( $profile_type_random == Contractor::class ) {
+            return 10;
+        } 
+
+        // Member::class
+        return 35;
     }
 
     /**

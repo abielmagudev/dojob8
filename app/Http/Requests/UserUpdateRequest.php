@@ -35,7 +35,7 @@ class UserUpdateRequest extends FormRequest
                 'confirmed',
                 'string',
                 'min:8',
-                // 'regex:/^[A-Za-z0-9_@#%!&*^()-=]+$/',
+                // sprintf('regex:%s', User::PASSWORD_PATTERN),
             ],
         ];
     }

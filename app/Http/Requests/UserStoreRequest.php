@@ -2,15 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Controllers\UserController\Requests\ProfileJsonInputMapper;
 use App\Models\User;
-use App\Models\User\Kernel\ProfileMapper;
-use App\Models\User\UserProfiler;
+use App\Models\User\Kernel\ProfileContainer;
+use App\Models\User\Services\RoleCatalogManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserStoreRequest extends FormRequest
 {
-    public $profile;
-
     public function authorize()
     {
         return auth()->user()->can('create-users');
@@ -18,39 +17,24 @@ class UserStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if(! $handler = $this->makeProfileInputHandler() ) {
-            return;
-        }
-
-        if(! ProfileMapper::shortExists($handler->profile_short) ) {
+        if(! $mapper = ProfileJsonInputMapper::make($this) ) {
             return;
         }
 
         $this->merge([
-            'profile_type' => ProfileMapper::getType($handler->profile_short),
-            'profile_id' => $handler->profile_id,
-            'profile_role' => $handler->profile_short,
+            'profile_type' => $mapper->profileType(),
+            'profile_id' => $mapper->profileId(),
+            'profile_short' => $mapper->profileShort(),
         ]);
-    }
-
-    protected function makeProfileInputHandler()
-    {
-        if(! $this->filled('profile') ||! isJson($this->input('profile')) ) {
-            return;
-        }
-
-        $profile_input = json_decode($this->input('profile'), true);
-        $profile_short = key($profile_input);
-
-        return (object) [
-            'profile_id' => $profile_input[$profile_short],
-            'profile_short' => $profile_short,
-        ];
     }
 
     public function rules()
     {
         return [
+            'role' => [
+                'required',
+                sprintf('in:%s', RoleCatalogManager::byProfile( app($this->profile_type) )->implode(',')),
+            ],
             'profile' => [
                 'required',
                 'json',
@@ -58,7 +42,7 @@ class UserStoreRequest extends FormRequest
             'profile_type' => [
                 'bail',
                 'required',
-                sprintf('in:%s', ProfileMapper::types()->implode(','))
+                sprintf('in:%s', ProfileContainer::types()->implode(','))
             ],
             'profile_id' => [
                 'bail',
@@ -88,8 +72,17 @@ class UserStoreRequest extends FormRequest
                 'confirmed',
                 'string',
                 'min:8',
-                // 'regex:/^[A-Za-z0-9_@#%!&*^()-=]+$/',
+                // sprintf('regex:%s', User::PASSWORD_PATTERN),
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'profile.*' => __('Select a user profile previously'),
+            'profile_type.*' => __('Invalid user profile'),
+            'profile_id.*' => __('Invalid user profile'),
         ];
     }
 }

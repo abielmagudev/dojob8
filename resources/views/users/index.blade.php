@@ -5,21 +5,23 @@
 @endsection
 
 @section('content')
-<x-card title="{{ $users->total() }}">
-    @slot('options')
-    <x-modal-trigger modal-id="modalFilterUsers" class="btn btn-outline-primary">
-        <i class="bi bi-filter"></i>
-    </x-modal-trigger>
-    @endslot
+<x-card>
+    <x-slot name="title">
+        <span class="badge bg-dark">{{ $users->total() }}</span>
+    </x-slot>
+
+    <x-slot name="options">
+        <x-modal-trigger modal-id="modalFilterUsers" class="btn btn-outline-primary">
+            <i class="bi bi-filter"></i>
+        </x-modal-trigger>
+    </x-slot>
 
     @if( $users->count() )
     <x-table class="align-middle">
         <x-slot name="thead">
             <tr>
-                <th></th>
-                <th>Username</th>
-                <th>Email</th>
                 <th>Name</th>
+                <th>Email</th>
                 <th>Profile</th>
                 <th>Roles</th>
                 <th class="text-nowrap">Last session</th>
@@ -29,9 +31,6 @@
 
         @foreach($users as $user)
         <tr>
-            <td class="text-center" style="width:1%">
-                <x-custom.indicator-active-status :toggle="$user->isActive()" tooltip/>
-            </td>
             <td>
                 {{ $user->name }}
             </td>
@@ -40,14 +39,12 @@
             </td>
             <td class="text-capitalize text-nowrap">
                 <span>{{ $user->profile_name }}</span>
-            </td>
-            <td class="text-capitalize">
-                {{ $user->profile_classnickname }}
+                <em class="text-secondary">{{ $user->profile_short }}</em>
             </td>
             <td class="text-capitalize">
                 {{ $user->getRoleNames()->implode(',') }}
             </td>
-            <td class="text-nowrap">
+            <td class="text-nowrap <?= $user->isInactive() ? 'text-secondary' : '' ?>">
                 <span class="me-1">{{ $user->last_session_date_human }}</span>
                 <span>{{ $user->last_session_time_human }}</span>
             </td>
@@ -58,6 +55,7 @@
             </td>
         </tr>
         @endforeach
+
     </x-table>
     @endif
 </x-card>

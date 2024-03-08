@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\UserController\Services\RouteShowProfileService;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
-use App\Models\User\Services\MemberRoleCatalogManager;
-use App\Models\User\UserProfiler;
+use App\Models\User\Kernel\ProfileContainer;
+use App\Models\User\Services\RoleCatalogManager;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -15,20 +16,24 @@ class UserController extends Controller
     public function __construct()
     {
         $this->authorizeResource(User::class, 'user');    
+
+        $this->middleware('abortUserHasSuperAdminRole')->only(['show', 'edit', 'update']);
     }
 
     public function index(Request $request)
     {
         $users = User::with('profile')
         ->filterByParameters( $request->all() )
-        ->where('id', '!=', auth()->id())
+        ->excludesSuperAdminRole()
+        ->excludesAuth()
         ->orderBy('id', $request->get('sort', 'desc'))
         ->paginate(35)
         ->appends( $request->query() );
 
         return view('users.index', [
             'users' => $users,
-            'profiles' => UserProfiler::classnicknames(),
+            'profiles' => ProfileContainer::shorts(),
+            'roles' => RoleCatalogManager::exceptSuperAdminRole(),
             'request' => $request,
         ]);
     }
@@ -36,11 +41,12 @@ class UserController extends Controller
     public function create(UserCreateRequest $request)
     {
         $profile = app($request->profile_type)->findOrFail($request->profile_id);
-        
+
         return view('users.create', [
-            'member_roles' => MemberRoleCatalogManager::restrictedByUserRole( auth()->user() ),
             'profile' => $profile,
             'request' => $request,
+            'roles' => RoleCatalogManager::byProfile($profile),
+            'url_back' => RouteShowProfileService::get($profile),
             'user' => new User,
         ]);
     }
@@ -51,33 +57,23 @@ class UserController extends Controller
             return back()->with('danger', 'Error saving user, try again please');
         }
 
-        if( $request->filled('member_role') ) {
-            $user->assignRole( $request->member_role );
-        } else {
-            $user->assignRole( $request->profile_role );
-        }
+        $user->assignRole( $request->role );
 
+        $url = RouteShowProfileService::get($user->profile);
 
-        return redirect()->route('users.index')->with('success', "You created the user <b>{$user->name}</b>");
+        return redirect($url)->with('success', "You created the user <b>{$user->name}</b>");
     }
 
     public function show(User $user)
-    {
-        if( $user->id == auth()->id() ) {
-            return redirect()->route('users.index');
-        }
-        
+    {        
         return view('users.show')->with('user', $user);
     }
 
     public function edit(User $user)
-    {
-        if( $user->id == auth()->id() ) {
-            return redirect()->route('users.index');
-        }
-        
+    {        
         return view('users.edit', [
-            'member_roles' => MemberRoleCatalogManager::restrictedByUserRole( auth()->user() ),
+            'roles' => RoleCatalogManager::byProfile($user->profile),
+            'url_back' => RouteShowProfileService::get($user->profile),
             'user' => $user,
         ]);
     }
@@ -88,9 +84,7 @@ class UserController extends Controller
             return back()->with('danger', 'Error updating user, try again please');
         }
 
-        if( $request->filled('member_role') ) {
-            $user->assignRole( $request->member_role );
-        }
+        $user->assignRole( $request->role );
 
         return redirect()->route('users.edit', $user)->with('success', "You updated the user <b>{$user->name}</b>");
     }
@@ -101,6 +95,8 @@ class UserController extends Controller
             return back()->with('danger', 'Error deleting user, try again please');
         }
 
-        return redirect()->route('users.index')->with('success', "You deleted the user <b>{$user->name}</b>");
+        $url = RouteShowProfileService::get($user->profile);
+
+        return redirect($url)->with('success', "You deleted the user <b>{$user->name}</b>");
     }
 }

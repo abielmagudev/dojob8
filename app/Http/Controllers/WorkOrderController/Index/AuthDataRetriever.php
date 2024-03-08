@@ -22,7 +22,7 @@ class AuthDataRetriever
     {
         $retriever = AdminUser::class;
 
-        if( auth()->user()->hasNonAdminRole() ) {
+        if(! auth()->user()->hasAdminRole() ) {
             $retriever = self::collectionRolesRetrieviers()->get( auth()->user()->role_name );
         }
 

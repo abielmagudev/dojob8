@@ -5,9 +5,8 @@ namespace App\Models\User\Kernel;
 use App\Models\Agency;
 use App\Models\Contractor;
 use App\Models\Member;
-use Illuminate\Http\Request;
 
-class ProfileMapper
+class ProfileContainer
 {
     protected static $cache;
 
@@ -17,7 +16,7 @@ class ProfileMapper
         'member' => Member::class,
     ];
 
-    public static function collection()
+    public static function all()
     {
         if( is_null( self::$cache ) ) {
             self::$cache = collect( self::$profiles );
@@ -28,31 +27,31 @@ class ProfileMapper
 
     public static function shorts()
     {
-        return self::collection()->keys();
+        return self::all()->keys();
     }
 
     public static function types()
     {
-        return self::collection()->values();
+        return self::all()->values();
     }
 
     public static function shortExists($short)
     {
-        return self::collection()->has($short);
+        return self::all()->has($short);
     }
 
     public static function containsType($type)
     {
-        return self::collection()->contains($type);
-    }
-
-    public static function getType($short)
-    {
-        return self::collection()->get($short);
+        return self::all()->contains($type);
     }
 
     public static function getShort($type)
     {
-        return self::collection()->search($type);
+        return self::all()->search($type);
+    }
+
+    public static function getType($short)
+    {
+        return self::all()->get($short);
     }
 }

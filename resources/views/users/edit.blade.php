@@ -14,7 +14,6 @@
     <form action="{{ route('users.update', $user) }}" method="post" autocomplete="off">
         @method('put')
         @csrf
-        @includeWhen($member_roles->isNotEmpty(), 'users.includes.form-member-roles')
         @include('users.includes.form')
 
         <x-form-field-horizontal for="confirmPasswordInput">
@@ -26,7 +25,7 @@
 
         <br>
         <div class="d-flex gap-2 justify-content-end align-items-center">
-            <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">Cancel</a>
+            <a href="{{ $url_back }}" class="btn btn-outline-primary">Cancel</a>
             <button class="btn btn-warning" type="submit">Update user</button>
         </div>
     </form>

@@ -6,7 +6,7 @@ class RoleCatalogService
 {
     protected static $cache;
 
-    protected static $catalog_roles = [
+    protected static $categories = [
         'admin' => [
             'SuperAdmin',
             'administrator',
@@ -28,7 +28,7 @@ class RoleCatalogService
     public static function collection()
     {
         if( is_null( self::$cache ) ) {
-            self::$cache = collect( self::$catalog_roles );
+            self::$cache = collect( self::$categories );
         }
 
         return self::$cache;
@@ -36,26 +36,36 @@ class RoleCatalogService
 
     public static function admin()
     {
-        return self::collection()->get('admin');
+        return collect( self::collection()->get('admin') );
     }
 
     public static function field()
     {
-        return self::collection()->get('field');
+        return collect( self::collection()->get('field') );
     }
 
     public static function partner()
     {
-        return self::collection()->get('partner');
+        return collect( self::collection()->get('partner') );
     }
 
-    public static function merge(array $catalogs)
+    public static function categories()
+    {
+        return collect( self::collection()->keys() );
+    }
+
+    public static function roles()
+    {
+        return self::collection()->flatMap(fn($category) => array_values($category));
+    }
+
+    public static function merge(array $categories)
     {
         $values = [];
 
-        foreach(self::$catalog_roles as $catalog => $roles)
+        foreach(self::$categories as $category => $roles)
         {
-            if( in_array($catalog, $catalogs) ) {
+            if( in_array($category, $categories) ) {
                 $values = array_merge($values, $roles);
             }
         }

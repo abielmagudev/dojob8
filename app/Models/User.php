@@ -7,8 +7,9 @@ use App\Models\Kernel\Interfaces\Filterable;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
-use App\Models\User\HasRoleClassifier;
-use App\Models\User\UserProfiler;
+use App\Models\User\Kernel\AssistAuthTrait;
+use App\Models\User\Kernel\AssistRolesTrait;
+use App\Models\User\Kernel\ProfileContainer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,14 +21,17 @@ class User extends Authenticatable implements Filterable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    use AssistAuthTrait;
+    use AssistRolesTrait;
     use HasActiveStatus;
     use HasFiltering;
     use HasHookUsers;
-    use HasRoleClassifier;
     use HasRoles;
     use SoftDeletes;
 
     const NAME_PATTERN = "/^[a-zA-Z0-9_.]+$/";
+
+    const PASSWORD_PATTERN = "/^[A-Za-z0-9_@#%!&*^()-=]+$/";
 
     protected $fillable = [
         'name',
@@ -38,7 +42,7 @@ class User extends Authenticatable implements Filterable
         'last_session_at',
         'last_session_device',
         'last_session_ip',
-        'last_session_geo',
+        // 'last_session_geo_json',
         'is_active',
     ];
 
@@ -52,6 +56,11 @@ class User extends Authenticatable implements Filterable
         'last_session_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'profile_short',
+        'profile_name',
+    ];
+
 
     // Interface
 
@@ -59,17 +68,21 @@ class User extends Authenticatable implements Filterable
     {
         return [
             'profile' => 'filterByProfileType',
+            'role' => 'filterByRole',
             'status' => 'filterByActive',
         ];
     }
 
 
-    // Attributes
+    // Mutators
 
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+
+    // Dates and times accessors
 
     public function getLastSessionDateHumanAttribute()
     {
@@ -81,24 +94,22 @@ class User extends Authenticatable implements Filterable
         return $this->getRawOriginal('last_session_at') ? $this->last_session_at->format('h:m A') : null; 
     }
 
-    public function getProfileClassnameAttribute()
-    {
-        return $this->profile_type;
-    }
 
-    public function getProfileClassnicknameAttribute()
+    // Profile accessors
+
+    public function getProfileShortAttribute()
     {
-        return UserProfiler::getClassnicknameByClassname($this->profile_type);
+        return $this->profile->profile_short;
     }
 
     public function getProfileNameAttribute()
     {
-        return $this->profile->profiled_name;
+        return $this->profile->profile_name;
     }
 
-    public function getRoleNameAttribute()
+    public function getProfileClassAttribute()
     {
-        return $this->getRoleNames()->first() ?? null;
+        return $this->profile_type;
     }
 
 
@@ -106,12 +117,13 @@ class User extends Authenticatable implements Filterable
 
     public function scopeFilterByProfileType($query, $value)
     {
-        if( empty($value) ||! $classname = UserProfiler::getClassnameByClassnickname($value) ) {
+        if( empty($value) ||! $type = ProfileContainer::getType($value) ) {
             return $query;
         }
 
-        return $query->where('profile_type', $classname);
+        return $query->where('profile_type', $type);
     }
+
 
 
     // Relationships

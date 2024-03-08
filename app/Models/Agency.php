@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use App\Models\Inspection\Traits\HasInspections;
-use App\Models\Kernel\Interfaces\Profilable;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasHookUsers;
+use App\Models\User\Interfaces\ProfileableUserContract;
+use App\Models\User\Traits\HasUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Agency extends Model implements Profilable
+class Agency extends Model implements ProfileableUserContract
 {
-    use HasActiveStatus;
     use HasFactory;
+    use HasActiveStatus;
     use HasHookUsers;
     use HasInspections;
+    use HasUsers;
     use SoftDeletes;
 
     protected $fillable = [
@@ -33,7 +35,7 @@ class Agency extends Model implements Profilable
 
     // Interface
 
-    public function getProfiledNameAttribute(): string
+    public function getProfileNameAttribute(): string
     {
         return $this->name;
     }

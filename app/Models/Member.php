@@ -3,23 +3,25 @@
 namespace App\Models;
 
 use App\Models\Kernel\Interfaces\Filterable;
-use App\Models\Kernel\Interfaces\Profilable;
 use App\Models\Kernel\Traits\HasAvailableStatus;
 use App\Models\Kernel\Traits\HasContactChannels;
 use App\Models\Kernel\Traits\HasFiltering;
 use App\Models\Kernel\Traits\HasHookUsers;
+use App\Models\User\Interfaces\ProfileableUserContract;
+use App\Models\User\Traits\HasUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Member extends Model implements Filterable, Profilable
+class Member extends Model implements Filterable, ProfileableUserContract
 {
     use HasAvailableStatus;
     use HasContactChannels;
     use HasFactory;
     use HasFiltering;
     use HasHookUsers;
+    use HasUsers;
     use SoftDeletes;
 
     protected $fillable = [
@@ -52,7 +54,7 @@ class Member extends Model implements Filterable, Profilable
         ];
     }
 
-    public function getProfiledNameAttribute(): string
+    public function getProfileNameAttribute(): string
     {
         return $this->full_name;
     }
@@ -171,10 +173,5 @@ class Member extends Model implements Filterable, Profilable
     public function inspections()
     {
         return $this->belongsToMany(Inspection::class)->using(InspectionMember::class);
-    }
-
-    public function users()
-    {
-        return $this->morphMany(User::class, 'profile'); // Old: morphOne(User::class, 'profile')
     }
 }

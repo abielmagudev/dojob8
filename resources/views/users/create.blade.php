@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+@dump($errors->all())
 <x-card title="New user">
     <form action="{{ route('users.store', [$request->profile => $request->profile_id]) }}" method="post" autocomplete="off">
         @csrf

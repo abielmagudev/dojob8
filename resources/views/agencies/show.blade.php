@@ -43,15 +43,16 @@
     </div>
 
     <!-- Accounts -->
-    <div class="col-sm d-none">
+    @can('create-users')  
+    <div class="col-sm">
         <x-card title="Accounts" class="h-100">
             <x-slot name="options">
-                <a href="{{ route('users.create', ['agency' => $agency->id]) }}" class="btn btn-primary">
+                <a href="{{ route('users.create', ['agency' => $agency->id]) }}" class="btn btn-primary btn-sm">
                     <i class="bi bi-plus-lg"></i>
                 </a>
             </x-slot>
 
-            @if( false )
+            @if( $agency->hasUsers() )
             <x-table class="align-middle">
                 <x-slot name="thead">
                 <tr>
@@ -75,6 +76,7 @@
             @endif
         </x-card>
     </div>
+    @endcan
 </div>
     
 @endsection

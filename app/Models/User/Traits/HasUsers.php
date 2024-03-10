@@ -14,11 +14,24 @@ trait HasUsers
         return ProfileContainer::getShort( get_class($this) );
     }
 
+    public function getUsersCounterAttribute()
+    {
+        return ($this->users_count ?? $this->users->count());
+    }
+
     
     // Relationships
 
     public function users()
     {
         return $this->morphMany(User::class, 'profile');
+    }
+
+
+    // Validators
+
+    public function hasUsers()
+    {
+        return (bool) $this->users_counter; 
     }
 }

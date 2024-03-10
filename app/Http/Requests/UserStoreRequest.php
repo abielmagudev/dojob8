@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Controllers\UserController\Requests\ProfileJsonInputMapper;
+use App\Models\Member;
 use App\Models\User;
 use App\Models\User\Kernel\ProfileContainer;
 use App\Models\User\Services\RoleCatalogManager;
@@ -49,7 +50,11 @@ class UserStoreRequest extends FormRequest
                 'sometimes',
                 'required',
                 'integer',
-                sprintf('not_in:%s', auth()->id()),
+                function ($attribute, $value, $fail) {
+                    if( $this->profile_type == Member::class && $value == auth()->id() ) {
+                        $fail('Invalid user profile');
+                    }
+                },
                 sprintf('exists:%s,id', $this->profile_type),
             ],
             'name' => [

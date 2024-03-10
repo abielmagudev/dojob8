@@ -2,11 +2,11 @@
 
 namespace App\Models\Kernel\Traits;
 
-use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
 
-trait HasFiltering
+trait HasFilterableQueryStringContract
 {
-    public function scopeFiltering($query, array $parameters, array $filters)
+    public function scopeFilterQueryString($query, array $parameters, array $filters)
     {
         foreach($filters as $parameter => $filter_and_extra_parameters)
         {
@@ -39,10 +39,10 @@ trait HasFiltering
 
     public function scopeFilterByParameters($query, array $parameters)
     {
-        if(! in_array(Filterable::class, class_implements(self::class) ) ) {
+        if(! in_array(FilterableQueryStringContract::class, class_implements(self::class) ) ) {
             return $query;
         }
 
-        return $query->filtering($parameters, $this->getParameterFilterSettings());
+        return $query->filterQueryString($parameters, $this->getMappingFilterableQueryString());
     }
 }

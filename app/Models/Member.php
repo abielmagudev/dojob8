@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasAvailableStatus;
 use App\Models\Kernel\Traits\HasContactChannels;
-use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\User\Interfaces\ProfileableUserContract;
 use App\Models\User\Traits\HasUsers;
@@ -14,12 +14,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Member extends Model implements Filterable, ProfileableUserContract
+class Member extends Model implements FilterableQueryStringContract, ProfileableUserContract
 {
     use HasAvailableStatus;
     use HasContactChannels;
     use HasFactory;
-    use HasFiltering;
+    use HasFilterableQueryStringContract;
     use HasHookUsers;
     use HasUsers;
     use SoftDeletes;
@@ -46,7 +46,7 @@ class Member extends Model implements Filterable, ProfileableUserContract
 
     // Interface
 
-    public function getParameterFilterSettings(): array
+    public function getMappingFilterableQueryString(): array
     {
         return [
             'status' => 'filterByAvailable',

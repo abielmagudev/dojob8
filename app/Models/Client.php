@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasAddress;
 use App\Models\Kernel\Traits\HasContactChannels;
-use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Traits\HasWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,12 +13,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Client extends Model implements Filterable
+class Client extends Model implements FilterableQueryStringContract
 {
     use HasAddress;
     use HasContactChannels;
     use HasFactory;
-    use HasFiltering;
+    use HasFilterableQueryStringContract;
     use HasHookUsers;
     use HasWorkOrders;
     use SoftDeletes;
@@ -42,7 +42,7 @@ class Client extends Model implements Filterable
 
     // Interface
 
-    public function getParameterFilterSettings(): array
+    public function getMappingFilterableQueryString(): array
     {
         return [
             'search' => 'filterBySearch',

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Crew\Traits\HasCrew;
-use App\Models\Kernel\Interfaces\Filterable;
-use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasPendingAttributes;
 use App\Models\Kernel\Traits\HasScheduledDate;
@@ -16,13 +16,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class Inspection extends Model implements Filterable
+class Inspection extends Model implements FilterableQueryStringContract
 {
     // Framework
     use HasFactory;
     
     // Kernel
-    use HasFiltering;
+    use HasFilterableQueryStringContract;
     use HasHookUsers;
     use HasPendingAttributes;
     use HasScheduledDate;
@@ -63,7 +63,7 @@ class Inspection extends Model implements Filterable
 
     // Interface 
 
-    public function getParameterFilterSettings(): array
+    public function getMappingFilterableQueryString(): array
     {
         return [
             'agency' => 'filterByAgency',

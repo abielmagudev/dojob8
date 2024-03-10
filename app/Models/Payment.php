@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\Interfaces\Filterable;
-use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\WorkOrder\Traits\BelongWorkOrder;
 use App\Models\WorkOrder\Traits\HasWorkOrderFilters;
@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Payment extends Model implements Filterable
+class Payment extends Model implements FilterableQueryStringContract
 {
     use HasFactory;
-    use HasFiltering;
+    use HasFilterableQueryStringContract;
     use HasStatus;
     use BelongWorkOrder;
     use HasWorkOrderFilters;
@@ -36,7 +36,7 @@ class Payment extends Model implements Filterable
 
     // Interface
 
-    public function getParameterFilterSettings(): array
+    public function getMappingFilterableQueryString(): array
     {
         return [
             'dates' => 'filterByWorkOrderDates',

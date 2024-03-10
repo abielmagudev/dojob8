@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Models\Crew\Traits\HasCrew;
 use App\Models\Inspection\Traits\HasInspections;
-use App\Models\Kernel\Interfaces\Filterable;
-use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
@@ -15,13 +15,13 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WorkOrder extends Model implements Filterable
+class WorkOrder extends Model implements FilterableQueryStringContract
 {
     // Framework
     use HasFactory;
 
     // Kernel
-    use HasFiltering;
+    use HasFilterableQueryStringContract;
     use HasHookUsers;
     use HasScheduledDate;
     use HasStatus;
@@ -94,7 +94,7 @@ class WorkOrder extends Model implements Filterable
 
     // Interfaces
     
-    public function getParameterFilterSettings(): array
+    public function getMappingFilterableQueryString(): array
     {
         return [
             'client' => 'filterByClient',

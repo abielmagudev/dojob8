@@ -3,9 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Kernel\Interfaces\Filterable;
+use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasActiveStatus;
-use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\User\Kernel\AssistAuthTrait;
 use App\Models\User\Kernel\AssistRolesTrait;
@@ -17,14 +17,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements Filterable
+class User extends Authenticatable implements FilterableQueryStringContract
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     use AssistAuthTrait;
     use AssistRolesTrait;
     use HasActiveStatus;
-    use HasFiltering;
+    use HasFilterableQueryStringContract;
     use HasHookUsers;
     use HasRoles;
     use SoftDeletes;
@@ -64,7 +64,7 @@ class User extends Authenticatable implements Filterable
 
     // Interface
 
-    public function getParameterFilterSettings(): array
+    public function getMappingFilterableQueryString(): array
     {
         return [
             'profile' => 'filterByProfileType',

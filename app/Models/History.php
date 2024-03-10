@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\Interfaces\Filterable;
-use App\Models\Kernel\Traits\HasFiltering;
+use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class History extends Model implements Filterable
+class History extends Model implements FilterableQueryStringContract
 {
-    use HasFiltering;
+    use HasFilterableQueryStringContract;
 
     protected $table = 'history';
     
@@ -40,7 +40,7 @@ class History extends Model implements Filterable
     
     // Interface
 
-    public function getParameterFilterSettings(): array
+    public function getMappingFilterableQueryString(): array
     {
         return [
             'dates' => 'filterByCreatedBetween',

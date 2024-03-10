@@ -9,34 +9,38 @@ use Illuminate\Database\Eloquent\Model;
 
 class RoleCatalogManager
 {
-    public static function exceptRoles($except = [])
+    public static function all()
     {
-        if(! is_array($except) ) {
-            $except = [$except];
-        }
+        return RoleCatalogService::roles();
+    }
 
-        return RoleCatalogService::roles()->reject(function ($role) use ($except) {
-            return in_array($role, $except);
-        });
-    }   
-
-    public static function exceptSuperAdminRole()
+    public static function agency()
     {
-        return self::exceptRoles('SuperAdmin');
+        return RoleCatalogService::partner()->filter(fn($role) => $role == 'agency');
+    }
+
+    public static function contractor()
+    {
+        return RoleCatalogService::partner()->filter(fn($role) => $role == 'contractor');
+    }
+
+    public static function member()
+    {
+        return RoleCatalogService::merge(['admin', 'management', 'field']);
     }
 
     public static function byProfile(Model $profile)
     {   
         if( is_a($profile, Agency::class) ) {
-            return RoleCatalogService::partner()->filter(fn($role) => $role == 'agency');
+            return self::agency();
         }
 
         if( is_a($profile, Contractor::class) ) {
-            return RoleCatalogService::partner()->filter(fn($role) => $role == 'contractor');
+            return self::contractor();
         }
 
         if( is_a($profile, Member::class) ) {
-            return RoleCatalogService::merge(['admin','field'])->reject(fn($role) => $role == 'SuperAdmin');
+            return self::member();
         }
 
         return collect([]);

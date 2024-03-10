@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $users = User::with('profile')
+        $users = User::with(['roles', 'profile'])
         ->filterByParameters( $request->all() )
         ->excludesSuperAdminRole()
         ->excludesAuth()
@@ -33,7 +33,7 @@ class UserController extends Controller
         return view('users.index', [
             'users' => $users,
             'profiles' => ProfileContainer::shorts(),
-            'roles' => RoleCatalogManager::exceptSuperAdminRole(),
+            'roles' => RoleCatalogManager::all(),
             'request' => $request,
         ]);
     }
@@ -83,6 +83,8 @@ class UserController extends Controller
         if(! $user->fill($request->validated())->save() ) {
             return back()->with('danger', 'Error updating user, try again please');
         }
+
+        $user->syncRoles([]);
 
         $user->assignRole( $request->role );
 

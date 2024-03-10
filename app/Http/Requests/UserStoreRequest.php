@@ -11,6 +11,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UserStoreRequest extends FormRequest
 {
+    public $roles;
+
+    public $types;
+
     public function authorize()
     {
         return auth()->user()->can('create-users');
@@ -18,6 +22,10 @@ class UserStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
+        $this->roles = RoleCatalogManager::byProfile( app($this->profile_type) )->implode(',');
+
+        $this->types = ProfileContainer::types()->implode(',');
+
         if(! $mapper = ProfileJsonInputMapper::make($this) ) {
             return;
         }
@@ -34,7 +42,7 @@ class UserStoreRequest extends FormRequest
         return [
             'role' => [
                 'required',
-                sprintf('in:%s', RoleCatalogManager::byProfile( app($this->profile_type) )->implode(',')),
+                sprintf('in:%s', $this->roles),
             ],
             'profile' => [
                 'required',
@@ -43,7 +51,7 @@ class UserStoreRequest extends FormRequest
             'profile_type' => [
                 'bail',
                 'required',
-                sprintf('in:%s', ProfileContainer::types()->implode(','))
+                sprintf('in:%s', $this->types)
             ],
             'profile_id' => [
                 'bail',

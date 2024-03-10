@@ -19,8 +19,8 @@
         @method('patch')
         @csrf
         @include('work-orders._form')
-        @includeWhen(auth()->user()->hasAdminRole(), 'work-orders._form.timeline')
-        @includeWhen(auth()->user()->hasAdminRole(), 'work-orders._form.status')
+        @includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.timeline')
+        @includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.status')
         <input type="hidden" name="url_back" value="{{ $request->get('url_back') }}">
         <br>
 

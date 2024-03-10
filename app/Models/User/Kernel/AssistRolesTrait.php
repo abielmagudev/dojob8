@@ -21,17 +21,22 @@ trait AssistRolesTrait
 
     // Role Validators
 
-    public function hasAdminRole()
+    public function hasAdminCategoryRole()
     {
         return RoleCatalogService::admin()->contains( $this->primary_role_name );
     }
 
-    public function hasFieldRole()
+    public function hasManagementCategoryRole()
+    {
+        return RoleCatalogService::management()->contains( $this->primary_role_name );
+    }
+
+    public function hasFieldCategoryRole()
     {
         return RoleCatalogService::field()->contains( $this->primary_role_name );
     }
 
-    public function hasPartnerRole()
+    public function hasPartnerCategoryRole()
     {
         return RoleCatalogService::partner()->contains( $this->primary_role_name );
     }

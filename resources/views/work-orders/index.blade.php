@@ -66,7 +66,7 @@
             </li>
             @endcan
             
-            @if( auth()->user()->hasAdminRole() )         
+            @if( auth()->user()->can('edit-work-orders') )         
             <li>
                 <hr class="dropdown-divider">
             </li>
@@ -83,7 +83,7 @@
                 <hr class="dropdown-divider">
             </li> 
 
-            @if( auth()->user()->hasAdminRole() || auth()->user()->hasRole('assessor') )          
+            @if( auth()->user()->can('edit-work-orders') || auth()->user()->hasRole('assessor') )          
             <li>
                 @include('work-orders.index.dropoptions.button-pending')
             </li>
@@ -114,7 +114,7 @@
             <th></th>
             @endif
 
-            @if( auth()->user()->hasAdminRole() )               
+            @if( auth()->user()->can('edit-work-orders') )               
             <th>
                 @include('work-orders.index.components.button-checker')
             </th>
@@ -148,7 +148,7 @@
             </td>
             @endif
 
-            @if( auth()->user()->hasAdminRole() )               
+            @if( auth()->user()->can('edit-work-orders') )               
             <td class="text-center" style="width:1%">
                 @if(! $work_order->hasPending() )
                 <input class="form-check-input" type="checkbox" form="formUpdateStatus" name="work_orders[]" value="{{ $work_order->id }}">
@@ -166,7 +166,7 @@
 
             @can('edit-work-orders')                
             <td class="text-center" style="width:1%">
-                @if( auth()->user()->hasAdminRole() )
+                @if( auth()->user()->can('edit-work-orders') )
                 <input type="number" class="form-control form-control-sm" style="width:56px" min="1" step="1" name="ordered[{{ $work_order->id }}]" value="{{ $work_order->ordered }}" form="formWorkOrderOrdered">
                 
                 @else

@@ -8,11 +8,13 @@ class RoleCatalogService
 
     protected static $categories = [
         'admin' => [
-            'SuperAdmin',
+            // 'SuperAdmin',
             'administrator',
-            'payments', 
+        ],
+        'management' => [
             'manager',
             'coordinator',
+            'payments', 
         ],
         'field' => [
             'assessor',
@@ -37,6 +39,11 @@ class RoleCatalogService
     public static function admin()
     {
         return collect( self::collection()->get('admin') );
+    }
+
+    public static function management()
+    {
+        return collect( self::collection()->get('management') );
     }
 
     public static function field()

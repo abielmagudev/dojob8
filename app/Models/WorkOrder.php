@@ -75,7 +75,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
             'crew' => 'filterByCrew', 
             'dates' => 'filterByScheduledDateBetween',
             'job' => 'filterByJob',
-            'pending' => 'filterByPendingAttributes',
+            'pending' => 'filterByPending',
             'scheduled_date' => 'filterByScheduledDate',
             'search' => 'filterBySearch',
             'status_group' => 'filterByStatusGroup',
@@ -349,7 +349,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return $query->whereNull('rectification_type');
     }
 
-    public function scopeFilterByPendingAttributes($query, $value)
+    public function scopeFilterByPending($query, $value)
     {
         if( is_null($value) ) {
             return $query;

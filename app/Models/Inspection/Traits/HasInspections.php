@@ -69,11 +69,11 @@ trait HasInspections
 
     public function onlyPendingInspections()
     {
-        return $this->inspections->filter(fn($i) => $i->hasPendingAttributes());
+        return $this->inspections->filter(fn($i) => $i->hasPending());
     }
 
     public function onlyAwaitingInspections()
     {
-        return $this->inspections->filter(fn($i) => $i->isAwaiting() &&! $i->hasPendingAttributes());
+        return $this->inspections->filter(fn($i) => $i->isAwaiting() &&! $i->hasPending());
     }
 }

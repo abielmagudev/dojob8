@@ -3,6 +3,7 @@
 namespace App\Models\WorkOrder\Services;
 
 use App\Models\Inspection;
+use App\Models\Inspection\Kernel\InspectionStatusCatalog;
 use App\Models\WorkOrder;
 
 class InspectionFactoryService
@@ -20,7 +21,7 @@ class InspectionFactoryService
             $inspection = Inspection::create([
                 'agency_id' => $inspection_setup->options->agency,
                 'work_order_id' => $work_order->id,
-                'status' => Inspection::INITIAL_STATUS,
+                'status' => InspectionStatusCatalog::INITIAL,
             ]);
 
             // Code to attach crew members of inspection(service)

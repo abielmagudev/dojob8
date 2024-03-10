@@ -46,7 +46,7 @@ class InspectionStoreRequest extends FormRequest
             ],
             'status' => [
                 'required',
-                sprintf('in:%s', Inspection::collectionAllStatuses()->implode(',')),
+                sprintf('in:%s', InspectionStatusCatalog::all()->implode(',')),
             ],
             'work_order' => [
                 'bail', 

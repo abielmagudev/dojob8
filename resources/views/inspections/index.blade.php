@@ -84,18 +84,18 @@
             @foreach($inspections as $inspection)
             <tr>
                 <td class="text-center">
-                    @if(! $inspection->hasPendingAttributes() )    
+                    @if(! $inspection->hasPending() )    
                     <input type="checkbox" class="form-check-input" name="inspections[]" value="{{ $inspection->id }}" form="formUpdateStatus">
                     @endif
                 </td>
 
                 <td style="width:1%">
-                    @includewhen($inspection->hasNoPendingAttributes(), 'inspections.__.flag-status', [
+                    @includewhen($inspection->hasNoPending(), 'inspections.__.flag-status', [
                         'status' => $inspection->status,
                         'class' => 'w-100',
                     ])
 
-                    @includeWhen($inspection->hasPendingAttributes(), 'components.custom.flag-pending')
+                    @includeWhen($inspection->hasPending(), 'components.custom.flag-pending')
                 </td>
 
                 @if( $request->has('dates') )

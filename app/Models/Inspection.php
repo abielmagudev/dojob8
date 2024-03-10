@@ -6,9 +6,9 @@ use App\Models\Crew\Traits\HasCrew;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasHookUsers;
-use App\Models\Kernel\Traits\HasPendingAttributes;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
+use App\Models\Kernel\Traits\HelpForPending;
 use App\Models\Media\Traits\HasMedia;
 use App\Models\WorkOrder\Traits\BelongWorkOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,16 +24,14 @@ class Inspection extends Model implements FilterableQueryStringContract
     // Kernel
     use HasFilterableQueryStringContract;
     use HasHookUsers;
-    use HasPendingAttributes;
     use HasScheduledDate;
     use HasStatus;
+    use HelpForPending;
     
     // Models
     use BelongWorkOrder;
     use HasCrew;
     use HasMedia;
-
-    const INITIAL_STATUS = 'awaiting';
 
     protected $fillable = [
         'scheduled_date',
@@ -49,17 +47,6 @@ class Inspection extends Model implements FilterableQueryStringContract
         'scheduled_date' => 'date',
     ];
 
-    public static $all_statuses = [
-        'awaiting',
-        'failed',
-        'success',
-    ];
-
-    public static $pending_attributes = [
-        'scheduled_date',
-    ];
-
-
 
     // Interface 
 
@@ -69,13 +56,12 @@ class Inspection extends Model implements FilterableQueryStringContract
             'agency' => 'filterByAgency',
             'crew' => 'filterByCrew',
             'dates' => 'filterByScheduledDateBetween',
-            'pending' => 'filterByPendingAttributes',
+            'pending' => 'filterByPending',
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
             'status' => 'filterByStatus', 
         ];
     }
-
 
 
     // Mutators
@@ -84,7 +70,6 @@ class Inspection extends Model implements FilterableQueryStringContract
     {
         $this->attributes['inspector_name'] = Str::title($value);
     }
-
 
 
     // Relationships
@@ -100,8 +85,17 @@ class Inspection extends Model implements FilterableQueryStringContract
     }
  
 
-
     // Validators
+
+    public function hasPending()
+    {
+        return is_null( $this->scheduled_date );
+    }
+
+    public function hasNoPending()
+    {
+        return ! $this->hasPending();
+    }
 
     public function hasInspector()
     {
@@ -153,6 +147,15 @@ class Inspection extends Model implements FilterableQueryStringContract
         return $query->select('inspector_name')->distinct()->whereNotNull('inspector_name');
     }
 
+    public function scopePending($query)
+    {
+        return $query->whereNull('scheduled_date');
+    }
+
+    public function scopeNoPending($query)
+    {
+        return $query->whereNotNull('scheduled_date');
+    }
 
 
     // Filters
@@ -164,14 +167,5 @@ class Inspection extends Model implements FilterableQueryStringContract
         }
 
         return $query->where('agency_id', $value);
-    }
-
-
-
-    // Statics
-
-    public static function collectionAllStatuses()
-    {
-        return collect( self::$all_statuses );
     }
 }

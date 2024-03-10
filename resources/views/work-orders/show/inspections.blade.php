@@ -38,7 +38,7 @@
             </td>
             <td style="width:1%">
                 @includeWhen($inspection->hasNoPendingAttributes(), 'inspections.__.flag-status', ['status' => $inspection->status])
-                @includeWhen($inspection->hasPendingAttributes(), 'components.custom.flag-pending')
+                @includeWhen($inspection->hasPending(), 'components.custom.flag-pending')
             </td>
             <td class="text-nowrap">
                 {{ $inspection->agency->name }}

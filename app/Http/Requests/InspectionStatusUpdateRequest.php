@@ -21,7 +21,7 @@ class InspectionStatusUpdateRequest extends FormRequest
             ],
             'status' => [
                 'required',
-                sprintf('in:%s', Inspection::collectionAllStatuses()->implode(',')),
+                sprintf('in:%s', InspectionStatusCatalog::all()->implode(',')),
             ],
             'url_back' => [
                 'required',

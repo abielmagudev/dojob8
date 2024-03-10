@@ -9,6 +9,7 @@ use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
+use App\Models\Kernel\Traits\HelpForPending;
 use App\Models\Media\Traits\HasMedia;
 use App\Models\Payment\Traits\HasPayment;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
@@ -26,6 +27,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
     use HasHookUsers;
     use HasScheduledDate;
     use HasStatus;
+    use HelpForPending;
 
     // Models
     use HasCrew;
@@ -349,19 +351,6 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return $query->whereNull('rectification_type');
     }
 
-    public function scopeFilterByPending($query, $value)
-    {
-        if( is_null($value) ) {
-            return $query;
-        }
-
-        if( $value == 0 ) {
-            return $query->noPending();
-        }
-
-        return $query->pending();
-    }
-
 
 
     // Validators
@@ -379,6 +368,11 @@ class WorkOrder extends Model implements FilterableQueryStringContract
     public function hasPending()
     {
         return is_null($this->scheduled_date) || is_null($this->crew_id);
+    }
+
+    public function hasNoPending()
+    {
+        return ! $this->hasPending();
     }
 
     public function hasIncompleteStatus()

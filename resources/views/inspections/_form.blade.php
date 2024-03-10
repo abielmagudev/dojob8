@@ -1,4 +1,4 @@
-<x-form-field-horizontal for="scheduledDateInput" label="Schedule" label-class="{{ $inspection->hasPendingAttributes() ? 'form-label-pending' : '' }}">
+<x-form-field-horizontal for="scheduledDateInput" label="Schedule" label-class="{{ $inspection->hasPending() ? 'form-label-pending' : '' }}">
     <input id="scheduledDateInput" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" type="date" name="scheduled_date" value="{{ old('scheduled_date', $inspection->scheduled_date_input) }}" autofocus>
     <x-form-feedback error="scheduled_date" />
 </x-form-field-horizontal>
@@ -56,7 +56,7 @@
     </select>
     <x-form-feedback error="status" />
 
-    @if( $inspection->hasPendingAttributes() )
+    @if( $inspection->hasPending() )
     <div class="alert alert-warning mt-3">If there is any missing information, such as the schedule, it will appear as a <b>pending status</b>.</div>
     @endif
 </x-form-field-horizontal>

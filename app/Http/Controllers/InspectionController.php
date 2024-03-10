@@ -9,6 +9,7 @@ use App\Http\Requests\InspectionUpdateRequest;
 use App\Models\Agency;
 use App\Models\Crew;
 use App\Models\Inspection;
+use App\Models\Inspection\Kernel\InspectionStatusCatalog;
 use App\Models\Inspection\Services\InspectionCrewMemberService;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
@@ -33,18 +34,18 @@ class InspectionController extends Controller
         ->appends( $request->all() );
 
         return view('inspections.index', [
-            'all_statuses' => Inspection::collectionAllStatuses(),
+            'all_statuses' => InspectionStatusCatalog::all(),
             'agencies' => Agency::all(),
             'crews' => Crew::purposeInspections()->active()->get(),
             'inspections' => $inspections,
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'request' => $request,
             'pending_inspections' => [
-                'count' => Inspection::pendingAttributesCount()->first()->pending_attributes_count,
+                'count' => Inspection::asPendingCount()->first()->pending_count,
                 'url' => InspectionUrlGenerator::pending(),
             ],
             'awaiting_inspections' => [
-                'count' => Inspection::awaitingStatusCount()->noPendingAttributes()->first()->awaiting_status_count,
+                'count' => Inspection::awaitingStatusCount()->noPending()->first()->awaiting_status_count,
                 'url' => InspectionUrlGenerator::awaiting(),
             ],
         ]);
@@ -54,7 +55,7 @@ class InspectionController extends Controller
     {
         return view('inspections.create', [
             'agencies' => Agency::all(),
-            'all_statuses' => Inspection::collectionAllStatuses(),
+            'all_statuses' => InspectionStatusCatalog::all(),
             'crews' => Crew::purposeInspections()->active()->get(),
             'inspection' => new Inspection,
             'inspector_names' => Inspection::inspectorNames()->get(),
@@ -85,7 +86,7 @@ class InspectionController extends Controller
 
         return view('inspections.edit', [
             'agencies' => Agency::all(),
-            'all_statuses' => Inspection::collectionAllStatuses(),
+            'all_statuses' => InspectionStatusCatalog::all(),
             'crews' => Crew::purposeInspections()->active()->get(),
             'inspection' => $inspection,
             'inspector_names' => Inspection::inspectorNames()->get()->pluck('inspector_name'),

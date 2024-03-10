@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Inspection;
+use App\Models\Inspection\Kernel\InspectionStatusCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class InspectionFactory extends Factory

@@ -13,6 +13,8 @@ use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\Job;
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
+use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 use App\Models\WorkOrder\Services\InspectionFactoryService;
 use App\Models\WorkOrder\Services\PaymentFactoryService;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,8 +47,8 @@ class WorkOrderController extends Controller
         $client->load('work_orders.job');
 
         return view('work-orders.create', [
-            'all_statuses' => WorkOrder::collectionAllStatuses(),
-            'all_types' => WorkOrder::collectionAllTypes(),
+            'all_statuses' => WorkOrderStatusCatalog::all(),
+            'all_types' => WorkOrderTypeCatalog::all(),
             'client' => $client,
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),
@@ -98,8 +100,8 @@ class WorkOrderController extends Controller
         $this->reflashInputErrors();
 
         return view('work-orders.edit', [
-            'all_form_statuses' => WorkOrder::collectionAllStatuses(),
-            'all_types' => WorkOrder::collectionAllTypes(),
+            'all_statuses' => WorkOrderStatusCatalog::all(),
+            'all_types' => WorkOrderTypeCatalog::all(),
             'client' => $work_order->client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),

@@ -11,7 +11,8 @@ use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\Media\Traits\HasMedia;
 use App\Models\Payment\Traits\HasPayment;
-use Carbon\Carbon;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
+use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,8 +32,6 @@ class WorkOrder extends Model implements FilterableQueryStringContract
     use HasInspections;
     use HasPayment;
     use HasMedia;
-
-    const INITIAL_STATUS = 'new';
 
     protected $fillable = [
         'ordered',
@@ -59,35 +58,9 @@ class WorkOrder extends Model implements FilterableQueryStringContract
 
     protected $casts = [
         'scheduled_date' => 'date',
-    ];
-
-    protected static $all_types = [
-        'standard',
-        'rework',
-        'warranty',
-    ];
-
-    protected static $all_statuses = [
-        'pause',
-        'new',
-        'working',
-        'done',
-        'completed',
-        'canceled',
-        'denialed',
-    ];
-
-    protected static $incomplete_statuses = [
-        'pause',
-        'new',
-        'working',
-        'done',
-    ];
-
-    protected static $closed_statuses = [ 
-        'completed',
-        'canceled',
-        'denialed',
+        'working_at' => 'datetime',
+        'done_at' => 'datetime',
+        'completed_at' => 'datetime',
     ];
 
 
@@ -163,32 +136,32 @@ class WorkOrder extends Model implements FilterableQueryStringContract
 
     public function getWorkingDateInputAttribute()
     {
-        return ! is_null($this->working_at) ? Carbon::parse($this->working_at)->format('Y-m-d') : null;
+        return ! is_null($this->working_at) ? $this->working_at->format('Y-m-d') : null;
     }
 
     public function getWorkingTimeInputAttribute()
     {
-        return ! is_null($this->working_at) ? Carbon::parse($this->working_at)->format('H:i') : null;
+        return ! is_null($this->working_at) ? $this->working_at->format('H:i') : null;
     }
 
     public function getDoneDateInputAttribute()
     {
-        return ! is_null($this->done_at) ? Carbon::parse($this->done_at)->format('Y-m-d') : null;
+        return ! is_null($this->done_at) ? $this->done_at->format('Y-m-d') : null;
     }
 
     public function getDoneTimeInputAttribute()
     {
-        return ! is_null($this->done_at) ? Carbon::parse($this->done_at)->format('H:i') : null;
+        return ! is_null($this->done_at) ? $this->done_at->format('H:i') : null;
     }
 
     public function getCompletedDateHumanAttribute()
     {
-        return ! is_null($this->completed_at) ? Carbon::parse($this->completed_at)->format('d M, Y') : null;
+        return ! is_null($this->completed_at) ? $this->completed_at->format('d M, Y') : null;
     }
 
     public function getCompletedTimeHumanAttribute()
     {
-        return ! is_null($this->completed_at) ? Carbon::parse($this->completed_at)->format('g:i A') : null;
+        return ! is_null($this->completed_at) ? $this->completed_at->format('g:i A') : null;
     }
 
     public function getTypeAttribute()
@@ -291,7 +264,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
 
     public function scopeIncomplete($query, array $except = [])
     {         
-        $incomplete_statuses = self::collectionIncompleteStatuses()->reject(function($status) use ($except) {
+        $incomplete_statuses = WorkOrderStatusCatalog::incomplete()->reject(function($status) use ($except) {
             return in_array($status, $except);
         })->toArray();
 
@@ -310,32 +283,6 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return $query->whereHas('members', function($query) use ($member_id){
             $query->where('member_id', $member_id);
         });
-    }
-
-    public function scopeWithAllRelationships($query)
-    {
-        return $query->with([
-            // Catalog
-            'client',
-            'contractor',
-            'crew',
-            'job',
-            'done_updater',
-            'working_updater',
-            
-            // Operative
-            'comments',
-            'inspections',
-            'reworks',
-            'warranties',
-
-            // Morph
-            'files',
-            'history',
-            
-            // Pivot
-            'members',
-        ]);
     }
 
     public function scopeWithEssentialRelationships($query)
@@ -382,11 +329,11 @@ class WorkOrder extends Model implements FilterableQueryStringContract
 
     public function scopeFilterByTypeGroup($query, $types_group)
     {
-        if( empty($types_group) || self::collectionAllTypes()->diff($types_group)->isEmpty() ) {
+        if( empty($types_group) || WorkOrderTypeCatalog::all()->diff($types_group)->isEmpty() ) {
             return $query;
         }
 
-        if( self::collectionAllRectificationTypes()->diff($types_group)->isEmpty() )
+        if( WorkOrderTypeCatalog::rectification()->diff($types_group)->isEmpty() )
         {
             return $query->whereNotNull('rectification_type');
         }
@@ -436,7 +383,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
 
     public function hasIncompleteStatus()
     {
-        return self::collectionIncompleteStatuses()->contains($this->status);
+        return WorkOrderStatusCatalog::incomplete()->contains($this->status);
     }
 
     public function hasWorkingAt()
@@ -474,7 +421,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return is_null($this->rectification_type) && is_null($this->rectification_id);
     }
 
-    public function isNonstandard()
+    public function isNonStandard()
     {
         return ! $this->isStandard();
     }
@@ -487,42 +434,5 @@ class WorkOrder extends Model implements FilterableQueryStringContract
     public function qualifiesForInspection()
     {
         return $this->isCompleted();
-    }
-
-
-
-    // Statics
-
-    public static function collectionAllTypes()
-    {
-        return collect( self::$all_types );
-    }
-
-    public static function collectionAllRectificationTypes()
-    {
-        return self::collectionAllTypes()->reject(function ($type) {
-            return $type == 'standard';
-        });
-    }
-
-    public static function collectionAllStatuses($except = [])
-    {
-        return collect( self::$all_statuses )->reject(function($status) use ($except) {
-            return in_array($status, $except);
-        });
-    }
-
-    public static function collectionIncompleteStatuses($except = [])
-    {
-        return collect( self::$incomplete_statuses )->reject(function($status) use ($except) {
-            return in_array($status, $except);
-        });
-    }
-
-    public static function collectionClosedStatuses($except = [])
-    {
-        return collect( self::$closed_statuses )->reject(function($status) use ($except) {
-            return in_array($status, $except);
-        });
     }
 }

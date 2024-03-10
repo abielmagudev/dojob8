@@ -8,6 +8,8 @@ use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\Job;
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
+use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 
 class AssessorLoader extends LoaderConstructor
 {
@@ -40,8 +42,8 @@ class AssessorLoader extends LoaderConstructor
                     ->count(),
                 ],
             ], 
-            'all_statuses' => WorkOrder::collectionAllStatuses(),
-            'all_types' => WorkOrder::collectionAllTypes(),
+            'all_statuses' => WorkOrderStatusCatalog::all(),
+            'all_types' => WorkOrderTypeCatalog::all(),
             'request' => $this->request,
             'work_orders' => $work_orders,
         ];

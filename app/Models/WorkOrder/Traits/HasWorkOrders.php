@@ -3,6 +3,7 @@
 namespace App\Models\WorkOrder\Traits;
 
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 
 trait HasWorkOrders
 {
@@ -35,7 +36,7 @@ trait HasWorkOrders
 
     public function incomplete_work_orders()
     {
-        return $this->hasMany(WorkOrder::class)->whereIn('status', WorkOrder::collectionIncompleteStatuses()->toArray());
+        return $this->hasMany(WorkOrder::class)->whereIn('status', WorkOrderStatusCatalog::incomplete()->toArray());
     }
 
 

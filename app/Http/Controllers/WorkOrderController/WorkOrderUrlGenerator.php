@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WorkOrderController;
 
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 
 class WorkOrderUrlGenerator
 {
@@ -25,7 +26,7 @@ class WorkOrderUrlGenerator
     public static function incomplete(array $parameters = [])
     {
         return route('work-orders.index', array_merge($parameters, [
-            'status_group' => WorkOrder::collectionIncompleteStatuses()->toArray(),
+            'status_group' => WorkOrderStatusCatalog::incomplete()->toArray(),
             'sort' => 'asc',
             'dates' => 'any',
         ]));
@@ -34,7 +35,7 @@ class WorkOrderUrlGenerator
     public static function closed(array $parameters = [])
     {
         return route('work-orders.index', array_merge($parameters, [
-            'status_group' => WorkOrder::getClosedStatuses()->all(),
+            'status_group' => WorkOrderStatusCatalog::closed()->toArray(),
             'sort' => 'asc',
             'dates' => 'any',
         ]));

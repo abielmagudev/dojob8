@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WorkOrderController\Index\Data;
 
 use App\Http\Controllers\WorkOrderController\Index\Data\Kernel\LoaderConstructor;
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 
 class ContractorLoader extends LoaderConstructor
 {
@@ -28,7 +29,7 @@ class ContractorLoader extends LoaderConstructor
                                         ->count(),
                 ],
             ],
-            'all_statuses' => WorkOrder::collectionAllStatuses(),
+            'all_statuses' => WorkOrderStatusCatalog::all(),
             'request' => $this->request,
             'work_orders' => $work_orders,
         ];

@@ -7,7 +7,8 @@ use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\Job;
-use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WorkOrderStoreRequest extends FormRequest
@@ -23,7 +24,7 @@ class WorkOrderStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if(! WorkOrder::collectionAllTypes()->contains( $this->get('type') ) ) {
+        if(! WorkOrderTypeCatalog::all()->contains( $this->get('type') ) ) {
             return;
         }
 
@@ -45,10 +46,10 @@ class WorkOrderStoreRequest extends FormRequest
             ],
             'type' => [
                 'required',
-                sprintf('in:%s', WorkOrder::collectionAllTypes()->implode(',')),
+                sprintf('in:%s', WorkOrderTypeCatalog::all()->implode(',')),
             ],
             'type_id' => [
-                sprintf('required_if:type,%s', WorkOrder::collectionAllRectificationTypes()->implode(',')),
+                sprintf('required_if:type,%s', WorkOrderTypeCatalog::rectification()->implode(',')),
                 sprintf('in:%s', $this->work_orders_id_for_rectification),
             ],
             'job' => [
@@ -106,7 +107,7 @@ class WorkOrderStoreRequest extends FormRequest
             'contractor_id' => $this->get('contractor'),
             'job_id' => $this->get('job'),
             'crew_id' => $this->get('crew'),
-            'status' => WorkOrder::INITIAL_STATUS,
+            'status' => WorkOrderStatusCatalog::INITIAL,
         ]);
     }
 }

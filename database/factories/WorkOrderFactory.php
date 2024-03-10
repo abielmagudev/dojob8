@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
+use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WorkOrderFactory extends Factory
@@ -16,8 +18,8 @@ class WorkOrderFactory extends Factory
      */
     public function definition()
     {
-        $status = WorkOrder::collectionAllStatuses()->random();
-        $rectification_type_random = WorkOrder::collectionAllTypes()->random();
+        $status = WorkOrderStatusCatalog::all()->random();
+        $rectification_type_random = WorkOrderTypeCatalog::all()->random();
 
         if( $rectification_type_random <> 'standard' && self::$counter >= 500 )
         {

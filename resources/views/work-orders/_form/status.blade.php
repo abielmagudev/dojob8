@@ -1,6 +1,6 @@
 <x-form-field-horizontal for="statusSelect" label="Status">
     <select id="statusSelect" class="form-select text-capitalize {{ bsInputInvalid( $errors->has('status') ) }}" name="status">
-        @foreach($all_form_statuses as $status)
+        @foreach($all_statuses as $status)
         <option value="{{ $status }}" {{ isSelected($status == $work_order->status) }}>{{ $status }}</option>
         @endforeach
     </select>

@@ -9,6 +9,7 @@ use App\Models\Inspection;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 use Illuminate\Http\Request;
 
 class StatisticalDataGenerator
@@ -23,7 +24,7 @@ class StatisticalDataGenerator
     public function dataByDefault(): array
     {
         return [
-            'all_statuses_work_order' => WorkOrder::collectionAllStatuses(),
+            'all_statuses_work_order' => WorkOrderStatusCatalog::all(),
             'all_statuses_inspection' => Inspection::collectionAllStatuses(),
             'agencies' => Agency::all(),
             'contractors' => Contractor::all(),

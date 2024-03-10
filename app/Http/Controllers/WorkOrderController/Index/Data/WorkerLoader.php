@@ -6,6 +6,7 @@ use App\Http\Controllers\WorkOrderController\Index\Data\Kernel\LoaderConstructor
 use App\Http\Controllers\WorkOrderController\Index\RequestManipulator;
 use App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator;
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 use Illuminate\Http\Request;
 
 class WorkerLoader extends LoaderConstructor
@@ -31,7 +32,7 @@ class WorkerLoader extends LoaderConstructor
                     'count' => $work_orders_incomplete->count(),
                 ],
             ],
-            'all_statuses' => WorkOrder::collectionAllStatuses(),
+            'all_statuses' => WorkOrderStatusCatalog::all(),
             'request' => $this->request,
             'work_orders' => $work_orders,
         ];

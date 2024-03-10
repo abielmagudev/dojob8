@@ -6,6 +6,8 @@ use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\Kernel\Updater;
 use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\WorkOrder;
+use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
+use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 
 class AdminUser extends Updater
 {
@@ -19,7 +21,7 @@ class AdminUser extends Updater
 
         $this->crews_id = Crew::purposeWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
 
-        if( WorkOrder::collectionAllTypes()->contains( $this->request->get('type') ) && $this->request->get('type') <> 'standard' ) {
+        if( WorkOrderTypeCatalog::all()->contains( $this->request->get('type') ) && $this->request->get('type') <> 'standard' ) {
             $this->work_orders_id_for_rectification = $work_order->client->onlyWorkOrdersForRectification($work_order)->pluck('id')->implode(',');
         }
     }
@@ -33,10 +35,10 @@ class AdminUser extends Updater
             ],
             'type' => [
                 'required',
-                sprintf('in:%s', WorkOrder::collectionAllTypes()->implode(',')),
+                sprintf('in:%s', WorkOrderTypeCatalog::all()->implode(',')),
             ],
             'type_id' => [
-                sprintf('required_if:type,%s', WorkOrder::collectionAllRectificationTypes()->implode(',')),
+                sprintf('required_if:type,%s', WorkOrderTypeCatalog::rectification()->implode(',')),
                 sprintf('in:%s', $this->work_orders_id_for_rectification),
             ],
             'crew' => [
@@ -77,7 +79,7 @@ class AdminUser extends Updater
             'status' => [
                 'required',
                 'string',
-                sprintf('in:%s', WorkOrder::collectionAllStatuses()->implode(','))
+                sprintf('in:%s', WorkOrderStatusCatalog::all()->implode(','))
             ],
         ];
     }

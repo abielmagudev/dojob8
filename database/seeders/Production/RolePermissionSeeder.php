@@ -45,6 +45,7 @@ class RolePermissionSeeder extends Seeder
         $this->createPermissionsForInspectionMembers($roles);
         $this->createPermissionsForJobExtensions($roles);
         $this->createPermissionsForWorkOrderMembers($roles);
+
     }
 
 
@@ -325,7 +326,7 @@ class RolePermissionSeeder extends Seeder
 
 
 
-    // OPERATIVE ---------------------------------------------------------------------------------------------------------------------------------
+    // OPERATIVE 
 
     /**
      * Comments

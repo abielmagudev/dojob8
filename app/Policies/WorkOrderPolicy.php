@@ -24,8 +24,8 @@ class WorkOrderPolicy
         if(! $user->can('see-work-orders') ) {
             abort(404);
         }
-
-        if(! $work_order->members->contains( auth()->user()->profile_id ) ) {
+        
+        if( $user->hasRole('worker') &&! $work_order->members->contains( auth()->user()->profile_id ) ) {
             abort(404);
         }
 
@@ -43,10 +43,10 @@ class WorkOrderPolicy
             abort(404);
         }
 
-        if(! $work_order->members->contains( auth()->user()->profile_id ) ) {
+        if( $user->hasRole('worker') &&! $work_order->members->contains( auth()->user()->profile_id ) ) {
             abort(404);
         }
-        
+
         return true;
     }
 

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
-use App\Http\Controllers\WorkOrderController\Index\AuthDataRetriever;
-use App\Http\Controllers\WorkOrderController\Index\RequestManipulator;
+use App\Http\Controllers\WorkOrderController\Index\AuthDataLoader;
+use App\Http\Controllers\WorkOrderController\Index\RequestInitializer;
 use App\Http\Controllers\WorkOrderController\ShowAction;
 use App\Http\Requests\WorkOrderStoreRequest;
 use App\Http\Requests\WorkOrderUpdateRequest;
@@ -29,11 +29,13 @@ class WorkOrderController extends Controller
 
     public function index(Request $request)
     {
-        $request = RequestManipulator::manipulate($request);
-        
-        $data = AuthDataRetriever::get($request);
+        $request = RequestInitializer::make($request);
 
-        return view('work-orders.index', $data);
+        if(! $loader = AuthDataLoader::get($request) ) {
+            abort(404);
+        }
+
+        return view('work-orders.index', $loader->data());
     }
 
     public function create(Client $client)

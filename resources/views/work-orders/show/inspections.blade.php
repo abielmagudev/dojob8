@@ -8,11 +8,13 @@
     </div>
     @endslot
 
+    @can('create-inspections')              
     @slot('options')
     <a href="{{ route('inspections.create', ['work_order' => $work_order->id]) }}" class="btn btn-primary">
         <i class="bi bi-plus-lg"></i>
     </a>
     @endslot
+    @endcan
 
 
     @if( $inspections->count() )
@@ -52,11 +54,14 @@
             <td style="min-width:240px; max-width:480px">
                 {{ $inspection->observations }}
             </td>
+
+            @can('edit-inspections')              
             <td class="text-nowrap text-end" style="width:1%">
                 <a href="{{ route('inspections.edit', $inspection) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>
+            @endcan
         </tr>
         @endforeach
 

@@ -7,8 +7,9 @@
     <span class="badge text-bg-dark">{{ $work_order->media->count() }}</span>
     @endslot
 
+    @can('create-media')   
     @slot('options')
-    
+
     @if( $work_order->media->count() )       
     <x-modal-trigger modal-id="mediaDeleteModal" class="btn btn-outline-danger">
         <i class="bi bi-trash3"></i>
@@ -19,6 +20,7 @@
         <i class="bi bi-plus-lg"></i>
     </x-modal-trigger>
     @endslot
+    @endcan
 
     @if( $work_order->media->count() )    
     <div class="row g-3">
@@ -39,8 +41,10 @@
     @endif
 </x-card>
 
+@canAny(['create-media', 'delete-media'])
 @include('work-orders.show.media.modal-uploader')
 @include('work-orders.show.media.modal-uploaded-delete')
+@endcanAny
 
 <?php 
 // @include('work-orders.show.media.modal-uploaded-focused') 

@@ -58,40 +58,50 @@
     @endcan
 
     {{-- DROPOPTIONS --}}
-    @slot('dropoptions')
-        @can('create-work-orders')       
-        <li>
-            @include('work-orders.index.modals.modal-search-client-to-create-work-order')
-        </li>
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-        @endcan
+    @canAny(['create-work-orders', 'edit-work-orders', 'filter-work-orders'])
+        @slot('dropoptions')
+            @can('create-work-orders')       
+            <li>
+                @include('work-orders.index.modals.modal-search-client-to-create-work-order')
+            </li>
+            @endcan
+            
+            @if( auth()->user()->hasAdminRole() )         
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                @include('work-orders.index.modals.modal-modify-status')
+            </li>
+            <li>
+                @include('work-orders.index.dropoptions.form-update-ordered')
+            </li>
+            @endif
+            
+            @can('filter-work-orders')      
+            <li>
+                <hr class="dropdown-divider">
+            </li> 
 
-        @if( auth()->user()->can('edit-work-orders') && auth()->user()->hasAdminRole() )         
-        <li>
-            @include('work-orders.index.modals.modal-modify-status')
-        </li>
-        <li>
-            @include('work-orders.index.dropoptions.form-update-ordered')
-        </li>
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-        @endif
-        
-        @isset( $filtering )       
-        <li>
-            @includeWhen(auth()->user()->hasAdminRole(), 'work-orders.index.dropoptions.button-pending')
-        </li>
-        <li>
-            @include('work-orders.index.dropoptions.button-incomplete')
-        </li>
-        <li>
-            @include('work-orders.index.modals.modal-filtering')
-        </li>
-        @endisset
-    @endslot
+            @if( auth()->user()->hasAdminRole() || auth()->user()->hasRole('assessor') )          
+            <li>
+                @include('work-orders.index.dropoptions.button-pending')
+            </li>
+            @endif
+
+            <li>
+                @include('work-orders.index.dropoptions.button-incomplete')
+            </li>
+
+            @isset( $filtering )           
+            <li>
+                @include('work-orders.index.modals.modal-filtering')
+            </li>
+            @endisset
+
+            @endcan
+        @endslot
+    @endcanAny
 
     {{-- BODY --}}
     @if( $work_orders->count() ) 
@@ -114,13 +124,18 @@
             <th>Scheduled</th>
             @endif
 
+            @can('edit-work-orders')                
             <th>Order</th>
+            @endcan
+
             <th>Crew</th>
             <th>Job</th>
             <th>Client</th>
             <th>Contractor</th>
             <th>Status</th>
+            @canAny(['see-work-orders', 'edit-work-orders'])
             <th></th>
+            @endcanAny
         </tr>
         @endslot
 
@@ -149,6 +164,7 @@
             </td>
             @endif
 
+            @can('edit-work-orders')                
             <td class="text-center" style="width:1%">
                 @if( auth()->user()->hasAdminRole() )
                 <input type="number" class="form-control form-control-sm" style="width:56px" min="1" step="1" name="ordered[{{ $work_order->id }}]" value="{{ $work_order->ordered }}" form="formWorkOrderOrdered">
@@ -158,6 +174,7 @@
 
                 @endif
             </td>
+            @endcan
 
             <td class="text-nowrap">
                 @includeWhen($work_order->hasCrew(), 'crews.__.flag', [
@@ -176,7 +193,7 @@
                 ])
             </td>
 
-            <td class="text-nowrap text-center">
+            <td class="text-nowrap">
                 @if( $work_order->hasContractor() )    
                     @include('contractors.__.flag', [
                         'name' => $work_order->contractor->alias,
@@ -195,16 +212,23 @@
                 ])
             </td>
 
+            @canAny(['see-work-orders', 'edit-work-orders'])
             <td class="text-nowrap text-end" style="width:1%">
+
+                @can('see-work-orders')                
                 <a href="{{ route('work-orders.show', $work_order) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
+                @endcan
+
                 @can('edit-work-orders')                
                 <a href="{{ route('work-orders.edit', [$work_order, 'url_back' => $request->fullUrl()]) }}" class="btn btn-outline-warning btn-sm">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
                 @endcan
+
             </td>
+            @endcanAny
         </tr>
         @endforeach
 

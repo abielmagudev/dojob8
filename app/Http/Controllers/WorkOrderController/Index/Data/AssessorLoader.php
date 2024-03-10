@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers\WorkOrderController\Index\Data;
 
+use App\Http\Controllers\WorkOrderController\Index\Data\Kernel\LoaderConstructor;
 use App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator;
 use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\Job;
 use App\Models\WorkOrder;
-use Illuminate\Http\Request;
-use Illuminate\Queue\Worker;
 
-class AdminUser
+class AssessorLoader extends LoaderConstructor
 {
-    public static function data(Request $request)
+    public function data()
     {
         $work_orders = WorkOrder::withEssentialRelationships()
-        ->filterByParameters( $request->all() )
+        ->whereHas('members', function ($query) {
+            $query->where('member_id', auth()->user()->profile_id);
+        })
+        ->filterByParameters( $this->request->all() )
         ->orderBy('crew_id')
-        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
+        ->orderBy('scheduled_date', $this->request->get('sort', 'desc'))
         ->orderByRaw('ordered IS NULL, ordered asc')
         ->paginate(35)
-        ->appends( $request->query() );
+        ->appends( $this->request->query() );
 
         return [
             'filtering' => [
@@ -29,16 +31,18 @@ class AdminUser
                 'jobs' => Job::orderBy('name', 'desc')->get(),
                 'pending' => [
                     'url' => WorkOrderUrlGenerator::pending(),
-                    'count' => WorkOrder::pending()->count(),
+                    'count' => WorkOrder::pending()->hasMember(auth()->user()->profile_id)->count(),
                 ],
                 'incomplete' => [
                     'url' => WorkOrderUrlGenerator::incomplete(),
-                    'count' => WorkOrder::incomplete()->count(),
+                    'count' => WorkOrder::incomplete()
+                    ->hasMember(auth()->user()->profile_id)
+                    ->count(),
                 ],
             ], 
             'all_statuses' => WorkOrder::collectionAllStatuses(),
             'all_types' => WorkOrder::collectionAllTypes(),
-            'request' => $request,
+            'request' => $this->request,
             'work_orders' => $work_orders,
         ];
     }

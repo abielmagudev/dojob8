@@ -27,7 +27,7 @@
         <div class="d-flex justify-content-end gap-2">
             <a href="{{ $url_back }}" class="btn btn-outline-primary">Back</a>
 
-            @if( auth()->user()->hasAdminRole() )
+            @if( auth()->user()->can('edit-work-orders') )
             <button class="btn btn-warning" type="submit">Update work order</button>
             @endif
 

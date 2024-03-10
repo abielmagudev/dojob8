@@ -257,7 +257,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return $query->whereNull('scheduled_date')->orWhereNull('crew_id');
     }
 
-    public function scopeNotPending($query)
+    public function scopeNoPending($query)
     {
         return $query->whereNotNull('scheduled_date')->WhereNotNull('crew_id');
     }
@@ -356,7 +356,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         }
 
         if( $value == 0 ) {
-            return $query->notPending();
+            return $query->noPending();
         }
 
         return $query->pending();

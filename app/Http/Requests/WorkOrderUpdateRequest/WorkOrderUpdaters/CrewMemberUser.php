@@ -4,7 +4,7 @@ namespace App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters;
 
 use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\Kernel\Updater;
 
-class WorkerUser extends Updater
+class CrewMemberUser extends Updater
 {
     public function prepareForValidation()
     {

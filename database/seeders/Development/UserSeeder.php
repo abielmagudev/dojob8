@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
 
             if( $user->profile_type == Member::class )
             {
-                $role = ! $user->profile->isCrewMember() ? $member_roles->except('worker')->random() : 'worker';
+                $role = ! $user->profile->isCrewMember() ? $member_roles->except('crew member')->random() : 'crew member';
                 $user->assignRole($role);
             }
 

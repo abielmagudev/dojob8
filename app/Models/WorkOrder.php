@@ -238,7 +238,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract
 
     // Actions
 
-    public function attachWorkers()
+    public function attachCrewMembers()
     {
         $this->members()->attach( 
             $this->crew->members->pluck('id')

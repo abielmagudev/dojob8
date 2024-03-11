@@ -66,7 +66,7 @@ class WorkOrderController extends Controller
         
         //?
         if( $work_order->hasCrew() ) {
-            $work_order->attachWorkers();
+            $work_order->attachCrewMembers();
         }
         
         InspectionFactoryService::create($work_order);

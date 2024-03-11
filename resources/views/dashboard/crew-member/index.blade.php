@@ -2,7 +2,7 @@
 @section('content')
 
 @section('header')
-<x-page-title>Dashboard (Worker)</x-page-title>
+<x-page-title>Dashboard (Crew member)</x-page-title>
 @endsection
 
 @section('content')

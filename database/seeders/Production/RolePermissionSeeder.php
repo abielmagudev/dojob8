@@ -60,7 +60,7 @@ class RolePermissionSeeder extends Seeder
             'manager' => Role::create(['name' => 'manager']),
             'coordinator' => Role::create(['name' => 'coordinator']),
             'assessor' => Role::create(['name' => 'assessor']),
-            'worker' => Role::create(['name' => 'worker']),
+            'crew member' => Role::create(['name' => 'crew member']),
             'contractor' => Role::create(['name' => 'contractor']),
             'agency' => Role::create(['name' => 'agency']),
             'payments' => Role::create(['name' => 'payments']),
@@ -355,7 +355,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'filter-comments'])->syncRoles([
@@ -364,7 +364,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'create-comments'])->syncRoles([
@@ -372,7 +372,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'edit-comments'])->syncRoles([
@@ -380,7 +380,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'delete-comments'])->syncRoles([
@@ -399,7 +399,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'filter-media'])->syncRoles([
@@ -408,7 +408,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'create-media'])->syncRoles([
@@ -416,7 +416,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'edit-media'])->syncRoles([
@@ -424,7 +424,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'delete-media'])->syncRoles([
@@ -443,7 +443,7 @@ class RolePermissionSeeder extends Seeder
             $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
-            $roles['worker'],
+            $roles['crew member'],
             $roles['agency'],
         ]);
 
@@ -452,6 +452,7 @@ class RolePermissionSeeder extends Seeder
             $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
+            $roles['crew member'],
             $roles['agency'],
         ]);
 
@@ -464,6 +465,7 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'edit-inspections'])->syncRoles([
             $roles['administrator'],
             $roles['manager'],
+            $roles['crew member'],
             $roles['coordinator'],
         ]);
 
@@ -514,7 +516,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
             $roles['contractor'],
         ]);
 
@@ -524,7 +526,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
             $roles['contractor'],
         ]);
 
@@ -540,7 +542,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
         ]);
 
         Permission::create(['name' => 'delete-work-orders'])->syncRoles([
@@ -632,7 +634,7 @@ class RolePermissionSeeder extends Seeder
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
-            $roles['worker'],
+            $roles['crew member'],
             $roles['payments'],
         ]);
     }

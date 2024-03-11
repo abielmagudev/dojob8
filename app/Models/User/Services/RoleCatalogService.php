@@ -18,7 +18,7 @@ class RoleCatalogService
         ],
         'field' => [
             'assessor',
-            'worker',
+            'crew member',
         ],
         'partner' => [
             'contractor',

@@ -3,14 +3,14 @@
 namespace App\Http\Requests\WorkOrderUpdateRequest;
 
 use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\AdminUser;
-use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\WorkerUser;
+use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaters\CrewMemberUser;
 use Illuminate\Http\Request;
 
 class WorkOrderUpdaterLoader
 {
     public $updaters = [
         'admin' => AdminUser::class,
-        'worker' => WorkerUser::class,
+        'crew member' => CrewMemberUser::class,
     ];
 
     public $loaded;

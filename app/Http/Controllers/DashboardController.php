@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController\Responses\AdminResponse;
 use App\Http\Controllers\DashboardController\Responses\AgencyResponse;
 use App\Http\Controllers\DashboardController\Responses\AssessorResponse;
 use App\Http\Controllers\DashboardController\Responses\ContractorResponse;
-use App\Http\Controllers\DashboardController\Responses\WorkerResponse;
+use App\Http\Controllers\DashboardController\Responses\CrewMemberResponse;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -36,7 +36,7 @@ class DashboardController extends Controller
             'coordinator' => AdminResponse::class,
             'payments' => AdminResponse::class,
             'assessor' => AssessorResponse::class,
-            'worker' => WorkerResponse::class,
+            'crew member' => CrewMemberResponse::class,
             'contractor' => ContractorResponse::class,
             'agency' => AgencyResponse::class,
         ]);

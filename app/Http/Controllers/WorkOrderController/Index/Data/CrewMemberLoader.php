@@ -4,41 +4,34 @@ namespace App\Http\Controllers\WorkOrderController\Index\Data;
 
 use App\Http\Controllers\WorkOrderController\Index\Data\Kernel\LoaderConstructor;
 use App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator;
-use App\Models\Contractor;
-use App\Models\Crew;
-use App\Models\Job;
 use App\Models\WorkOrder;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
-use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
+use Illuminate\Http\Request;
 
-class AdminLoader extends LoaderConstructor
+class CrewMemberLoader extends LoaderConstructor
 {
     public function data()
     {
         $work_orders = WorkOrder::withEssentialRelationships()
         ->filterByParameters( $this->request->all() )
+        ->hasMember( auth()->user()->profile_id )
         ->orderBy('crew_id')
-        ->orderBy('scheduled_date', $this->request->get('sort', 'desc'))
-        ->orderByRaw('ordered IS NULL, ordered asc')
+        ->orderBy('ordered')
         ->paginate(35)
         ->appends( $this->request->query() );
 
+        $work_orders_incomplete = WorkOrder::incomplete()
+        ->hasMember( auth()->user()->profile_id )
+        ->get();
+
         return [
             'filtering' => [
-                'contractors' => Contractor::orderBy('name', 'desc')->get(),
-                'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),
-                'jobs' => Job::orderBy('name', 'desc')->get(),
-                'pending' => [
-                    'url' => WorkOrderUrlGenerator::pending(),
-                    'count' => WorkOrder::pending()->count(),
-                ],
                 'incomplete' => [
                     'url' => WorkOrderUrlGenerator::incomplete(),
-                    'count' => WorkOrder::incomplete()->count(),
+                    'count' => $work_orders_incomplete->count(),
                 ],
-            ], 
+            ],
             'all_statuses' => WorkOrderStatusCatalog::all(),
-            'all_types' => WorkOrderTypeCatalog::all(),
             'request' => $this->request,
             'work_orders' => $work_orders,
         ];

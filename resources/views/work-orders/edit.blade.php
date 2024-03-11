@@ -31,7 +31,7 @@
             <button class="btn btn-warning" type="submit">Update work order</button>
             @endif
 
-            @includeWhen(auth()->user()->hasRole('worker'), 'work-orders._form.working-done')
+            @includeWhen(auth()->user()->hasRole('crew member'), 'work-orders._form.working-done')
         </div>
     </form>
 </x-card>

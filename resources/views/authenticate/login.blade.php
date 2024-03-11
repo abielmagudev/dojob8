@@ -3,8 +3,8 @@
 <div class="row justify-content-center align-items-center vh-100" data-bs-theme="light">
     <div class="col-sm col-sm-4 col-md-6 col-lg-5 col-xl-4">
         <div class="shadow rounded text-bg-light">
-            <div class="text-bg-primary text-center text-uppercase rounded-top py-4 px-3">
-                <b class="fs-3">¡Welcome!</b>
+            <div class="d-none text-bg-primary text-center text-uppercase rounded-top py-4 px-3">
+                <b class="fs-3 d-none">¡Welcome!</b>
             </div>
             <div class="py-4 py-xl-5 px-3 px-md-4 px-xl-5">
                 <form action="{{ route('login') }}" method="post" autocomplete="off">

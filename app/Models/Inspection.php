@@ -137,6 +137,11 @@ class Inspection extends Model implements FilterableQueryStringContract
         ]);
     }
 
+    public function scopeAwaiting($query)
+    {
+        return $query->where('status', 'awaiting');
+    }
+
     public function scopeAwaitingStatusCount($query)
     {
         return $query->select( DB::raw('COUNT(*) as awaiting_status_count') )->where('status', 'awaiting');

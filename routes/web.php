@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\CrewController;
+use App\Http\Controllers\CrewMemberAssignmentController;
 use App\Http\Controllers\CrewMemberController;
 use App\Http\Controllers\CrewStatusController;
 use App\Http\Controllers\DashboardController;
@@ -25,7 +26,6 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\WorkOrderJobExtensionsAjaxController;
-use App\Http\Controllers\WorkOrderMemberController;
 use App\Http\Controllers\WorkOrderOrderedController;
 use App\Http\Controllers\WorkOrderStatusController;
 use Illuminate\Support\Facades\Route;
@@ -64,9 +64,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
     Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
     Route::resource('jobs', JobController::class);
+
+    // Crew Members Assigment
+    Route::patch('crew-members/assignment', CrewMemberAssignmentController::class)->name('crew-members.assignment.update');
     
-    Route::put('crews/members', CrewMemberController::class)->name('crews.update.members');
+    // Crews
     Route::patch('crews/status', CrewStatusController::class)->name('crews.update.status');
+    Route::put('crews/members', CrewMemberController::class)->name('crews.update.members');
     Route::resource('crews', CrewController::class);
     
     Route::resource('contractors', ContractorController::class);
@@ -102,7 +106,6 @@ Route::middleware(['auth'])->group(function () {
     
     Route::patch('work-orders/order', WorkOrderOrderedController::class)->name('work-orders.update.ordered');
     Route::patch('work-orders/status', WorkOrderStatusController::class)->name('work-orders.update.status');
-    Route::patch('work-orders/workers', WorkOrderMemberController::class)->name('work-orders.update.workers');
     Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
     Route::resource('work-orders', WorkOrderController::class)->except('create');
 

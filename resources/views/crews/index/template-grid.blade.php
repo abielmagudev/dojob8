@@ -1,9 +1,15 @@
 <div class="row">
     @foreach($active_crews as $crew)
     <div class="col-sm col-sm-6 col-md-4 col-xl-3 mb-4">
-        <x-card title="{{ $crew->name }}" class="h-100" style="border-top:0.5rem solid {{ $crew->colors->background }} !important">
-        
-            @slot('options')
+        <x-card class="h-100" style="border-top:0.5rem solid {{ $crew->colors->background }} !important">
+            
+            <x-slot name="title">
+                <x-tooltip title="{{ ucwords($crew->purposes_collection->implode(', ')) }}">
+                    {{ $crew->name }}
+                </x-tooltip>
+            </x-slot>
+
+            <x-slot name="options">
                 @includeWhen($crew->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
                     'parameters' => ['crew' => $crew->id],
                     'counter' => $crew->incomplete_work_orders_counter
@@ -17,7 +23,7 @@
                 <a href="{{ route('crews.show', $crew) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-eye-fill"></i>
                 </a>
-            @endslot
+            </x-slot>
 
             <div class="list-group list-group-flush is-sortable" data-crew="{{ $crew->id }}">
             @foreach($crew->members as $member)

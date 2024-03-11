@@ -13,9 +13,9 @@
 
     {{-- Center --}}
     <div class="col text-nowrap text-center">
-        <x-modal-trigger modal-id="setWorkOrderWorkersModal" class="btn btn-warning">
+        <x-modal-trigger modal-id="crewMemberAssignmentModal" class="btn btn-warning">
             <i class="bi bi-rocket-takeoff"></i>
-            <span class="ms-1 d-none d-md-inline-block ">Set on work orders</span>
+            <span class="ms-1 d-none d-md-inline-block ">Send crew members</span>
         </x-modal-trigger>
     </div>
 

@@ -12,7 +12,7 @@
 @include("crews.index.template-{$template}")
 @include('crews.index.modal-add-crew-members')
 @include('crews.index.modal-change-status-crews')
-@include('crews.index.modal-set-work-order-workers')
+@include('crews.index.modal-crew-members-assignment')
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.1/Sortable.min.js"></script>

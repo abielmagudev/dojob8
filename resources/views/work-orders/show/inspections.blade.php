@@ -50,7 +50,7 @@
                 @if( $inspection->hasCrew() )
                 @include('crews.__.flag', ['crew' => $inspection->crew])
                 <br>
-                <small>{{ $inspection->crew->members->pluck('full_name')->implode(', ') }}</small>
+                <small>{{ $inspection->members->pluck('full_name')->implode(', ') }}</small>
                 @endif
             </td>
             <td style="min-width:240px; max-width:480px">

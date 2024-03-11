@@ -25,8 +25,8 @@
         </div>
 
         <div class="col-sm">
-            <x-small-title title="Workers">
-                {!! $work_order->members->map(function($member){ return $member->full_name; })->implode('<br>') !!}
+            <x-small-title title="Crew members">
+                {!! $work_order->members->pluck('full_name')->implode('<br>') !!}
             </x-small-title>
         </div>
     </div>

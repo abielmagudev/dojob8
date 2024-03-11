@@ -101,6 +101,11 @@ class Crew extends Model
         return ! empty($this->purposes_stringify) ? explode(',', $this->purposes_stringify) : [];
     }
 
+    public function getPurposesCollectionAttribute()
+    {
+        return collect( $this->purposes_array );
+    }
+
 
 
     // Relationships

@@ -22,13 +22,13 @@ class UserStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $this->roles = RoleCatalogManager::byProfile( app($this->profile_type) )->implode(',');
-
-        $this->types = ProfileContainer::types()->implode(',');
-
         if(! $mapper = ProfileJsonInputMapper::make($this) ) {
             return;
         }
+
+        $this->types = ProfileContainer::types()->implode(',');
+
+        $this->roles = RoleCatalogManager::byProfile( app($mapper->profileType()) )->implode(',');
 
         $this->merge([
             'profile_type' => $mapper->profileType(),

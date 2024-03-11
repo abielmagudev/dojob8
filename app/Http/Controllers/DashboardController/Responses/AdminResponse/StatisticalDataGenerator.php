@@ -5,7 +5,7 @@ namespace App\Http\Controllers\DashboardController\Responses\AdminResponse;
 use App\Models\Agency;
 use App\Models\Contractor;
 use App\Models\Crew;
-use App\Models\Inspection;
+use App\Models\Inspection\Kernel\InspectionStatusCatalog;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\WorkOrder;

@@ -78,23 +78,27 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-agencies'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
         ]);
         
         Permission::create(['name' => 'filter-agencies'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'create-agencies'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
         ]);
 
         Permission::create(['name' => 'edit-agencies'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
         ]);
 
@@ -114,6 +118,7 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-clients'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -121,6 +126,7 @@ class RolePermissionSeeder extends Seeder
 
         Permission::create(['name' => 'filter-clients'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -128,6 +134,7 @@ class RolePermissionSeeder extends Seeder
 
         Permission::create(['name' => 'create-clients'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -135,6 +142,7 @@ class RolePermissionSeeder extends Seeder
 
         Permission::create(['name' => 'edit-clients'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -156,23 +164,27 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-contractors'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'filter-contractors'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'create-contractors'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
         ]);
 
         Permission::create(['name' => 'edit-contractors'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
         ]);
 
@@ -228,11 +240,13 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-jobs'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
         ]);
 
         Permission::create(['name' => 'filter-jobs'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
         ]);
 
@@ -260,12 +274,14 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-members'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
         ]);
 
         Permission::create(['name' => 'filter-members'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
         ]);
@@ -335,6 +351,7 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-comments'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -343,6 +360,7 @@ class RolePermissionSeeder extends Seeder
 
         Permission::create(['name' => 'filter-comments'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -377,6 +395,7 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-media'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -385,6 +404,7 @@ class RolePermissionSeeder extends Seeder
 
         Permission::create(['name' => 'filter-media'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -420,6 +440,7 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-inspections'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['worker'],
@@ -428,6 +449,7 @@ class RolePermissionSeeder extends Seeder
 
         Permission::create(['name' => 'filter-inspections'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['agency'],
@@ -465,7 +487,17 @@ class RolePermissionSeeder extends Seeder
             $roles['payments'],
         ]);
 
+        Permission::create(['name' => 'create-payments'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
         Permission::create(['name' => 'edit-payments'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'delete-payments'])->syncRoles([
             $roles['administrator'],
             $roles['payments'],
         ]);
@@ -478,22 +510,22 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'see-work-orders'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
             $roles['worker'],
             $roles['contractor'],
-            $roles['payments'],
         ]);
 
         Permission::create(['name' => 'filter-work-orders'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
             $roles['worker'],
             $roles['contractor'],
-            $roles['payments'],
         ]);
 
         Permission::create(['name' => 'create-work-orders'])->syncRoles([
@@ -596,6 +628,7 @@ class RolePermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'search'])->syncRoles([
             $roles['administrator'],
+            $roles['payments'],
             $roles['manager'],
             $roles['coordinator'],
             $roles['assessor'],
@@ -645,7 +678,15 @@ class RolePermissionSeeder extends Seeder
      */
     public function createPermissionsForJobExtensions(array $roles)
     {
+        Permission::create(['name' => 'create-job-extensions'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
         Permission::create(['name' => 'edit-job-extensions'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'delete-job-extensions'])->syncRoles([
             $roles['administrator'],
         ]);
     }

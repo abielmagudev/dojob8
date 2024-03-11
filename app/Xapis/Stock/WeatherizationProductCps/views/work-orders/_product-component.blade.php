@@ -18,6 +18,10 @@
             <label for="inputQuantity" class="form-label">Quantity</label>
             <input id="inputQuantity" class="form-control" type="number" min="1" max="999" step="1">
         </div>
+        <div class="col">
+            <label for="indicationsInput" class="form-label form-label-optional">Indications</label>
+            <input id="indicationsInput" class="form-control" type="text">
+        </div>
         <div class="col col-sm-2 col-md-1">
             <button class="btn btn-primary w-100" type="button">
                 <b>+</b>

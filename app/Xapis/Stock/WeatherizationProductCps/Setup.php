@@ -35,9 +35,4 @@ return new class implements SetupInterface
             'xapi_wzprodcps_work_orders' => Stocker::path('WeatherizationProductCps/migrations/create_xapi_wzprodcps_work_orders_table.php'),
         ]; 
     }
-
-    public function hasSettings(): bool
-    {
-        return true;
-    }
 };

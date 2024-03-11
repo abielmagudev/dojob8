@@ -8,7 +8,7 @@ use App\Models\WorkOrder;
 use App\Xapis\Stock\WeatherizationProductCps\Exports\WzProdCpsWorkOrderExport;
 use App\Xapis\Stock\WeatherizationProductCps\Models\Category;
 use App\Xapis\Stock\WeatherizationProductCps\Models\Product;
-use App\Xapis\Stock\WeatherizationProductCps\Models\WzProdCpsWorkOrder;
+use App\Xapis\Stock\WeatherizationProductCps\Models\WeatherizationProductCpsWorkOrder;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -19,7 +19,7 @@ class ExportController extends Controller
         return view('WeatherizationProductCps/views/exports/index', [
             'extension' => $extension,
             'categories' => Category::with('products')->get(),
-            'work_orders' => WzProdCpsWorkOrder::with('work_order')->get(),
+            'work_orders' => WeatherizationProductCpsWorkOrder::with('work_order')->get(),
         ]);
     }
 
@@ -27,7 +27,7 @@ class ExportController extends Controller
     {
         $work_orders_table = (new WorkOrder)->getTable();
 
-        $query = WzProdCpsWorkOrder::with(['product', 'work_order']);
+        $query = WeatherizationProductCpsWorkOrder::with(['product', 'work_order']);
         
         if(! is_null($request->from) ||! is_null($request->to) )
         {

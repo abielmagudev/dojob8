@@ -28,4 +28,4 @@
 <x-form-feedback error="quantities" />
 <x-form-feedback error="quantities.*" />
 
-<script src="{{ asset('x-js/wcps.js') }}" fake></script>
+<script src="{{ asset('storage/xapis/wzprodcps.js') }}" fake></script>

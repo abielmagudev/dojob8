@@ -13,6 +13,10 @@
                 'text' => $work_order_product->quantity,
                 'value' => $work_order_product->quantity
             ],
+            'indications' => [
+                'text' => $work_order_product->indications,
+                'value' => $work_order_product->indications
+            ],
         ])
     @endforeach
 
@@ -34,6 +38,10 @@
                     'text' => old('quantities')[$i] ?? 0,
                     'value' => old('quantities')[$i] ?? 0,
                 ],
+                'indications' => [
+                    'text' => old('indications')[$i] ?? 0,
+                    'value' => old('indications')[$i] ?? 0,
+                ],
             ])
         @endif
 
@@ -45,4 +53,4 @@
 <x-form-feedback error="quantities" />
 <x-form-feedback error="quantities.*" />
 
-<script src="{{ asset('x-js/wcps.js') }}" fake></script>
+<script src="{{ asset('storage/xapis/wzprodcps.js') }}" fake></script>

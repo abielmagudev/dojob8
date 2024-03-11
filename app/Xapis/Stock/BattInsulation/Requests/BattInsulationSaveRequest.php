@@ -1,0 +1,88 @@
+<?php
+
+namespace App\Xapis\Stock\BattInsulation\Requests;
+
+use App\Xapis\Stock\BattInsulation\Kernel\Rvalue;
+use App\Xapis\Stock\BattInsulation\Kernel\Size;
+use App\Xapis\Stock\BattInsulation\Kernel\Type;
+use Illuminate\Foundation\Http\FormRequest;
+
+class BattInsulationSaveRequest extends FormRequest
+{
+    public $rvalue_names_by_space = '';
+
+    public function authorize()
+    {
+        return true;
+    }
+
+    public function rules()
+    {
+        return [
+            'battins_space' => [
+                'required',
+                sprintf('in:%s', Rvalue::spaces()->implode(',')),
+            ],
+            'battins_rvalue_name' => [
+                'required',
+                sprintf('in:%s', $this->rvalue_names_by_space),
+            ],
+            'battins_size' => [
+                'required',
+                sprintf('in:%s', Size::all()->implode(',')),
+            ],
+            'battins_type' => [
+                'required',
+                sprintf('in:%s', Type::all()->implode(',')),
+            ],
+            'battins_square_footage' => [
+                'required',
+                'numeric',
+                'min:0.01',
+            ],
+            'battins_square_footage_netting' => [
+                'nullable',
+                'numeric',
+                'min:0.01',
+            ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'battins_space.required' => __('Space is required'),
+            'battins_space.in' => __('Space is invalid'),
+            'battins_rvalue_name.required' => __('R-Value is required'),
+            'battins_rvalue_name.in' => __('R-Value is invalid or doesn\'t belong in space'),
+            'battins_size.required' => __('Size is required'),
+            'battins_size.in' => __('Size is invalid'),
+            'battins_type.required' => __('Type is required'),
+            'battins_type.in' => __('Type is invalid'),
+            'battins_square_footage.required' => __('Square footage is required'),
+            'battins_square_footage.numeric' => __('Square footage is invalid'),
+            'battins_square_footage.min' => __('Square footage must be a minimum of 0.01'),
+            'battins_square_footage_netting.numeric' => __('Square footage of Netting is invalid'),
+            'battins_square_footage_netting.min' => __('Square footage of Netting must be a minimum of 0.01'),
+        ];
+    }
+
+    public function prepareForValidation()
+    {
+        if( Rvalue::spaceExists( $this->get('battins_space') ) ) {
+            $this->rvalue_names_by_space = Rvalue::allBySpace( $this->get('battins_space') )->implode(',');
+        }
+    }
+
+    public function validated()
+    {
+        return [
+            'space' => $this->battins_space,
+            'rvalue_name' => $this->battins_rvalue_name,
+            'size' => $this->battins_size,
+            'type' => $this->battins_type,
+            'square_footage' => $this->battins_square_footage,
+            'square_footage_netting' => $this->battins_square_footage_netting,
+        ];
+    }
+}

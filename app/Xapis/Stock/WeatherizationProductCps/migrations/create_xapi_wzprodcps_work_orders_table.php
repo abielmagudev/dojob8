@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('xapi_wzprodcps_work_orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('quantity');
+            $table->string('indications')->nullable();
             $table->foreignId('product_id')->references('id')->on('xapi_wzprodcps_products')->onDelete('cascade');
             $table->foreignId('work_order_id')->references('id')->on('work_orders')->onDelete('cascade')->index('xapi_wzprodcps_work_order_foreign');
             $table->dateTime('created_at');

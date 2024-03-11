@@ -27,6 +27,13 @@ class ProductWorkOrderSaveRequest extends FormRequest
             'quantities.*' => [
                 'integer',
             ],
+            'indications' => [
+                'array',
+            ],
+            'indications.*' => [
+                'nullable',
+                'string',
+            ]
         ];
     }
 

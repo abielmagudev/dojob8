@@ -18,20 +18,19 @@ class ExtensionSeeder extends Seeder
 
     public function run()
     {
-        $this->console->writeln("<question> XAPI: eXtension API Seeders </question>");
+        $this->console->writeln("<question> Extension Seeder with XAPI eXtension API </question>");
 
         foreach(Stocker::all() as $xapi => $setup_path)
         {
             $setup = include($setup_path);
             
-            $this->console->writeln("<comment> Seeding {$xapi} </comment>");
+            $this->console->writeln("<comment> Extension seeding {$xapi} </comment>");
 
             Extension::create([
                 'name' => $setup->name(),
                 'description' => $setup->description(),
                 'spacename' => $setup->spacename(),
                 'abbr' => $setup->abbr(),
-                'has_settings' => $setup->hasSettings(),
             ]);
 
             $this->console->writeln("<info> Seeded {$xapi} </info>");

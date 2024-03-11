@@ -37,7 +37,7 @@
                 {{ $inspection->scheduled_date_human }}
             </td>
             <td style="width:1%">
-                @includeWhen($inspection->hasNoPendingAttributes(), 'inspections.__.flag-status', ['status' => $inspection->status])
+                @includeWhen($inspection->hasNoPending(), 'inspections.__.flag-status', ['status' => $inspection->status])
                 @includeWhen($inspection->hasPending(), 'components.custom.flag-pending')
             </td>
             <td class="text-nowrap">
@@ -48,7 +48,9 @@
             </td>
             <td class="text-nowrap">
                 @if( $inspection->hasCrew() )
-                {{ $inspection->crew->name }}
+                @include('crews.__.flag', ['crew' => $inspection->crew])
+                <br>
+                <small>{{ $inspection->crew->members->pluck('full_name')->implode(', ') }}</small>
                 @endif
             </td>
             <td style="min-width:240px; max-width:480px">

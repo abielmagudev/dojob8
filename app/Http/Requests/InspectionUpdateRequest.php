@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Agency;
 use App\Models\Crew;
-use App\Models\Inspection;
+use App\Models\Inspection\Kernel\InspectionStatusCatalog;
 use Illuminate\Foundation\Http\FormRequest;
 
 class InspectionUpdateRequest extends FormRequest

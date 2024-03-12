@@ -16,9 +16,6 @@ class AssessorLoader extends LoaderConstructor
     public function data()
     {
         $work_orders = WorkOrder::withEssentialRelationships()
-        ->whereHas('members', function ($query) {
-            $query->where('member_id', auth()->user()->profile_id);
-        })
         ->filterByParameters( $this->request->all() )
         ->orderBy('crew_id')
         ->orderBy('scheduled_date', $this->request->get('sort', 'desc'))
@@ -33,13 +30,11 @@ class AssessorLoader extends LoaderConstructor
                 'jobs' => Job::orderBy('name', 'desc')->get(),
                 'pending' => [
                     'url' => WorkOrderUrlGenerator::pending(),
-                    'count' => WorkOrder::pending()->hasMember(auth()->user()->profile_id)->count(),
+                    'count' => WorkOrder::pending()->count(),
                 ],
                 'incomplete' => [
                     'url' => WorkOrderUrlGenerator::incomplete(),
-                    'count' => WorkOrder::incomplete()
-                    ->hasMember(auth()->user()->profile_id)
-                    ->count(),
+                    'count' => WorkOrder::incomplete()->count(),
                 ],
             ], 
             'all_statuses' => WorkOrderStatusCatalog::all(),

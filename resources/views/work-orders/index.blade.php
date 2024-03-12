@@ -62,7 +62,10 @@
         @slot('dropoptions')
             @can('create-work-orders')       
             <li>
-                @include('work-orders.index.modals.modal-search-client-to-create-work-order')
+                <x-modal-trigger modal-id="modalClientNewWorkOrder" class="dropdown-item">
+                    <i class="bi bi-plus-lg"></i>
+                    <span class="ms-1">New work order</span>
+                </x-modal-trigger>
             </li>
             @endcan
             
@@ -240,4 +243,8 @@
 <div class="px-3">
     <x-pagination-simple-model :collection="$work_orders" />
 </div>
+
+@can('create-work-orders')
+@include('work-orders.index.modals.modal-client-new-work-order')
+@endcan
 @endsection

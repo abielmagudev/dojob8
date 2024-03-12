@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgencyController;
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommentController;
@@ -73,10 +74,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('crews/members', CrewMemberController::class)->name('crews.update.members');
     Route::resource('crews', CrewController::class);
     
+    // Contractors
     Route::resource('contractors', ContractorController::class);
     
+    // Users
     Route::resource('users', UserController::class);
     
+    // History
     Route::get('history', HistoryController::class)->name('history.index');
     
     // Comments
@@ -99,6 +103,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
     Route::resource('extensions', ExtensionController::class)->except(['create','store']);
     
+    // Assessments
+    Route::resource('assessments', AssessmentController::class);
+
     // Work orders
     Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
     Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
@@ -106,8 +113,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::patch('work-orders/order', WorkOrderOrderedController::class)->name('work-orders.update.ordered');
     Route::patch('work-orders/status', WorkOrderStatusController::class)->name('work-orders.update.status');
-    Route::get('work-orders/create/{client}', [WorkOrderController::class, 'create'])->name('work-orders.create');
-    Route::resource('work-orders', WorkOrderController::class)->except('create');
+    Route::resource('work-orders', WorkOrderController::class);
 
     // Account
     Route::get('account', [AccountController::class, 'edit'])->name('account.edit');

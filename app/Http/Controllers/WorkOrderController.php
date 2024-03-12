@@ -41,9 +41,11 @@ class WorkOrderController extends Controller
         return view('work-orders.index', $loader->data());
     }
 
-    public function create(Client $client)
+    public function create(Request $request)
     {
         $this->reflashInputErrors();
+
+        $client = Client::findOrFail($request->client);
 
         $client->load('work_orders.job');
 

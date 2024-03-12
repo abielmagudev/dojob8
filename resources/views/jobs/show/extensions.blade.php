@@ -13,6 +13,7 @@
             @foreach($job->extensions as $extension)
             <tr>
                 <td>{{ $extension->name }}</td>
+                <td>{{ $extension->description }}</td>
                 <td class="text-end">
                     <x-modal-trigger class="btn btn-outline-danger" modal-id="modalRemoveExtension" name="extension" :value="json_encode(['id' => $extension->id, 'name' => $extension->name])">
                         <b>X</b>

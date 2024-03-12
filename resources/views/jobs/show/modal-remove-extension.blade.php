@@ -1,16 +1,15 @@
 <x-modal id="modalRemoveExtension" title="Remove extension" header-close>
-    <div class="text-center">
-        <p>¿Are you sure to remove the extension<br><b></b>?</p>
+    <div class="text-center mb-5">
+        <p class="mb-1">¿Are you sure to remove the extension <b></b>?</p>
         <small class="fw-bold text-success">* All information will be kept safe</small>
     </div>
-    <br>
     <form action="{{ route('jobs.extensions.detach', $job) }}" method="post">
         @csrf
         @method('delete')
         <input type="hidden" name="extension" value="">
         <div class="text-center">
-            <button class="btn btn-outline-danger" type="submit">Yes, remove extension</button>
             <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-outline-danger" type="submit">Remove extension</button>
         </div>
     </form>
 </x-modal>

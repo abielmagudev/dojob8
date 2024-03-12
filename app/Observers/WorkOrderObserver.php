@@ -41,10 +41,6 @@ class WorkOrderObserver
 
     public function deleted(WorkOrder $work_order)
     {
-        // Media::about($work_order)->delete();
-
-        // History::about($work_order)->delete();
-
         History::create([
             'description' => sprintf("The work order <em>{$work_order->id} - {$work_order->job->name}</em> was deleted."),
             'model_type' => WorkOrder::class,

@@ -12,6 +12,7 @@ use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\Job;
+use App\Models\Media\Kernel\MediaFileDestroyer;
 use App\Models\WorkOrder;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
@@ -136,7 +137,11 @@ class WorkOrderController extends Controller
             return back()->with('danger', 'Error deleting work order, try again please');
         }        
 
-        // Delete on extensions job
+        MediaFileDestroyer::byWorkOrder($work_order);
+
+        $work_order->media()->delete();
+
+        $work_order->history()->delete();
 
         return redirect()->route('work-orders.index')->with('success', "You deleted the work order <b>#{$work_order->id}</b>");
     }

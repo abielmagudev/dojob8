@@ -3,6 +3,7 @@
 namespace App\Models\Media\Kernel;
 
 use App\Models\Media;
+use App\Models\WorkOrder;
 use Illuminate\Support\Facades\Log; 
 use Illuminate\Support\Facades\Storage;
 
@@ -91,5 +92,19 @@ class MediaFileDestroyer
     public function dataNotDestroyed()
     {
         return Media::whereIn('id', $this->media_ids())->get();
+    }
+
+
+    // Statics
+
+    public static function byWorkOrder(WorkOrder $work_order)
+    {
+        $path_relative = sprintf('work-orders/%s', $work_order->id);
+
+        if( Storage::exists($path_relative) ) {
+            Storage::deleteDirectory($path_relative);
+        }
+
+        return ! Storage::exists($path_relative);
     }
 }

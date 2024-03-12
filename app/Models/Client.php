@@ -39,6 +39,11 @@ class Client extends Model implements FilterableQueryStringContract
         'notes',
     ];
 
+    protected $appends = [
+        'address_simple',
+        'contact_channels',
+    ];
+
 
     // Interface
 
@@ -65,6 +70,27 @@ class Client extends Model implements FilterableQueryStringContract
     public function setFullNameAttribute($value)
     {
         $this->attributes['full_name'] = Str::title($value);
+    }
+
+
+    // Accessors
+
+    public function getAddressSimpleAttribute()
+    {
+        $address_simple = $this->address_data->only([
+            'street',
+            'city_name',
+            'state_code',
+            'country_code',
+            'zip_code',
+        ]);
+
+        return $address_simple->implode(', ');
+    }
+
+    public function getContactChannelsAttribute()
+    {  
+        return $this->contact_data->filter()->implode(', ');
     }
 
 

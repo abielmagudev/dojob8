@@ -16,10 +16,17 @@ class ClientAjaxController extends Controller
 
     public function __invoke(Request $request)
     {
+        $clients = collect([]);
+
+        if( $request->filled('search') ) {
+            $clients = Client::search($request->search)->get();
+        }
+
         return response()->json([
             'status' => 200, 
             'search' => $request->search,
-            'clients' => $request->filled('search') ? Client::search($request->search)->limit(7)->get() : [],
+            'total' => $clients->count(),
+            'clients' => $clients->take(15),
         ]);
     }
 }

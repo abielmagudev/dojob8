@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // Models
 use App\Models\Agency;
+use App\Models\Assessment;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
@@ -18,6 +19,7 @@ use App\Models\WorkOrder;
 
 // Observers 
 use App\Observers\AgencyObserver;
+use App\Observers\AssessmentObserver;
 use App\Observers\ClientObserver;
 use App\Observers\ContractorObserver;
 use App\Observers\CrewObserver;
@@ -60,6 +62,7 @@ class EventServiceProvider extends ServiceProvider
 
         // Models::Observers
         Agency::observe(AgencyObserver::class);
+        Assessment::observe(AssessmentObserver::class);
         Client::observe(ClientObserver::class);
         Contractor::observe(ContractorObserver::class);
         Crew::observe(CrewObserver::class);

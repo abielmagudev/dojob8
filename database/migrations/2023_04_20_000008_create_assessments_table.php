@@ -15,11 +15,12 @@ class CreateAssessmentsTable extends Migration
     {
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->index();
             $table->date('scheduled_date')->index();
             $table->tinyInteger('ordered', false, true)->nullable();
+            $table->string('status')->index();
             $table->text('notes')->nullable();
             $table->foreignId('client_id');
+            $table->foreignId('contractor_id')->nullable();
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();

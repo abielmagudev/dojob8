@@ -47,7 +47,6 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\Development\CommentSeeder::class,
             
             // Pivot tables
-            \Database\Seeders\Development\AssessmentJobSeeder::class,
             \Database\Seeders\Development\CrewMemberSeeder::class,
             \Database\Seeders\Development\InspectionMemberSeeder::class,
             \Database\Seeders\Development\MemberWorkOrderSeeder::class,

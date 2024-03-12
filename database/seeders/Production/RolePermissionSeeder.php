@@ -27,9 +27,10 @@ class RolePermissionSeeder extends Seeder
         $this->createPermissionsForUsers($roles);
 
         // OPERATIVE
+        $this->createPermissionsForAssessments($roles);
         $this->createPermissionsForComments($roles);
-        $this->createPermissionsForMedia($roles);
         $this->createPermissionsForInspections($roles);
+        $this->createPermissionsForMedia($roles);
         $this->createPermissionsForPayments($roles);
         $this->createPermissionsForWorkOrders($roles);
         $this->createPermissionsForXapi($roles);
@@ -343,6 +344,46 @@ class RolePermissionSeeder extends Seeder
 
 
     // OPERATIVE 
+
+    /**
+     * Assessments
+     */
+    protected function createPermissionsForAssessments($roles)
+    {
+        Permission::create(['name' => 'see-assessments'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+        ]);
+
+        Permission::create(['name' => 'filter-assessments'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+        ]);
+
+        Permission::create(['name' => 'create-assessments'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+        ]);
+
+        Permission::create(['name' => 'edit-assessments'])->syncRoles([
+            $roles['administrator'],
+            $roles['manager'],
+            $roles['coordinator'],
+            $roles['assessor'],
+        ]);
+
+        Permission::create(['name' => 'delete-assessments'])->syncRoles([
+            $roles['administrator'],
+        ]);
+    }
 
     /**
      * Comments

@@ -49,7 +49,8 @@ class WorkOrderFactory extends Factory
             'contractor_id' => $this->faker->optional()->numberBetween(1, 10),
             'crew_id' => $this->faker->optional()->numberBetween(1, 10),
             'job_id' => $this->faker->numberBetween(1, 10),
-            'assessment_id' => null,
+            
+            // 'assessment_id' => $this->faker->optional()->numberBetween(1, 1000), // Check WorkOrderSeeder for assessments!
         ];
     }
 }

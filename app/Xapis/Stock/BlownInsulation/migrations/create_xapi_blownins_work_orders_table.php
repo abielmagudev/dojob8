@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('xapi_blownins_work_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('space');
+            $table->string('area');
             $table->string('rvalue_name');
             $table->string('rvalue_score')->nullable();
             $table->float('square_footage', 8, 2, true)->nullable();

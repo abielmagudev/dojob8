@@ -2,23 +2,25 @@
     <b>{{ $extension->name }}</b>
 </p>
 <div class="row">
+
     <div class="col-sm">
         <div class="mb-3">
-            <label for="blowninsSpaceSelect" class="form-label">Space</label>
-            <select id="blowninsSpaceSelect" class="form-select" name="blownins_space" required>
-                @foreach($spaces as $space)
-                <option value="{{ $space }}" <?= isSelected( $space == old('blownins_space', $blownins->space) ) ?>>{{ ucfirst($space) }}</option>
+            <label for="blowninsAreaSelect" class="form-label">Area</label>
+            <select id="blowninsAreaSelect" class="form-select" name="blownins_area" required>
+                @foreach($areas_rvalues->keys() as $area)
+                <option value="{{ $area }}" <?= isSelected( $area == old('blownins_area', $blownins->area) ) ?>>{{ ucfirst($area) }}</option>
                 @endforeach
             </select>
-            <x-form-feedback error="blownins_space" />
+            <x-form-feedback error="blownins_area" />
         </div>
     </div>
+
     <div class="col-sm">
         <div class="mb-3">
             <label for="blowninsRvalueNameSelect" class="form-label">R-Value</label>
             <select id="blowninsRvalueNameSelect" class="form-select" name="blownins_rvalue_name" required>
-                @foreach($rvalues as $space => $rvalues)
-                <optgroup label="{{ ucfirst($space) }}">
+                @foreach($areas_rvalues as $area => $rvalues)
+                <optgroup label="{{ ucfirst($area) }}">
                     @foreach($rvalues as $rvalue_name => $rvalue_score)
                     <option value="{{ $rvalue_name }}" data-score="{{ $rvalue_score }}" <?= isSelected( $rvalue_name == old('blownins_rvalue_name', $blownins->rvalue_name) ) ?>>{{ ucfirst($rvalue_name) }}</option>
                     @endforeach
@@ -28,6 +30,7 @@
             <x-form-feedback error="blownins_rvalue_name" />
         </div>
     </div>
+
     <div class="col-sm">
         <div class="mb-3">
             <label for="blowninsSquareFootageInput" class="form-label">Square footage</label>
@@ -35,6 +38,7 @@
             <x-form-feedback error="blownins_square_footage" />
         </div>
     </div>
+
     <div class="col-sm">
         <div class="mb-3">
             <label for="blowninsBagsInput" class="form-label">Bags</label>
@@ -42,6 +46,7 @@
             <x-form-feedback error="blownins_bags" />
         </div>
     </div>
+    
 </div>
 
 <script src="{{ asset('storage/xapis/blownins.js') }}" fake></script>

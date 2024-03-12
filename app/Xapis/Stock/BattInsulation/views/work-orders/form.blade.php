@@ -4,21 +4,21 @@
 <div class="row">
     <div class="col-sm">
         <div class="mb-3">
-            <label for="battinsSpaceSelect" class="form-label">Space</label>
-            <select id="battinsSpaceSelect" class="form-select" name="battins_space" required>
-                @foreach($rvalues_by_space->keys() as $space)
-                <option value="{{ $space }}" <?= isSelected( $space == old('battins_space', $battins->space) ) ?>>{{ ucfirst($space) }}</option>
+            <label for="battinsAreaSelect" class="form-label">Area</label>
+            <select id="battinsAreaSelect" class="form-select" name="battins_area" required>
+                @foreach($areas_rvalues->keys() as $area)
+                <option value="{{ $area }}" <?= isSelected( $area == old('battins_area', $battins->area) ) ?>>{{ ucfirst($area) }}</option>
                 @endforeach
             </select>
-            <x-form-feedback error="battins_space" />
+            <x-form-feedback error="battins_area" />
         </div>
     </div>
     <div class="col-sm">
         <div class="mb-3">
             <label for="battinsRvalueNameSelect" class="form-label">R-Value</label>
             <select id="battinsRvalueNameSelect" class="form-select" name="battins_rvalue_name">
-                @foreach($rvalues_by_space as $space => $rvalues)
-                <optgroup label="{{ ucfirst($space) }}">
+                @foreach($areas_rvalues as $area => $rvalues)
+                <optgroup label="{{ ucfirst($area) }}">
                     @foreach($rvalues as $rvalue_name)
                     <option value="{{ $rvalue_name }}" <?= isSelected( $rvalue_name == old('battins_rvalue_name', $battins->rvalue_name) ) ?>>{{ ucfirst($rvalue_name) }}</option>
                     @endforeach

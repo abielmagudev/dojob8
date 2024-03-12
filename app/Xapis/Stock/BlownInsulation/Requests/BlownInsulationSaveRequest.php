@@ -2,8 +2,8 @@
 
 namespace App\Xapis\Stock\BlownInsulation\Requests;
 
+use App\Xapis\Stock\BlownInsulation\Kernel\AreaRvalueCatalog;
 use App\Xapis\Stock\BlownInsulation\Kernel\BagCalculator;
-use App\Xapis\Stock\BlownInsulation\Kernel\RvalueManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BlownInsulationSaveRequest extends FormRequest
@@ -21,13 +21,13 @@ class BlownInsulationSaveRequest extends FormRequest
     public function rules()
     {
         return [
-            'blownins_space' => [
+            'blownins_area' => [
                 'required',
-                sprintf('in:%s', RvalueManager::spaces()->implode(',')),
+                sprintf('in:%s', AreaRvalueCatalog::areas()->implode(',')),
             ],
             'blownins_rvalue_name' => [
                 'required',
-                sprintf('in:%s', RvalueManager::rvalueNamesBySpace($this->blownins_space)->implode(',')),
+                sprintf('in:%s', AreaRvalueCatalog::rvalueNamesByArea($this->blownins_area)->implode(',')),
             ],
             'blownins_square_footage' => [
                 'required',
@@ -44,8 +44,8 @@ class BlownInsulationSaveRequest extends FormRequest
     public function messages()
     {
         return [
-            'blownins_space.required' => __('Space is required'),
-            'blownins_space.in' => __('Space is invalid'),
+            'blownins_area.required' => __('Area is required'),
+            'blownins_area.in' => __('Area is invalid'),
             'blownins_rvalue_name.required' => __('R-Value is required'),
             'blownins_rvalue_name.in' => __('R-Value is invalid or doesn\'t belong in space'),
             'blownins_square_footage.required' => __('Square footage is required'),
@@ -56,12 +56,14 @@ class BlownInsulationSaveRequest extends FormRequest
 
     public function validated()
     {
+        $rvalue_score = AreaRvalueCatalog::rvalueScoreByArea($this->blownins_area, $this->blownins_rvalue_name);
+
         return [
-            'space' => $this->blownins_space,
+            'area' => $this->blownins_area,
             'rvalue_name' => $this->blownins_rvalue_name,
-            'rvalue_score' => RvalueManager::rvalueScoreBySpace($this->blownins_space, $this->blownins_rvalue_name),
+            'rvalue_score' => $rvalue_score,
             'square_footage' => $this->blownins_square_footage,
-            'bags' => BagCalculator::get($this->blownins_space, $this->blownins_rvalue_name, $this->blownins_square_footage),
+            'bags' => BagCalculator::calculate($this->blownins_square_footage, $rvalue_score),
         ];
     }
 }

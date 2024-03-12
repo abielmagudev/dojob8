@@ -12,8 +12,9 @@ class BattInsulationWorkOrder extends Model
     protected $table = 'xapi_battins_work_orders';
 
     protected $fillable = [
-        'space',
+        'area',
         'rvalue_name',
+        // 'rvalue_score',
         'size',
         'type',
         'square_footage',

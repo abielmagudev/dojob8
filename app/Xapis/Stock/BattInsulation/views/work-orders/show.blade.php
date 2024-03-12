@@ -3,8 +3,8 @@
 </p>
 <div class="row">
     <div class="col-sm">
-        <x-small-title title="Space">
-            <span class="text-capitalize">{{ $battins->space }}</span>
+        <x-small-title title="Area">
+            <span class="text-capitalize">{{ $battins->area }}</span>
         </x-small-title>
     </div>
     <div class="col-sm">

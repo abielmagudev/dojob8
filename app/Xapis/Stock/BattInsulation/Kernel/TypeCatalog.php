@@ -2,16 +2,16 @@
 
 namespace App\Xapis\Stock\BattInsulation\Kernel;
 
-class Size
+class TypeCatalog
 {
-    protected static $sizes = [
-        'large',
-        'small',
+    protected static $types = [
+        'faced',
+        'unfaced',
     ];
 
     public static function all()
     {
-        return collect( self::$sizes );
+        return collect( self::$types );
     }
 
     public static function exists($value)

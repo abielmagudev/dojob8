@@ -5,7 +5,7 @@ namespace App\Xapis\Stock\CelluloseInsulation\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\WorkOrder;
-use App\Xapis\Stock\CelluloseInsulation\Kernel\RvalueManager;
+use App\Xapis\Stock\CelluloseInsulation\Kernel\AreaRvalueCatalog;
 use App\Xapis\Stock\CelluloseInsulation\Models\CelluloseInsulationWorkOrder;
 use App\Xapis\Stock\CelluloseInsulation\Requests\CelluloseInsulationSaveRequest;
 use Illuminate\Http\Request;
@@ -16,8 +16,7 @@ class CelluloseInsulationWorkOrderController extends Controller
     {
         return view('CelluloseInsulation.views.work-orders.form', [
             'extension' => $extension,
-            'spaces' => RvalueManager::spaces(),
-            'rvalues' => RvalueManager::all(),
+            'areas_rvalues' => AreaRvalueCatalog::all(),
             'celluloseins' => new CelluloseInsulationWorkOrder,
         ]);
     }
@@ -43,8 +42,7 @@ class CelluloseInsulationWorkOrderController extends Controller
     {
         return view('CelluloseInsulation.views.work-orders.form', [
             'extension' => $extension,
-            'spaces' => RvalueManager::spaces(),
-            'rvalues' => RvalueManager::all(),
+            'areas_rvalues' => AreaRvalueCatalog::all(),
             'celluloseins' => CelluloseInsulationWorkOrder::where('work_order_id', $work_order->id)->first(),
         ]);
     }

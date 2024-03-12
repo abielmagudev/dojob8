@@ -2,15 +2,13 @@
 
 namespace App\Xapis\Stock\BattInsulation\Requests;
 
-use App\Xapis\Stock\BattInsulation\Kernel\Rvalue;
-use App\Xapis\Stock\BattInsulation\Kernel\Size;
-use App\Xapis\Stock\BattInsulation\Kernel\Type;
+use App\Xapis\Stock\BattInsulation\Kernel\AreaRvalueCatalog;
+use App\Xapis\Stock\BattInsulation\Kernel\SizeCatalog;
+use App\Xapis\Stock\BattInsulation\Kernel\TypeCatalog;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BattInsulationSaveRequest extends FormRequest
 {
-    public $rvalue_names_by_space = '';
-
     public function authorize()
     {
         return true;
@@ -19,21 +17,21 @@ class BattInsulationSaveRequest extends FormRequest
     public function rules()
     {
         return [
-            'battins_space' => [
+            'battins_area' => [
                 'required',
-                sprintf('in:%s', Rvalue::spaces()->implode(',')),
+                sprintf('in:%s', AreaRvalueCatalog::areas()->implode(',')),
             ],
             'battins_rvalue_name' => [
                 'required',
-                sprintf('in:%s', $this->rvalue_names_by_space),
+                sprintf('in:%s', AreaRvalueCatalog::rvalueNamesByArea($this->battins_area)->implode(',')),
             ],
             'battins_size' => [
                 'required',
-                sprintf('in:%s', Size::all()->implode(',')),
+                sprintf('in:%s', SizeCatalog::all()->implode(',')),
             ],
             'battins_type' => [
                 'required',
-                sprintf('in:%s', Type::all()->implode(',')),
+                sprintf('in:%s', TypeCatalog::all()->implode(',')),
             ],
             'battins_square_footage' => [
                 'required',
@@ -51,10 +49,10 @@ class BattInsulationSaveRequest extends FormRequest
     public function messages()
     {
         return [
-            'battins_space.required' => __('Space is required'),
-            'battins_space.in' => __('Space is invalid'),
+            'battins_area.required' => __('Area is required'),
+            'battins_area.in' => __('Area is invalid'),
             'battins_rvalue_name.required' => __('R-Value is required'),
-            'battins_rvalue_name.in' => __('R-Value is invalid or doesn\'t belong in space'),
+            'battins_rvalue_name.in' => __('R-Value is invalid or doesn\'t belong in area'),
             'battins_size.required' => __('Size is required'),
             'battins_size.in' => __('Size is invalid'),
             'battins_type.required' => __('Type is required'),
@@ -67,17 +65,10 @@ class BattInsulationSaveRequest extends FormRequest
         ];
     }
 
-    public function prepareForValidation()
-    {
-        if( Rvalue::spaceExists( $this->get('battins_space') ) ) {
-            $this->rvalue_names_by_space = Rvalue::allBySpace( $this->get('battins_space') )->implode(',');
-        }
-    }
-
     public function validated()
     {
         return [
-            'space' => $this->battins_space,
+            'area' => $this->battins_area,
             'rvalue_name' => $this->battins_rvalue_name,
             'size' => $this->battins_size,
             'type' => $this->battins_type,

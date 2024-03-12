@@ -12,7 +12,7 @@ class BlownInsulationWorkOrder extends Model
     protected $table = 'xapi_blownins_work_orders';
 
     protected $fillable = [
-        'space',
+        'area',
         'rvalue_name',
         'rvalue_score',
         'square_footage',

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('xapi_battins_work_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('space');
+            $table->string('area');
             $table->string('rvalue_name')->index();
             $table->string('rvalue_score')->nullable();
             $table->string('size')->nullable();

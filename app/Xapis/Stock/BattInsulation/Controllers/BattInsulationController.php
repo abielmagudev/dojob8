@@ -4,9 +4,9 @@ namespace App\Xapis\Stock\BattInsulation\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
-use App\Xapis\Stock\BattInsulation\Kernel\Rvalue;
-use App\Xapis\Stock\BattInsulation\Kernel\Size;
-use App\Xapis\Stock\BattInsulation\Kernel\Type;
+use App\Xapis\Stock\BattInsulation\Kernel\AreaRvalueCatalog;
+use App\Xapis\Stock\BattInsulation\Kernel\SizeCatalog;
+use App\Xapis\Stock\BattInsulation\Kernel\TypeCatalog;
 use App\Xapis\Stock\BattInsulation\Models\BattInsulationWorkOrder;
 use Illuminate\Http\Request;
 
@@ -21,9 +21,9 @@ class BattInsulationController extends Controller
     {
         return view('BattInsulation.views.show', [
             'extension' => $extension,
-            'rvalues_by_space' => Rvalue::collection(),
-            'sizes' => Size::all(),
-            'types' => Type::all(),
+            'areas_rvalues' => AreaRvalueCatalog::all(),
+            'sizes' => SizeCatalog::all(),
+            'types' => TypeCatalog::all(),
             'battins' => new BattInsulationWorkOrder,
         ]);
     }

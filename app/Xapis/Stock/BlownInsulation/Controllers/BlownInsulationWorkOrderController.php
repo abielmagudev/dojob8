@@ -5,7 +5,7 @@ namespace App\Xapis\Stock\BlownInsulation\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\WorkOrder;
-use App\Xapis\Stock\BlownInsulation\Kernel\RvalueManager;
+use App\Xapis\Stock\BlownInsulation\Kernel\AreaRvalueCatalog;
 use App\Xapis\Stock\BlownInsulation\Models\BlownInsulationWorkOrder;
 use App\Xapis\Stock\BlownInsulation\Requests\BlownInsulationSaveRequest;
 use Illuminate\Http\Request;
@@ -16,8 +16,7 @@ class BlownInsulationWorkOrderController extends Controller
     {
         return view('BlownInsulation.views.work-orders.form', [
             'extension' => $extension,
-            'spaces' => RvalueManager::spaces(),
-            'rvalues' => RvalueManager::all(),
+            'areas_rvalues' => AreaRvalueCatalog::all(),
             'blownins' => new BlownInsulationWorkOrder,
         ]);
     }
@@ -43,8 +42,7 @@ class BlownInsulationWorkOrderController extends Controller
     {
         return view('BlownInsulation.views.work-orders.form', [
             'extension' => $extension,
-            'spaces' => RvalueManager::spaces(),
-            'rvalues' => RvalueManager::all(),
+            'areas_rvalues' => AreaRvalueCatalog::all(),
             'blownins' => BlownInsulationWorkOrder::where('work_order_id', $work_order->id)->first(),
         ]);
     }

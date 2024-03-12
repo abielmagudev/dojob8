@@ -4,7 +4,7 @@ namespace App\Xapis\Stock\BlownInsulation\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
-use App\Xapis\Stock\BlownInsulation\Kernel\RvalueManager;
+use App\Xapis\Stock\BlownInsulation\Kernel\AreaRvalueCatalog;
 use App\Xapis\Stock\BlownInsulation\Models\BlownInsulationWorkOrder;
 use Illuminate\Http\Request;
 
@@ -19,8 +19,7 @@ class BlownInsulationController extends Controller
     {
         return view('BlownInsulation.views.show', [
             'extension' => $extension,
-            'spaces' => RvalueManager::spaces(),
-            'rvalues' => RvalueManager::all(),
+            'areas_rvalues' => AreaRvalueCatalog::all(),
             'blownins' => new BlownInsulationWorkOrder,
         ]);
     }

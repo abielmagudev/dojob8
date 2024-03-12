@@ -2,8 +2,8 @@
 
 namespace App\Xapis\Stock\CelluloseInsulation\Requests;
 
+use App\Xapis\Stock\CelluloseInsulation\Kernel\AreaRvalueCatalog;
 use App\Xapis\Stock\CelluloseInsulation\Kernel\BagCalculator;
-use App\Xapis\Stock\CelluloseInsulation\Kernel\RvalueManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CelluloseInsulationSaveRequest extends FormRequest
@@ -13,21 +13,16 @@ class CelluloseInsulationSaveRequest extends FormRequest
         return auth()->check();
     }
 
-    public function prepareForValidation()
-    {
-        //
-    }
-
     public function rules()
     {
         return [
-            'celluloseins_space' => [
+            'celluloseins_area' => [
                 'required',
-                sprintf('in:%s', RvalueManager::spaces()->implode(',')),
+                sprintf('in:%s', AreaRvalueCatalog::areas()->implode(',')),
             ],
             'celluloseins_rvalue_name' => [
                 'required',
-                sprintf('in:%s', RvalueManager::rvalueNamesBySpace($this->celluloseins_space)->implode(',')),
+                sprintf('in:%s', AreaRvalueCatalog::rvalueNamesByArea($this->celluloseins_area)->implode(',')),
             ],
             'celluloseins_square_footage' => [
                 'required',
@@ -44,8 +39,8 @@ class CelluloseInsulationSaveRequest extends FormRequest
     public function messages()
     {
         return [
-            'celluloseins_space.required' => __('Space is required'),
-            'celluloseins_space.in' => __('Space is invalid'),
+            'celluloseins_area.required' => __('Area is required'),
+            'celluloseins_area.in' => __('Area is invalid'),
             'celluloseins_rvalue_name.required' => __('R-Value is required'),
             'celluloseins_rvalue_name.in' => __('R-Value is invalid or doesn\'t belong in space'),
             'celluloseins_square_footage.required' => __('Square footage is required'),
@@ -56,12 +51,14 @@ class CelluloseInsulationSaveRequest extends FormRequest
 
     public function validated()
     {
+        $rvalue_score = AreaRvalueCatalog::rvalueScoreByArea($this->celluloseins_area, $this->celluloseins_rvalue_name);
+
         return [
-            'space' => $this->celluloseins_space,
+            'area' => $this->celluloseins_area,
             'rvalue_name' => $this->celluloseins_rvalue_name,
-            'rvalue_score' => RvalueManager::rvalueScoreBySpace($this->celluloseins_space, $this->celluloseins_rvalue_name),
+            'rvalue_score' => $rvalue_score,
             'square_footage' => $this->celluloseins_square_footage,
-            'bags' => BagCalculator::get($this->celluloseins_space, $this->celluloseins_rvalue_name, $this->celluloseins_square_footage),
+            'bags' => BagCalculator::calculate($this->celluloseins_square_footage, $rvalue_score),
         ];
     }
 }

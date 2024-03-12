@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\File;
+use App\Models\Media;
 use App\Models\History;
 use App\Models\WorkOrder;
 use App\Observers\Kernel\HasObserverConstructor;
@@ -41,9 +41,9 @@ class WorkOrderObserver
 
     public function deleted(WorkOrder $work_order)
     {
-        File::about($work_order)->delete();
+        // Media::about($work_order)->delete();
 
-        History::about($work_order)->delete();
+        // History::about($work_order)->delete();
 
         History::create([
             'description' => sprintf("The work order <em>{$work_order->id} - {$work_order->job->name}</em> was deleted."),

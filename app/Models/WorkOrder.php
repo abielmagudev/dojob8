@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Models\Crew\Traits\HasCrew;
+use App\Models\History\Traits\HasHistory;
 use App\Models\Inspection\Traits\HasInspections;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
-use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\Kernel\Traits\HelpForPending;
@@ -19,21 +21,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkOrder extends Model implements FilterableQueryStringContract
 {
-    // Framework
+    use BelongsCreatorUser;
+    use BelongsUpdaterUser;
+    use HasCrew;
     use HasFactory;
-
-    // Kernel
     use HasFilterableQueryStringContract;
-    use HasHookUsers;
+    use HasHistory;
+    use HasInspections;
+    use HasMedia;
+    use HasPayment;
     use HasScheduledDate;
     use HasStatus;
     use HelpForPending;
-
-    // Models
-    use HasCrew;
-    use HasInspections;
-    use HasPayment;
-    use HasMedia;
 
     protected $fillable = [
         'ordered',
@@ -217,11 +216,6 @@ class WorkOrder extends Model implements FilterableQueryStringContract
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-
-    public function history()
-    {
-        return $this->morphMany(History::class, 'model');
     }
 
     public function working_updater()

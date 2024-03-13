@@ -3,54 +3,52 @@
 namespace App\Observers;
 
 use App\Models\Contractor;
-use App\Models\History;
-use App\Observers\Kernel\HasObserverConstructor;
 
 class ContractorObserver
 {
-    use HasObserverConstructor;
-
     public function created(Contractor $contractor)
     {
         Contractor::withoutEvents(function() use ($contractor) {
-            $contractor->updateCreatorUpdater();
+            $contractor->created_id = auth()->id();
+            $contractor->updated_id = auth()->id();
+            $contractor->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$contractor->name}</em> contractor was created."),
+        $contractor->history()->create([
+            'description' => sprintf("Contractor <b>{$contractor->name}</b> was created."),
             'link' => route('contractors.show', $contractor),
-            'model_type' => Contractor::class,
-            'model_id' => $contractor->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function updated(Contractor $contractor)
     {
         Contractor::withoutEvents(function() use ($contractor) {
-            $contractor->updateUpdater();
+            $contractor->updated_id = auth()->id();
+            $contractor->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$contractor->name}</em> contractor was updated."),
+        $contractor->history()->create([
+            'description' => sprintf("Contractor <b>{$contractor->name}</b> was updated."),
             'link' => route('contractors.show', $contractor),
-            'model_type' => Contractor::class,
-            'model_id' => $contractor->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function deleting(Contractor $contractor)
     {
         Contractor::withoutEvents(function() use ($contractor) {
-            $contractor->updateDeleter();
-        });      
+            $contractor->deleted_id = auth()->id();
+            $contractor->save();
+        }); 
     }
 
     public function deleted(Contractor $contractor)
     {
-        History::create([
-            'description' => sprintf("The <em>{$contractor->name}</em> contractor was deleted."),
-            'model_type' => Contractor::class,
-            'model_id' => $contractor->id,
+        $contractor->history()->create([
+            'description' => sprintf("Contractor <b>{$contractor->name}</b> was deleted."),
+            'link' => route('users.show', auth()->id()),
+            'user_id' => auth()->id(),
         ]);
     }
 }

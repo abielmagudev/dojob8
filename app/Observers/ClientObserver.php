@@ -3,54 +3,52 @@
 namespace App\Observers;
 
 use App\Models\Client;
-use App\Models\History;
-use App\Observers\Kernel\HasObserverConstructor;
 
 class ClientObserver
 {
-    use HasObserverConstructor;
-
     public function created(Client $client)
     {
         Client::withoutEvents(function() use ($client) {
-            $client->updateCreatorUpdater();
+            $client->created_id = auth()->id();
+            $client->updated_id = auth()->id();
+            $client->save();
         });
 
-        History::create([
-            'description' => sprintf("<em>{$client->full_name}</em> client was created."),
+        $client->history()->create([
+            'description' => sprintf("Client <b>{$client->full_name}</b> was created."),
             'link' => route('clients.show', $client),
-            'model_type' => Client::class,
-            'model_id' => $client->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function updated(Client $client)
     {
         Client::withoutEvents(function() use ($client) {
-            $client->updateUpdater();
+            $client->updated_id = auth()->id();
+            $client->save();
         });
 
-        History::create([
-            'description' => sprintf("<em>{$client->full_name}</em> client was updated."),
+        $client->history()->create([
+            'description' => sprintf("Client <b>{$client->full_name}</b> was updated."),
             'link' => route('clients.show', $client),
-            'model_type' => Client::class,
-            'model_id' => $client->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function deleting(Client $client)
     {
         Client::withoutEvents(function() use ($client) {
-            $client->updateDeleter();
+            $client->deleted_id = auth()->id();
+            $client->save();
         });
     }
 
     public function deleted(Client $client)
     {
-        History::create([
-            'description' => sprintf("<em>{$client->full_name}</em> client was deleted."),
-            'model_type' => Client::class,
-            'model_id' => $client->id,
+        $client->history()->create([
+            'description' => sprintf("Client <b>{$client->full_name}</b> was deleted."),
+            'link' => route('users.show', auth()->id()),
+            'user_id' => auth()->id(),
         ]);
     }
 

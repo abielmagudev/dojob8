@@ -26,9 +26,9 @@ class CreateMembersTable extends Migration
             $table->boolean('is_available')->default(true);
             $table->boolean('is_crew_member')->default(false);
             $table->text('notes')->nullable();
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
-            $table->foreignId('deleted_by')->nullable();
+            $table->foreignId('created_id')->nullable();
+            $table->foreignId('updated_id')->nullable();
+            $table->foreignId('deleted_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

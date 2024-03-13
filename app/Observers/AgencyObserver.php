@@ -3,54 +3,52 @@
 namespace App\Observers;
 
 use App\Models\Agency;
-use App\Models\History;
-use App\Observers\Kernel\HasObserverConstructor;
 
 class AgencyObserver
 {
-    use HasObserverConstructor;
-
     public function created(Agency $agency)
     {
         Agency::withoutEvents(function() use ($agency) {
-            $agency->updateCreatorUpdater();
+            $agency->created_id = auth()->id();
+            $agency->updated_id = auth()->id();
+            $agency->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$agency->name}</em> agency was created."),
+        $agency->history()->create([
+            'description' => sprintf("Agency <b>{$agency->name}</b> was created."),
             'link' => route('agencies.show', $agency),
-            'model_type' => Agency::class,
-            'model_id' => $agency->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function updated(Agency $agency)
     {
         Agency::withoutEvents(function() use ($agency) {
-            $agency->updateUpdater();
+            $agency->updated_id = auth()->id();
+            $agency->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$agency->name}</em> agency was updated."),
+        $agency->history()->create([
+            'description' => sprintf("Agency <b>{$agency->name}</b> was updated."),
             'link' => route('agencies.show', $agency),
-            'model_type' => Agency::class,
-            'model_id' => $agency->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function deleting(Agency $agency)
-    {
+    {        
         Agency::withoutEvents(function() use ($agency) {
-            $agency->updateDeleter();
+            $agency->deleted_id = auth()->id();
+            $agency->save();
         });
     }
 
     public function deleted(Agency $agency)
     {
-        History::create([
-            'description' => sprintf("The <em>{$agency->name}</em> agency was deleted."),
-            'model_type' => Agency::class,
-            'model_id' => $agency->id,
+        $agency->history()->create([
+            'description' => sprintf("Agency <b>{$agency->name}</b> was deleted."),
+            'link' => route('users.show', auth()->id()),
+            'user_id' => auth()->id(),
         ]);
     }
 }

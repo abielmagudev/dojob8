@@ -2,23 +2,27 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\Traits\HasHookUsers;
+use App\Models\History\Traits\HasHistory;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsDeleterUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Settings extends Model
 {
+    use BelongsCreatorUser;
+    use BelongsDeleterUser;
+    use BelongsUpdaterUser;
     use HasFactory;
-    use HasHookUsers;
+    use HasHistory;
     use SoftDeletes;
 
     protected $table = 'settings';
 
     protected $fillable = [
         'data_json',
-        'created_by',
-        'updated_by',
     ];
 
     private static $singleton;

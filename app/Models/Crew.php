@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\History\Traits\HasHistory;
 use App\Models\Inspection\Traits\HasInspections;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsDeleterUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasActiveStatus;
-use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Traits\HasWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +15,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Crew extends Model
 {
+    use BelongsCreatorUser;
+    use BelongsDeleterUser;
+    use BelongsUpdaterUser;
     use HasActiveStatus;
     use HasFactory;
-    use HasHookUsers;
-    use HasWorkOrders;
+    use HasHistory;
     use HasInspections;
+    use HasWorkOrders;
     use SoftDeletes;
 
     const COLOR_HEX_PATTERN = '/^#[0-9A-Fa-f]{6}$/';

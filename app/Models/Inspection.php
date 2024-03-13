@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Models\Crew\Traits\HasCrew;
+use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
-use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\Kernel\Traits\HelpForPending;
@@ -18,20 +20,17 @@ use Illuminate\Support\Str;
 
 class Inspection extends Model implements FilterableQueryStringContract
 {
-    // Framework
+    use BelongsCreatorUser;
+    use BelongsUpdaterUser;
+    use BelongWorkOrder;
+    use HasCrew;
     use HasFactory;
-    
-    // Kernel
     use HasFilterableQueryStringContract;
-    use HasHookUsers;
+    use HasHistory;
+    use HasMedia;
     use HasScheduledDate;
     use HasStatus;
     use HelpForPending;
-    
-    // Models
-    use BelongWorkOrder;
-    use HasCrew;
-    use HasMedia;
 
     protected $fillable = [
         'scheduled_date',

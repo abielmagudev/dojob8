@@ -4,64 +4,53 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Models\History;
-use App\Observers\Kernel\HasObserverConstructor;
 use Jenssegers\Agent\Facades\Agent;
 
 class UserObserver
 {
-    use HasObserverConstructor;
-
     public function created(User $user)
     {
         User::withoutEvents(function () use ($user) {
-            $user->updateCreatorUpdater();
+            $user->created_id = auth()->id();
+            $user->updated_id = auth()->id();
+            $user->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$user->name}</em> user was created."),
+        $user->history()->create([
+            'description' => "User <b>{$user->name}</b> was created.",
             'link' => route('users.show', $user),
-            'model_type' => User::class,
-            'model_id' => $user->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function updated(User $user)
     {
         User::withoutEvents(function () use ($user) {
-            $user->updateUpdater();
+            $user->updated_id = auth()->id();
+            $user->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$user->name}</em> user was updated."),
+        $user->history()->create([
+            'description' => "User <b>{$user->name}</b> was updated.",
             'link' => route('users.show', $user),
-            'model_type' => User::class,
-            'model_id' => $user->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function deleting(User $user)
     {
         User::withoutEvents(function() use ($user) {
-            $user->updateDeleter();
+            $user->deleted_id = auth()->id();
+            $user->save();
         });      
     }
 
     public function deleted(User $user)
     {
-        History::create([
-            'description' => sprintf("The <em>{$user->name}</em> user was deleted."),
-            'model_type' => User::class,
-            'model_id' => $user->id,
+        $user->history()->create([
+            'description' => "User <b>{$user->name}</b> was deleted.",
+            'link' => route('users.show', auth()->id()),
+            'user_id' => auth()->id(),
         ]);
-    }
-
-    public function restored(User $user)
-    {
-        //
-    }
-
-    public function forceDeleted(User $user)
-    {
-        //
     }
 }

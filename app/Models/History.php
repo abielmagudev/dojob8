@@ -17,8 +17,6 @@ class History extends Model implements FilterableQueryStringContract
     protected $fillable = [
         'description',
         'link',
-        'model_type',
-        'model_id',
         'user_id',
         'created_at'
     ];
@@ -34,7 +32,6 @@ class History extends Model implements FilterableQueryStringContract
         'settings' => Settings::class,
         'users' => User::class,
         'work orders' => WorkOrder::class,
-        // 'extensions' => Extension::class,
     ];
 
     

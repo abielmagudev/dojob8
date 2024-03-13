@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Job\InspectionsSetupWizard;
+use App\Models\History\Traits\HasHistory;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsDeleterUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasActiveStatus;
-use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Traits\HasWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,9 +14,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Job extends Model
 {
+    use BelongsCreatorUser;
+    use BelongsDeleterUser;
+    use BelongsUpdaterUser;
     use HasActiveStatus;
     use HasFactory;
-    use HasHookUsers;
+    use HasHistory;
     use HasWorkOrders;
     use SoftDeletes;
 

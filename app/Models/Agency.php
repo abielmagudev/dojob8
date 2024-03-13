@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\History\Traits\HasHistory;
 use App\Models\Inspection\Traits\HasInspections;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsDeleterUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasActiveStatus;
-use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\User\Interfaces\ProfileableUserContract;
 use App\Models\User\Traits\HasUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Agency extends Model implements ProfileableUserContract
 {
-    use HasFactory;
+    use BelongsCreatorUser;
+    use BelongsDeleterUser;
+    use BelongsUpdaterUser;
     use HasActiveStatus;
-    use HasHookUsers;
+    use HasFactory;
+    use HasHistory;
     use HasInspections;
     use HasUsers;
     use SoftDeletes;
@@ -27,9 +33,6 @@ class Agency extends Model implements ProfileableUserContract
         'phone_number',
         'notes',
         'is_active',
-        'created_by',
-        'updated_by',
-        'deleted_by',
     ];
 
 

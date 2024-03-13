@@ -2,55 +2,53 @@
 
 namespace App\Observers;
 
-use App\Models\History;
 use App\Models\Job;
-use App\Observers\Kernel\HasObserverConstructor;
 
 class JobObserver
 {
-    use HasObserverConstructor;
-
     public function created(Job $job)
     {
         Job::withoutEvents(function() use ($job) {
-            $job->updateCreatorUpdater();
+            $job->created_id = auth()->id();
+            $job->updated_id = auth()->id();
+            $job->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$job->name}</em> job was created."),
+        $job->history()->create([
+            'description' => sprintf("Job <b>{$job->name}</b> was created."),
             'link' => route('jobs.show', $job),
-            'model_type' => Job::class,
-            'model_id' => $job->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function updated(Job $job)
     {
         Job::withoutEvents(function() use ($job) {
-            $job->updateUpdater();
+            $job->updated_id = auth()->id();
+            $job->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$job->name}</em> job was updated."),
+        $job->history()->create([
+            'description' => sprintf("Job <b>{$job->name}</b> was updated."),
             'link' => route('jobs.show', $job),
-            'model_type' => Job::class,
-            'model_id' => $job->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function deleting(Job $job)
     {
         Job::withoutEvents(function() use ($job) {
-            $job->updateDeleter();
+            $job->deleted_id = auth()->id();
+            $job->save();
         });
     }
 
     public function deleted(Job $job)
     {
-        History::create([
-            'description' => sprintf("The <em>{$job->name}</em> job was deleted."),
-            'model_type' => Job::class,
-            'model_id' => $job->id,
+        $job->history()->create([
+            'description' => sprintf("Job <b>{$job->name}</b> was deleted."),
+            'link' => route('users.show', auth()->id()),
+            'user_id' => auth()->id(),
         ]);
     }
 }

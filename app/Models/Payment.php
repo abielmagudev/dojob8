@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\WorkOrder\Traits\BelongWorkOrder;
@@ -13,10 +16,13 @@ use Illuminate\Support\Facades\DB;
 
 class Payment extends Model implements FilterableQueryStringContract
 {
+    use BelongsCreatorUser;
+    use BelongsUpdaterUser;
+    use BelongWorkOrder;
     use HasFactory;
     use HasFilterableQueryStringContract;
+    use HasHistory;
     use HasStatus;
-    use BelongWorkOrder;
     use HasWorkOrderFilters;
 
     const INITIAL_STATUS = 'unpaid';

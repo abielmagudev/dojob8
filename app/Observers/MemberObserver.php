@@ -2,76 +2,79 @@
 
 namespace App\Observers;
 
-use App\Models\History;
 use App\Models\Member;
-use App\Observers\Kernel\HasObserverConstructor;
 
 class MemberObserver
 {
-    use HasObserverConstructor;
-
     public function created(Member $member)
     {
         Member::withoutEvents(function() use ($member) {
-            $member->updateCreatorUpdater();
+            $member->created_id = auth()->id();
+            $member->updated_id = auth()->id();
+            $member->save();
         });
 
-        History::create([
-            'description' => sprintf("<em>{$member->full_name}</em> member was created."),
+        $member->history()->create([
+            'description' => sprintf("Member <b>{$member->full_name}</b> was created."),
             'link' => route('members.show', $member),
-            'model_type' => Member::class,
-            'model_id' => $member->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function updated(Member $member)
     {
         Member::withoutEvents(function() use ($member) {
-            $member->updateUpdater();
+            $member->updated_id = auth()->id();
+            $member->save();
         });
 
-        History::create([
-            'description' => sprintf("<em>{$member->full_name}</em> member was updated."),
+        $member->history()->create([
+            'description' => sprintf("Member <b>{$member->full_name}</b> was updated."),
             'link' => route('members.show', $member),
-            'model_type' => Member::class,
-            'model_id' => $member->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function deleting(Member $member)
     {
         Member::withoutEvents(function() use ($member) {
-            $member->updateDeleter();
+            $member->deleted_id = auth()->id();
+            $member->save();
         });
     }
 
     public function deleted(Member $member)
     {
-        History::create([
-            'description' => sprintf("<em>{$member->full_name}</em> member was deleted."),
-            'link' => route('members.index'),
-            'model_type' => Member::class,
-            'model_id' => $member->id,
+        $member->history()->create([
+            'description' => sprintf("Member <b>{$member->full_name}</b> was deleted."),
+            'link' => route('users.show', auth()->id()),
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function restored(Member $member)
     {
-        History::create([
-            'description' => sprintf("<em>{$member->full_name}</em> member was restored."),
+        Member::withoutEvents(function() use ($member) {
+            $member->updated_id = auth()->id();
+            $member->deleted_id = null;
+            $member->save();
+        });
+
+        $member->history()->create([
+            'description' => sprintf("Member <b>{$member->full_name}</b> was restored."),
             'link' => route('members.show', $member),
-            'model_type' => Member::class,
-            'model_id' => $member->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function forceDeleted(Member $member)
     {
-        History::create([
-            'description' => sprintf("<em>{$member->full_name}</em> member was force deleted."),
-            'link' => route('members.show', $member),
-            'model_type' => Member::class,
-            'model_id' => $member->id,
+        $member->history()->delete();
+
+        $member->history()->create([
+            'description' => sprintf("Member <b>{$member->full_name}</b> was destroyed."),
+            'link' => route('users.show', auth()->id()),
+            'user_id' => auth()->id(),
         ]);
     }
 }

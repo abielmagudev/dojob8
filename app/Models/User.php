@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsDeleterUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasActiveStatus;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
-use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\User\Kernel\AssistAuthTrait;
 use App\Models\User\Kernel\AssistRolesTrait;
 use App\Models\User\Kernel\ProfileContainer;
@@ -20,12 +24,14 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements FilterableQueryStringContract
 {
     use HasApiTokens, HasFactory, Notifiable;
-
     use AssistAuthTrait;
     use AssistRolesTrait;
+    use BelongsCreatorUser;
+    use BelongsDeleterUser;
+    use BelongsUpdaterUser;
     use HasActiveStatus;
     use HasFilterableQueryStringContract;
-    use HasHookUsers;
+    use HasHistory;
     use HasRoles;
     use SoftDeletes;
 
@@ -138,7 +144,7 @@ class User extends Authenticatable implements FilterableQueryStringContract
         return $this->hasMany(Comment::class);
     }
 
-    public function history()
+    public function histories()
     {
         return $this->hasMany(History::class);
     }

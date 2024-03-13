@@ -28,9 +28,9 @@ class CreateContractorsTable extends Migration
             $table->string('zip_code');
             $table->text('notes')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
-            $table->foreignId('deleted_by')->nullable();
+            $table->foreignId('created_id')->nullable();
+            $table->foreignId('updated_id')->nullable();
+            $table->foreignId('deleted_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

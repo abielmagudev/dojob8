@@ -3,54 +3,52 @@
 namespace App\Observers;
 
 use App\Models\Crew;
-use App\Models\History;
-use App\Observers\Kernel\HasObserverConstructor;
 
 class CrewObserver
 {
-    use HasObserverConstructor;
-
     public function created(Crew $crew)
     {
         Crew::withoutEvents(function() use ($crew) {
-            $crew->updateCreatorUpdater();
+            $crew->created_id = auth()->id();
+            $crew->updated_id = auth()->id();
+            $crew->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$crew->name}</em> crew was created."),
+        $crew->history()->create([
+            'description' => sprintf("Crew <b>{$crew->name}</b> was created."),
             'link' => route('crews.show', $crew),
-            'model_type' => Crew::class,
-            'model_id' => $crew->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function updated(Crew $crew)
     {
         Crew::withoutEvents(function() use ($crew) {
-            $crew->updateUpdater();
+            $crew->updated_id = auth()->id();
+            $crew->save();
         });
 
-        History::create([
-            'description' => sprintf("The <em>{$crew->name}</em> crew was updated."),
+        $crew->history()->create([
+            'description' => sprintf("Crew <b>{$crew->name}</b> was updated."),
             'link' => route('crews.show', $crew),
-            'model_type' => Crew::class,
-            'model_id' => $crew->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
     public function deleting(Crew $crew)
     {
         Crew::withoutEvents(function() use ($crew) {
-            $crew->updateDeleter();
+            $crew->deleted_id = auth()->id();
+            $crew->save();
         });
     }
 
     public function deleted(Crew $crew)
     {
-        History::create([
-            'description' => sprintf("<em>{$crew->name}</em> crew was deleted."),
-            'model_type' => Crew::class,
-            'model_id' => $crew->id,
+        $crew->history()->create([
+            'description' => sprintf("Crew <b>{$crew->name}</b> was deleted."),
+            'link' => route('users.show', auth()->id()),
+            'user_id' => auth()->id(),
         ]);
     }
 }

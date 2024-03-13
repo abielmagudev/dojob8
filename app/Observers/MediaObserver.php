@@ -9,18 +9,23 @@ class MediaObserver
     public function created(Media $media)
     {
         Media::withoutEvents(function() use ($media) {
-            $media->created_by = auth()->id();
+            $media->created_id = auth()->id();
             $media->save();
         });
-    }
 
-    public function updated(Media $media)
-    {
-        //
+        $media->history()->create([
+            'description' => sprintf("Media #<b>{$media->id}</b> ({$media->name_without_extension}) was created."),
+            'user_id' => auth()->id(),
+        ]);
     }
 
     public function deleted(Media $media)
     {
-        //
+        $media->history()->deleted();
+
+        $media->history()->create([
+            'description' => sprintf("Media #<b>{$media->id}</b> ({$media->name_without_extension}) was deleted."),
+            'user_id' => auth()->id(),
+        ]);
     }
 }

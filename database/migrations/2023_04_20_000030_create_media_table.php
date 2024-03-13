@@ -25,7 +25,7 @@ class CreateMediaTable extends Migration
             $table->text('original_information_json');
             $table->integer('downloads_count', false, true)->nullable();
             $table->morphs('mediable');
-            $table->foreignId('created_by')->nullable();
+            $table->foreignId('created_id')->nullable();
             $table->timestamps();
         });
     }

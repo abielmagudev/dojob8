@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\History\Traits\HasHistory;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
 use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
+    use BelongsCreatorUser;
+    use HasHistory;
+
     protected $table = "media";
 
     protected $fillable = [
@@ -18,9 +23,6 @@ class Media extends Model
         'url',
         'original_information_json',
         'downloads_count',
-        // 'mediable_type',
-        // 'mediable_id',
-        // 'created_by',
     ];
 
 

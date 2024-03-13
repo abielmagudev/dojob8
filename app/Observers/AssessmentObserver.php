@@ -9,13 +9,13 @@ class AssessmentObserver
     public function created(Assessment $assessment)
     {
         Assessment::withoutEvents(function() use ($assessment) {
-            $assessment->created_by = auth()->id();
-            $assessment->updated_by = auth()->id();
+            $assessment->created_id = auth()->id();
+            $assessment->updated_id = auth()->id();
             $assessment->save();
         });
 
         $assessment->history()->create([
-            'description' => sprintf("<em>{$assessment->id}</em> assessment was created."),
+            'description' => sprintf("Assessment <b>{$assessment->id}</b> was created."),
             'link' => route('assessments.show', $assessment),
             'user_id' => auth()->id(),
         ]);
@@ -24,12 +24,12 @@ class AssessmentObserver
     public function updated(Assessment $assessment)
     {
         Assessment::withoutEvents(function() use ($assessment) {
-            $assessment->updated_by = auth()->id();
+            $assessment->updated_id = auth()->id();
             $assessment->save();
         });
 
         $assessment->history()->create([
-            'description' => sprintf("<em>{$assessment->id}</em> assessment was updated."),
+            'description' => sprintf("Assessment <b>{$assessment->id}</b> was updated."),
             'link' => route('assessments.show', $assessment),
             'user_id' => auth()->id(),
         ]);
@@ -40,7 +40,8 @@ class AssessmentObserver
         $assessment->history()->delete();
 
         $assessment->history()->create([
-            'description' => sprintf("<em>{$assessment->id}</em> assessment was deleted."),
+            'description' => sprintf("Assessment <b>{$assessment->id}</b> was deleted."),
+            'link' => route('users.show', auth()->id()),
             'user_id' => auth()->id(),
         ]);
     }

@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsDeleterUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasAddress;
 use App\Models\Kernel\Traits\HasContactChannels;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
-use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\WorkOrder\Traits\HasWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,11 +18,14 @@ use Illuminate\Support\Str;
 
 class Client extends Model implements FilterableQueryStringContract
 {
+    use BelongsCreatorUser;
+    use BelongsDeleterUser;
+    use BelongsUpdaterUser;
     use HasAddress;
     use HasContactChannels;
     use HasFactory;
     use HasFilterableQueryStringContract;
-    use HasHookUsers;
+    use HasHistory;
     use HasWorkOrders;
     use SoftDeletes;
 
@@ -137,13 +143,5 @@ class Client extends Model implements FilterableQueryStringContract
     public function scopeFilterBySearch($query, $value)
     {
         return ! empty($value) ? $query->search($value) : $query;
-    }
-
-
-    // Relations
-
-    public function history()
-    {
-        return $this->morphMany(History::class, 'model');
     }
 }

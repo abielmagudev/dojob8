@@ -36,8 +36,8 @@ class CreateWorkOrdersTable extends Migration
             $table->foreignId('crew_id')->nullable();
             $table->foreignId('job_id');
             $table->foreignId('assessment_id')->nullable()->references('id')->on('assessments')->onDelete('set null');
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
+            $table->foreignId('created_id')->nullable();
+            $table->foreignId('updated_id')->nullable();
             $table->timestamps();
         });
     }

@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Traits\BelongsCreatorUser;
+use App\Models\Kernel\Traits\BelongsDeleterUser;
+use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasAvailableStatus;
 use App\Models\Kernel\Traits\HasContactChannels;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
-use App\Models\Kernel\Traits\HasHookUsers;
 use App\Models\User\Interfaces\ProfileableUserContract;
 use App\Models\User\Traits\HasUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,11 +19,14 @@ use Illuminate\Support\Str;
 
 class Member extends Model implements FilterableQueryStringContract, ProfileableUserContract
 {
+    use BelongsCreatorUser;
+    use BelongsDeleterUser;
+    use BelongsUpdaterUser;
     use HasAvailableStatus;
     use HasContactChannels;
     use HasFactory;
     use HasFilterableQueryStringContract;
-    use HasHookUsers;
+    use HasHistory;
     use HasUsers;
     use SoftDeletes;
 
@@ -78,7 +84,7 @@ class Member extends Model implements FilterableQueryStringContract, Profileable
     }
 
 
-    // Attributes
+    // Accessors
 
     public function getBirthdateInputAttribute()
     {

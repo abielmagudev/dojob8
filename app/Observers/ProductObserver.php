@@ -9,13 +9,13 @@ class ProductObserver
     public function created(Product $product)
     {
         Product::withoutEvents(function() use ($product) {
-            $product->created_by = auth()->id();
-            $product->updated_by = auth()->id();
+            $product->created_id = auth()->id();
+            $product->updated_id = auth()->id();
             $product->save();
         });
 
         $product->history()->create([
-            'description' => sprintf("Product <em>{$product->name}</em> was created."),
+            'description' => sprintf("Product <b>{$product->name}</b> was created."),
             'link' => route('products.show', $product),
             'user_id' => auth()->id(),
         ]);
@@ -24,37 +24,30 @@ class ProductObserver
     public function updated(Product $product)
     {
         Product::withoutEvents(function() use ($product) {
-            $product->updated_by = auth()->id();
+            $product->updated_id = auth()->id();
             $product->save();
         });
 
         $product->history()->create([
-            'description' => sprintf("Product <em>{$product->name}</em> was updated."),
+            'description' => sprintf("Product <b>{$product->name}</b> was updated."),
             'link' => route('products.show', $product),
             'user_id' => auth()->id(),
         ]);
     }
 
-    public function deleted(Product $product)
+    public function deleting(Product $product)
     {
         Product::withoutEvents(function() use ($product) {
-            $product->deleted_by = auth()->id();
+            $product->deleted_id = auth()->id();
             $product->save();
         });
+    }
 
+    public function deleted(Product $product)
+    {
         $product->history()->create([
-            'description' => sprintf("Product <em>{$product->name}</em> was deleted."),
+            'description' => sprintf("Product <b>{$product->name}</b> was deleted."),
             'user_id' => auth()->id(),
         ]);
-    }
-
-    public function restored(Product $product)
-    {
-        //
-    }
-
-    public function forceDeleted(Product $product)
-    {
-        //
     }
 }

@@ -22,8 +22,8 @@ class CreateAssessmentsTable extends Migration
             $table->foreignId('client_id');
             $table->foreignId('contractor_id')->nullable();
             $table->foreignId('crew_id')->nullable();
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
+            $table->foreignId('created_id')->nullable();
+            $table->foreignId('updated_id')->nullable();
             $table->timestamps();
         });
     }

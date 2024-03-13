@@ -21,9 +21,9 @@ class CreateProductsTable extends Migration
             $table->decimal('labor_price', 8, 2, true);
             $table->decimal('unit_price', 8, 2, true);
             $table->text('description')->nullable();
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
-            $table->foreignId('deleted_by')->nullable();
+            $table->foreignId('created_id')->nullable();
+            $table->foreignId('updated_id')->nullable();
+            $table->foreignId('deleted_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -72,7 +72,7 @@
                     'parameters' => ['client' => $client->id],
                 ])
 
-                <a href="{{ route('work-orders.create', $client) }}" class="btn btn-outline-success btn-sm">
+                <a href="{{ route('work-orders.create', ['client' => $client->id]) }}" class="btn btn-outline-success btn-sm">
                     <i class="bi bi-plus-lg"></i>
                 </a>
 

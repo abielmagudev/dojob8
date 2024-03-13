@@ -35,12 +35,8 @@
             <td>{{ $product->name }}</td>
             <td>{{ $product->description }}</td>
             <td>{{ $product->item_price_id }}</td>
-            <td>
-                <span class="currency-symbol">{{ $product->material_price_currency }}</span>
-            </td>
-            <td>
-                <span class="currency-symbol">{{ $product->labor_price_currency }}</span>
-            </td>
+            <td>{{ $product->material_price_currency }}</td>
+            <td>{{ $product->labor_price_currency }}</td>
             <td>
                 <span class="currency-symbol">{{ $product->unit_price_currency }}</span>
             </td>

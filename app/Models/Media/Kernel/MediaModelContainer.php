@@ -23,6 +23,11 @@ class MediaModelContainer
         return self::models()->has($key);
     }
     
+    public static function search($value)
+    {
+        return self::models()->search($value);
+    }
+
     public static function get(string $key)
     {
         return self::models()->get($key);

@@ -18,7 +18,6 @@ return [
             'see-work-orders',
             'see-inspections',
             'see-payments',
-            'see-history',
         ],
         'menu' => [
             'Assessments' => [
@@ -45,11 +44,52 @@ return [
                 'permission' => 'see-payments',
                 'route' => 'payments.index',
             ],
-            'History' => [
-                'active' => 'history.*',
-                'icon' => '<i class="bi bi-clock-history"></i>',
-                'permission' => 'see-history',
-                'route' => 'history.index',
+        ],
+    ],
+    'Staff' => [
+        'permissions' => [
+            'see-crews',
+            'see-members',
+        ],
+        'menu' => [
+            'Crews' => [
+                'active' => 'crews.*',
+                'icon' => '<i class="bi bi-people"></i>',
+                'permission' => 'see-crews',
+                'route' => 'crews.index',
+            ],
+            'Members' => [
+                'active' => 'members.*',
+                'icon' => '<i class="bi bi-person"></i>',
+                'permission' => 'see-members',
+                'route' => 'members.index',
+            ],
+        ],
+    ],
+    'Tools' => [
+        'permissions' => [
+            'see-jobs',
+            'see-products',
+            'see-extensions',
+        ],
+        'menu' => [
+            'Jobs' => [
+                'active' => 'jobs.*',
+                'icon' => '<i class="bi bi-wrench-adjustable-circle"></i>',
+                'permission' => 'see-jobs',
+                'route' => 'jobs.index',
+            ],
+            'Products' => [
+                'active' => 'products.*',
+                'icon' => '<i class="bi bi-boxes"></i>',
+                'permission' => 'see-products',
+                'route' => 'products.index',
+            ],
+            'Extensions' => [
+                'active' => 'extensions.*',
+                'icon' => '<i class="bi bi-plug"></i>',
+                'permission' => 'see-extensions',
+                'route' => 'extensions.index',
             ],
         ],
     ],
@@ -80,51 +120,24 @@ return [
             ],
         ],
     ],
-    'Staff' => [
-        'permissions' => [
-            'see-members',
-            'see-crews',
-            'see-jobs',
-        ],
-        'menu' => [
-            'Members' => [
-                'active' => 'members.*',
-                'icon' => '<i class="bi bi-person"></i>',
-                'permission' => 'see-members',
-                'route' => 'members.index',
-            ],
-            'Crews' => [
-                'active' => 'crews.*',
-                'icon' => '<i class="bi bi-people"></i>',
-                'permission' => 'see-crews',
-                'route' => 'crews.index',
-            ],
-            'Jobs' => [
-                'active' => 'jobs.*',
-                'icon' => '<i class="bi bi-wrench-adjustable-circle"></i>',
-                'permission' => 'see-jobs',
-                'route' => 'jobs.index',
-            ],
-        ],
-    ],
     'Application' => [
         'permissions' => [
             'see-users',
-            'see-extensions',
+            'edit-history',
             'edit-settings',
         ],
-        'menu' => [   
+        'menu' => [      
             'Users' => [
                 'active' => 'users.*',
                 'icon' => '<i class="bi bi-person-workspace"></i>',
                 'permission' => 'see-users',
                 'route' => 'users.index',
-            ],     
-            'Extensions' => [
-                'active' => 'extensions.*',
-                'icon' => '<i class="bi bi-plug"></i>',
-                'permission' => 'see-extensions',
-                'route' => 'extensions.index',
+            ],
+            'History' => [
+                'active' => 'history.*',
+                'icon' => '<i class="bi bi-clock-history"></i>',
+                'permission' => 'see-history',
+                'route' => 'history.index',
             ],
             'Settings' => [
                 'active' => 'settings.*',

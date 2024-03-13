@@ -30,6 +30,10 @@
             content: "(Pending)";
             margin-left: 0.1rem;
         }
+        .currency-symbol::before {
+            color: var(--bs-tertiary-color);
+            content: "$ ";
+        }
     </style>
     @yield('style')
     

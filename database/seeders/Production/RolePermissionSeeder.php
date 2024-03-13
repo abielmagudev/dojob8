@@ -24,6 +24,7 @@ class RolePermissionSeeder extends Seeder
         $this->createPermissionsForCrews($roles);
         $this->createPermissionsForJobs($roles);
         $this->createPermissionsForMembers($roles);
+        $this->createPermissionsForProducts($roles);
         $this->createPermissionsForUsers($roles);
 
         // OPERATIVE
@@ -541,6 +542,37 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         Permission::create(['name' => 'delete-payments'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+    }
+
+    /**
+     * Products
+     */
+    protected function createPermissionsForProducts(array $roles)
+    {
+        Permission::create(['name' => 'see-products'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'filter-products'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'create-products'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'edit-products'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'delete-products'])->syncRoles([
             $roles['administrator'],
             $roles['payments'],
         ]);

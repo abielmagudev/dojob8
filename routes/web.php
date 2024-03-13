@@ -22,6 +22,7 @@ use App\Http\Controllers\MediaAjaxController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
@@ -60,11 +61,17 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('inspections/status', InspectionStatusController::class)->name('inspections.update.status');
     Route::get('inspections/create/{work_order}', [InspectionController::class, 'create'])->name('inspections.create');
     Route::resource('inspections', InspectionController::class)->except('create');
+   
+    // Agencies
     Route::resource('agencies', AgencyController::class);
     
+    // Jobs
     Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
     Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
     Route::resource('jobs', JobController::class);
+
+    // Products
+    Route::resource('products', ProductController::class);
 
     // Crew Members Assigment
     Route::patch('crew-members/assignment', CrewMemberAssignmentController::class)->name('crew-members.assignment.update');

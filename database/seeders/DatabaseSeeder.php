@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
     public function developmentSeeders(): array
     {
         return [
+            // Catalog
             \Database\Seeders\Development\AgencySeeder::class,
             \Database\Seeders\Development\AssessmentSeeder::class,
             \Database\Seeders\Development\ClientSeeder::class,
@@ -37,6 +38,7 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\Development\CrewSeeder::class,
             \Database\Seeders\Development\JobSeeder::class,
             \Database\Seeders\Development\MemberSeeder::class,
+            \Database\Seeders\Development\ProductSeeder::class,
             \Database\Seeders\Development\UserSeeder::class,
             \Database\Seeders\Development\WorkOrderSeeder::class,
             

@@ -83,7 +83,7 @@ class WorkOrderController extends Controller
             'store'
         );
         
-        $route = $request->get('after_saving') == 1 ? route('work-orders.create', $work_order->client_id) : route('work-orders.index');
+        $route = $request->get('after_saving') == 1 ? route('work-orders.create', ['client' => $work_order->client_id]) : route('work-orders.index');
 
         return redirect($route)->with('success', "You saved the work order <b>#{$work_order->id}: {$work_order->job->name}</b>");
     }

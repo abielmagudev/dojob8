@@ -56,13 +56,13 @@ class RolePermissionSeeder extends Seeder
         return [
             'SuperAdmin' => Role::create(['name' => 'SuperAdmin']),
             'administrator' => Role::create(['name' => 'administrator']),
+            'payments' => Role::create(['name' => 'payments']),
             'manager' => Role::create(['name' => 'manager']),
             'coordinator' => Role::create(['name' => 'coordinator']),
-            'assessor' => Role::create(['name' => 'assessor']),
             'crew member' => Role::create(['name' => 'crew member']),
+            'assessor' => Role::create(['name' => 'assessor']),
             'contractor' => Role::create(['name' => 'contractor']),
             'agency' => Role::create(['name' => 'agency']),
-            'payments' => Role::create(['name' => 'payments']),
         ];
     }
 

@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Auth;
 
 class DatabaseSeeder extends Seeder
 {
@@ -10,7 +12,10 @@ class DatabaseSeeder extends Seeder
     {        
         $this->call( $this->productionSeeders() );
 
-        if(! app()->environment('production') ) {
+        if(! app()->environment('production') )
+        {
+            Auth::login( User::first() );
+
             $this->call( $this->developmentSeeders() );
         }
     }
@@ -19,8 +24,7 @@ class DatabaseSeeder extends Seeder
     {
         return [
             \Database\Seeders\Production\RolePermissionSeeder::class,
-            \Database\Seeders\Production\UserSeeder::class,
-            \Database\Seeders\Production\MemberSeeder::class,
+            \Database\Seeders\Production\MemberSuperAdminSeeder::class,
             \Database\Seeders\Production\SettingsSeeder::class,
 
         ];

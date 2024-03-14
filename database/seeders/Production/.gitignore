@@ -1,2 +1,2 @@
-MemberSeeder.php
-UserSeeder.php
+MemberSuperAdminSeeder.php
+SettingsSeeder.php

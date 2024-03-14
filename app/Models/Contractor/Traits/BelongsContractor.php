@@ -21,21 +21,24 @@ trait BelongsContractor
         return ! empty( $this->contractor_id );
     }
 
-    public function hasContractorChecked()
+    public function existsContractor()
     {
         return $this->hasContractor() && is_a($this->contractor, Contractor::class);
     }
-
 
 
     // Scopes
 
     public function scopeFilterByContractor($query, $value)
     {
-        if( empty($value) ) {
-            return $query; 
+        if( is_null($value) ||! ctype_digit($value) ) {
+            return $query;
         }
 
-        return $query->where('contractor_id', $value);
+        if( $value == 0 ) {
+            return $query->whereNull('contractor_id');
+        }
+
+        return $query->whereNotNull()->where('contractor_id', $value);
     }
 }

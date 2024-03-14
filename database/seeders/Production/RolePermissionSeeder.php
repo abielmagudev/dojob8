@@ -332,10 +332,6 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'restore-users']);
 
         Permission::create(['name' => 'force-delete-users']);
-
-        Permission::create(['name' => 'everything-admin']); // CRUD for admin users
-
-        Permission::create(['name' => 'everything-SuperAdmin']); // CRUD for super admin users
     }
 
 
@@ -573,6 +569,10 @@ class RolePermissionSeeder extends Seeder
             $roles['administrator'],
             $roles['payments'],
         ]);
+
+        Permission::create(['name' => 'restore-products']);
+
+        Permission::create(['name' => 'force-delete-products']);
     }
 
     /**
@@ -651,7 +651,6 @@ class RolePermissionSeeder extends Seeder
             $roles['coordinator'],
             $roles['assessor'],
             $roles['crew member'],
-            $roles['payments'],
         ]);
     }
 

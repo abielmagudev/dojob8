@@ -14,11 +14,7 @@ return [
     */
 
     'paths' => [
-        // Default
         resource_path('views'),
-
-        // XAPI: eXtension API
-        app_path('Xapis/Stock'),
     ],
 
     /*

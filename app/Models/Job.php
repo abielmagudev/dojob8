@@ -38,22 +38,12 @@ class Job extends Model
         return ($this->inspection_setup_count || $this->inspection_setup->count());
     }
 
-    public function getExtensionsCounterAttribute()
-    {
-        return ($this->extensions_count || $this->extensions->count());
-    }
-
 
     // Relationships
 
     public function inspection_setup()
     {
         return $this->hasMany(InspectionSetupForJob::class);
-    }
-
-    public function extensions()
-    {
-        return $this->belongsToMany(Extension::class);
     }
 
 
@@ -67,10 +57,5 @@ class Job extends Model
     public function hasInspectionSetup(): bool
     {
         return (bool) $this->inspection_setup_counter;
-    }
-
-    public function hasExtensions(): bool
-    {
-        return (bool) $this->extensions_counter;
     }
 }

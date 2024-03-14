@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\JobSaveRequest;
 use App\Models\Agency;
-use App\Models\Extension;
 use App\Models\Job;
 use App\Models\Job\Services\InspectionSetupService;
 
@@ -17,7 +16,7 @@ class JobController extends Controller
 
     public function index()
     {
-        $jobs = Job::withCount(['incomplete_work_orders', 'extensions'])
+        $jobs = Job::withCount(['incomplete_work_orders'])
         ->orderBy('name')
         ->paginate(35);
 
@@ -47,9 +46,10 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
+        $job->load('work_orders');
+
         return view('jobs.show', [
-            'extensions' => Extension::whereNotIn('id', $job->extensions->pluck('id'))->orderBy('name')->get(),
-            'job' => $job->load(['extensions', 'work_orders']),
+            'job' => $job,
         ]);
     }
 

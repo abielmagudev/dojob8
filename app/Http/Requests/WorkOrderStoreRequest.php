@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\WorkOrderRequest\ResolveExtensionRequestsTrait;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
@@ -13,8 +12,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class WorkOrderStoreRequest extends FormRequest
 {
-    use ResolveExtensionRequestsTrait;
-
     public $work_orders_id_for_rectification = '';
 
     public function authorize()
@@ -81,21 +78,6 @@ class WorkOrderStoreRequest extends FormRequest
             'type_id.required_if' => __(sprintf('Choose a work order for %s', $this->get('type'))),
             'type_id.in' => __(sprintf('Choose a valid work order for %s', $this->get('type'))),
         ];
-    }
-
-    public function passedValidation()
-    {
-        $job = Job::find($this->job);
-
-        $this->merge([
-            'cache' => [
-                'extensions' => $job->extensions,
-                'resolved_requests' => $this->resolveExtensionRequests(
-                    $job->extensions,
-                    'store'
-                ),
-            ],
-        ]);
     }
 
     public function validated()

@@ -1,15 +1,12 @@
 @extends('application')
-@section('header')
 
+@section('header')
 <x-breadcrumb :items="[
     'Work orders' => route('work-orders.index'),
     'Create',
 ]" />
-
 <x-page-title>Work order</x-page-title>
-
 @include('work-orders.__.summary-client')
-
 @endsection
 
 @section('content')
@@ -18,6 +15,7 @@
         @csrf
         @include('work-orders._form')
         <input type="hidden" name="client" value="{{ $client->id }}">  
+
         <x-form-field-horizontal for="afterCreatingSelect" label="After saving">
             <div class="alert alert-warning p-2">
                 <div class="form-check">
@@ -26,6 +24,7 @@
                 </div>
             </div>
         </x-form-field-horizontal>
+
         <br>
 
         <div class="text-end">
@@ -36,19 +35,3 @@
 
 </x-card>
 @endsection
-
-@push('scripts') 
-@include('work-orders.scripts.extensionsLoader')
-@include('work-orders.scripts.selectedJob')
-
-<script>
-selectedJob.listen("<?= route('work-orders.ajax.create', '?') ?>")
-</script>
-
-@if( old('job') &&! $errors->has('job') )
-<script>
-extensionsLoader.get("<?= route('work-orders.ajax.create', old('job')) ?>")
-</script>
-@endif
-
-@endpush

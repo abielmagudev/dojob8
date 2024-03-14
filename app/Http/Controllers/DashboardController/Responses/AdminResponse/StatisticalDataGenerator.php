@@ -49,7 +49,7 @@ class StatisticalDataGenerator
     {
         $query = WorkOrder::with([
             'inspections',
-            'job.extensions',
+            'job',
         ]);
 
         if( $this->request->filled('from') && $this->request->filled('to') ) {

@@ -2,15 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\WorkOrderRequest\ResolveExtensionRequestsTrait;
 use App\Http\Requests\WorkOrderUpdateRequest\WorkOrderUpdaterLoader;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
 
 class WorkOrderUpdateRequest extends FormRequest
 {    
-    use ResolveExtensionRequestsTrait;
-
     public $loader;
 
     public function authorize()
@@ -32,24 +28,6 @@ class WorkOrderUpdateRequest extends FormRequest
     public function messages()
     {
         return $this->loader->messages();
-    }
-
-    public function withValidator(Validator $validator)
-    {
-        // dd( $validator->errors() );
-    }
-
-    public function passedValidation()
-    {
-        $this->merge([
-            'cache' => [
-                'extensions' => $this->route('work_order')->job->extensions,
-                'resolved_requests' => $this->resolveExtensionRequests(
-                    $this->route('work_order')->job->extensions,
-                    'update'
-                ),
-            ],
-        ]);
     }
 
     public function validated()

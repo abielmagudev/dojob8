@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Kernel\ReflashInputErrorsTrait;
 use App\Http\Controllers\WorkOrderController\Index\AuthDataLoader;
 use App\Http\Controllers\WorkOrderController\Index\RequestInitializer;
 use App\Http\Controllers\WorkOrderController\ShowAction;
@@ -18,13 +17,10 @@ use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 use App\Models\WorkOrder\Services\InspectionFactoryService;
 use App\Models\WorkOrder\Services\PaymentFactoryService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class WorkOrderController extends Controller
 {
-    use ReflashInputErrorsTrait;
-
     public function __construct()
     {
         $this->authorizeResource(WorkOrder::class, 'work_order');
@@ -43,8 +39,6 @@ class WorkOrderController extends Controller
 
     public function create(Request $request)
     {
-        $this->reflashInputErrors();
-
         $client = Client::findOrFail($request->client);
 
         $client->load('work_orders.job');
@@ -55,7 +49,7 @@ class WorkOrderController extends Controller
             'client' => $client,
             'contractors' => Contractor::orderBy('name')->get(),
             'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),
-            'jobs' => Job::with('extensions')->orderBy('name')->get(),
+            'jobs' => Job::orderBy('name')->get(),
             'work_order' => new WorkOrder,
             'work_orders_for_rectification' => $client->onlyWorkOrdersForRectification(),
         ]);
@@ -75,13 +69,6 @@ class WorkOrderController extends Controller
         InspectionFactoryService::create($work_order);
 
         PaymentFactoryService::create($work_order);
-
-        $this->saveOrderByExtensions(
-            $request->cache['extensions'],
-            $request->cache['resolved_requests'], 
-            $work_order,
-            'store'
-        );
         
         $route = $request->get('after_saving') == 1 ? route('work-orders.create', ['client' => $work_order->client_id]) : route('work-orders.index');
 
@@ -100,8 +87,6 @@ class WorkOrderController extends Controller
 
     public function edit(Request $request, WorkOrder $work_order)
     {
-        $this->reflashInputErrors();
-
         return view('work-orders.edit', [
             'all_statuses' => WorkOrderStatusCatalog::all(),
             'all_types' => WorkOrderTypeCatalog::all(),
@@ -121,13 +106,6 @@ class WorkOrderController extends Controller
             return back()->with('danger', 'Error updating work order, try again please');
         }
 
-        $this->saveOrderByExtensions(
-            $request->cache['extensions'],
-            $request->cache['resolved_requests'],
-            $work_order,
-            'update'
-        );
-
         $parameters = $request->filled('url_back') ? [$work_order, 'url_back' => $request->get('url_back')] : $work_order;
 
         return redirect()->route('work-orders.edit', $parameters)->with('success', "You updated the work order <b>#{$work_order->id}</b>");
@@ -146,16 +124,5 @@ class WorkOrderController extends Controller
         $work_order->history()->delete();
 
         return redirect()->route('work-orders.index')->with('success', "You deleted the work order <b>#{$work_order->id}</b>");
-    }
-
-
-    // Extensions
-
-    private function saveOrderByExtensions(Collection $extensions, array $requests, WorkOrder $work_order, string $method)
-    {
-        foreach($extensions as $extension)
-        {
-            app($extension->xapi_work_order_controller)->callAction($method, [...$requests[$extension->id], $work_order]);
-        }
     }
 }

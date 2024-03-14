@@ -18,7 +18,6 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th class="text-nowrap text-center">Success inspections required</th>
-                <th>Extensions</th>
                 <th></th>
             </tr>
         </x-slot>
@@ -27,7 +26,6 @@
             <td class="{{ $job->isInactive() ? 'text-secondary' : '' }}">{{ $job->name }}</td>
             <td>{{ $job->description }}</td>
             <td class="text-center">{{ $job->success_inspections_required_count }}</td>
-            <td>{{ $job->extensions_count }}</td>
             <td class="text-nowrap text-end">
                 @includeWhen($job->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
                         'counter' => $job->incomplete_work_orders_counter,

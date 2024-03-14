@@ -12,8 +12,6 @@ use App\Http\Controllers\CrewMemberAssignmentController;
 use App\Http\Controllers\CrewMemberController;
 use App\Http\Controllers\CrewStatusController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ExtensionController;
-use App\Http\Controllers\ExtensionJobController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectionStatusController;
@@ -27,7 +25,6 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
-use App\Http\Controllers\WorkOrderJobExtensionsAjaxController;
 use App\Http\Controllers\WorkOrderOrderedController;
 use App\Http\Controllers\WorkOrderStatusController;
 use Illuminate\Support\Facades\Route;
@@ -66,8 +63,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('agencies', AgencyController::class);
     
     // Jobs
-    Route::post('jobs/{job}/extensions', [ExtensionJobController::class, 'attach'])->name('jobs.extensions.attach');
-    Route::delete('jobs/{job}/extensions', [ExtensionJobController::class, 'detach'])->name('jobs.extensions.detach');
     Route::resource('jobs', JobController::class);
 
     // Products
@@ -105,19 +100,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('media', [MediaController::class, 'store'])->name('media.store');
     Route::delete('media', [MediaController::class, 'destroy'])->name('media.destroy');
     
-    // Extensions
-    Route::get('extensions/{extension}/create', [ExtensionController::class, 'create'])->name('extensions.create');
-    Route::post('extensions/{extension}/create', [ExtensionController::class, 'store'])->name('extensions.store');
-    Route::resource('extensions', ExtensionController::class)->except(['create','store']);
-    
     // Assessments
     Route::resource('assessments', AssessmentController::class);
 
-    // Work orders
-    Route::get('work-orders/ajax/create/{job}', [WorkOrderJobExtensionsAjaxController::class, 'create'])->name('work-orders.ajax.create');
-    Route::get('work-orders/ajax/edit/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'edit'])->name('work-orders.ajax.edit');
-    Route::get('work-orders/ajax/show/{work_order}', [WorkOrderJobExtensionsAjaxController::class, 'show'])->name('work-orders.ajax.show');
-    
+    // Work orders    
     Route::patch('work-orders/order', WorkOrderOrderedController::class)->name('work-orders.update.ordered');
     Route::patch('work-orders/status', WorkOrderStatusController::class)->name('work-orders.update.status');
     Route::resource('work-orders', WorkOrderController::class);

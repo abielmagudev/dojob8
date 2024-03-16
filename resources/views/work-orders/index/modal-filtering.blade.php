@@ -9,13 +9,13 @@
 <x-modal id="modalWorkOrdersFilter" title="Work order filters" dialog-class="modal-dialog-scrollable" header-close>
     <form action="{{ route('work-orders.index') }}" method="get" autocomplete="off" id="formWorkOrderFilters">
         @include('components.custom.input-between-dates')
-        @includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders.index.modals.modal-filtering.type')
-        @include('work-orders.index.modals.modal-filtering.status')
-        @includeWhen(auth()->user()->can('edit-work-orders') || auth()->user()->hasRole('assessor'), 'components.custom.select-pending')
-        @include('work-orders.index.modals.modal-filtering.job')
-        @include('work-orders.index.modals.modal-filtering.crew')
-        @include('work-orders.index.modals.modal-filtering.contractor')
-        @include('work-orders.index.modals.modal-filtering.sort')
+        @include('work-orders.index.modal-filtering.type')
+        @include('work-orders.index.modal-filtering.status')
+        @include('components.custom.select-pending')
+        @include('work-orders.index.modal-filtering.job')
+        @include('work-orders.index.modal-filtering.crew')
+        @include('work-orders.index.modal-filtering.contractor')
+        @include('work-orders.index.modal-filtering.sort')
     </form>
     
     @slot('footer')

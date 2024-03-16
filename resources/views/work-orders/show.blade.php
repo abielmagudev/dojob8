@@ -8,9 +8,9 @@
 
 <x-page-title>
     <span>#{{ $work_order->id }}</span>
-    @if( $work_order->isNonstandard() )
+    @if( $work_order->isRectification() )
     <span class="text-secondary text-capitalize fw-normal my-3">
-        {{ $work_order->type }}: {{ $work_order->type_id }}
+        {{ $work_order->type }}: {{ $work_order->rectification_id }}
     </span>
     @endif
 </x-page-title>
@@ -19,5 +19,5 @@
 
 @section('content')
 @include('work-orders.show._tabs')
-@include("work-orders.show.{$show}")
+@include("work-orders.show.{$template}")
 @endsection

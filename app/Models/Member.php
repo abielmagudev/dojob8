@@ -40,8 +40,8 @@ class Member extends Model implements FilterableQueryStringContract, Profileable
         'email',
         'position',
         'category',
-        'is_crew_member',
         'notes',
+        'is_crew_member',
         'is_available',
     ];
 
@@ -173,7 +173,7 @@ class Member extends Model implements FilterableQueryStringContract, Profileable
 
     public function work_orders()
     {
-        return $this->belongsToMany(WorkOrder::class)->using(MemberWorkOrder::class);
+        return $this->belongsToMany(WorkOrder::class);
     }
 
     public function inspections()

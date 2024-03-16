@@ -12,7 +12,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class WorkOrderStoreRequest extends FormRequest
 {
-    public $work_orders_id_for_rectification = '';
+    public $work_orders_id_to_rectify = '';
 
     public function authorize()
     {
@@ -21,12 +21,8 @@ class WorkOrderStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if(! WorkOrderTypeCatalog::all()->contains( $this->get('type') ) ) {
-            return;
-        }
-
-        if( $this->get('type') <> 'standard' && $client = Client::find( $this->get('client') ) ) {
-            $this->work_orders_id_for_rectification = $client->onlyWorkOrdersForRectification()->pluck('id')->implode(',');
+        if( WorkOrderTypeCatalog::rectification()->contains($this->type) && $client = Client::find($this->client) ) {
+            $this->work_orders_id_to_rectify = $client->work_orders_to_rectify->pluck('id')->implode(',');
         }
     }
 
@@ -45,9 +41,10 @@ class WorkOrderStoreRequest extends FormRequest
                 'required',
                 sprintf('in:%s', WorkOrderTypeCatalog::all()->implode(',')),
             ],
-            'type_id' => [
+            'rectification_id' => [
+                'sometimes',
                 sprintf('required_if:type,%s', WorkOrderTypeCatalog::rectification()->implode(',')),
-                sprintf('in:%s', $this->work_orders_id_for_rectification),
+                sprintf('in:%s', $this->work_orders_id_to_rectify),
             ],
             'job' => [
                 'required',
@@ -75,16 +72,16 @@ class WorkOrderStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'type_id.required_if' => __(sprintf('Choose a work order for %s', $this->get('type'))),
-            'type_id.in' => __(sprintf('Choose a valid work order for %s', $this->get('type'))),
+            'rectification_id.required_if' => __(sprintf('Choose a work order for %s', $this->get('type'))),
+            'rectification_id.in' => __(sprintf('Choose a valid work order for %s', $this->get('type'))),
         ];
     }
 
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'rectification_type' => $this->get('type_id') ? $this->get('type') : null,
-            'rectification_id' => $this->get('type_id'),
+            'type' => $this->get('type'),
+            'rectification_id' => $this->get('rectification_id'),
             'client_id' => $this->get('client'),
             'contractor_id' => $this->get('contractor'),
             'job_id' => $this->get('job'),

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\WorkOrderController;
+namespace App\Http\Controllers\WorkOrderController\Services;
 
-use App\Models\WorkOrder;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 
 class WorkOrderUrlGenerator

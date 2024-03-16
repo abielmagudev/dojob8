@@ -102,7 +102,7 @@ if(! function_exists('workOrderUrlGenerator') )
 {
     function workOrderUrlGenerator(string $method, array $parameters = [])
     {
-        return call_user_func([\App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator::class, $method], $parameters);
+        return call_user_func([\App\Http\Controllers\WorkOrderController\Services\WorkOrderUrlGenerator::class, $method], $parameters);
     }
 } 
 

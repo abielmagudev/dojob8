@@ -4,9 +4,9 @@ namespace App\Models\WorkOrder\Traits;
 
 use App\Models\WorkOrder;
 
-trait BelongWorkOrder
+trait BelongsWorkOrder
 {
-    // Relationships
+    // Relationship
     
     public function work_order()
     {

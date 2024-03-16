@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\WorkOrderController\Index\Data;
 
-use App\Http\Controllers\WorkOrderController\Index\Data\Kernel\LoaderConstructor;
+use App\Http\Controllers\WorkOrderController\Index\Data\Kernel\DataLoaderContract;
 use App\Http\Controllers\WorkOrderController\WorkOrderUrlGenerator;
 use App\Models\Contractor;
 use App\Models\Crew;
@@ -10,18 +10,19 @@ use App\Models\Job;
 use App\Models\WorkOrder;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
+use Illuminate\Http\Request;
 
-class ManagementLoader extends LoaderConstructor
+class ManagementLoader implements DataLoaderContract
 {
-    public function data()
+    public function data(Request $request): array
     {
         $work_orders = WorkOrder::withEssentialRelationships()
-        ->filterByParameters( $this->request->all() )
+        ->filterByParameters( $request->all() )
         ->orderBy('crew_id')
-        ->orderBy('scheduled_date', $this->request->get('sort', 'desc'))
+        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->orderByRaw('ordered IS NULL, ordered asc')
         ->paginate(35)
-        ->appends( $this->request->query() );
+        ->appends( $request->query() );
 
         return [
             'filtering' => [
@@ -29,17 +30,17 @@ class ManagementLoader extends LoaderConstructor
                 'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),
                 'jobs' => Job::orderBy('name', 'desc')->get(),
                 'pending' => [
-                    'url' => WorkOrderUrlGenerator::pending(),
+                    'url' => workOrderUrlGenerator('pending'),
                     'count' => WorkOrder::pending()->count(),
                 ],
                 'incomplete' => [
-                    'url' => WorkOrderUrlGenerator::incomplete(),
+                    'url' => workOrderUrlGenerator('incomplete'),
                     'count' => WorkOrder::incomplete()->count(),
                 ],
             ], 
             'all_statuses' => WorkOrderStatusCatalog::all(),
             'all_types' => WorkOrderTypeCatalog::all(),
-            'request' => $this->request,
+            'request' => $request,
             'work_orders' => $work_orders,
         ];
     }

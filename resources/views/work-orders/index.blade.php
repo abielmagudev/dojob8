@@ -74,10 +74,10 @@
                 <hr class="dropdown-divider">
             </li>
             <li>
-                @include('work-orders.index.modals.modal-modify-status')
+                @include('work-orders.index.modal-edit-quickly')
             </li>
             <li>
-                @include('work-orders.index.dropoptions.form-update-ordered')
+                @include('work-orders.index.form-update-ordering')
             </li>
             @endif
             
@@ -88,17 +88,17 @@
 
             @if( auth()->user()->can('edit-work-orders') || auth()->user()->hasRole('assessor') )          
             <li>
-                @include('work-orders.index.dropoptions.button-pending')
+                @include('work-orders.index.button-pending')
             </li>
             @endif
 
             <li>
-                @include('work-orders.index.dropoptions.button-incomplete')
+                @include('work-orders.index.button-incomplete')
             </li>
 
             @isset( $filtering )           
             <li>
-                @include('work-orders.index.modals.modal-filtering')
+                @include('work-orders.index.modal-filtering')
             </li>
             @endisset
 
@@ -108,7 +108,7 @@
 
     {{-- BODY --}}
     @if( $work_orders->count() ) 
-    <x-table>
+    <x-table class="align-middle">
 
         {{-- THEAD --}}
         @slot('thead')
@@ -119,17 +119,17 @@
 
             @if( auth()->user()->can('edit-work-orders') )               
             <th>
-                @include('work-orders.index.components.button-checker')
+                @include('work-orders.index.button-checker')
             </th>
             @endif
+
+            @can('edit-work-orders')                
+            <th>Ordered</th>
+            @endcan
 
             @if( $request->has('dates') )
             <th>Scheduled</th>
             @endif
-
-            @can('edit-work-orders')                
-            <th>Order</th>
-            @endcan
 
             <th>Crew</th>
             <th>Job</th>
@@ -153,11 +153,23 @@
 
             @if( auth()->user()->can('edit-work-orders') )               
             <td class="text-center" style="width:1%">
-                @if(! $work_order->hasPending() )
-                <input class="form-check-input" type="checkbox" form="formUpdateStatus" name="work_orders[]" value="{{ $work_order->id }}">
+                @if( $work_order->hasNoPendingAttribute('crew_id') )
+                <input type="checkbox" class="form-check-input" name="work_orders[]" value="{{ $work_order->id }}">
                 @endif
             </td>
             @endif
+
+            @can('edit-work-orders')                
+            <td class="text-center" style="width:1%">
+                @if( auth()->user()->can('edit-work-orders') && $work_order->hasNoPending() )
+                <input type="number" class="form-control form-control-sm" style="width:58px" min="1" step="1" name="work_orders[{{ $work_order->id }}]" value="{{ $work_order->ordered }}" form="workOrderOrderingUpdateForm">
+                
+                @else
+                <span class="text-secondary">{{ $work_order->ordered }}</span>
+
+                @endif
+            </td>
+            @endcan
 
             @if( $request->filled('dates') )
             <td class="text-nowrap">
@@ -166,18 +178,6 @@
                 @endif
             </td>
             @endif
-
-            @can('edit-work-orders')                
-            <td class="text-center" style="width:1%">
-                @if( auth()->user()->can('edit-work-orders') )
-                <input type="number" class="form-control form-control-sm" style="width:56px" min="1" step="1" name="ordered[{{ $work_order->id }}]" value="{{ $work_order->ordered }}" form="formWorkOrderOrdered">
-                
-                @else
-                <span class="text-secondary">{{ $work_order->ordered }}</span>
-
-                @endif
-            </td>
-            @endcan
 
             <td class="text-nowrap">
                 @includeWhen($work_order->hasCrew(), 'crews.__.flag', [
@@ -209,7 +209,7 @@
             <td>
                 @include('work-orders.__.flag-status', [
                     'class' => 'w-100',
-                    'pending' =>$work_order->hasPending(),
+                    'pending' => $work_order->hasPending(),
                     'status' => $work_order->status,
                     'display' => 'd-block',
                 ])
@@ -245,6 +245,7 @@
 </div>
 
 @can('create-work-orders')
-@include('work-orders.index.modals.modal-client-new-work-order')
+@include('work-orders.index.modal-client-new-work-order')
 @endcan
+
 @endsection

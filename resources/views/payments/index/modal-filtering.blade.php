@@ -2,8 +2,8 @@
     <form action="{{ route('payments.index') }}" method="get" id="formFiltering">
         @include('components.custom.input-between-dates')
         @include('payments.index.modal-filtering.status')
-        @include('work-orders.index.modals.modal-filtering.contractor')
-        @include('work-orders.index.modals.modal-filtering.job')
+        @include('work-orders.index.modal-filtering.contractor')
+        @include('work-orders.index.modal-filtering.job')
         @include('components.custom.select-sort')
     </form>
     

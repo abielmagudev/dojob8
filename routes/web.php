@@ -27,6 +27,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\WorkOrderOrderedController;
 use App\Http\Controllers\WorkOrderStatusController;
+use App\Http\Controllers\WorkOrderUpdateQuicklyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -104,8 +105,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('assessments', AssessmentController::class);
 
     // Work orders    
-    Route::patch('work-orders/order', WorkOrderOrderedController::class)->name('work-orders.update.ordered');
-    Route::patch('work-orders/status', WorkOrderStatusController::class)->name('work-orders.update.status');
+    Route::patch('work-orders/edit-quickly/{attribute}', WorkOrderUpdateQuicklyController::class)->name('work-orders.update.quickly');
     Route::resource('work-orders', WorkOrderController::class);
 
     // Account

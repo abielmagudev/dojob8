@@ -1,12 +1,12 @@
-<x-card title="{{ $work_order->reworks->count() }} reworks">
+<x-card title="{{ $reworks->count() }} reworks">
     @slot('options')
     <a href="{{ route('work-orders.create', [$work_order->client, 'type' => 'rework', 'bind' => $work_order->id]) }}" class="btn btn-primary">
         <i class="bi bi-plus-lg"></i>
     </a>
     @endslot
 
-    @if( $work_order->reworks->count() )
-    <?php $work_order->reworks->load(['crew','contractor','job']) ?>
+    @if( $reworks->count() )
+    <?php $reworks->load(['crew','contractor','job']) ?>
     <x-table class="align-middle">
         @slot('thead')
         <tr>
@@ -19,7 +19,7 @@
         </tr>
         @endslot
 
-        @foreach($work_order->reworks as $rework)
+        @foreach($reworks as $rework)
         <tr>
             <td>{{ $rework->scheduled_date_human }}</td>
             <td>

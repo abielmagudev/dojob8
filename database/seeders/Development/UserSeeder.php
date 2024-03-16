@@ -53,10 +53,10 @@ class UserSeeder extends Seeder
             $member = $model_profiles['members']->get( $user->profile_id ); 
 
             if( $member->isCrewMember() ) {
-                 return 'crew member';
+                 return 'crew-member';
             }
 
-            return $member_roles->except('crew member')->random();
+            return $member_roles->except('crew-member')->random();
         };
 
         $users = User::factory( mt_rand(1,50) )->make();

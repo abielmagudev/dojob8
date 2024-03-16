@@ -11,7 +11,6 @@ use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 
 class AdminUser extends Updater
 {
-    public $crews_id;
 
     public $work_orders_id_for_rectification;
 
@@ -37,7 +36,7 @@ class AdminUser extends Updater
                 'required',
                 sprintf('in:%s', WorkOrderTypeCatalog::all()->implode(',')),
             ],
-            'type_id' => [
+            'rectification_id' => [
                 sprintf('required_if:type,%s', WorkOrderTypeCatalog::rectification()->implode(',')),
                 sprintf('in:%s', $this->work_orders_id_for_rectification),
             ],
@@ -87,16 +86,16 @@ class AdminUser extends Updater
     public function messages()
     {
         return [
-            'type_id.required_if' => __(sprintf('Choose a work order for %s', $this->request->get('type'))),
-            'type_id.in' => __(sprintf('Choose a valid work order for %s', $this->request->get('type'))),
+            'rectification_id.required_if' => __(sprintf('Choose a work order for %s', $this->request->get('type'))),
+            'rectification_id.in' => __(sprintf('Choose a valid work order for %s', $this->request->get('type'))),
         ];
     }
 
     public function validated()
     {
         return [
-            'rectification_type' => $this->request->get('type_id') ? $this->request->get('type') : null,
-            'rectification_id' => $this->request->get('type_id'),
+            'type' => $this->request->get('rectification_id') ? $this->request->get('type') : null,
+            'rectification_id' => $this->request->get('rectification_id'),
             'contractor_id' => $this->request->get('contractor'),
             'crew_id' => $this->request->get('crew'),
             'working_at' => $this->request->only(['working_date', 'working_time']), // Mutator

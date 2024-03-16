@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\WorkOrderController\Index;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class AuthDataLoader
 {
     const UNKNOWN_LOADER = null;
 
-    public static function get(Request $request)
+    public static function find(User $user)
     {
-        if(! $loader_classname = DataLoadersContainer::get( auth()->user()->primary_role_name ) ) {
+        if(! $classname = IndexDataLoadersContainer::get($user->primary_role_name) ) {
             return self::UNKNOWN_LOADER;
         }
 
-        return app($loader_classname, [$request]);
+        return app($classname);
     }
 }

@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\WorkOrderController\Index\Data;
 
-use App\Http\Controllers\WorkOrderController\Index\Data\Kernel\LoaderConstructor;
+use App\Http\Controllers\WorkOrderController\Index\Data\Kernel\DataLoaderContract;
 use App\Models\WorkOrder;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
+use Illuminate\Http\Request;
 
-class ContractorLoader extends LoaderConstructor
+class ContractorLoader implements DataLoaderContract
 {
-    public function data()
+    public function data(Request $request): array
     {
-        $paramter_for_filters = $this->getParameterForFilters();
+        $paramter_for_filters = $this->getParameterForFilters($request);
 
         $work_orders = WorkOrder::withEssentialRelationships()
         ->filterByParameters( $paramter_for_filters )
-        ->orderBy('scheduled_date', $this->request->get('sort', 'desc'))
+        ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->paginate(35)
-        ->appends( $this->request->query() );
+        ->appends( $request->query() );
 
         return [
             'filtering' => [
@@ -30,14 +31,14 @@ class ContractorLoader extends LoaderConstructor
                 ],
             ],
             'all_statuses' => WorkOrderStatusCatalog::all(),
-            'request' => $this->request,
+            'request' => $request,
             'work_orders' => $work_orders,
         ];
     }
 
-    protected function getParameterForFilters()
+    protected function getParameterForFilters(Request $request)
     {
-        $only = $this->request->only([
+        $only = $request->only([
             'dates',
             'scheduled_date',
             'sort',

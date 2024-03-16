@@ -15,8 +15,7 @@ class PaymentFactory extends Factory
     public function definition()
     {
         return [
-            'status' => $this->faker->randomElement( Payment::collectionAllStatuses()->toArray() ),
-            'work_order_id' => $this->faker->unique()->numberBetween(1,1000),
+            'status' => Payment::collectionAllStatuses()->random(),
         ];
     }
 }

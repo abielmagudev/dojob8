@@ -1,6 +1,6 @@
 <x-form-field-horizontal for="crewSelect" label="Crew" label-class="{{ !$work_order->hasCrew() ? 'form-label-pending' : '' }}">
     <select id="crewSelect" class="form-select {{ bsInputInvalid( $errors->has('crew') ) }}" name="crew">
-        <option selected label="* None"></option>
+        <option selected label="Pending *"></option>
 
         @foreach($crews as $crew)          
         <option value="{{ $crew->id }}" {{ isSelected($crew->id == old('crew', $work_order->crew_id)) }}>
@@ -10,7 +10,7 @@
 
         @if( $work_order->crew &&! $crews->contains($work_order->crew_id) )
         <option value="{{ $work_order->crew->id }}" selected>
-            {{ $work_order->crew->name }} - It is inactive or it is not for work order tasks
+            {{ $work_order->crew->name }} - It is inactive or it is not for work order purpose
         </option>
         @endif
     </select>

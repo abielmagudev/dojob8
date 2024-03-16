@@ -4,29 +4,10 @@ namespace App\Models\WorkOrder\Traits;
 
 use App\Models\WorkOrder;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
+use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 
 trait HasWorkOrders
 {
-    // Accessors
-
-    public function getWorkOrdersCounterAttribute()
-    {
-        return ($this->work_orders_count ?? $this->work_orders->count());
-    }
-
-    public function getWorkOrdersWithIncompleteStatusCounterAttribute()
-    {
-        return $this->onlyIncompleteWorkOrders()->count();
-    }
-
-    public function getIncompleteWorkOrdersCounterAttribute()
-    {
-        return ($this->incomplete_work_orders_count ?? $this->incomplete_work_orders->count());
-    }
-
-
-
-
     // Relationships
 
     public function work_orders()
@@ -36,10 +17,31 @@ trait HasWorkOrders
 
     public function incomplete_work_orders()
     {
-        return $this->hasMany(WorkOrder::class)->whereIn('status', WorkOrderStatusCatalog::incomplete()->toArray());
+        return $this->work_orders()->whereIn('status', WorkOrderStatusCatalog::incomplete()->toArray());
+    }
+
+    public function work_orders_to_rectify()
+    {
+        return $this->work_orders()->where('type', 'standard')->where('status', 'completed')->whereNull('rectification_id');
     }
 
 
+    // Accessors
+
+    public function getWorkOrdersCounterAttribute()
+    {
+        return ($this->work_orders_count ?? $this->work_orders->count());
+    }
+
+    public function getIncompleteWorkOrdersCounterAttribute()
+    {
+        return ($this->incomplete_work_orders_count ?? $this->incomplete_work_orders->count());
+    }
+
+    public function getWorkOrdersToRectifyCounterAttribute()
+    {
+        return ($this->work_orders_to_rectify_count ?? $this->work_orders_to_rectify->count());
+    }
 
 
     // Validators
@@ -49,39 +51,21 @@ trait HasWorkOrders
         return (bool) $this->work_orders_counter;
     }
 
-    public function hasWorkOrdersWithIncompleteStatus()
-    {
-        return (bool) $this->work_orders_with_incomplete_status_counter;
-    }
-    
     public function hasIncompleteWorkOrders()
     {
         return (bool) $this->incomplete_work_orders_counter;
     }
 
-    
-
-    // Actions
-
-    public function onlyIncompleteWorkOrders()
+    public function hasWorkOrdersToRectify()
     {
-        return $this->work_orders->filter(fn($wo) => $wo->hasIncompleteStatus());
+        return (bool) $this->work_orders_to_rectify_counter;
     }
-
-    public function onlyWorkOrdersForRectification($except = [])
-    {
-        if(! is_array($except) ) {
-            $except = is_a($except, WorkOrder::class) ? [$except->id] : [];
-        }
-
-        return $this->work_orders->filter(function($wo) use($except) {
-            return $wo->qualifiesForRectification() &&! in_array($wo->id, $except);
-        });
-    }   
 }
 
 /**
- * Una manera de verificar si una relación ha sido cargada en una colección de modelos después de realizar eager loading 
+ * Una manera de verificar si una relación ha sido cargada en una 
+ * colección de modelos después de realizar eager loading...
+ * 
  * "isEagerLoaded" y "relationLoaded"
  * 
  * $collection->first()->isEagerLoaded('models')

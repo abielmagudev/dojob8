@@ -8,8 +8,8 @@ use App\Models\Kernel\Traits\BelongsCreatorUser;
 use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasStatus;
-use App\Models\WorkOrder\Traits\BelongWorkOrder;
-use App\Models\WorkOrder\Traits\HasWorkOrderFilters;
+use App\Models\WorkOrder\Traits\BelongsWorkOrder;
+use App\Models\WorkOrder\Traits\BelongsWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -18,12 +18,12 @@ class Payment extends Model implements FilterableQueryStringContract
 {
     use BelongsCreatorUser;
     use BelongsUpdaterUser;
-    use BelongWorkOrder;
+    use BelongsWorkOrder;
     use HasFactory;
     use HasFilterableQueryStringContract;
     use HasHistory;
     use HasStatus;
-    use HasWorkOrderFilters;
+    use BelongsWorkOrders;
 
     const INITIAL_STATUS = 'unpaid';
 

@@ -1,7 +1,0 @@
-@includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.schedule')
-@includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.type')
-@include('work-orders._form.job')
-@includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.crew')
-@includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.contractor')
-@includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.permit-code')
-@include('work-orders._form.notes')

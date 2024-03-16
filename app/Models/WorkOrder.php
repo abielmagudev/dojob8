@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Client\Traits\BelongsClient;
+use App\Models\Contractor\Traits\BelongsContractor;
 use App\Models\Crew\Traits\HasCrew;
 use App\Models\History\Traits\HasHistory;
 use App\Models\Inspection\Traits\HasInspections;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Interfaces\PendingAttributesContract;
 use App\Models\Kernel\Traits\BelongsCreatorUser;
 use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
-use App\Models\Kernel\Traits\HelpForPending;
+use App\Models\Kernel\Traits\PendingContractImplemented;
 use App\Models\Media\Traits\HasMedia;
 use App\Models\Payment\Traits\HasPayment;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
@@ -19,8 +22,10 @@ use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WorkOrder extends Model implements FilterableQueryStringContract
+class WorkOrder extends Model implements FilterableQueryStringContract, PendingAttributesContract
 {
+    use BelongsClient;
+    use BelongsContractor;
     use BelongsCreatorUser;
     use BelongsUpdaterUser;
     use HasCrew;
@@ -32,28 +37,29 @@ class WorkOrder extends Model implements FilterableQueryStringContract
     use HasPayment;
     use HasScheduledDate;
     use HasStatus;
-    use HelpForPending;
+    use PendingContractImplemented;
 
     protected $fillable = [
-        'ordered',
+        'type',
+        'rectification_id',
         'status',
-
+        
         'scheduled_date',
+        'ordered',
         'working_at',
-        'working_by',
+        'working_id',
         'done_at',
-        'done_by',
+        'done_id',
         'completed_at',
-        'completed_by',
+        'completed_id',
+
         'permit_code',
         'notes',
 
-        'rectification_type',
-        'rectification_id',
         'client_id',
-        'contractor_id',
-        'crew_id',
         'job_id',
+        'crew_id',
+        'contractor_id',
         'assessment_id',
     ];
 
@@ -64,73 +70,42 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         'completed_at' => 'datetime',
     ];
 
-
-
-    // Interfaces
     
-    public function getMappingFilterableQueryString(): array
-    {
-        return [
-            'client' => 'filterByClient',
-            'contractor' => 'filterByContractor',
-            'crew' => 'filterByCrew', 
-            'dates' => 'filterByScheduledDateBetween',
-            'job' => 'filterByJob',
-            'pending' => 'filterByPending',
-            'scheduled_date' => 'filterByScheduledDate',
-            'search' => 'filterBySearch',
-            'status_group' => 'filterByStatusGroup',
-            'status' => 'filterByStatus',
-            'type_group' => 'filterByTypeGroup',
-        ];
-    }
-
-
-
     // Mutators
 
-    public function setWorkingAtAttribute($values)
+    public function setWorkingAtAttribute($value)
     {
-        if( is_array($values) ) {
-            $values = trim( implode(' ', $values) );
+        if(! empty($value) && $value <> $this->working_at )
+        {
+            $this->attributes['working_at'] = $value;
+            $this->attributes['working_id'] = auth()->id();
+            return;
         }
 
-        if(! empty($values) && $values <> $this->working_at ) {
-            $this->attributes['working_at'] = $values;
-            $this->attributes['working_by'] = auth()->id();
-        }
-        
-        if( empty($values) ) {
-            $this->attributes['working_at'] = null;
-            $this->attributes['working_by'] = null;
-        }
+        $this->attributes['working_at'] = null;
+        $this->attributes['working_id'] = null;
     }
 
-    public function setDoneAtAttribute($values)
+    public function setDoneAtAttribute($value)
     {
-        if( is_array($values) ) {
-            $values = trim( implode(' ', $values) );
+        if(! empty($value) && $value <> $this->done_at )
+        {
+            $this->attributes['done_at'] = $value;
+            $this->attributes['done_id'] = auth()->id();
+            return;
         }
 
-        if(! empty($values) && $values <> $this->done_at ) {
-            $this->attributes['done_at'] = $values;
-            $this->attributes['done_by'] = auth()->id();
-        }
-        
-        if( empty($values) ) {
-            $this->attributes['done_at'] = null;
-            $this->attributes['done_by'] = null;
-        }
+        $this->attributes['done_at'] = null;
+        $this->attributes['done_id'] = null;
     }
 
     public function setCompletedAtAttribute($status)
     {        
         if( $status == 'completed' && is_null($this->completed_at) ) {
             $this->attributes['completed_at'] = now();
-            $this->attributes['completed_by'] = auth()->id();
+            $this->attributes['completed_id'] = auth()->id();
         }
     }
-
 
 
     // Accessors
@@ -165,37 +140,100 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return ! is_null($this->completed_at) ? $this->completed_at->format('g:i A') : null;
     }
 
-    public function getTypeAttribute()
-    {
-        if( empty($this->rectification_type) ) {
-            return 'standard';
-        }
 
-        return $this->rectification_type;
+    // Validators
+
+    public function isStandard()
+    {
+        return $this->type == 'standard' && is_null($this->rectification_id);
     }
 
-    public function getTypeIdAttribute()
+    public function isRectification()
     {
-        return $this->rectification_id;
+        return ! $this->isStandard();
     }
 
+    public function isRework()
+    {
+        return $this->type == 'rework' && is_int($this->rectification_id);
+    }
+
+    public function isWarranty()
+    {
+        return $this->type == 'warranty' && is_int($this->rectification_id);
+    }
+
+    public function hasIncompleteStatus()
+    {
+        return WorkOrderStatusCatalog::incomplete()->contains($this->status);
+    }
+    
+    public function isCompleted()
+    {
+        return $this->status == 'completed' && $this->hasCompletedAt();
+    }
+
+    public function qualifiesForRectification()
+    {
+        return $this->isStandard() && $this->isCompleted();
+    }
+
+    public function qualifiesForInspection()
+    {
+        return $this->isCompleted();
+    }
+
+    public function hasPending(): bool
+    {
+        return is_null($this->scheduled_date) || is_null($this->crew_id);
+    }
+
+    public function hasNoPending(): bool
+    {
+        return ! $this->hasPending();
+    }
+
+    public function hasWorkingAt()
+    {
+        return ! empty( $this->working_at );
+    }
+
+    public function hasDoneAt()
+    {
+        return ! empty( $this->done_at );
+    }
+
+    public function hasCompletedAt()
+    {
+        return ! empty( $this->completed_at );
+    }
 
 
     // Relationships
 
+    public function rectifications()
+    {
+        return $this->hasMany(self::class, 'rectification_id')->whereIn('type', WorkOrderTypeCatalog::rectification()->toArray());
+    }
+
     public function reworks()
     {
-        return $this->hasMany(self::class, 'rectification_id')->where('rectification_type', 'rework');
+        return $this->hasMany(self::class, 'rectification_id')->where('type', 'rework');
     }
 
     public function warranties()
     {
-        return $this->hasMany(self::class, 'rectification_id')->where('rectification_type', 'warranty');
+        return $this->hasMany(self::class, 'rectification_id')->where('type', 'warranty');
     }
 
-    public function client()
+    public function working_updater()
     {
-        return $this->belongsTo(Client::class)->withTrashed();
+        return $this->belongsTo(User::class, 'working_id')->withTrashed();
+    }
+
+    public function done_updater()
+    {
+        return $this->belongsTo(User::class, 'done_id')->withTrashed();
     }
 
     public function job()
@@ -203,42 +241,15 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return $this->belongsTo(Job::class)->withTrashed();
     }
 
-    public function contractor()
-    {
-        return $this->belongsTo(Contractor::class)->withTrashed();
-    }
-
     public function members()
     {
-        return $this->belongsToMany(Member::class)->using(MemberWorkOrder::class)->withTimestamps();
+        return $this->belongsToMany(Member::class)->withTimestamps();
     }
 
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
-
-    public function working_updater()
-    {
-        return $this->belongsTo(User::class, 'working_by')->withTrashed();
-    }
-
-    public function done_updater()
-    {
-        return $this->belongsTo(User::class, 'done_by')->withTrashed();
-    }
-
-
-
-    // Actions
-
-    public function attachCrewMembers()
-    {
-        $this->members()->attach( 
-            $this->crew->members->pluck('id')
-        );
-    }
-
 
 
     // Scopes
@@ -248,14 +259,24 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return $query->where($column, 'like', "%{$value}%")->orderBy('id','asc');
     }
 
-    public function scopePending($query)
+    public function scopeStandard($query)
     {
-        return $query->whereNull('scheduled_date')->orWhereNull('crew_id');
+        return $query->where('type', 'standard')->whereNull('rectification_id');
     }
 
-    public function scopeNoPending($query)
+    public function scopeRectification($query)
     {
-        return $query->whereNotNull('scheduled_date')->WhereNotNull('crew_id');
+        return $query->whereIn('type', WorkOrderTypeCatalog::rectification()->toArray())->whereNotNull('rectification_id');
+    }
+
+    public function scopeRework($query)
+    {
+        return $query->whereIn('type', 'rework')->whereNotNull('rectification_id');
+    }
+
+    public function scopeWarranty($query)
+    {
+        return $query->where('type', 'warranty')->whereNotNull('rectification_id');
     }
 
     public function scopeIncomplete($query, array $except = [])
@@ -281,6 +302,16 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         });
     }
 
+    public function scopePending($query)
+    {
+        return $query->whereNull('scheduled_date')->orWhereNull('crew_id');
+    }
+
+    public function scopeNoPending($query)
+    {
+        return $query->whereNotNull('scheduled_date')->WhereNotNull('crew_id');
+    }
+
     public function scopeWithEssentialRelationships($query)
     {
         return $query->with([
@@ -292,7 +323,6 @@ class WorkOrder extends Model implements FilterableQueryStringContract
     }
 
 
-
     // Filters
 
     public function scopeFilterBySearch($query, $value)
@@ -300,27 +330,9 @@ class WorkOrder extends Model implements FilterableQueryStringContract
         return ! is_null($value) ? $query->search($value)->orderBy('id', 'asc') : $query;
     }
 
-    public function scopeFilterByClient($query, $value)
-    {
-        return ! is_null($value) ? $query->where('client_id', $value) : $query;
-    }
-
     public function scopeFilterByJob($query, $value)
     {
         return ! is_null($value) ? $query->where('job_id', $value) : $query;
-    }
-
-    public function scopeFilterByContractor($query, $value)
-    {
-        if( is_null($value) ) {
-            return $query;
-        }
-
-        if( $value == 0 ) {
-            return $query->whereNull('contractor_id');
-        }
-
-        return $query->where('contractor_id', $value);
     }
 
     public function scopeFilterByTypeGroup($query, $types_group)
@@ -331,96 +343,34 @@ class WorkOrder extends Model implements FilterableQueryStringContract
 
         if( WorkOrderTypeCatalog::rectification()->diff($types_group)->isEmpty() )
         {
-            return $query->whereNotNull('rectification_type');
+            return $query->whereIn('type', WorkOrderTypeCatalog::rectification()->toArray());
         }
 
         if( in_array('rework', $types_group) ) {
-            return $query->where('rectification_type', 'rework');
+            return $query->where('type', 'rework');
         }
 
         if( in_array('warranty', $types_group) ) {
-            return $query->where('rectification_type', 'warranty');
+            return $query->where('type', 'warranty');
         }
 
-        return $query->whereNull('rectification_type');
+        return $query->where('type', 'standard');
     }
 
-
-
-    // Validators
-
-    public function hasContractor()
+    public function getMappingFilterableQueryString(): array
     {
-        return ! is_null($this->contractor_id);
-    }
-
-    public function hasContractorVerified()
-    {
-        return ! is_null($this->contractor_id) && is_a($this->contractor, Contractor::class);
-    }
-
-    public function hasPending()
-    {
-        return is_null($this->scheduled_date) || is_null($this->crew_id);
-    }
-
-    public function hasNoPending()
-    {
-        return ! $this->hasPending();
-    }
-
-    public function hasIncompleteStatus()
-    {
-        return WorkOrderStatusCatalog::incomplete()->contains($this->status);
-    }
-
-    public function hasWorkingAt()
-    {
-        return ! empty( $this->working_at );
-    }
-
-    public function hasDoneAt()
-    {
-        return ! empty( $this->done_at );
-    }
-
-    public function hasCompletedAt()
-    {
-        return ! empty( $this->completed_at );
-    }
-    
-    public function isCompleted()
-    {
-        return $this->status == 'completed' && $this->hasCompletedAt();
-    }
-
-    public function isRework()
-    {
-        return $this->rectification_type == 'rework' && is_int($this->rectification_id);
-    }
-
-    public function isWarranty()
-    {
-        return $this->rectification_type == 'warranty' && is_int($this->rectification_id);
-    }
-
-    public function isStandard()
-    {
-        return is_null($this->rectification_type) && is_null($this->rectification_id);
-    }
-
-    public function isNonStandard()
-    {
-        return ! $this->isStandard();
-    }
-
-    public function qualifiesForRectification()
-    {
-        return $this->isStandard() && $this->isCompleted();
-    }
-
-    public function qualifiesForInspection()
-    {
-        return $this->isCompleted();
+        return [
+            'client' => 'filterByClient',
+            'contractor' => 'filterByContractor',
+            'crew' => 'filterByCrew', 
+            'dates' => 'filterByScheduledDateBetween',
+            'job' => 'filterByJob',
+            'pending' => 'filterByPending',
+            'scheduled_date' => 'filterByScheduledDate',
+            'search' => 'filterBySearch',
+            'status_group' => 'filterByStatusGroup',
+            'status' => 'filterByStatus',
+            'type_group' => 'filterByTypeGroup',
+        ];
     }
 }

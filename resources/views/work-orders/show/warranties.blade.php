@@ -1,12 +1,12 @@
-<x-card title="{{ $work_order->warranties->count() }} warranties">
+<x-card title="{{ $warranties->count() }} warranties">
     @slot('options')
     <a href="{{ route('work-orders.create', [$work_order->client, 'type' => 'warranty', 'bind' => $work_order->id]) }}" class="btn btn-primary">
         <i class="bi bi-plus-lg"></i>
     </a>
     @endslot
 
-    @if( $work_order->warranties->count() )
-    <?php $work_order->warranties->load(['crew','contractor','job']) ?>
+    @if( $warranties->count() )
+    <?php $warranties->load(['crew','contractor','job']) ?>
     <x-table class="align-middle">
         @slot('thead')
         <tr>
@@ -19,7 +19,7 @@
         </tr>
         @endslot
 
-        @foreach($work_order->warranties as $warranty)
+        @foreach($warranties as $warranty)
         <tr>
             <td>{{ $warranty->scheduled_date_human }}</td>
             <td>

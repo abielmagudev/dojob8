@@ -42,7 +42,7 @@
         @if( $settings['display'] )         
         <li class="nav-item border-0">
             <a 
-                class="nav-link border-0 {{ $show == $tab ? 'active fw-bold' : '' }} {{ $settings['enabled'] ? '' : 'disabled' }}" 
+                class="nav-link border-0 {{ $template == $tab ? 'active fw-bold' : '' }} {{ $settings['enabled'] ? '' : 'disabled' }}" 
                 href="{{ route('work-orders.show', [$work_order, 'tab' => $tab]) }}"
             >{{ $settings['title'] }}</a>
         </li>

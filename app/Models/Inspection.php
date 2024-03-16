@@ -12,7 +12,7 @@ use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\Kernel\Traits\HelpForPending;
 use App\Models\Media\Traits\HasMedia;
-use App\Models\WorkOrder\Traits\BelongWorkOrder;
+use App\Models\WorkOrder\Traits\BelongsWorkOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +22,7 @@ class Inspection extends Model implements FilterableQueryStringContract
 {
     use BelongsCreatorUser;
     use BelongsUpdaterUser;
-    use BelongWorkOrder;
+    use BelongsWorkOrder;
     use HasCrew;
     use HasFactory;
     use HasFilterableQueryStringContract;

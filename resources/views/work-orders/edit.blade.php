@@ -1,16 +1,12 @@
 @extends('application')
-@section('header')
 
+@section('header')
 <x-breadcrumb :items="[
     'Work orders' => route('work-orders.index'),
     sprintf(' %s ', $work_order->id) => route('work-orders.show', $work_order),
     'Edit',
 ]" />
-
 <x-page-title>Work order #{{ $work_order->id }}</x-page-title>
-
-@include('work-orders.__.summary-client', ['client' => $work_order->client])
-
 @endsection
 
 @section('content')
@@ -18,21 +14,21 @@
     <form action="{{ route('work-orders.update', $work_order) }}" method="post" autocomplete="off">
         @method('patch')
         @csrf
-        @include('work-orders._form')
-        @includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.timeline')
-        @includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders._form.status')
+        @include('work-orders.inc.form')
+        @includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders.inc.form.timeline')
+        @includeWhen(auth()->user()->can('edit-work-orders'), 'work-orders.inc.form.status')
         <input type="hidden" name="url_back" value="{{ $request->get('url_back') }}">
         <br>
 
-        <div class="d-flex justify-content-end gap-2">
-            <a href="{{ $url_back }}" class="btn btn-outline-primary">Back</a>
+        <x-form.box-action-buttons>
+            <a href="{{ $url_back }}" class="btn btn-dark">Back</a>
 
-            @if( auth()->user()->can('edit-work-orders') )
+            @can('edit-work-orders')          
             <button class="btn btn-warning" type="submit">Update work order</button>
-            @endif
+            @endcan
 
-            @includeWhen(auth()->user()->hasRole('crew member'), 'work-orders._form.working-done')
-        </div>
+            @includeWhen(auth()->user()->hasRole('crew-member'), 'work-orders.inc.form.working-done')
+        </x-form.box-action-buttons>
     </form>
 </x-card>
 <br>

@@ -1,8 +1,8 @@
 <div class="card shadow-sm border-0 {{ $attributes->get('class', '') }}" style="{{ $attributes->get('style', '') }}">
 
     @if( isset($title) || isset($options) || isset($dropoptions) )
-    <div class="card-header border-bottom p-0">
-        <div class="row align-items-center p-3">
+    <div class="card-header rounded">
+        <div class="d-flex justify-content-between align-items-center">
 
             {{-- Left --}}
             @isset( $title )             

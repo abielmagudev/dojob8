@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Product\Kernel\MeasurementUnitsCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -13,16 +14,14 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $material_price = $this->faker->randomFloat(2, 0.01, 999);
-        $labor_price = $this->faker->randomFloat(2, 0.01, 999);
-
         return [
-            'name' => $this->faker->unique()->currencyCode(),
-            'item_price_id' => $this->faker->optional()->numberBetween(1,10),
-            'material_price' => $material_price,
-            'labor_price' => $labor_price,
-            'unit_price' => ($material_price + $labor_price),
+            'name' => $this->faker->unique()->languageCode(),
             'description' => $this->faker->optional()->sentence(),
+            'measurement_unit' => MeasurementUnitsCatalog::abbreviations()->random(),
+            'item_price_id' => $this->faker->optional()->numberBetween(1,10),
+            'material_price' => $this->faker->randomFloat(2, 0.01, 999),
+            'labor_price' => $this->faker->randomFloat(2, 0.01, 999),
+            // 'unit_price' => ($material_price + $labor_price),
         ];
     }
 }

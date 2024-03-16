@@ -19,6 +19,7 @@ class RolePermissionSeeder extends Seeder
 
         // CATALOG
         $this->createPermissionsForAgencies($roles);
+        $this->createPermissionsForCategories($roles);
         $this->createPermissionsForClients($roles);
         $this->createPermissionsForContractors($roles);
         $this->createPermissionsForCrews($roles);
@@ -108,6 +109,36 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'restore-agencies']);
 
         Permission::create(['name' => 'force-delete-agencies']);
+    }
+
+    /**
+     * Categories
+     */
+    protected function createPermissionsForCategories(array $roles)
+    {
+        Permission::create(['name' => 'see-categories'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+        
+        Permission::create(['name' => 'filter-categories'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'create-categories'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'edit-categories'])->syncRoles([
+            $roles['administrator'],
+            $roles['payments'],
+        ]);
+
+        Permission::create(['name' => 'delete-categories'])->syncRoles([
+            $roles['administrator'],
+        ]);
     }
 
     /**

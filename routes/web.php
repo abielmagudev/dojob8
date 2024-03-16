@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommentController;
@@ -63,11 +64,14 @@ Route::middleware(['auth'])->group(function () {
     // Agencies
     Route::resource('agencies', AgencyController::class);
     
-    // Jobs
-    Route::resource('jobs', JobController::class);
+    // Categories
+    Route::resource('categories', CategoryController::class);
 
     // Products
     Route::resource('products', ProductController::class);
+
+    // Jobs
+    Route::resource('jobs', JobController::class);
 
     // Crew Members Assigment
     Route::patch('crew-members/assignment', CrewMemberAssignmentController::class)->name('crew-members.assignment.update');

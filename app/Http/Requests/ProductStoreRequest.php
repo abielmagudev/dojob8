@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -36,13 +37,20 @@ class ProductStoreRequest extends FormRequest
                 'nullable',
                 'string',
             ],
+            'category' => [
+                'bail',
+                'nullable',
+                'integer',
+                sprintf('exists:%s,id', Category::class),
+            ],
         ];
     }
 
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'unit_price' => ($this->material_price + $this->labor_price),
+            // 'unit_price' => ($this->material_price + $this->labor_price),
+            'category_id' => $this->get('category'),
         ]);
     }
 }

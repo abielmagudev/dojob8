@@ -22,3 +22,15 @@
     <input id="itemPriceIdInput" type="text" class="form-control {{ bsInputInvalid( $errors->has('item_price_id') ) }}" name="item_price_id" value="{{ old('item_price_id', $product->item_price_id) }}">
     <x-form-feedback error="item_price_id" />
 </x-form-field-horizontal>
+
+<x-form-field-horizontal for="categorySelect" label="Category" label-class="form-label-optional">
+    <select id="categorySelect" class="form-select {{ bsInputInvalid( $errors->has('category') ) }}" name="category">
+        <option selected label="None *"></option>
+
+        @foreach($categories as $category)
+        <option value="{{ $category->id }}" {{ isSelected( $category->id == old('category', $product->category_id) ) }}>{{ $category->name }}</option>
+        @endforeach
+        
+    </select>
+    <x-form-feedback error="category" />
+</x-form-field-horizontal>

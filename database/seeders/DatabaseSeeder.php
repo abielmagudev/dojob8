@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             // Catalog
             \Database\Seeders\Development\AgencySeeder::class,
             \Database\Seeders\Development\AssessmentSeeder::class,
+            \Database\Seeders\Development\CategorySeeder::class,
             \Database\Seeders\Development\ClientSeeder::class,
             \Database\Seeders\Development\ContractorSeeder::class,
             \Database\Seeders\Development\CrewSeeder::class,
@@ -44,7 +45,6 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\Development\ProductSeeder::class,
             \Database\Seeders\Development\UserSeeder::class,
             \Database\Seeders\Development\WorkOrderSeeder::class,
-            
             
             // Belongs to a work order
             \Database\Seeders\Development\PaymentSeeder::class,

@@ -19,11 +19,13 @@ class Product extends Model
 
     protected $fillable = [
         'name',
+        'description',
+        'measurement_unit',
         'item_price_id',
         'material_price',
         'labor_price',
-        'unit_price',
-        'description',
+        // 'unit_price',
+        'category_id',
     ];
 
 
@@ -42,5 +44,18 @@ class Product extends Model
     public function getUnitPriceCurrencyAttribute()
     {
         return number_format($this->unit_price, 2, '.', ', ');
+    }
+
+    public function getUnitPriceAttribute()
+    {
+        return ($this->material_price + $this->labor_price);
+    }
+
+
+    // Relationships
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

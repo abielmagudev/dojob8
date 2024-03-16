@@ -22,6 +22,7 @@
         <tr>
             <td>Name</td>
             <td>Description</td>
+            <td>Measurement unit</td>
             <td>Item Price ID</td>
             <td>Material price</td>
             <td>Labor price</td>
@@ -34,6 +35,7 @@
         <tr>
             <td>{{ $product->name }}</td>
             <td>{{ $product->description }}</td>
+            <td>{{ $product->measurement_unit }}</td>
             <td>{{ $product->item_price_id }}</td>
             <td>{{ $product->material_price_currency }}</td>
             <td>{{ $product->labor_price_currency }}</td>

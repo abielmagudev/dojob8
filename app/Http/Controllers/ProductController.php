@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,7 @@ class ProductController extends Controller
     {
         return view('products.create', [
             'product' => new Product,
+            'categories' => Category::all(),
         ]);
     }
 
@@ -54,6 +56,7 @@ class ProductController extends Controller
     {
         return view('products.edit', [
             'product' => $product,
+            'categories' => Category::all(),
         ]);
     }
 

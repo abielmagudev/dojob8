@@ -70,6 +70,7 @@ return [
         'permissions' => [
             'see-jobs',
             'see-products',
+            'see-categories',
         ],
         'menu' => [
             'Jobs' => [
@@ -80,9 +81,15 @@ return [
             ],
             'Products' => [
                 'active' => 'products.*',
-                'icon' => '<i class="bi bi-boxes"></i>',
+                'icon' => '<i class="bi bi-tags"></i>',
                 'permission' => 'see-products',
                 'route' => 'products.index',
+            ],
+            'Categories' => [
+                'active' => 'categories.*',
+                'icon' => '<i class="bi bi-bookmark"></i>',
+                'permission' => 'see-categories',
+                'route' => 'categories.index',
             ],
         ],
     ],

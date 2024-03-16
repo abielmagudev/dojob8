@@ -36,7 +36,7 @@ class DashboardController extends Controller
             'coordinator' => AdminResponse::class,
             'payments' => AdminResponse::class,
             'assessor' => AssessorResponse::class,
-            'crew member' => CrewMemberResponse::class,
+            'crew-member' => CrewMemberResponse::class,
             'contractor' => ContractorResponse::class,
             'agency' => AgencyResponse::class,
         ]);

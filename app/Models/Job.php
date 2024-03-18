@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Product\Traits\BelongsProducts;
 use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Traits\BelongsCreatorUser;
 use App\Models\Kernel\Traits\BelongsDeleterUser;
@@ -17,6 +18,7 @@ class Job extends Model
     use BelongsCreatorUser;
     use BelongsDeleterUser;
     use BelongsUpdaterUser;
+    use BelongsProducts;
     use HasActiveStatus;
     use HasFactory;
     use HasHistory;
@@ -39,14 +41,6 @@ class Job extends Model
     }
 
 
-    // Relationships
-
-    public function inspection_setup()
-    {
-        return $this->hasMany(InspectionSetupForJob::class);
-    }
-
-
     // Validators
 
     public function requiresSuccessInspections(): bool
@@ -57,5 +51,13 @@ class Job extends Model
     public function hasInspectionSetup(): bool
     {
         return (bool) $this->inspection_setup_counter;
+    }
+
+
+    // Relationships
+
+    public function inspection_setup()
+    {
+        return $this->hasMany(InspectionSetupForJob::class);
     }
 }

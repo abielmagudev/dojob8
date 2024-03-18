@@ -7,7 +7,7 @@ use App\Models\Kernel\Traits\BelongsCreatorUser;
 use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str;
 class Category extends Model
 {
     use BelongsCreatorUser;
@@ -22,6 +22,11 @@ class Category extends Model
 
 
     // Accessors
+
+    public function getNameCamelCaseAttribute()
+    {
+        return Str::camel($this->name);
+    }
 
     public function getProductsCounterAttribute()
     {

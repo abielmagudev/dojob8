@@ -14,8 +14,8 @@ class CreateJobProductTable extends Migration
     public function up()
     {
         Schema::create('job_product', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('job_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
         });
     }
 

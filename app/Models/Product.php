@@ -28,6 +28,10 @@ class Product extends Model
         'category_id',
     ];
 
+    protected $appends = [
+        'category_name',
+    ];
+
 
     // Accessors
 
@@ -51,11 +55,42 @@ class Product extends Model
         return ($this->material_price + $this->labor_price);
     }
 
+    public function getCategoryNameAttribute()
+    {
+        return $this->existsCategory() ? $this->category->name : 'uncategorized';
+    }
+
+
+    // Validators
+
+    public function hasCategory()
+    {
+        return ! empty($this->category_id);
+    }   
+
+    public function existsCategory()
+    {
+        return $this->hasCategory() && is_a($this->category, Category::class);
+    }
+
 
     // Relationships
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+
+    // Scopes
+
+    public function scopeCategorized($query)
+    {
+        return $query->whereNotNull('category_id');
+    }
+
+    public function scopeUncategorized($query)
+    {
+        return $query->whereNull('category_id');
     }
 }

@@ -6,7 +6,7 @@ use App\Http\Requests\JobSaveRequest;
 use App\Models\Agency;
 use App\Models\Job;
 use App\Models\Job\Services\InspectionSetupService;
-
+use App\Models\Product\Services\ProductCatalogService;
 class JobController extends Controller
 {
     public function __construct()
@@ -46,9 +46,10 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
-        $job->load('work_orders');
-
+        $job->load(['products.category', 'work_orders']);
+        
         return view('jobs.show', [
+            'products_categorized' => ProductCatalogService::all(),
             'job' => $job,
         ]);
     }

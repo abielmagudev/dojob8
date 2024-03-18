@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            // $table->string('profile_name')->nullable();
             $table->morphs('profile');
             $table->dateTime('last_session_at')->nullable()->index();
             $table->string('last_session_device')->nullable();

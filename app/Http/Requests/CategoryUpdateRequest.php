@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Category;
+use App\Rules\CategoryRestrictedName;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CategoryUpdateRequest extends FormRequest
@@ -16,7 +17,9 @@ class CategoryUpdateRequest extends FormRequest
     {
         return [
             'name' => [
+                'bail',
                 'required',
+                new CategoryRestrictedName,
                 sprintf('unique:%s,id,%s', Category::class, $this->route('category')->id),
             ],
             'description' => [

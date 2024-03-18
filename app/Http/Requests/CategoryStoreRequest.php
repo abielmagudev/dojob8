@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Category;
+use App\Rules\CategoryRestrictedName;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CategoryStoreRequest extends FormRequest
@@ -16,7 +17,9 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'name' => [
+                'bail',
                 'required',
+                new CategoryRestrictedName,
                 sprintf('unique:%s', Category::class),
             ],
             'description' => [

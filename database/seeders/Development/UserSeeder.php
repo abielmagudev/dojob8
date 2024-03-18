@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
             // Cache $model_profiles['members'], avoid instantiating the member object again
             $member = $model_profiles['members']->get( $user->profile_id ); 
 
-            if( $member->isCrewMember() ) {
+            if( $member && $member->isCrewMember() ) {
                  return 'crew-member';
             }
 

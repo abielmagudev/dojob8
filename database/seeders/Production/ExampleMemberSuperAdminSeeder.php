@@ -6,7 +6,7 @@ use App\Models\Member;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class MemberSuperAdminSeeder extends Seeder
+class ExampleMemberSuperAdminSeeder extends Seeder
 {
     public function run()
     {
@@ -35,6 +35,6 @@ class MemberSuperAdminSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        $member->users()->first()->asignRole('SuperAdmin');
+        $member->users()->first()->assignRole('SuperAdmin');
     }
 }

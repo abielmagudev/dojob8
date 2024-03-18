@@ -187,13 +187,45 @@ if(! function_exists('initials') )
 }
 
 /**
- * Use Str::class to convert all text to lowercase, only the initial of the first word is uppercase to give a title style.
+ * Use Str::class with helper functions
  */
 if(! function_exists('title') )
 {
     function title(string $text)
     {
         return \Illuminate\Support\Str::title( trim($text) );
+    }
+}
+
+if(! function_exists('camelCase') )
+{
+    function camelCase(string $text)
+    {
+        return \Illuminate\Support\Str::camel( trim($text) );
+    }
+}
+
+if(! function_exists('snakeCase') )
+{
+    function snakeCase(string $text)
+    {
+        return \Illuminate\Support\Str::snake( trim($text) );
+    }
+}
+
+if(! function_exists('slugCase') )
+{
+    function slugCase(string $text)
+    {
+        return \Illuminate\Support\Str::slug( trim($text) );
+    }
+}
+
+if(! function_exists('studlyCase') )
+{
+    function studlyCase(string $text)
+    {
+        return \Illuminate\Support\Str::studly( trim($text) );
     }
 }
 

@@ -22,6 +22,7 @@ class AssessmentController extends Controller
         $assessments = Assessment::withCount('work_orders')
         ->withEssentialRelationships()
         ->filterByParameters( $request->all() )
+        ->where('scheduled_date', now()->format('Y-m-d'))
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->orderByRaw('ordered IS NULL, ordered asc')
         ->orderByDesc('id')

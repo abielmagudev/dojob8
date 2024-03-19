@@ -239,3 +239,18 @@ if(! function_exists('humanDateFormat') )
         return Carbon\Carbon::parse($date)->format($format);
     }
 }
+
+/**
+ * Converts a array to json for print on element HTML(Double quotes fixed).
+ */
+if(! function_exists('jsonEncodeHtml') )
+{
+    function jsonEncodeHtml(array $elements)
+    {
+        return htmlspecialchars(
+            json_encode($elements),
+            ENT_QUOTES,
+            'UTF-8'
+        );
+    }
+}

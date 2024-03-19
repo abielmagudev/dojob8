@@ -69,6 +69,7 @@
             <th>Job</th>
             <th>Client</th>
             <th class="text-center">Contractor</th>
+            <th>Total</th>
             <th class="text-center">Status</th>
             <th></th>
         </tr>
@@ -116,6 +117,10 @@
             @endif
             </td>
 
+            <td>
+                <span class="currency-symbol">{{ mt_rand(0.01, 999.99) }}</span>
+            </td>
+            
             <td class="text-center">
                 @include('work-orders.__.flag-status', [
                     'status' => $payment->work_order->status,

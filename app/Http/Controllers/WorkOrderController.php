@@ -135,6 +135,7 @@ class WorkOrderController extends Controller
             'request' => $request,
             'work_order' => $work_order,
             'url_back' => $request->filled('url_back') ? $request->get('url_back') : route('work-orders.show', $work_order),
+            'assessment' => new Assessment,
         ]);
     }
 

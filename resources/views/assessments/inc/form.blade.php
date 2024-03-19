@@ -7,6 +7,7 @@
             {{ $client->contact_channels }}
         </small>
     </p>
+    <input type="hidden" name="client" value="{{ $client->id }}">
     <x-form-feedback error="client" />
 </x-form-field-horizontal>
 

@@ -32,7 +32,6 @@
             <th>Contractor</th>
             <th>Client</th>
             <th class="text-nowrap">Work Orders</th>
-            <th class="text-nowrap">Total</th>
             <th>Status</th>
             <th></th>
         </tr>

@@ -60,6 +60,23 @@ class WorkOrderController extends Controller
         if(! $work_order = WorkOrder::create($request->validated()) ) {
             return back()->with('danger', "Error saving work order, try again please");
         }
+
+        if( $products_array = $request->input('products') )
+        {
+            $products_to_attach = [];
+
+            foreach($products_array as $product_item)
+            {
+                $product = json_decode($product_item);
+
+                $products_to_attach[$product->id] = [
+                    'quantity' => $product->quantity,
+                    'indications' => $product->indications,
+                ];
+            }
+
+            $work_order->products()->attach($products_to_attach);
+        }
         
         if( $work_order->hasCrew() )
         {
@@ -105,12 +122,33 @@ class WorkOrderController extends Controller
     }
 
     public function update(WorkOrderUpdateRequest $request, WorkOrder $work_order)
-    {
+    {        
         if(! $work_order->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating work order, try again please');
         }
 
         $work_order->refresh();
+
+        if( $products_array = $request->input('products') )
+        {
+            $products_to_attach = [];
+
+            foreach($products_array as $product_item)
+            {
+                $product = json_decode($product_item);
+                
+                $products_to_attach[$product->id] = [
+                    'quantity' => $product->quantity,
+                    'indications' => $product->indications,
+                ];
+            }
+
+            $work_order->products()->syncWithoutDetaching($products_to_attach);
+        }
+        else
+        {
+            $work_order->products()->detach();
+        }
 
         if( $work_order->hasCrew() )
         {

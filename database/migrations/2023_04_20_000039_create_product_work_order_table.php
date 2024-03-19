@@ -14,8 +14,10 @@ class CreateProductWorkOrderTable extends Migration
     public function up()
     {
         Schema::create('product_work_order', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('quantity', false, true);
+            $table->text('indications')->nullable();
+            $table->foreignId('product_id');
+            $table->foreignId('work_order_id')->constrained()->cascadeOnDelete();
         });
     }
 

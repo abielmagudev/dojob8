@@ -60,4 +60,9 @@ class Job extends Model
     {
         return $this->hasMany(InspectionSetupForJob::class);
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

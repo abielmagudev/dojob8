@@ -17,6 +17,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InspectionStatusController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\JobProductAjaxController;
 use App\Http\Controllers\JobProductController;
 use App\Http\Controllers\MediaAjaxController;
 use App\Http\Controllers\MediaController;
@@ -72,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('products', ProductController::class);
 
     // Jobs
+    Route::get('jobs/ajax/{job}/products', JobProductAjaxController::class)->name('jobs.get.products');
     Route::patch('jobs/{job}/products', JobProductController::class)->name('jobs.update.products');
     Route::resource('jobs', JobController::class);
 

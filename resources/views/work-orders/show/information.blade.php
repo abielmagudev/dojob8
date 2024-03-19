@@ -23,6 +23,7 @@
     @endcan
 
     @include('work-orders.show.information.job')
+    @include('work-orders.show.information.products')
     @include('work-orders.show.information.timeline')
     @include('work-orders.show.information.participants')
 </x-card>

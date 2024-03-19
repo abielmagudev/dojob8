@@ -6,14 +6,6 @@ use App\Models\Product;
 
 trait BelongsProducts
 {
-    // Relationship
-
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
-
-
     // Accessor
 
     public function getProductsCounterAttribute()

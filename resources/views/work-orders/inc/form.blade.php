@@ -2,6 +2,7 @@
 @include('work-orders.inc.form.schedule')
 @include('work-orders.inc.form.type')
 @include('work-orders.inc.form.job')
+@include('work-orders.inc.form.products')
 @include('work-orders.inc.form.crew')
 @include('work-orders.inc.form.contractor')
 @include('work-orders.inc.form.permit-code')

@@ -17,6 +17,7 @@ use App\Models\Kernel\Traits\HasStatus;
 use App\Models\Kernel\Traits\PendingContractImplemented;
 use App\Models\Media\Traits\HasMedia;
 use App\Models\Payment\Traits\HasPayment;
+use App\Models\Product\Traits\BelongsProducts;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,6 +29,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract, PendingA
     use BelongsContractor;
     use BelongsCreatorUser;
     use BelongsUpdaterUser;
+    use BelongsProducts;
     use HasCrew;
     use HasFactory;
     use HasFilterableQueryStringContract;
@@ -249,6 +251,14 @@ class WorkOrder extends Model implements FilterableQueryStringContract, PendingA
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot([
+            'quantity',
+            'indications',
+        ]);
     }
 
 

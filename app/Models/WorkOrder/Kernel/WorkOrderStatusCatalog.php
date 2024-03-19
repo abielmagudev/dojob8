@@ -13,7 +13,8 @@ class WorkOrderStatusCatalog
         'done',
         'completed',
         'canceled',
-        'denialed',
+        // 'denialed',
+        'deferred',
     ];
 
     public static function all()

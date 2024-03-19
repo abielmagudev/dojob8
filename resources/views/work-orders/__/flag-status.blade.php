@@ -21,6 +21,9 @@
     'denialed' => [
         'class' => 'text-bg-danger',
     ],
+    'deferred' => [
+        'class' => 'text-bg-danger',
+    ],
 ]; ?>
 
 <div class="position-relative {{ $display ?? 'd-block' }}">

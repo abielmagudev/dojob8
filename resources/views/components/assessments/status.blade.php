@@ -5,6 +5,7 @@ $colors = [
     'working' => 'border text-bg-warning',
     'done' => 'border text-bg-success',
     'denialed' => 'border text-bg-danger',
+    'deferred' => 'border text-bg-danger',
     'canceled' => 'border border-danger text-danger',
 ];
 

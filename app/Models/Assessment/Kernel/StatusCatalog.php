@@ -11,7 +11,8 @@ class StatusCatalog
         'working',
         'done',
         'canceled',
-        'denialed',
+        // 'denialed',
+        'deferred',
     ];
 
     public static function all()

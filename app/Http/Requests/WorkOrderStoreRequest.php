@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Assessment;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
@@ -66,6 +67,11 @@ class WorkOrderStoreRequest extends FormRequest
                 'nullable',
                 'string',
             ],
+            'assessment' => [
+                'sometimes',
+                'nullable',
+                sprintf('exists:%s,id', Assessment::class),
+            ],
         ];
     }
 
@@ -87,6 +93,7 @@ class WorkOrderStoreRequest extends FormRequest
             'job_id' => $this->get('job'),
             'crew_id' => $this->get('crew'),
             'status' => WorkOrderStatusCatalog::INITIAL,
+            'assessment_id' => $this->filled('assessment') ? $this->assessment : null,
         ]);
     }
 }

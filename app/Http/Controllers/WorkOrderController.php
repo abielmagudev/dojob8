@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\WorkOrderController\Index\AuthDataLoader;
 use App\Http\Controllers\WorkOrderController\Index\RequestInitializer;
 use App\Http\Controllers\WorkOrderController\Show\TabDataLoader;
-use App\Http\Controllers\WorkOrderController\ShowAction;
 use App\Http\Requests\WorkOrderStoreRequest;
 use App\Http\Requests\WorkOrderUpdateRequest;
+use App\Models\Assessment;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
@@ -40,11 +40,20 @@ class WorkOrderController extends Controller
 
     public function create(Request $request)
     {
-        $client = Client::findOrFail($request->client);
+        if( $request->filled('assessment') )
+        {
+            $assessment = Assessment::findOrFail($request->assessment);
+            $client = $assessment->client;
+        }
+        else
+        {     
+            $client = Client::findOrFail($request->client);
+        }
 
         $client->load('work_orders_to_rectify.job');
 
         return view('work-orders.create', [
+            'assessment' => $assessment ?? new Assessment,
             'all_statuses' => WorkOrderStatusCatalog::all(),
             'catalog_types' => new WorkOrderTypeCatalog,
             'client' => $client,
@@ -89,9 +98,17 @@ class WorkOrderController extends Controller
 
         PaymentFactoryService::create($work_order);
         
-        $route = $request->get('after_creating') ? route('work-orders.create', ['client' => $work_order->client_id]) : route('work-orders.index');
+        if( $request->get('after_creating') )
+        {
+            $parameters = $work_order->assessment_id ? ['assessment' => $work_order->assessment_id] : ['client' => $work_order->client_id];
+            $url = route('work-orders.create', $parameters);
+        }
+        else
+        {
+            $url = route('work-orders.index');
+        }
 
-        return redirect($route)->with('success', "You created the work order <b>#{$work_order->id}: {$work_order->job->name}</b>");
+        return redirect($url)->with('success', "You created the work order <b>#{$work_order->id}: {$work_order->job->name}</b>");
     }
 
     public function show(Request $request, WorkOrder $work_order)

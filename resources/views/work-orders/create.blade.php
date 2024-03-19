@@ -14,6 +14,7 @@
         @csrf
         @include('work-orders.inc.form')
         @include('work-orders.inc.form.after-creating')
+        <input type="hidden" name="assessment" value="{{ $assessment->id }}">
         <br>
 
         <x-form.box-action-buttons>

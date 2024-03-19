@@ -13,7 +13,7 @@
 
         <div class="d-flex justify-content-end gap-2">
             <a href="{{ route('assessments.index') }}" class="btn btn-dark">Cancel</a>
-            <button type="submit" class="btn btn-success">Create contractor</button>
+            <button type="submit" class="btn btn-success">Create assessment</button>
         </div>
     </form>
 </x-card>

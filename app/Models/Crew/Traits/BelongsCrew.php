@@ -4,7 +4,7 @@ namespace App\Models\Crew\Traits;
 
 use App\Models\Crew;
 
-trait HasCrew
+trait BelongsCrew
 {
     // Validators
 

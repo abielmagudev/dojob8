@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Client\Traits\BelongsClient;
 use App\Models\Contractor\Traits\BelongsContractor;
-use App\Models\Crew\Traits\HasCrew;
+use App\Models\Crew\Traits\BelongsCrew;
 use App\Models\History\Traits\HasHistory;
 use App\Models\Inspection\Traits\HasInspections;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
@@ -30,7 +30,7 @@ class WorkOrder extends Model implements FilterableQueryStringContract, PendingA
     use BelongsCreatorUser;
     use BelongsUpdaterUser;
     use BelongsProducts;
-    use HasCrew;
+    use BelongsCrew;
     use HasFactory;
     use HasFilterableQueryStringContract;
     use HasHistory;

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Crew\Traits\HasCrew;
+use App\Models\Crew\Traits\BelongsCrew;
 use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
 use App\Models\Kernel\Traits\BelongsCreatorUser;
@@ -23,7 +23,7 @@ class Inspection extends Model implements FilterableQueryStringContract
     use BelongsCreatorUser;
     use BelongsUpdaterUser;
     use BelongsWorkOrder;
-    use HasCrew;
+    use BelongsCrew;
     use HasFactory;
     use HasFilterableQueryStringContract;
     use HasHistory;

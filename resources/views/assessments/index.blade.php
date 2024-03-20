@@ -16,11 +16,24 @@
                 <x-custom.form-scheduled-date url="{{ route('assessments.index') }}" />
             </div>
             <div>
-                <x-modal-trigger modal-id="modalClientNewAssessment">
-                    <i class="bi bi-plus-lg"></i>
-                </x-modal-trigger>
+                
             </div>
         </div>
+    </x-slot>
+
+    <x-slot name="dropoptions">
+        <li>
+            <x-modal-trigger modal-id="modalClientNewAssessment" class="dropdown-item">
+                <i class="bi bi-plus-lg"></i>
+                <span>New assessment</span>
+            </x-modal-trigger>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+            @include('assessments.inc.modal-filters')
+        </li>
     </x-slot>
 
     @if( $assessments->isNotEmpty() )

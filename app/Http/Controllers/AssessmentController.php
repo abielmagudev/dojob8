@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AssessmentController\Index\RequestInitializer;
 use App\Http\Requests\AssessmentStoreRequest;
 use App\Http\Requests\AssessmentUpdateRequest;
 use App\Models\Assessment;
 use App\Models\Assessment\Kernel\StatusCatalog;
 use App\Models\Client;
 use App\Models\Contractor;
+use App\Models\Crew;
 use Illuminate\Http\Request;
 
 class AssessmentController extends Controller
@@ -19,10 +21,11 @@ class AssessmentController extends Controller
 
     public function index(Request $request)
     {
+        $request = RequestInitializer::init($request);
+
         $assessments = Assessment::withCount('work_orders')
         ->withEssentialRelationships()
         ->filterByParameters( $request->all() )
-        ->where('scheduled_date', now()->format('Y-m-d'))
         ->orderBy('scheduled_date', $request->get('sort', 'desc'))
         ->orderByRaw('ordered IS NULL, ordered asc')
         ->orderByDesc('id')
@@ -31,6 +34,8 @@ class AssessmentController extends Controller
 
         return view('assessments.index', [
             'assessments' => $assessments,
+            'crews' => Crew::all(),
+            'contractors' => Contractor::all(),
         ]);
     }
 

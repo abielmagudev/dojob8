@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Client\Traits\BelongsClient;
 use App\Models\Contractor\Traits\BelongsContractor;
+use App\Models\Crew\Traits\BelongsCrew;
 use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
 use App\Models\Kernel\Traits\BelongsCreatorUser;
@@ -17,16 +18,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assessment extends Model implements FilterableQueryStringContract
 {
-    use HasFactory; 
+    use BelongsCreatorUser;
+    use BelongsUpdaterUser;
     use BelongsClient;
     use BelongsContractor;
+    use BelongsCrew;
+    use HasFactory; 
     use HasFilterableQueryStringContract;
     use HasHistory;
     use HasScheduledDate;
     use HasStatus;
     use HasWorkOrders;
-    use BelongsCreatorUser;
-    use BelongsUpdaterUser;
 
     protected $fillable = [
         'client_id',

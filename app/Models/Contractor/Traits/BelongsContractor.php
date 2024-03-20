@@ -39,6 +39,6 @@ trait BelongsContractor
             return $query->whereNull('contractor_id');
         }
 
-        return $query->whereNotNull()->where('contractor_id', $value);
+        return $query->where('contractor_id', $value);
     }
 }

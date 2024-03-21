@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\Production\RolePermissionSeeder::class,
             \Database\Seeders\Production\MemberSuperAdminSeeder::class,
             \Database\Seeders\Production\SettingsSeeder::class,
+            \Database\Seeders\Production\TaskSeeder::class,
 
         ];
     }

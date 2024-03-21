@@ -23,7 +23,7 @@ class WorkOrderUpdateRequest extends FormRequest
     {
         $work_order = $this->route('work_order');
 
-        $this->crews_id = Crew::purposeWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
+        $this->crews_id = Crew::task('work orders')->get()->push($work_order->crew)->pluck('id')->implode(',');
 
         if( WorkOrderTypeCatalog::rectification()->contains($this->type) ) {
             $this->work_orders_id_to_rectify = $work_order->client->work_orders_to_rectify->pluck('id')->implode(',');

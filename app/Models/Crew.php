@@ -35,17 +35,9 @@ class Crew extends Model
         'name',
         'description',
         'colors_json',
-        'purposes_stringify',
         'lead_member_id',
         'is_active',
     ];
-
-    protected static $all_purposes = [
-        // 'assessments',
-        'inspections',
-        'work orders',
-    ];
-
 
 
     // Mutators
@@ -67,17 +59,6 @@ class Crew extends Model
             'text' => $values[1],
         ]);
     }
-
-    public function setPurposesStringifyAttribute($values)
-    {
-        if(! is_array($values) || is_array($values) && empty($values) ) {
-            $this->attributes['purposes_stringify'] = null;
-            return;
-        }
-
-        $this->attributes['purposes_stringify'] = implode(',', $values);
-    }
-
 
 
     // Accessors
@@ -102,26 +83,6 @@ class Crew extends Model
         return $this->hasTextColor() ? $this->colors->text : self::TEXT_COLOR_DEFAULT;
     }
 
-    public function getPurposesArrayAttribute()
-    {
-        return ! empty($this->purposes_stringify) ? explode(',', $this->purposes_stringify) : [];
-    }
-
-    public function getPurposesCollectionAttribute()
-    {
-        return collect( $this->purposes_array );
-    }
-
-
-
-    // Relationships
-
-    public function members()
-    {
-        return $this->belongsToMany(Member::class)->using(CrewMember::class)->withTimestamps();
-    }
-
-
 
     // Validators
 
@@ -145,46 +106,52 @@ class Crew extends Model
         return $this->hasColors() && property_exists($this->colors, 'text');
     }
 
-    public function hasPurposes()
-    {
-        return ! empty($this->purposes_array);
-    }
-
-    public function hasPurpose($purpose)
-    {
-        return in_array($purpose, $this->purposes_array);
-    }
-
     public function hasMembers()
     {
-        return (bool) $this->members_count || $this->members->count();
+        return (bool) ($this->members_count ?? $this->members->count());
     }
 
+    public function hasTasks()
+    {
+        return (bool) ($this->tasks_count ?? $this->tasks->count());
+    }
+
+    public function hasTask(Task $task)
+    {
+        return $this->tasks->contains($task);
+    }
+
+    public function hasTaskByName(string $value)
+    {
+        return $this->tasks->contains(function($task) use ($value) {
+            $task->name == $value;
+        });
+    }
+
+
+    // Relationships
+
+    public function members()
+    {
+        return $this->belongsToMany(Member::class)->using(CrewMember::class)->withTimestamps();
+    }
+
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class);
+    }
 
 
     // Scopes
 
-    public function scopePurposeAssessments($query)
+    public function scopeTask($query, $values)
     {
-        return $query->where('purposes_stringify', 'like', '%assessments%');
-    }
+        if(! is_array($values) ) {
+            $values = [$values];
+        }
 
-    public function scopePurposeInspections($query)
-    {
-        return $query->where('purposes_stringify', 'like', '%inspections%');
-    }
-
-    public function scopePurposeWorkOrders($query)
-    {
-        return $query->where('purposes_stringify', 'like', '%work orders%');
-    }
-
-
-
-    // Statics
-
-    public static function collectionAllPurposes()
-    {
-        return collect( self::$all_purposes );
+        return $query->whereHas('tasks', function ($q) use ($values) {
+            $q->whereIn('name', $values);
+        });
     }
 }

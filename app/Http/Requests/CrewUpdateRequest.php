@@ -3,12 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Models\Crew;
+use App\Models\Task;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CrewSaveRequest extends FormRequest
+class CrewUpdateRequest extends FormRequest
 {
-    public $crew_id;
-
     public function authorize()
     {
         return auth()->user()->canAny(['create-crews', 'edit-crews']);
@@ -21,19 +20,11 @@ class CrewSaveRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
-                sprintf('unique:%s,name,%s', Crew::class, $this->crew_id),
+                sprintf('unique:%s,name,%s', Crew::class, $this->route('crew')->id),
             ],
             'description' => [
                 'nullable',
                 'string',
-            ],
-            'purposes' => [
-                'nullable',
-                'array',
-            ],
-            'purposes.*' => [
-                'required_with:purposes',
-                sprintf('in:%s', Crew::collectionAllPurposes()->implode(',')),
             ],
             'background_color' => [
                 'required',
@@ -49,28 +40,30 @@ class CrewSaveRequest extends FormRequest
                 'nullable',
                 'boolean',
             ],
+            'tasks' => [
+                'nullable',
+                'array',
+            ],
+            'tasks.*' => [
+                'required_with:tasks',
+                sprintf('in:%s', Task::all()->pluck('id')->implode(',')),
+            ],
         ];
     }
 
     public function messages()
     {
         return [
-            'purposes.array' => __('Choose one or more purposes'),
-            'purposes.*.in' => __('Choose one or more valid purposes'),
-            'purposes.*.required_with' => __('Choose at least one purpose from the list'),
+            'tasks.array' => __('Choose one or more tasks'),
+            'tasks.*.in' => __('Choose one or more valid tasks'),
+            'tasks.*.required_with' => __('Choose at least one task from the list'),
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        $this->crew_id = $this->route('crew')->id ?? 0;
     }
 
     public function validated()
     {
         return array_merge(parent::validated(), [
             'colors_json' => [$this->get('background_color'), $this->get('text_color')],
-            'purposes_stringify' => $this->get('purposes'),
             'is_active' => (int) $this->filled('active'),
         ]);
     }

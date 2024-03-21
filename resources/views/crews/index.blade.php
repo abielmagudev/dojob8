@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-@include("crews.index.template-{$template}")
+@include("crews.index.templates.{$template}")
 @include('crews.index.modal-add-crew-members')
 @include('crews.index.modal-change-status-crews')
 @include('crews.index.modal-crew-members-assignment')

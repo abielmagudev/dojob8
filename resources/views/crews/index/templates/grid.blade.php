@@ -1,13 +1,10 @@
 <div class="row">
     @foreach($active_crews as $crew)
     <div class="col-sm col-sm-6 col-md-4 col-xl-3 mb-4">
-        <x-card class="h-100" style="border-top:0.5rem solid {{ $crew->colors->background }} !important">
+        <?php $style = sprintf('border-top:0.5rem solid %s !important', $crew->colors->background ) ?> 
+        <x-card class="h-100" :style="$style">
             
-            <x-slot name="title">
-                <x-tooltip title="{{ ucwords($crew->purposes_collection->implode(', ')) }}">
-                    {{ $crew->name }}
-                </x-tooltip>
-            </x-slot>
+            <x-slot name="title">{{ $crew->name }} </x-slot>
 
             <x-slot name="options">
                 @includeWhen($crew->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [

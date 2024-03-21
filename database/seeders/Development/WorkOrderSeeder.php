@@ -36,7 +36,7 @@ class WorkOrderSeeder extends Seeder
         $relationships = (object) [
             'clients' => Client::all(),
             'jobs' => Job::all(),
-            'crews' => Crew::where('purposes_stringify', 'like', 'work orders')->get(),
+            'crews' => Crew::task('work orders')->get(),
             'contractors' => Contractor::all(),
             'assessments' => Assessment::all(),
         ];

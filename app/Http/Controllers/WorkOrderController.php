@@ -58,7 +58,7 @@ class WorkOrderController extends Controller
             'catalog_types' => new WorkOrderTypeCatalog,
             'client' => $client,
             'contractors' => Contractor::orderBy('name')->get(),
-            'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),
+            'crews' => Crew::task('work orders')->active()->orderBy('name', 'desc')->get(),
             'jobs' => Job::orderBy('name')->get(),
             'work_order' => new WorkOrder,
         ]);
@@ -131,7 +131,7 @@ class WorkOrderController extends Controller
             'catalog_types' => new WorkOrderTypeCatalog,
             'client' => $work_order->client->load(['work_orders.job']),
             'contractors' => Contractor::orderBy('name')->get(),
-            'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),
+            'crews' => Crew::task('work orders')->active()->orderBy('name', 'desc')->get(),
             'request' => $request,
             'work_order' => $work_order,
             'url_back' => $request->filled('url_back') ? $request->get('url_back') : route('work-orders.show', $work_order),

@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\Development\ClientSeeder::class,
             \Database\Seeders\Development\ContractorSeeder::class,
             \Database\Seeders\Development\CrewSeeder::class,
+            \Database\Seeders\Development\CrewTaskSeeder::class,
             \Database\Seeders\Development\JobSeeder::class,
             \Database\Seeders\Development\MemberSeeder::class,
             \Database\Seeders\Development\ProductSeeder::class,

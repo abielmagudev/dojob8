@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\CrewController\IndexTemplate;
-use App\Http\Requests\CrewSaveRequest;
+use App\Http\Requests\CrewStoreRequest;
+use App\Http\Requests\CrewUpdateRequest;
 use App\Models\Crew;
 use App\Models\Member;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class CrewController extends Controller
@@ -22,7 +24,7 @@ class CrewController extends Controller
         // ->orderBy('name')
         // ->get();
 
-        $crews = Crew::with('members')->orderBy('name')->get();
+        $crews = Crew::with(['members','tasks'])->orderBy('name')->get();
 
         return view('crews.index', [
             'active_crews' => $crews->filter(fn($crew) => $crew->isActive()),
@@ -36,15 +38,19 @@ class CrewController extends Controller
     public function create()
     {        
         return view('crews.create', [
-            'all_purposes' => Crew::collectionAllPurposes(),
+            'tasks' => Task::all(),
             'crew' => new Crew,
         ]);
     }
 
-    public function store(CrewSaveRequest $request)
+    public function store(CrewStoreRequest $request)
     {
         if(! $crew = Crew::create( $request->validated() ) ) {
             return back()->with('danger', 'Error saving crew, try again please');
+        }
+
+        if( $request->filled('tasks') ) {
+            $crew->tasks()->attach( $request->get('tasks') );
         }
 
         return redirect()->route('crews.index')->with('success', "You saved the crew <b>{$crew->name}</b>");
@@ -58,12 +64,12 @@ class CrewController extends Controller
     public function edit(Crew $crew)
     {
         return view('crews.edit', [
-            'all_purposes' => Crew::collectionAllPurposes(),
+            'tasks' => Task::all(),
             'crew' => $crew,
         ]);
     }
 
-    public function update(CrewSaveRequest $request, Crew $crew)
+    public function update(CrewUpdateRequest $request, Crew $crew)
     {
         if(! $crew->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating crew, try again please');
@@ -72,6 +78,8 @@ class CrewController extends Controller
         if( $crew->isInactive() ) {
             $crew->members()->detach();
         }
+
+        $crew->tasks()->sync( $request->get('tasks') );
 
         return redirect()->route('crews.edit', $crew)->with('success', "You updated the crew <b>{$crew->name}</b>");
     }

@@ -39,7 +39,7 @@ class InspectionUpdateRequest extends FormRequest
                 'bail',
                 'nullable',
                 'integer',
-                sprintf('in:%s', Crew::purposeInspections()->active()->get()->pluck('id')->implode(',')),
+                sprintf('in:%s', Crew::task('inspections')->active()->get()->pluck('id')->implode(',')),
             ],
             'replace_crew_members' => [
                 'sometimes',

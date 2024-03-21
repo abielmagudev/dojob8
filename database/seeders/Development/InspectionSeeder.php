@@ -19,7 +19,7 @@ class InspectionSeeder extends Seeder
     {
         $agencies = Agency::all();
 
-        $crews = Crew::where('purposes_stringify', 'like', '%inspections%')->get();
+        $crews = Crew::task('inspections')->get();
 
         $work_orders_standard = WorkOrder::standard()->get();
 

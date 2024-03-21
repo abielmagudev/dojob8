@@ -36,7 +36,7 @@ class InspectionController extends Controller
         return view('inspections.index', [
             'all_statuses' => InspectionStatusCatalog::all(),
             'agencies' => Agency::all(),
-            'crews' => Crew::purposeInspections()->active()->get(),
+            'crews' => Crew::task('inspections')->active()->get(),
             'inspections' => $inspections,
             'scheduled_date' => $request->get('scheduled_date', now()->toDateString()),
             'request' => $request,
@@ -56,7 +56,7 @@ class InspectionController extends Controller
         return view('inspections.create', [
             'agencies' => Agency::all(),
             'all_statuses' => InspectionStatusCatalog::all(),
-            'crews' => Crew::purposeInspections()->active()->get(),
+            'crews' => Crew::task('inspections')->active()->get(),
             'inspection' => new Inspection,
             'inspector_names' => Inspection::inspectorNames()->get(),
             'work_order' => $work_order,
@@ -87,7 +87,7 @@ class InspectionController extends Controller
         return view('inspections.edit', [
             'agencies' => Agency::all(),
             'all_statuses' => InspectionStatusCatalog::all(),
-            'crews' => Crew::purposeInspections()->active()->get(),
+            'crews' => Crew::task('inspections')->active()->get(),
             'inspection' => $inspection,
             'inspector_names' => Inspection::inspectorNames()->get()->pluck('inspector_name'),
             'url_back' => $url_back,

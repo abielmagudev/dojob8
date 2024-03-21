@@ -53,7 +53,7 @@ class WorkOrderStoreRequest extends FormRequest
             ],
             'crew' => [
                 'nullable', 
-                sprintf('in:%s', Crew::purposeWorkOrders()->get()->pluck('id')->implode(',')),
+                sprintf('in:%s', Crew::task('work orders')->get()->pluck('id')->implode(',')),
             ],
             'contractor' => [
                 'nullable',

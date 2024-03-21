@@ -10,7 +10,7 @@
 
         @if( $work_order->crew &&! $crews->contains($work_order->crew_id) )
         <option value="{{ $work_order->crew->id }}" selected>
-            {{ $work_order->crew->name }} - It is inactive or it is not for work order purpose
+            {{ $work_order->crew->name }} - It is inactive or it is not for work order task
         </option>
         @endif
     </select>

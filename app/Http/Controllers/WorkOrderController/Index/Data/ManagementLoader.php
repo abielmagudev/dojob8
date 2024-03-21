@@ -27,7 +27,7 @@ class ManagementLoader implements DataLoaderContract
         return [
             'filtering' => [
                 'contractors' => Contractor::orderBy('name', 'desc')->get(),
-                'crews' => Crew::purposeWorkOrders()->active()->orderBy('name', 'desc')->get(),
+                'crews' => Crew::task('work orders')->active()->orderBy('name', 'desc')->get(),
                 'jobs' => Job::orderBy('name', 'desc')->get(),
                 'pending' => [
                     'url' => workOrderUrlGenerator('pending'),

@@ -11,6 +11,7 @@ use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
 
 class AdminUser extends Updater
 {
+    public $crews_id;
 
     public $work_orders_id_for_rectification;
 
@@ -18,7 +19,7 @@ class AdminUser extends Updater
     {
         $work_order = $this->request->route('work_order');
 
-        $this->crews_id = Crew::purposeWorkOrders()->get()->push($work_order->crew)->pluck('id')->implode(',');
+        $this->crews_id = Crew::task('work orders')->get()->push($work_order->crew)->pluck('id')->implode(',');
 
         if( WorkOrderTypeCatalog::all()->contains( $this->request->get('type') ) && $this->request->get('type') <> 'standard' ) {
             $this->work_orders_id_for_rectification = $work_order->client->onlyWorkOrdersForRectification($work_order)->pluck('id')->implode(',');

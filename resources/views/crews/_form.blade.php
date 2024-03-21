@@ -19,27 +19,27 @@
     </div>
 </x-form-field-horizontal>
 
-<x-form-field-horizontal label="Purposes">
+<x-form-field-horizontal for="" label="Description" label-class="form-label-optional">
+    <textarea id="descriptionTextarea" rows="3" class="form-control" name="description">{{ old('description', $crew->description) }}</textarea>
+    <x-form-feedback error="description" />
+</x-form-field-horizontal>
+
+<x-form-field-horizontal label="Tasks">
     <div class="form-control p-0">
         <ul class="list-group list-group-flush rounded">
-            @foreach($all_purposes as $purpose)
+            @foreach($tasks as $task)
             <li class="list-group-item">
-                <?php $checkbox_id = "purpose" . str_replace(' ', '', ucwords($purpose)) ?>
+                <?php $checkbox_id = sprintf('task%sCheckbox', $task->id) ?>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="purposes[]" value="{{ $purpose }}" id="{{ $checkbox_id }}" {{ isChecked( $crew->hasPurpose($purpose) ) }}>
-                    <label class="form-check-label text-capitalize" for="{{ $checkbox_id }}">{{ $purpose }}</label>
+                    <input class="form-check-input" type="checkbox" name="tasks[]" value="{{ $task->id }}" id="{{ $checkbox_id }}" {{ isChecked( $crew->hasTask( $task ) ) }}>
+                    <label class="form-check-label text-capitalize" for="{{ $checkbox_id }}">{{ $task->name }}</label>
                 </div>
             </li>
             @endforeach
         </ul>
     </div>
-    <x-form-feedback error="purposes" />
-    <x-form-feedback error="purposes.*" />
-</x-form-field-horizontal>
-
-<x-form-field-horizontal for="" label="Description" label-class="form-label-optional">
-    <textarea id="descriptionTextarea" rows="3" class="form-control" name="description">{{ old('description', $crew->description) }}</textarea>
-    <x-form-feedback error="description" />
+    <x-form-feedback error="tasks" />
+    <x-form-feedback error="tasks.*" />
 </x-form-field-horizontal>
 
 @push('scripts')

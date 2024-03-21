@@ -37,7 +37,7 @@ class ClientController extends Controller
         if(! $client = Client::create( $request->validated() ) )
             return back()->with('danger', 'Error saving client, please try again');
 
-        return redirect()->route('work-orders.create', $client)->with('success', "You created the client <b>{$client->full_name}</b>");
+        return redirect()->route('work-orders.create', ['client' => $client->id])->with('success', "You created the client <b>{$client->full_name}</b>");
     }
 
     public function show(Client $client)

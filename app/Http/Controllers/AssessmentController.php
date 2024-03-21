@@ -45,8 +45,9 @@ class AssessmentController extends Controller
 
         return view('assessments.create', [
             'assessment' => new Assessment,
-            'contractors' => Contractor::all(),
             'client' => $client,
+            'contractors' => Contractor::all(),
+            'crews' => Crew::task('assessments')->get(),
         ]);
     }
 
@@ -54,6 +55,13 @@ class AssessmentController extends Controller
     {
         if(! $assessment = Assessment::create( $request->validated() ) ) {
             return back()->with('danger', 'Error creating assessment, try again please...');
+        }
+
+        if( $assessment->hasCrew() )
+        {
+            $assessment->member()->attach(
+                $assessment->crew->members
+            );
         }
 
         return redirect()->route('assessments.index')->with('success', "Assessment <b>{$assessment->id}</b> created");
@@ -72,9 +80,10 @@ class AssessmentController extends Controller
     {
         return view('assessments.edit', [
             'assessment' => $assessment,
-            'contractors' => Contractor::all(),
             'client' => $assessment->client,
-            'statuses' => StatusCatalog::all(),
+            'contractors' => Contractor::all(),
+            'crews' => Crew::task('assessments')->get(),
+            'statuses' => Assessment::statuses(),
         ]);
     }
 
@@ -82,6 +91,20 @@ class AssessmentController extends Controller
     {
         if(! $assessment->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating assessment, try again please...');
+        }
+
+        if( $request->filled('reassign_crew_members') )
+        {
+            if( $assessment->hasCrew() )
+            {
+                $assessment->members()->sync(
+                    $assessment->crew->members
+                );
+            }
+            else
+            {
+                $assessment->members()->detach();
+            }
         }
 
         return redirect()->route('assessments.edit', $assessment)->with('success', "Assessment <b>{$assessment->id}</b> updated");

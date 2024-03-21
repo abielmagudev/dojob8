@@ -44,6 +44,7 @@
             <th>Schedule</th>
             <th>Type</th>
             <th>Client</th>
+            <th>Crew</th>
             <th>Contractor</th>
             <th class="text-nowrap">Work Orders</th>
             <th>Status</th>
@@ -60,6 +61,11 @@
                 @include('clients.__.inline-address-contact', [
                     'client' => $assessment->client
                 ])
+            </td>
+            <td>
+                @if( $assessment->hasCrew() )
+                {{ $assessment->crew->name }}
+                @endif
             </td>
             <td>
                 @if( $assessment->hasContractor() )

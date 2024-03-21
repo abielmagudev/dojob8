@@ -15,7 +15,7 @@ class CreateAssessmentsTable extends Migration
     {
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
-            $table->date('scheduled_date')->index();
+            $table->date('scheduled_date')->nullable()->index();
             $table->tinyInteger('ordered', false, true)->nullable();
             $table->string('status')->index();
             $table->text('notes')->nullable();

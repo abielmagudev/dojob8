@@ -15,7 +15,7 @@ class AssessmentFactory extends Factory
     public function definition()
     {
         return [
-            'scheduled_date' => $this->faker->dateTimeBetween('-2 years'),
+            'scheduled_date' => $this->faker->optional()->dateTimeBetween('-2 years'),
             'ordered' => $this->faker->optional()->numberBetween(1, 10),
             'status' => Assessment::statuses()->random(),
             'notes' => $this->faker->optional()->text(),

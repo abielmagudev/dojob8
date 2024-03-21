@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Assessment;
 use App\Models\Client;
 use App\Models\Contractor;
+use App\Models\Crew;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AssessmentStoreRequest extends FormRequest
@@ -28,12 +29,17 @@ class AssessmentStoreRequest extends FormRequest
                 'integer',
             ],
             'scheduled_date' => [
-                'required',
+                'nullable',
                 'date',
+            ],
+            'crew' => [
+                'bail',
+                'nullable',
+                sprintf('in:%s', Crew::task('assessments')->pluck('id')->implode(',')),
             ],
             'contractor' => [
                 'bail',
-                'required',
+                'nullable',
                 'integer',
                 sprintf('exists:%s,id', Contractor::class),
             ],
@@ -54,10 +60,11 @@ class AssessmentStoreRequest extends FormRequest
     public function validated()
     {
         return array_merge(parent::validated(), [
-            'status' => Assessment::STATUS_INITIAL,
-            'is_walk_thru' => $this->type,
             'client_id' => $this->client,
             'contractor_id' => $this->contractor,
+            'crew_id' => $this->crew,
+            'is_walk_thru' => $this->type,
+            'status' => Assessment::STATUS_INITIAL,
         ]);
     }
 }

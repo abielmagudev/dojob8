@@ -7,16 +7,18 @@ use App\Models\Contractor\Traits\BelongsContractor;
 use App\Models\Crew\Traits\BelongsCrew;
 use App\Models\History\Traits\HasHistory;
 use App\Models\Kernel\Interfaces\FilterableQueryStringContract;
+use App\Models\Kernel\Interfaces\PendingAttributesContract;
 use App\Models\Kernel\Traits\BelongsCreatorUser;
 use App\Models\Kernel\Traits\BelongsUpdaterUser;
 use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
+use App\Models\Kernel\Traits\PendingContractImplemented;
 use App\Models\WorkOrder\Traits\HasWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Assessment extends Model implements FilterableQueryStringContract
+class Assessment extends Model implements FilterableQueryStringContract, PendingAttributesContract
 {
     use BelongsCreatorUser;
     use BelongsUpdaterUser;
@@ -29,6 +31,7 @@ class Assessment extends Model implements FilterableQueryStringContract
     use HasScheduledDate;
     use HasStatus;
     use HasWorkOrders;
+    use PendingContractImplemented;
 
     const STATUS_INITIAL = 'new';
 
@@ -73,6 +76,24 @@ class Assessment extends Model implements FilterableQueryStringContract
         return (bool) $this->is_walk_thru;
     }
 
+    public function hasPending(): bool
+    {
+        return !$this->hasScheduledDate() ||! $this->hasCrew();
+    }
+
+    public function hasNoPending(): bool
+    {
+        return ! $this->hasPending();
+    }
+
+
+    // Relationships
+
+    public function members()
+    {
+        return $this->belongsToMany(Member::class);
+    }
+
 
     // Scopes
 
@@ -83,6 +104,16 @@ class Assessment extends Model implements FilterableQueryStringContract
             'contractor',
             'crew',
         ]);
+    }
+
+    public function scopePending($query)
+    {
+        return $query->whereNull('scheduled_date')->orWhereNull('crew_id');
+    }
+
+    public function scopeNoPending($query)
+    {
+        return $query->whereNotNull('scheduled_date')->whereNotNull('crew_id');
     }
 
 

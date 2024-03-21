@@ -19,6 +19,7 @@ class CreateAssessmentsTable extends Migration
             $table->tinyInteger('ordered', false, true)->nullable();
             $table->string('status')->index();
             $table->text('notes')->nullable();
+            $table->boolean('is_walk_thru')->default(false);
             $table->foreignId('client_id');
             $table->foreignId('contractor_id')->nullable();
             $table->foreignId('crew_id')->nullable();

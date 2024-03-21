@@ -30,19 +30,72 @@ class Assessment extends Model implements FilterableQueryStringContract
     use HasStatus;
     use HasWorkOrders;
 
+    const STATUS_INITIAL = 'new';
+
+    public static $statuses = [
+        'new',
+        'working',
+        'done',
+        'reschedule',
+        'deferred', 
+        'denialed',
+        'canceled',
+    ];
+
     protected $fillable = [
+        'scheduled_date',
+        'ordered',
+        'status',
+        'notes', 
+        'is_walk_thru',
         'client_id',
         'contractor_id',
         'crew_id',
-        'notes', 
-        'ordered',
-        'scheduled_date',
-        'status',
     ];
 
     protected $casts = [
         'scheduled_date' => 'date',
     ];
+
+
+    // Accessors
+
+    public function getTypeAttribute()
+    {
+        return $this->isWalkThru() ? 'walk thru' : 'regular';
+    }
+    
+
+    // Validators
+
+    public function isWalkThru()
+    {
+        return (bool) $this->is_walk_thru;
+    }
+
+
+    // Scopes
+
+    public function scopeWithEssentialRelationships($query)
+    {
+        return $query->with([
+            'client',
+            'contractor',
+            'crew',
+        ]);
+    }
+
+
+    // Filters
+
+    public function scopeFilterByType($query, $value)
+    {
+        if(! in_array($value, [0,1]) ) {
+            return $query;
+        }
+
+        return $query->where('is_walk_thru', $value);
+    }
 
 
     // Interface
@@ -54,21 +107,19 @@ class Assessment extends Model implements FilterableQueryStringContract
             'contractor' => 'filterByContractor',
             'crew' => 'filterByCrew', 
             'dates' => 'filterByScheduledDateBetween',
-            // 'pending' => 'filterByPending',
+            'pending' => 'filterByPending',
             'scheduled_date' => 'filterByScheduledDate',
             'status_group' => 'filterByStatusGroup',
             'status' => 'filterByStatus',
+            'type' => 'filterByType',
         ];
     }
 
 
-    // Scopes
+    // Static
 
-    public function scopeWithEssentialRelationships($query)
+    public static function statuses()
     {
-        return $query->with([
-            'client',
-            'contractor',
-        ]);
+        return collect(self::$statuses);
     }
 }

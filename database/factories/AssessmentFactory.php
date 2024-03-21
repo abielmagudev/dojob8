@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Assessment\Kernel\StatusCatalog as AssessmentStatusCatalog;
+use App\Models\Assessment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AssessmentFactory extends Factory
@@ -17,8 +17,9 @@ class AssessmentFactory extends Factory
         return [
             'scheduled_date' => $this->faker->dateTimeBetween('-2 years'),
             'ordered' => $this->faker->optional()->numberBetween(1, 10),
-            'status' => AssessmentStatusCatalog::all()->random(),
+            'status' => Assessment::statuses()->random(),
             'notes' => $this->faker->optional()->text(),
+            'is_walk_thru' => $this->faker->boolean(),
             'client_id' => $this->faker->numberBetween(1, 500),
             'contractor_id' => $this->faker->optional()->numberBetween(1, 10),
             'crew_id' => $this->faker->optional()->numberBetween(1, 10),

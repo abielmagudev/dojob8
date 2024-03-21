@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Assessment\Kernel\StatusCatalog;
+use App\Models\Assessment;
 use App\Models\Client;
 use App\Models\Contractor;
 use Illuminate\Foundation\Http\FormRequest;
@@ -23,15 +23,19 @@ class AssessmentStoreRequest extends FormRequest
                 'integer',
                 sprintf('exists:%s,id', Client::class),
             ],
+            'type' => [
+                'required',
+                'integer',
+            ],
+            'scheduled_date' => [
+                'required',
+                'date',
+            ],
             'contractor' => [
                 'bail',
                 'required',
                 'integer',
                 sprintf('exists:%s,id', Contractor::class),
-            ],
-            'scheduled_date' => [
-                'required',
-                'date',
             ],
             'notes' => [
                 'nullable',
@@ -40,12 +44,20 @@ class AssessmentStoreRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'type.integer' => __('Choose a valid type'),
+        ];
+    }
+
     public function validated()
     {
         return array_merge(parent::validated(), [
+            'status' => Assessment::STATUS_INITIAL,
+            'is_walk_thru' => $this->type,
             'client_id' => $this->client,
             'contractor_id' => $this->contractor,
-            'status' => StatusCatalog::INITIAL,
         ]);
     }
 }

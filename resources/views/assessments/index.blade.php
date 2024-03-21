@@ -42,8 +42,9 @@
         <tr>
             <th>Order</th>
             <th>Schedule</th>
-            <th>Contractor</th>
+            <th>Type</th>
             <th>Client</th>
+            <th>Contractor</th>
             <th class="text-nowrap">Work Orders</th>
             <th>Status</th>
             <th></th>
@@ -54,6 +55,12 @@
         <tr>
             <td class="text-center text-secondary" style="width:1%">{{ $assessment->ordered }}</td>
             <td>{{ $assessment->scheduled_date_human }}</td>
+            <td class="text-capitalize">{{ $assessment->type }}</td>
+            <td>
+                @include('clients.__.inline-address-contact', [
+                    'client' => $assessment->client
+                ])
+            </td>
             <td>
                 @if( $assessment->hasContractor() )
                 @include('contractors.__.flag', [
@@ -61,11 +68,6 @@
                     'tooltip' => $assessment->contractor->name,
                 ]) 
                 @endif
-            </td>
-            <td>
-                @include('clients.__.inline-address-contact', [
-                    'client' => $assessment->client
-                ])
             </td>
             <td class="text-center">{{ $assessment->work_orders_counter }}</td>
             <td class="text-center">

@@ -11,6 +11,14 @@
     <x-form-feedback error="client" />
 </x-form-field-horizontal>
 
+<x-form-field-horizontal for="typeSelect" label="Type">
+    <select id="typeSelect" name="type" class="form-select" required>
+        <option value="0" {{ isSelected( old('type', $assessment->is_walk_thru) == 0 ) }}>Regular</option>
+        <option value="1" {{ isSelected( old('type', $assessment->is_walk_thru) == 1 ) }}>Walk Thru</option>
+    </select>
+    <x-form-feedback error="type" />
+</x-form-field-horizontal>
+
 <x-form-field-horizontal for="scheduledDateInput" label="Schedule">
     <input type="date" id="scheduledDateInput" class="form-control {{ bsInputInvalid( $errors->has('scheduled_date') ) }}" name="scheduled_date" value="{{ old('scheduled_date', $assessment->scheduled_date_input) }}" required>
     <x-form-feedback error="scheduled_date" />

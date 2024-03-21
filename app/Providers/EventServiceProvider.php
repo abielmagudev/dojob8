@@ -15,7 +15,7 @@ use App\Models\Media;
 use App\Models\Member;
 use App\Models\Payment;
 use App\Models\Product;
-use App\Models\Settings;
+use App\Models\Configuration;
 use App\Models\User;
 use App\Models\WorkOrder;
 
@@ -32,7 +32,7 @@ use App\Observers\MediaObserver;
 use App\Observers\MemberObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\ProductObserver;
-use App\Observers\SettingsObserver;
+use App\Observers\ConfigurationObserver;
 use App\Observers\UserObserver;
 use App\Observers\WorkOrderObserver;
 
@@ -77,7 +77,7 @@ class EventServiceProvider extends ServiceProvider
         Member::observe(MemberObserver::class);
         Payment::observe(PaymentObserver::class);
         Product::observe(ProductObserver::class);
-        Settings::observe(SettingsObserver::class);
+        Configuration::observe(ConfigurationObserver::class);
         User::observe(UserObserver::class);
         WorkOrder::observe(WorkOrderObserver::class);
     }

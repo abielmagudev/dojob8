@@ -6,7 +6,7 @@ use App\Suppliers\CountryManager;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class SettingsSaveRequest extends FormRequest
+class ConfigurationUpdateRequest extends FormRequest
 {
     public $country_codes;
 
@@ -14,7 +14,7 @@ class SettingsSaveRequest extends FormRequest
 
     public function authorize()
     {
-        return auth()->user()->hasRole('SuperAdmin');
+        return auth()->user()->can('edit-configuration');
     }
 
     public function rules()
@@ -58,6 +58,8 @@ class SettingsSaveRequest extends FormRequest
             'city_name' => Str::title( $this->get('city_name') ),
         ]);
 
-        return ['data_json' => json_encode($validated)];
+        return [
+            'settings_json' => $validated
+        ];
     }
 }

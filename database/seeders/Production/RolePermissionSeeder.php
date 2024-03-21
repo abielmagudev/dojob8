@@ -39,7 +39,7 @@ class RolePermissionSeeder extends Seeder
         // APPLICATION
         $this->createPermissionsForHistory($roles);
         $this->createPermissionsForSearch($roles);
-        $this->createPermissionsForSettings($roles);
+        $this->createPermissionsForConfiguration($roles);
 
         // PIVOT
         $this->createPermissionsForCrewMembers($roles);
@@ -688,11 +688,23 @@ class RolePermissionSeeder extends Seeder
     /**
      * Settings
      */
-    protected function createPermissionsForSettings(array $roles)
+    protected function createPermissionsForConfiguration(array $roles)
     {
-        Permission::create(['name' => 'see-settings']);
+        Permission::create(['name' => 'see-configuration'])->syncRoles([
+            $roles['administrator'],
+        ]);
 
-        Permission::create(['name' => 'edit-settings']);
+        Permission::create(['name' => 'create-configuration'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'edit-configuration'])->syncRoles([
+            $roles['administrator'],
+        ]);
+
+        Permission::create(['name' => 'delete-configuration'])->syncRoles([
+            $roles['administrator'],
+        ]);
     }
 
 

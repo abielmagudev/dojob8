@@ -139,11 +139,11 @@ return [
                 'permission' => 'see-history',
                 'route' => 'history.index',
             ],
-            'Settings' => [
-                'active' => 'settings.*',
+            'Configuration' => [
+                'active' => 'configuration.*',
                 'icon' => '<i class="bi bi-gear"></i>',
-                'permission' => 'see-settings',
-                'route' => 'settings.index',
+                'permission' => 'see-configuration',
+                'route' => 'configuration.index',
             ],
         ]
     ],

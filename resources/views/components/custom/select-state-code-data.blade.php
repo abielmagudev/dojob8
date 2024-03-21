@@ -2,9 +2,9 @@
 
 $country_loaded = $countryManager->exists( $attributes->get('country') ) 
                 ? $countryManager->get( $attributes->get('country') ) 
-                : $countryManager->get( $settings->get('country_code', 'US') );
+                : $countryManager->get( $configuration->get('country_code', 'US') );
 
-$selected = $slot->isNotEmpty() ? $slot : $settings->get('state_code');
+$selected = $slot->isNotEmpty() ? $slot : $configuration->get('state_code');
 
 ?>
 <select 

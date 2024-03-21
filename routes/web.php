@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientAjaxController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\CrewMemberAssignmentController;
@@ -25,11 +26,8 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
-use App\Http\Controllers\WorkOrderOrderedController;
-use App\Http\Controllers\WorkOrderStatusController;
 use App\Http\Controllers\WorkOrderUpdateQuicklyController;
 use Illuminate\Support\Facades\Route;
 
@@ -120,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('account', [AccountController::class, 'edit'])->name('account.edit');
     Route::patch('account', [AccountController::class, 'update'])->name('account.update');
 
-    // Settings
-    Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
-    Route::patch('settings', [SettingsController::class, 'update'])->name('settings.update');
+    // Configuration
+    Route::get('configuration', [ConfigurationController::class, 'index'])->name('configuration.index');
+    Route::patch('configuration', [ConfigurationController::class, 'update'])->name('configuration.update');
 });

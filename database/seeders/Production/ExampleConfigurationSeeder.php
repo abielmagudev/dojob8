@@ -2,10 +2,10 @@
 
 namespace Database\Seeders\Production;
 
-use App\Models\Settings;
+use App\Models\Configuration;
 use Illuminate\Database\Seeder;
 
-class ExampleSettingsSeeder extends Seeder
+class ExampleConfigurationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,13 +14,13 @@ class ExampleSettingsSeeder extends Seeder
      */
     public function run()
     {
-        Settings::create([
-            'data_json' => json_encode([
+        Configuration::create([
+            'settings_json' => [
                 'company_name' => 'Your company name',
                 'city_name' => 'City Name',
                 'state_code' => 'TX',
                 'country_code' => 'US',
-            ]),
+            ],
         ]);
     }
 }

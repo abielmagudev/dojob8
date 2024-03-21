@@ -10,7 +10,7 @@
           </button>
         </div>
         <div class="lh-1">
-          <b class="d-block mb-1">{{ $settings->get('company_name') }}</b>
+          <b class="d-block mb-1">{{ $configuration->get('company_name') }}</b>
           <small>{{ now()->toFormattedDayDateString() }}</small>
         </div>
       </div>

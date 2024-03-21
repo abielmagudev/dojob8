@@ -2,11 +2,11 @@
 
 // $countries = $countryManager->all();
 
-// $countries = $countryManager->only( $settings->get('country_code', 'US') );
+// $countries = $countryManager->only( $configuration->get('country_code', 'US') );
 
 $countries = $countryManager->only('US');
 
-$selected = $slot->isNotEmpty() ? $slot : $settings->get('country_code');
+$selected = $slot->isNotEmpty() ? $slot : $configuration->get('country_code');
 
 ?>
 <select 

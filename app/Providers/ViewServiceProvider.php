@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Settings;
+use App\Models\Configuration;
 use App\Suppliers\CountryManager;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -33,7 +33,7 @@ class ViewServiceProvider extends ServiceProvider
             'components.custom.select-state-code-data',
             'components.custom.select-country-code-data',
         ], function($view) {
-            $view->with('settings', Settings::singleton());
+            $view->with('configuration', Configuration::singleton());
         });
 
         View::composer([

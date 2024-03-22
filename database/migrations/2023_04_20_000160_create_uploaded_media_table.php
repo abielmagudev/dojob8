@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMediaTable extends Migration
+class CreateUploadedMediaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,10 @@ class CreateMediaTable extends Migration
         Schema::create('uploaded_media', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
-            $table->text('url')->index();
+            $table->string('url')->index();
             $table->string('disk');
-            $table->string('mime');
+            $table->string('type_mime')->index();
+            $table->integer('size_bytes');
             $table->integer('downloads_count', false, true)->default(0);
             $table->morphs('mediable');
             $table->foreignId('created_id')->nullable();

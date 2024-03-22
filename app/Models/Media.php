@@ -15,13 +15,10 @@ class Media extends Model
 
     protected $fillable = [
         'name',
-        'name_hashed',
-        'extension',
-        'directory',
-        'disk',
-        'path',
         'url',
-        'original_information_json',
+        'disk',
+        'type_mime',
+        'size_bytes',
         'downloads_count',
     ];
 

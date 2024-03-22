@@ -40,7 +40,7 @@ class InspectionStatusController extends Controller
                 'link' => route('work-orders.show', [$i->work_order_id, 'tab' => 'inspections']),
                 'model_type' => Inspection::class,
                 'model_id' => $i->id,
-                'user_id' => mt_rand(1,10),
+                'user_id' => auth()->id(),
             ];
         })->toArray();
 

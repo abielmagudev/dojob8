@@ -12,7 +12,7 @@
             'class' => 'btn btn-outline-primary',
         ])
 
-        <a href="{{ route('work-orders.create', $client) }}" class="btn btn-primary">
+        <a href="{{ route('work-orders.create', ['client' => $client->id]) }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i>
         </a>
     </x-slot>

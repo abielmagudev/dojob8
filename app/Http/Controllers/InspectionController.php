@@ -29,6 +29,7 @@ class InspectionController extends Controller
         ->withNestedRelationships()
         ->filterByParameters( $request->all() )
         ->orderByRaw("scheduled_date IS NULL, scheduled_date {$request->get('sort', 'DESC')}")
+        ->orderBy('crew_id', 'DESC')
         ->orderBy('agency_id', 'DESC')
         ->paginate(35)
         ->appends( $request->all() );

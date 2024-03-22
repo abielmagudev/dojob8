@@ -6,13 +6,11 @@ use App\Models\Member;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class MemberSaveRequest extends FormRequest
+class MemberStoreRequest extends FormRequest
 {
-    public $member_id;
-
     public function authorize()
     {
-        return auth()->user()->canAny(['create-members', 'edit-members']);
+        return auth()->user()->canAny('create-members');
     }
 
     public function rules()
@@ -30,7 +28,7 @@ class MemberSaveRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
-                sprintf('unique:%s,full_name,%s', Member::class, $this->member_id),
+                sprintf('unique:%s,full_name,%s', Member::class),
             ],
             'birthdate' => [
                 'nullable',
@@ -60,13 +58,15 @@ class MemberSaveRequest extends FormRequest
                 'nullable',
                 'string',
             ],
+            'is_available' => [
+                'sometimes',
+                'boolean',
+            ],
         ];
     }
 
     public function prepareForValidation()
     {
-        $this->member_id = $this->route('member')->id ?? 0;
-
         $this->merge([
             'full_name' => sprintf('%s %s', $this->name, $this->lastname),
         ]);
@@ -78,8 +78,8 @@ class MemberSaveRequest extends FormRequest
             'name' => $this->name,
             'last_name' => $this->last_name,
             'full_name' =>  $this->full_name,
-            'is_crew_member' => $this->get('is_crew_member'),
-            'is_available' => $this->get('available'),
+            'is_crew_member' => (int) $this->filled('is_crew_member'),
+            'is_available' => (int) $this->filled('is_available'),
         ]);
     }
 }

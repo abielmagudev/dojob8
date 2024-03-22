@@ -50,22 +50,6 @@ class Member extends Model implements FilterableQueryStringContract, Profileable
     ];
 
 
-    // Interface
-
-    public function getMappingFilterableQueryString(): array
-    {
-        return [
-            'status' => 'filterByAvailable',
-            'is_crew_member' => 'filterByCrewMember',
-        ];
-    }
-
-    public function getProfileNameAttribute(): string
-    {
-        return $this->full_name;
-    }
-
-
     // Mutators
 
     public function setNameAttribute($value)
@@ -144,6 +128,24 @@ class Member extends Model implements FilterableQueryStringContract, Profileable
     }
 
 
+    // Relationships
+
+    public function crews()
+    {
+        return $this->belongsToMany(Crew::class)->using(CrewMember::class);
+    }
+
+    public function work_orders()
+    {
+        return $this->belongsToMany(WorkOrder::class);
+    }
+
+    public function inspections()
+    {
+        return $this->belongsToMany(Inspection::class)->using(InspectionMember::class);
+    }
+    
+    
     // Scopes
 
     public function scopeCrewMember($query)
@@ -164,20 +166,18 @@ class Member extends Model implements FilterableQueryStringContract, Profileable
     }
 
 
-    // Relationships
+    // Interface
 
-    public function crews()
+    public function getMappingFilterableQueryString(): array
     {
-        return $this->belongsToMany(Crew::class)->using(CrewMember::class);
+        return [
+            'status' => 'filterByAvailable',
+            'is_crew_member' => 'filterByCrewMember',
+        ];
     }
 
-    public function work_orders()
+    public function getProfileNameAttribute(): string
     {
-        return $this->belongsToMany(WorkOrder::class);
-    }
-
-    public function inspections()
-    {
-        return $this->belongsToMany(Inspection::class)->using(InspectionMember::class);
+        return $this->full_name;
     }
 }

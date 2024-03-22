@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MemberSaveRequest;
+use App\Http\Requests\MemberStoreRequest;
+use App\Http\Requests\MemberUpdateRequest;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class MemberController extends Controller
         return view('members.create')->with('member', new Member);
     }
 
-    public function store(MemberSaveRequest $request)
+    public function store(MemberStoreRequest $request)
     {
         if(! $member = Member::create( $request->validated() ) ) {
             return back()->with('danger', 'Error saving member, try again please');
@@ -42,6 +43,7 @@ class MemberController extends Controller
     public function show(Member $member)
     {
         $member->load('crews.members');
+
         return view('members.show')->with('member', $member);
     }
 
@@ -50,7 +52,7 @@ class MemberController extends Controller
         return view('members.edit')->with('member', $member);
     }
 
-    public function update(MemberSaveRequest $request, Member $member)
+    public function update(MemberUpdateRequest $request, Member $member)
     {
         if(! $member->fill( $request->validated() )->save() ) {
             return back()->with('danger', 'Error updating member, try again please');

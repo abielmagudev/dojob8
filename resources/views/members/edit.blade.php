@@ -16,7 +16,7 @@
         @method('put')
         @include('members._form')
         
-        <x-form-field-horizontal for="isCrewMemberSelect">
+        <x-form-field-horizontal for="isAvailableSwitch">
             <div class="alert alert-warning">
                 <div class="form-check form-switch">
                     <input class="form-check-input" id="isAvailableSwitch" type="checkbox" role="switch" name="is_available" value="1" {{ isChecked( old('is_available', $member->is_available) == 1 ) }}>

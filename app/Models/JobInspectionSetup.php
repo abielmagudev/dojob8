@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class InspectionSetupForJob extends Model
+class JobInspectionSetup extends Model
 {
     use HasFactory;
 
-    protected $table = 'inspection_setup_for_job';
+    protected $table = 'job_inspection_setup';
 
     protected $fillable = [
         'options_json',

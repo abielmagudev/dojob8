@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInspectionSetupForJobTable extends Migration
+class CreateJobInspectionSetupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInspectionSetupForJobTable extends Migration
      */
     public function up()
     {
-        Schema::create('inspection_setup_for_job', function (Blueprint $table) {
+        Schema::create('job_inspection_setup', function (Blueprint $table) {
             $table->id();
             $table->text('options_json');
             $table->foreignId('job_id');
@@ -28,6 +28,6 @@ class CreateInspectionSetupForJobTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inspection_setup_for_job');
+        Schema::dropIfExists('job_inspection_setup');
     }
 }

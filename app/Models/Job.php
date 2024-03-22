@@ -58,7 +58,7 @@ class Job extends Model
 
     public function inspection_setup()
     {
-        return $this->hasMany(InspectionSetupForJob::class);
+        return $this->hasMany(JobInspectionSetup::class);
     }
 
     public function products()

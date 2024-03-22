@@ -12,7 +12,7 @@ class CommentController extends Controller
     {
         $comment = Comment::create([
             'content' => $request->get('comment'),
-            'user_id' => mt_rand(1,10),
+            'user_id' => auth()->id(),
             'work_order_id' => $work_order->id,
         ]);
 

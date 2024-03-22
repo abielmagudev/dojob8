@@ -47,6 +47,7 @@
     </div>
 
     <!-- Accounts -->
+    @can('create-users')
     <div class="col-sm">
         <x-card title="Accounts">
             <x-slot name="options">
@@ -79,6 +80,7 @@
             @endif
         </x-card>
     </div>
+    @endcan
 
 
     <!-- Crews -->

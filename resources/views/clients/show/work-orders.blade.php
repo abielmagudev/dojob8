@@ -1,7 +1,7 @@
 <x-card title="Work orders" class="h-100">
     <x-slot name="options">
-        @includeWhen($client->hasWorkOrdersWithIncompleteStatus(), 'work-orders.__.button-counter-incomplete', [
-            'counter' => $client->work_orders_with_incomplete_status_counter,
+        @includeWhen($client->hasIncompleteWorkOrders(), 'work-orders.__.button-counter-incomplete', [
+            'counter' => $client->incomplete_work_orders_counter,
             'parameters' => ['client' => $client->id],
             'class' => 'btn btn-outline-warning',
         ])

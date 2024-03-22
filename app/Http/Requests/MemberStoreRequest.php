@@ -28,7 +28,7 @@ class MemberStoreRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
-                sprintf('unique:%s,full_name,%s', Member::class),
+                sprintf('unique:%s,full_name', Member::class),
             ],
             'birthdate' => [
                 'nullable',

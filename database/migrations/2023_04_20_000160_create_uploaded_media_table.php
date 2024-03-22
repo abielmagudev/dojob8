@@ -13,17 +13,13 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('media', function (Blueprint $table) {
+        Schema::create('uploaded_media', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
-            $table->string('name_hashed')->index();
-            $table->string('extension', 8)->index();
-            $table->string('directory');
-            $table->string('disk', 64);
-            $table->text('path');
-            $table->text('url')->nullable();
-            $table->text('original_information_json');
-            $table->integer('downloads_count', false, true)->nullable();
+            $table->text('url')->index();
+            $table->string('disk');
+            $table->string('mime');
+            $table->integer('downloads_count', false, true)->default(0);
             $table->morphs('mediable');
             $table->foreignId('created_id')->nullable();
             $table->timestamps();
@@ -37,6 +33,6 @@ class CreateMediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('media');
+        Schema::dropIfExists('uploaded_media');
     }
 }

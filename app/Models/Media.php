@@ -11,7 +11,7 @@ class Media extends Model
     use BelongsCreatorUser;
     use HasHistory;
 
-    protected $table = "media";
+    protected $table = "uploaded_media";
 
     protected $fillable = [
         'name',

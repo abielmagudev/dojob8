@@ -2,36 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\MediaController\MediaManagerContainer;
 use App\Http\Requests\MediaDestroyRequest;
 use App\Http\Requests\MediaStoreRequest;
 use App\Models\Assessment;
 use App\Models\Inspection;
 use App\Models\Media;
-use App\Models\Media\Services\MediaUploader;
+use App\Models\Media\Services\MediaFileDestroyer;
+use App\Models\Media\Services\MediaFileUploader;
+use App\Models\Member;
+use App\Models\User;
 use App\Models\WorkOrder;
-use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
-    protected $media_models = [
+    protected $models = [
         'assessments' => Assessment::class,
         'inspections' => Inspection::class,
+        'members' => Member::class,
+        'users' => User::class,
         'work-orders' => WorkOrder::class,
     ];
+
 
     public function __construct()
     {
         $this->authorizeResource(Media::class, 'media');
     }
 
+    public function bind($model_key, $model_id)
+    {
+        if(! array_key_exists($model_key, $this->models) ) {
+            return abort(404);
+        }
+
+        $class = $this->models[$model_key];
+
+        return $class::findOrFail($model_id);
+    }
+
     public function store(MediaStoreRequest $request, $model_key, $model_id)
     {        
-        $media_model = array_key_exists($model_key, $this->media_models) ? $this->media_models[$model_key] : null;
-
-        if( is_null($media_model) ||! $model = $media_model::find($model_id) ) {
-            abort(404);
-        }
+        $model = $this->bind($model_key, $model_id);
 
         $files = collect($request->file('media'));
 
@@ -39,21 +50,12 @@ class MediaController extends Controller
 
         foreach($files as $file)
         {
-            if( $data = MediaUploader::put($file, "{$model_key}/{$model->id}") )
-            {
-                $data = array_merge($data, [
-                    'mediable_type' => $media_model,
-                    'mediable_id' => $model->id,
-                    'created_id' => auth()->id(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-                
+            if( $data = MediaFileUploader::put($file, $model) ) {        
                 $uploaded->push($data);
             }
         }
 
-        Media::insert($uploaded->toArray());
+        Media::insert( $uploaded->toArray() );
 
         $model->history()->create([
             'description' => sprintf("%s files were uploaded in %s #%s", $uploaded->count(), $model_key, $model->id),
@@ -70,11 +72,7 @@ class MediaController extends Controller
 
     public function destroy(MediaDestroyRequest $request, $model_key, $model_id)
     {
-        $media_model = array_key_exists($model_key, $this->media_models) ? $this->media_models[$model_key] : null;
-
-        if( is_null($media_model) ||! $model = $media_model::find($model_id) ) {
-            abort(404);
-        }
+        $model = $this->bind($model_key, $model_id);
 
         $media = $model->media()->whereIn('id', $request->get('media'))->get();
 
@@ -82,9 +80,7 @@ class MediaController extends Controller
 
         foreach($media as $file)
         {
-            Storage::delete($file->path);
-
-            if(! Storage::exists($file->path) ) {
+            if( MediaFileDestroyer::delete($file) ) {
                 $destroyed->push($file);
             }
         }

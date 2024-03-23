@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Models\Media\Kernel;
+namespace App\Models\Media\Services;
 
-class MediaRestriction
+class MediaFileRestriction
 {
     protected static $accepts = [
         '.csv',

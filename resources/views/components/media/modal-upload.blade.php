@@ -1,5 +1,5 @@
 <!-- Trigger -->
-<x-modal-trigger modal-id="mediaUploaderModal">
+<x-modal-trigger modal-id="MediaFileUploaderModal">
     @if( $slot->isEmpty() )
     <i class="bi bi-plus-lg"></i>
     
@@ -11,17 +11,17 @@
 
 <!-- Modal -->
 @push('end')
-<x-modal id="mediaUploaderModal" title="Photos & Documents" dialog-class="modal-xl" header-close>
-    <form action="{{ $action }}" method="post" enctype="multipart/form-data" autocomplete="off" id="mediaUploaderForm">
+<x-modal id="MediaFileUploaderModal" title="Photos & Documents" dialog-class="modal-xl" header-close>
+    <form action="{{ $action }}" method="post" enctype="multipart/form-data" autocomplete="off" id="MediaFileUploaderForm">
         @csrf
         <label for="inputMediaFiles" class="border border-secondary rounded w-100 p-5 text-center fs-5" style="border-style:dashed !important">Click to choose files...</label>
-        <input id="inputMediaFiles" class="d-none" type="file" name="media[]" accept="{{ \App\Models\Media\Kernel\MediaRestriction::accepts()->implode(',') }}" multiple>
+        <input id="inputMediaFiles" class="d-none" type="file" name="media[]" accept="{{ \App\Models\Media\Services\MediaFileRestriction::accepts()->implode(',') }}" multiple>
         
         <div class="d-flex justify-content-end mt-4 gap-2">
             <x-modal-button-close>
                 Cancel
             </x-modal-button-close>
-            <button id="mediaUploaderButton" class="btn btn-success" form="mediaUploaderForm" type="submit">
+            <button id="MediaFileUploaderButton" class="btn btn-success" form="MediaFileUploaderForm" type="submit">
                 <div>
                     <i class="bi bi-cloud-arrow-up-fill"></i>
                     <span class="ms-1">Upload</span>
@@ -64,8 +64,8 @@ const inputMediaFiles = {
 }
 inputMediaFiles.listen()
 
-const mediaUploaderButton = {
-    element: document.getElementById('mediaUploaderButton'),
+const MediaFileUploaderButton = {
+    element: document.getElementById('MediaFileUploaderButton'),
     listen: function () {
         this.element.addEventListener('click', function (evt) {
             this.querySelector('div:first-child').classList.add('d-none')
@@ -75,16 +75,16 @@ const mediaUploaderButton = {
         })
     }
 }
-mediaUploaderButton.listen()
+MediaFileUploaderButton.listen()
 
-const mediaUploaderModal = {
-    element: document.getElementById('mediaUploaderModal'),
+const MediaFileUploaderModal = {
+    element: document.getElementById('MediaFileUploaderModal'),
     listen: function () {
         this.element.addEventListener('hidden.bs.modal', function (evt) {
             inputMediaFiles.clear()
         })
     }
 }
-mediaUploaderModal.listen()
+MediaFileUploaderModal.listen()
 </script>
 @endpush

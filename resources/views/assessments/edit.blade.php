@@ -29,7 +29,7 @@
 </x-card>
 <br>
 
-<x-custom.modal-confirm-delete :route="route('assessments.destroy', $assessment)" concept="agency">
-    <p>¿Do you want to continue to delete <br> the assessmebt <b>#<?= $assessment->id ?></b>?</p>
+<x-custom.modal-confirm-delete :route="route('assessments.destroy', $assessment)" concept="assessment">
+    <p>¿Do you want to continue to delete <br> the assessment <b>#<?= $assessment->id ?></b>?</p>
 </x-custom.modal-confirm-delete>
 @endsection

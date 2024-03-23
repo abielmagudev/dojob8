@@ -10,6 +10,7 @@ use App\Models\Assessment\Kernel\StatusCatalog;
 use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
+use App\Models\Media\Services\MediaFileDestroyer;
 use Illuminate\Http\Request;
 
 class AssessmentController extends Controller
@@ -112,9 +113,19 @@ class AssessmentController extends Controller
 
     public function destroy(Assessment $assessment)
     {
+        $media = $assessment->media;
+
         if(! $assessment->delete() ) {
             return back()->with('danger', 'Error deleting assessment, try again please...');
         }
+
+        foreach($media as $file) {
+            MediaFileDestroyer::delete($file);
+        }
+
+        $assessment->media()->delete();
+
+        $assessment->history()->delete();
 
         return redirect()->route('assessments.index')->with('success', "Assessment <b>{$assessment->id}</b> deleted");
     }

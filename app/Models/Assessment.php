@@ -21,19 +21,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assessment extends Model implements FilterableQueryStringContract, PendingAttributesContract
 {
-    use BelongsCreatorUser;
-    use BelongsUpdaterUser;
     use BelongsClient;
     use BelongsContractor;
+    use BelongsCreatorUser;
     use BelongsCrew;
+    use BelongsUpdaterUser;
     use HasFactory; 
     use HasFilterableQueryStringContract;
     use HasHistory;
+    use HasMedia;
     use HasScheduledDate;
     use HasStatus;
     use HasWorkOrders;
     use PendingContractImplemented;
-    use HasMedia;
 
     const STATUS_INITIAL = 'new';
 

@@ -12,7 +12,7 @@ use App\Models\Client;
 use App\Models\Contractor;
 use App\Models\Crew;
 use App\Models\Job;
-use App\Models\Media\Kernel\MediaFileDestroyer;
+use App\Models\Media\Services\MediaFileDestroyer;
 use App\Models\WorkOrder;
 use App\Models\WorkOrder\Kernel\WorkOrderStatusCatalog;
 use App\Models\WorkOrder\Kernel\WorkOrderTypeCatalog;
@@ -186,11 +186,15 @@ class WorkOrderController extends Controller
 
     public function destroy(WorkOrder $work_order)
     {
+        $media = $work_order->media;
+
         if(! $work_order->delete() ) {
             return back()->with('danger', 'Error deleting work order, try again please');
         }        
 
-        MediaFileDestroyer::byWorkOrder($work_order);
+        foreach($media as $file) {
+            MediaFileDestroyer::delete($file);
+        }
 
         $work_order->media()->delete();
 

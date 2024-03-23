@@ -31,8 +31,8 @@
                     <input type="checkbox" class="form-check-input" name="media[]" value="{{ $file->id }}" form="mediaDeleteForm">
                 </div>
 
-                <a href="{{ asset($file->public_url) }}" target="_blank" download="{{ $file->name }}">
-                    <img src="{{ asset($file->public_url) }}" class="img-fluid mx-auto d-block"/>
+                <a href="{{ asset($file->url) }}" target="_blank" download="{{ $file->name }}">
+                    <img src="{{ $file->url }}" class="img-fluid mx-auto d-block"/>
                 </a>
             </div>
         </div> 

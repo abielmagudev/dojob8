@@ -28,6 +28,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOrderController;
+use App\Http\Controllers\WorkOrderMediaController;
 use App\Http\Controllers\WorkOrderUpdateQuicklyController;
 use Illuminate\Support\Facades\Route;
 
@@ -104,13 +105,15 @@ Route::middleware(['auth'])->group(function () {
     
     // Media (Files, photos, videos...)
     // Route::resource('media/ajax', MediaAjaxController::class)->only(['store', 'destroy']);
-    Route::post('media', [MediaController::class, 'store'])->name('media.store');
-    Route::delete('media', [MediaController::class, 'destroy'])->name('media.destroy');
+    Route::prefix('media/{model_key}/{model_id}')->group(function () {
+        Route::post('/', [MediaController::class, 'store'])->name('media.store');
+        Route::delete('/', [MediaController::class, 'destroy'])->name('media.destroy');
+    });
     
     // Assessments
     Route::resource('assessments', AssessmentController::class);
 
-    // Work orders    
+    // Work orders
     Route::patch('work-orders/edit-quickly/{attribute}', WorkOrderUpdateQuicklyController::class)->name('work-orders.update.quickly');
     Route::resource('work-orders', WorkOrderController::class);
 

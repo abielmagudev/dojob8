@@ -16,10 +16,12 @@ class CreateUploadedMediaTable extends Migration
         Schema::create('uploaded_media', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
-            $table->string('url')->index();
+            $table->string('hashed');
+            $table->string('path')->index();
+            // $table->string('url')->index();
             $table->string('disk');
-            $table->string('type_mime')->index();
-            $table->integer('size_bytes');
+            $table->string('type_mime');
+            $table->integer('size_bytes', false, true);
             $table->integer('downloads_count', false, true)->default(0);
             $table->morphs('mediable');
             $table->foreignId('created_id')->nullable();

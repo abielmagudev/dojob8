@@ -2,7 +2,7 @@
 
 namespace App\Models\Media\Kernel;
 
-class FileRestriction
+class MediaRestriction
 {
     protected static $accepts = [
         '.csv',

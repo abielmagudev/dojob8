@@ -367,7 +367,6 @@ class RolePermissionSeeder extends Seeder
 
 
 
-
     // OPERATIVE 
 
     /**
@@ -455,7 +454,7 @@ class RolePermissionSeeder extends Seeder
     }
 
     /**
-     * Files
+     * Media Files
      */
     protected function createPermissionsForMedia($roles)
     {

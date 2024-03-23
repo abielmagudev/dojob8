@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\WorkOrderController\Show\Data;
 
 use App\Http\Controllers\WorkOrderController\Show\Data\Kernel\DataLoaderContract;
-use App\Models\Media\Kernel\FileRestriction;
+use App\Models\Media\Kernel\MediaRestriction;
 use App\Models\WorkOrder;
 
 class MediaLoader implements DataLoaderContract
@@ -12,7 +12,7 @@ class MediaLoader implements DataLoaderContract
     {
         return [
             'template' => 'media',
-            'accepts' => FileRestriction::accepts(),
+            'accepts' => MediaRestriction::accepts(),
             'media' => $work_order->media,
             'work_order' => $work_order,
         ];

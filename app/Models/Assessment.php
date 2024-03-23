@@ -14,6 +14,7 @@ use App\Models\Kernel\Traits\HasFilterableQueryStringContract;
 use App\Models\Kernel\Traits\HasScheduledDate;
 use App\Models\Kernel\Traits\HasStatus;
 use App\Models\Kernel\Traits\PendingContractImplemented;
+use App\Models\Media\Traits\HasMedia;
 use App\Models\WorkOrder\Traits\HasWorkOrders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +33,7 @@ class Assessment extends Model implements FilterableQueryStringContract, Pending
     use HasStatus;
     use HasWorkOrders;
     use PendingContractImplemented;
+    use HasMedia;
 
     const STATUS_INITIAL = 'new';
 

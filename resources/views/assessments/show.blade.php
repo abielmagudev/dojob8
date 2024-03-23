@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 <div class="row">
-    <div class="col-sm col-sm-4">
+    <div class="col-sm col-sm-3">
         <x-card>
             <x-slot name="title">
                 <x-assessments.status value="{{ $assessment->status }}" />
@@ -20,7 +20,7 @@
             <x-small-title title="Client">
                 <b>{{ $assessment->client->full_name }}</b>
                 <br>
-                <small>
+                <small style="text-wrap:balance !important;">
                     {{ $assessment->client->address_simple }}
                     <br>
                     {{ $assessment->client->contact_channels }}
@@ -38,6 +38,15 @@
     </div>
 
     <div class="col-sm">
+        <!-- Media -->
+        <x-media.card-visualizer 
+            :media="$assessment->media"
+            action-upload="{{ route('media.store', ['assessments', $assessment->id]) }}"
+            action-delete="{{ route('media.destroy', ['assessments', $assessment->id]) }}"
+        />
+        <br>
+        
+        <!-- Work orders -->
         <x-card title="Work orders">
             <x-slot name="options">
                 <a href="{{ route('work-orders.create', ['assessment' => $assessment->id]) }}" class="btn btn-primary">

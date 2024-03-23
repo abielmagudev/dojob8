@@ -23,9 +23,6 @@ class Media extends Model
         'type_mime',
         'size_bytes',
         'downloads_count',
-        'mediable_type',
-        'mediable_id',
-        'created_id',
     ];
 
 

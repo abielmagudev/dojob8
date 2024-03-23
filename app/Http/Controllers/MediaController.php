@@ -41,9 +41,14 @@ class MediaController extends Controller
         {
             if( $data = MediaUploader::put($file, "{$model_key}/{$model->id}") )
             {
-                $data['mediable_type'] = $media_model;
-                $data['mediable_id'] = $model->id;
-                $data['created_id'] = auth()->id();
+                $data = array_merge($data, [
+                    'mediable_type' => $media_model,
+                    'mediable_id' => $model->id,
+                    'created_id' => auth()->id(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                
                 $uploaded->push($data);
             }
         }
